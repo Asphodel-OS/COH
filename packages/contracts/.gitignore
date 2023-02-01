@@ -1,10 +1,19 @@
-out/
-cache/
+# node modules
 node_modules/
-bindings/
-artifacts/
-deployments
-abi/
-types/
-broadcast/
+
+# environment variables
 .env
+
+# ???
+bindings/
+deployments
+
+# build and deployment artifacts 
+abi/
+artifacts/
+broadcast/
+/cache/
+out/
+src/libraries/LibDeploy.sol
+src/test/TestSetupImports.sol
+types/
