@@ -1,9 +1,10 @@
 [profile.default]
 ffi = false
 fuzz_runs = 256
+libs = ["../../node_modules", "../../../mud"]
 optimizer = true
 optimizer_runs = 1000000
-verbosity = 1
-libs = ["../../node_modules", "../../../mud"]
-src = "src"
 out = "out"
+solc = "0.8.17"
+src = "src"
+verbosity = 1
