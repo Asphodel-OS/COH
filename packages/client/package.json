@@ -13,9 +13,14 @@
     "start": "yarn cache:clear && yarn parcel src/index.html --port 3000"
   },
   "devDependencies": {
+    "@types/react": "^17.0.43",
+    "@types/react-dom": "^18.0.4",
+    "@types/styled-components": "^5.1.24",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
     "eslint": "^8.29.0",
+    "parcel-reporter-static-files-copy": "^1.5.0",
+    "prettier": "^2.5.1",
     "typescript": "^4.6.4",
     "vite": "^3.2.3"
   },

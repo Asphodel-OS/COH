@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-interface Cheats {
+interface ICheats {
   // Set block.timestamp (newTimestamp)
   function warp(uint256) external;
 
@@ -18,10 +18,20 @@ interface Cheats {
   function load(address, bytes32) external returns (bytes32);
 
   // Stores a value to an address' storage slot, (who, slot, value)
-  function store(address, bytes32, bytes32) external;
+  function store(
+    address,
+    bytes32,
+    bytes32
+  ) external;
 
   // Signs data, (privateKey, digest) => (v, r, s)
-  function sign(uint256, bytes32) external returns (uint8, bytes32, bytes32);
+  function sign(uint256, bytes32)
+    external
+    returns (
+      uint8,
+      bytes32,
+      bytes32
+    );
 
   // Gets address for a given private key, (privateKey) => (address)
   function addr(uint256) external returns (address);
@@ -67,15 +77,30 @@ interface Cheats {
   // Call this function, then emit an event, then call a function. Internally after the call, we check if
   // logs were emitted in the expected order with the expected topics and data (as specified by the booleans).
   // Second form also checks supplied address against emitting contract.
-  function expectEmit(bool, bool, bool, bool) external;
+  function expectEmit(
+    bool,
+    bool,
+    bool,
+    bool
+  ) external;
 
-  function expectEmit(bool, bool, bool, bool, address) external;
+  function expectEmit(
+    bool,
+    bool,
+    bool,
+    bool,
+    address
+  ) external;
 
   // Mocks a call to an address, returning specified data.
   // Calldata can either be strict or a partial match, e.g. if you only
   // pass a Solidity selector to the expected calldata, then the entire Solidity
   // function will be mocked.
-  function mockCall(address, bytes calldata, bytes calldata) external;
+  function mockCall(
+    address,
+    bytes calldata,
+    bytes calldata
+  ) external;
 
   // Clears all mocked calls
   function clearMockedCalls() external;

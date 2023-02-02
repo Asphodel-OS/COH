@@ -1,19 +1,33 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "moduleResolution": "Node",
-    "strict": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "noEmit": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "skipLibCheck": true
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+    /* Projects */
+    /* Language and Environment */
+    "target": "esnext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "jsx": "preserve" /* Specify what JSX code is generated. */,
+    "useDefineForClassFields": true /* Emit ECMAScript-standard-compliant class fields. */,
+    /* Modules */
+    "module": "esnext" /* Specify what module code is generated. */,
+    "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
+    "types": [
+      "vite/client",
+    ] /* Specify type package names to be included without being referenced in a source file. */,
+    "resolveJsonModule": true /* Enable importing .json files */,
+    /* JavaScript Support */
+    /* Emit */
+    "sourceMap": true /* Create source map files for emitted JavaScript files. */,
+    "outDir": "dist" /* Specify an output folder for all emitted files. */,
+    /* Interop Constraints */
+    "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+    /* Type Checking */
+    "strict": true /* Enable all strict type-checking options. */,
+    /* Completeness */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["src"]
+  "exclude": [
+    "dist",
+    "packages"
+  ]
 }
