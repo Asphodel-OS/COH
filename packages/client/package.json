@@ -5,9 +5,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "cache:clear": "rimraf ../../.parcel-cache && rimraf .parcel-cache",
+    "build": "rimraf dist && yarn cache:clear && parcel build src/index.html",
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "lint": "eslint . --fix --ext .ts",
+    "preview": "vite preview",
+    "start": "yarn cache:clear && yarn parcel src/index.html --port 3000"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.46.1",
@@ -27,6 +30,7 @@
     "mobx": "^6.7.0",
     "nice-grpc": "^2.0.1",
     "nice-grpc-web": "^2.0.1",
+    "parcel": "^2.8.0",
     "proxy-deep": "^3.1.1",
     "react": "^18.2.0",
     "threads": "^1.7.0"

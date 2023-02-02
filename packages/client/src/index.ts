@@ -1,7 +1,7 @@
 import { setupMUDNetwork } from "@latticexyz/std-client";
 import { createWorld } from "@latticexyz/recs";
-import { SystemTypes } from "contracts/types/SystemTypes";
-import { SystemAbis } from "contracts/types/SystemAbis.mjs";
+import { SystemTypes } from "client/types/SystemTypes";
+import { SystemAbis } from "client/types/SystemAbis.mjs";
 import { defineNumberComponent } from "@latticexyz/std-client";
 import { config } from "./config";
 
