@@ -7,7 +7,7 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { ID as CharacterComponentID } from "components/IsCharacterComponent.sol";
+import { ID as IsCharacterComponentID } from "components/IsCharacterComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
 import { LocationComponent, ID as LocationComponentID } from "components/LocationComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
