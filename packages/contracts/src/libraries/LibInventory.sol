@@ -89,20 +89,31 @@ library LibInventory {
    *     BALANCES
    *********************/
 
-  // adds an amount to the balance of an existing item inventory entity
-  function addBalance(
+  // transfers the specified inventory amt from=>to entity
+  function transferBalance(
+    IUint256Component components,
+    uint256 fromID,
+    uint256 toID,
+    uint256 amt
+  ) internal {
+    decBalance(components, fromID, amt);
+    incBalance(components, toID, amt);
+  }
+
+  // increases an inventory balance by the specified amount
+  function incBalance(
     IUint256Component components,
     uint256 id,
     uint256 amt
   ) internal returns (uint256) {
     uint256 bal = getBalance(components, id);
     bal += amt;
-    setBalance(components, id, bal);
+    _setBalance(components, id, bal);
     return bal;
   }
 
-  // subtracts an amount from the balance of an existing item inventory entity
-  function subBalance(
+  // decreases an inventory balance by the specified amount
+  function decBalance(
     IUint256Component components,
     uint256 id,
     uint256 amt
@@ -110,12 +121,12 @@ library LibInventory {
     uint256 bal = getBalance(components, id);
     require(bal >= amt, "Inventory: insufficient balance");
     bal -= amt;
-    setBalance(components, id, bal);
+    _setBalance(components, id, bal);
     return bal;
   }
 
   // set the balance of an existing inventory entity
-  function setBalance(
+  function _setBalance(
     IUint256Component components,
     uint256 id,
     uint256 amt
