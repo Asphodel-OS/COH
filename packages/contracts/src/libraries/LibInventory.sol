@@ -29,7 +29,6 @@ library LibInventory {
     IsInventoryComponent(getAddressById(components, IsInventoryComponentID)).set(id);
     IdOwnerComponent(getAddressById(components, IdOwnerComponentID)).set(id, entityID);
     IndexItemComponent(getAddressById(components, IndexItemComponentID)).set(id, itemIndex);
-    BalanceComponent(getAddressById(components, BalanceComponentID)).set(id, 0);
     return id;
   }
 

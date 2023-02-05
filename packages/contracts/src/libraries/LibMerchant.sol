@@ -8,15 +8,16 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { IsMerchantComponent, ID as IsMerchantComponentID } from "components/IsMerchantComponent.sol";
 import { IdMerchantComponent, ID as IdMerchantComponentID } from "components/IdMerchantComponent.sol";
+import { IsMerchantComponent, ID as IsMerchantComponentID } from "components/IsMerchantComponent.sol";
 import { NameComponent, ID as NameComponentID } from "components/NameComponent.sol";
 import { LocationComponent, ID as LocationComponentID } from "components/LocationComponent.sol";
 import { PriceBuyComponent, ID as PriceBuyComponentID } from "components/PriceBuyComponent.sol";
 import { PriceSellComponent, ID as PriceSellComponentID } from "components/PriceSellComponent.sol";
 import { IndexItemComponent, ID as IndexItemComponentID } from "components/IndexItemComponent.sol";
-import "libraries/LibCoin.sol";
-import "libraries/LibInventory.sol";
+import { LibCharacter } from "libraries/LibCharacter.sol";
+import { LibCoin } from "libraries/LibCoin.sol";
+import { LibInventory } from "libraries/LibInventory.sol";
 
 /*
  * LibMerchant handles all operations interacting with Merchants
@@ -38,6 +39,35 @@ library LibMerchant {
     NameComponent(getAddressById(components, NameComponentID)).set(id, name);
     LocationComponent(getAddressById(components, LocationComponentID)).set(id, location);
     return id;
+  }
+
+  // gets a specified merchant by room
+  function getMerchant(IUint256Component components, uint256 locationID)
+    internal
+    view
+    returns (uint256 result)
+  {
+    QueryFragment[] memory fragments = new QueryFragment[](2);
+    fragments[0] = QueryFragment(
+      QueryType.Has,
+      getComponentById(components, IsMerchantComponentID),
+      ""
+    );
+    fragments[1] = QueryFragment(
+      QueryType.HasValue,
+      getComponentById(components, LocationComponentID),
+      abi.encode(locationID)
+    );
+
+    uint256[] memory results = LibQuery.query(fragments);
+    if (results.length != 0) {
+      result = results[0];
+    }
+  }
+
+  // gets the location of a specified merchant
+  function getLocation(IUint256Component components, uint256 id) internal view returns (uint256) {
+    return LocationComponent(getAddressById(components, LocationComponentID)).getValue(id);
   }
 
   /************************
@@ -134,6 +164,18 @@ library LibMerchant {
     return true;
   }
 
+  // VIEW FUNCTIONS
+
+  // checks whether a character can transact with a listing
+  function canTransactWithListing(
+    IUint256Component components,
+    uint256 listingID,
+    uint256 charID
+  ) internal view returns (bool can) {
+    uint256 merchantID = getListingMerchantID(components, listingID);
+    return getLocation(components, merchantID) == LibCharacter.getLocation(components, charID);
+  }
+
   // gets all listings from a merchant
   function getListings(IUint256Component components, uint256 merchantID)
     internal
@@ -150,7 +192,7 @@ library LibMerchant {
     return LibQuery.query(fragments);
   }
 
-  // gets an item listing from a merchant
+  // gets an item listing from a merchant by its index
   function getListing(
     IUint256Component components,
     uint256 merchantID,
@@ -173,5 +215,13 @@ library LibMerchant {
       return 0;
     }
     return results[0];
+  }
+
+  // return the merchant ID of a listing
+  function getListingMerchantID(
+    IUint256Component components,
+    uint256 id // id of listing
+  ) internal view returns (uint256) {
+    return IdMerchantComponent(getAddressById(components, IdMerchantComponentID)).getValue(id);
   }
 }

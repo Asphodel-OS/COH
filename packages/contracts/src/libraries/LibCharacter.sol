@@ -10,6 +10,7 @@ import { getAddressById, getComponentById } from "solecs/utils.sol";
 import { ID as IsCharacterComponentID } from "components/IsCharacterComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
 import { LocationComponent, ID as LocationComponentID } from "components/LocationComponent.sol";
+import { OperatorComponent, ID as OperatorComponentID } from "components/OperatorComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
@@ -29,10 +30,9 @@ library LibCharacter {
     LocationComponent(getAddressById(components, LocationComponentID)).set(id, to);
   }
 
-  // Check whether an entity is a Character.
-  function isCharacter(IUint256Component components, uint256 id) internal view returns (bool) {
-    return getComponentById(components, IsCharacterComponentID).has(id);
-  }
+  /************************
+   *    View Functions
+   ************************/
 
   // Check whether a character can move to a location from where they currently are.
   // This function assumes that the entity id provided belongs to a character.
@@ -42,7 +42,7 @@ library LibCharacter {
     uint256 id,
     uint256 to
   ) internal view returns (bool) {
-    uint256 from = LocationComponent(getAddressById(components, LocationComponentID)).getValue(id);
+    uint256 from = getLocation(components, id);
     return LibRoom.isValidPath(components, from, to);
   }
 
@@ -52,5 +52,26 @@ library LibCharacter {
       id,
       block.timestamp
     );
+  }
+
+  // Check whether an entity is a Character.
+  function isCharacter(IUint256Component components, uint256 id) internal view returns (bool) {
+    return getComponentById(components, IsCharacterComponentID).has(id);
+  }
+
+  // gets the location of a specified character
+  function getLocation(IUint256Component components, uint256 id) internal view returns (uint256) {
+    return LocationComponent(getAddressById(components, LocationComponentID)).getValue(id);
+  }
+
+  // determines whether the specified character is owned by the specified operator
+  function isOwnedBy(
+    IUint256Component components,
+    uint256 charID,
+    address operator
+  ) internal view returns (bool) {
+    return
+      operator ==
+      OperatorComponent(getAddressById(components, OperatorComponentID)).getValue(charID);
   }
 }
