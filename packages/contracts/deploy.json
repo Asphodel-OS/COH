@@ -1,4 +1,20 @@
 {
-  "components": ["CounterComponent"],
-  "systems": [{ "name": "IncrementSystem", "writeAccess": ["CounterComponent"] }]
+  "components": [
+    "BalanceComponent",
+    "ExitsComponent",
+    "IdCharacterComponent",
+    "IdPet",
+    "IdInventoryComponent",
+    "IsCharacterComponent",
+    "IsInventoryComponent",
+    "IsNodeComponent",
+    "IsPetComponent",
+    "IsProductionComponent",
+    "IsRegistryEntryComponent",
+    "IsRoomComponent",
+    "Location",
+    "State",
+    "TimeLastAction"
+  ],
+  "systems": []
 }

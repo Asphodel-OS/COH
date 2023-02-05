@@ -6,11 +6,11 @@ import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { IComponent } from "solecs/interfaces/IComponent.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
-import { getAddressById } from "solecs/utils.sol";
+import { getAddressById, getComponentById } from "solecs/utils.sol";
 
+import { IsRoomComponent, ID as IsRoomComponentID } from "components/IsRoomComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
 import { LocationComponent, ID as LocationComponentID } from "components/LocationComponent.sol";
-import { RoomComponent, ID as RoomComponentID } from "components/RoomComponent.sol";
 
 library LibRoom {
   // Create a room at a given location.
@@ -20,7 +20,7 @@ library LibRoom {
     uint256 location
   ) internal returns (uint256) {
     uint256 id = world.getUniqueEntityId();
-    RoomComponent(getAddressById(components, RoomComponentID)).set(id);
+    IsRoomComponent(getAddressById(components, IsRoomComponentID)).set(id);
     LocationComponent(getAddressById(components, LocationComponentID)).set(id, location);
     return id;
   }
@@ -34,7 +34,7 @@ library LibRoom {
     QueryFragment[] memory fragments = new QueryFragment[](2);
     fragments[0] = QueryFragment(
       QueryType.Has,
-      IComponent(getAddressById(components, RoomComponentID)),
+      IComponent(getAddressById(components, IsRoomComponentID)),
       ""
     );
     fragments[1] = QueryFragment(

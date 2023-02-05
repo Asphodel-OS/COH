@@ -2,9 +2,9 @@
 pragma solidity ^0.8.0;
 import "std-contracts/components/BoolComponent.sol";
 
-uint256 constant ID = uint256(keccak256("component.Inventory"));
+uint256 constant ID = uint256(keccak256("component.Is.Production"));
 
-// identifies an entity as an inventory slot
-contract InventoryComponent is BoolComponent {
+// identifies an entity as a (node) resource production
+contract IsProductionComponent is BoolComponent {
   constructor(address world) BoolComponent(world, ID) {}
 }

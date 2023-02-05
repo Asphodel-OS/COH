@@ -5,9 +5,9 @@ import { IUint256Component } from "solecs/interfaces/IUint256Component.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
-import { getAddressById } from "solecs/utils.sol";
+import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { CharacterComponent, ID as CharacterComponentID } from "components/CharacterComponent.sol";
+import { ID as CharacterComponentID } from "components/IsCharacterComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
 import { LocationComponent, ID as LocationComponentID } from "components/LocationComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
@@ -31,7 +31,7 @@ library LibCharacter {
 
   // Check whether an entity is a Character.
   function isCharacter(IUint256Component components, uint256 id) internal view returns (bool) {
-    return CharacterComponent(getAddressById(components, CharacterComponentID)).has(id);
+    return getComponentById(components, IsCharacterComponentID).has(id);
   }
 
   // Check whether a character can move to a location from where they currently are.
