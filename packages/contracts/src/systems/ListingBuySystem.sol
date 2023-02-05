@@ -25,7 +25,7 @@ contract ListingBuySystem is System {
       "Merchant: character must be in room"
     );
 
-    LibMerchant.buyFromListing(components, characterID, listingID, amt);
+    LibMerchant.buyFromListing(world, components, characterID, listingID, amt);
     return "";
   }
 

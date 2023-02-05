@@ -1,22 +1,63 @@
 {
   "components": [
     "BalanceComponent",
+    "CoinComponent",
     "ExitsComponent",
     "IdCharacterComponent",
+    "IdMerchantComponent",
     "IdOwnerComponent",
     "IdPetComponent",
     "IndexItemComponent",
-    "IsInventoryComponent",
     "IsCharacterComponent",
     "IsInventoryComponent",
+    "IsMerchantComponent",
     "IsNodeComponent",
     "IsPetComponent",
     "IsProductionComponent",
     "IsRegistryEntryComponent",
-    "IsRoomComponent",
-    "Location",
-    "State",
-    "TimeLastAction"
+    "IsRoomComponentComponent",
+    "LocationComponent",
+    "NameComponent",
+    "OperatorComponent",
+    "PriceBuyComponent",
+    "PriceSellComponent",
+    "StateComponent",
+    "TimeLastActionComponent"
   ],
-  "systems": []
+  "systems": [
+    {
+      "name": "ListingBuySystem",
+      "writeAccess": [
+        "BalanceComponent",
+        "CoinComponent",
+        "IdOwnerComponent",
+        "IndexItemComponent",
+        "IsInventoryComponent"
+      ]
+    },
+    {
+      "name": "ListingSellSystem",
+      "writeAccess": [
+        "BalanceComponent",
+        "CoinComponent"
+      ]
+    },
+    {
+      "name": "ListingSetSystem",
+      "writeAccess": [
+        "IdMerchantComponent",
+        "IndexItemComponent",
+        "PriceBuyComponent",
+        "PriceSellComponent"
+      ]
+    },
+    {
+      "name": "MerchantCreateSystem",
+      "writeAccess": [
+        "IsMerchantComponent",
+        "NameComponent",
+        "LocationComponent"
+      ]
+    }
+  ]
 }

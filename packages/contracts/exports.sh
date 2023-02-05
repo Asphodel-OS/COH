@@ -20,7 +20,7 @@ for file in ${ABIS[@]}; do
 done
 
 for file in ${EXCLUDE[@]}; do
-  if [ -f abi/$file.json ]; then
-    rm abi/$file.json;
+  if [ -f ../client/abi/$file.json ]; then
+    rm ../client/abi/$file.json;
   fi
 done

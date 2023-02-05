@@ -100,7 +100,7 @@ library LibMerchant {
     uint256 sellPrice
   ) internal returns (uint256) {
     uint256 listingID = world.getUniqueEntityId();
-    IdMerchantComponent(getAddressById(components, IndexItemComponentID)).set(
+    IdMerchantComponent(getAddressById(components, IdMerchantComponentID)).set(
       listingID,
       merchantID
     );
@@ -122,6 +122,7 @@ library LibMerchant {
 
   // processes a buy for amt of item from a listing to a character
   function buyFromListing(
+    IWorld world,
     IUint256Component components,
     uint256 charID,
     uint256 listingID,
@@ -137,6 +138,9 @@ library LibMerchant {
     }
 
     uint256 inventoryID = LibInventory.get(components, charID, itemIndex);
+    if (inventoryID == 0) {
+      LibInventory.create(world, components, charID, itemIndex);
+    }
     LibInventory.incBalance(components, inventoryID, amt);
     LibCoin.decBalance(components, charID, amt * price);
     return true;
