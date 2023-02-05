@@ -7,9 +7,7 @@
   "scripts": {
     "cache:clear": "rimraf ../../.parcel-cache && rimraf .parcel-cache",
     "build": "rimraf dist && yarn cache:clear && parcel build src/index.html",
-    "dev": "vite",
     "lint": "eslint . --fix --ext .ts",
-    "preview": "vite preview",
     "start": "yarn cache:clear && yarn parcel src/index.html --port 3000"
   },
   "devDependencies": {
@@ -21,8 +19,7 @@
     "eslint": "^8.29.0",
     "parcel-reporter-static-files-copy": "^1.5.0",
     "prettier": "^2.5.1",
-    "typescript": "^4.6.4",
-    "vite": "^3.2.3"
+    "typescript": "^4.6.4"
   },
   "dependencies": {
     "@improbable-eng/grpc-web": "^0.15.0",
