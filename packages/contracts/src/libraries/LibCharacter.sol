@@ -12,6 +12,7 @@ import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponen
 import { LocationComponent, ID as LocationComponentID } from "components/LocationComponent.sol";
 import { OperatorComponent, ID as OperatorComponentID } from "components/OperatorComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
+import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
 // NOTE(ja): thinking we should handle minting and location movements here as well. It would be
@@ -26,13 +27,19 @@ library LibCharacter {
     uint256 id,
     uint256 to
   ) internal {
-    isCharacter(components, id);
     LocationComponent(getAddressById(components, LocationComponentID)).set(id, to);
   }
 
-  /************************
-   *    View Functions
-   ************************/
+  // Update the TimeLastAction of the character to the current time.
+  function updateLastTimestamp(IUint256Component components, uint256 id) internal {
+    TimeLastActionComponent(getAddressById(components, TimeLastActionComponentID)).set(
+      id,
+      block.timestamp
+    );
+  }
+
+  /////////////////
+  // CALCULATIONS
 
   // Check whether a character can move to a location from where they currently are.
   // This function assumes that the entity id provided belongs to a character.
@@ -46,32 +53,38 @@ library LibCharacter {
     return LibRoom.isValidPath(components, from, to);
   }
 
-  // Update the TimeLastAction of the character to the current time.
-  function updateLastTimestamp(IUint256Component components, uint256 id) internal {
-    TimeLastActionComponent(getAddressById(components, TimeLastActionComponentID)).set(
-      id,
-      block.timestamp
-    );
+  /////////////////
+  // CHECKS
+
+  // determines whether the specified character is owned by the specified operator
+  function getOperator(IUint256Component components, uint256 charID)
+    internal
+    view
+    returns (address)
+  {
+    return OperatorComponent(getAddressById(components, OperatorComponentID)).getValue(charID);
   }
 
-  // Check whether an entity is a Character.
-  function isCharacter(IUint256Component components, uint256 id) internal view returns (bool) {
-    return getComponentById(components, IsCharacterComponentID).has(id);
-  }
+  /////////////////
+  // COMPONENT RETRIEVAL
 
   // gets the location of a specified character
   function getLocation(IUint256Component components, uint256 id) internal view returns (uint256) {
     return LocationComponent(getAddressById(components, LocationComponentID)).getValue(id);
   }
 
-  // determines whether the specified character is owned by the specified operator
-  function isOwnedBy(
+  /////////////////
+  // QUERIES
+
+  // Get the active productions of a character on a node. Return 0 if there are none.
+  function getActiveNodeProduction(
     IUint256Component components,
-    uint256 charID,
-    address operator
-  ) internal view returns (bool) {
-    return
-      operator ==
-      OperatorComponent(getAddressById(components, OperatorComponentID)).getValue(charID);
+    uint256 id,
+    uint256 nodeID
+  ) internal view returns (uint256 result) {
+    uint256[] memory results = LibProduction._getAllX(components, nodeID, id, 0, "");
+    if (results.length > 0) {
+      result = results[0];
+    }
   }
 }

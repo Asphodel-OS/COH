@@ -15,25 +15,25 @@ contract ListingSellSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public returns (bytes memory) {
-    (uint256 characterID, uint256 listingID, uint256 amt) = abi.decode(
+    (uint256 charID, uint256 listingID, uint256 amt) = abi.decode(
       arguments,
       (uint256, uint256, uint256)
     );
-    require(LibCharacter.isOwnedBy(components, characterID, msg.sender), "Character: not urs");
+    require(LibCharacter.getOperator(components, charID) == msg.sender, "Character: not urs");
     require(
-      LibMerchant.canTransactWithListing(components, characterID, listingID),
+      LibMerchant.canTransactWithListing(components, charID, listingID),
       "Merchant: character must be in room"
     );
 
-    LibMerchant.sellToListing(components, characterID, listingID, amt);
+    LibMerchant.sellToListing(components, charID, listingID, amt);
     return "";
   }
 
   function executeTyped(
-    uint256 characterID,
+    uint256 charID,
     uint256 listingID,
     uint256 amt
   ) public returns (bytes memory) {
-    return execute(abi.encode(characterID, listingID, amt));
+    return execute(abi.encode(charID, listingID, amt));
   }
 }

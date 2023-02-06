@@ -1,6 +1,7 @@
 components/=./src/components
 systems/=./src/systems
 libraries/=./src/libraries
+utils/=./src/utils
 std-contracts/=../../node_modules/@latticexyz/std-contracts/src/
 solecs/=../../node_modules/@latticexyz/solecs/src/
 memmove/=../../node_modules/memmove/src/

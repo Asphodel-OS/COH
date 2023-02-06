@@ -15,7 +15,7 @@
     "IsPetComponent",
     "IsProductionComponent",
     "IsRegistryEntryComponent",
-    "IsRoomComponentComponent",
+    "IsRoomComponent",
     "LocationComponent",
     "NameComponent",
     "OperatorComponent",
