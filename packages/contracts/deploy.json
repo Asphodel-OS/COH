@@ -70,5 +70,15 @@
         "LocationComponent"
       ]
     }
+  ], 
+  "libraries": [
+    "LibCharacter",
+    "LibCoin",
+    "LibInventory",
+    "LibMerchant",
+    "LibNode",
+    "LibPet",
+    "LibProduction",
+    "LibRoom"
   ]
 }
