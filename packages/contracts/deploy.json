@@ -3,6 +3,8 @@
     "BalanceComponent",
     "CoinComponent",
     "ExitsComponent",
+    "ERC721EntityIndexPetComponent",
+    "ERC721OwnedByPetComponent",
     "IdCharacterComponent",
     "IdMerchantComponent",
     "IdOwnerComponent",
@@ -18,6 +20,7 @@
     "IsRoomComponent",
     "LocationComponent",
     "NameComponent",
+    "MediaURIComponent",
     "OperatorComponent",
     "PriceBuyComponent",
     "PriceSellComponent",
@@ -25,6 +28,14 @@
     "TimeLastActionComponent"
   ],
   "systems": [
+    {
+      "name": "ERC721PetSystem",
+      "writeAccess": [
+        "ERC721EntityIndexPetComponent",
+        "ERC721OwnedByPetComponent",
+        "MediaURIComponent" 
+      ]
+    },
     {
       "name": "ListingBuySystem",
       "writeAccess": [

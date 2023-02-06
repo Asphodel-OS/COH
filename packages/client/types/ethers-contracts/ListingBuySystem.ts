@@ -124,7 +124,7 @@ export interface ListingBuySystem extends BaseContract {
     ): Promise<ContractTransaction>;
 
     executeTyped(
-      characterID: PromiseOrValue<BigNumberish>,
+      charID: PromiseOrValue<BigNumberish>,
       listingID: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -144,7 +144,7 @@ export interface ListingBuySystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   executeTyped(
-    characterID: PromiseOrValue<BigNumberish>,
+    charID: PromiseOrValue<BigNumberish>,
     listingID: PromiseOrValue<BigNumberish>,
     amt: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -164,7 +164,7 @@ export interface ListingBuySystem extends BaseContract {
     ): Promise<string>;
 
     executeTyped(
-      characterID: PromiseOrValue<BigNumberish>,
+      charID: PromiseOrValue<BigNumberish>,
       listingID: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -196,7 +196,7 @@ export interface ListingBuySystem extends BaseContract {
     ): Promise<BigNumber>;
 
     executeTyped(
-      characterID: PromiseOrValue<BigNumberish>,
+      charID: PromiseOrValue<BigNumberish>,
       listingID: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -217,7 +217,7 @@ export interface ListingBuySystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
-      characterID: PromiseOrValue<BigNumberish>,
+      charID: PromiseOrValue<BigNumberish>,
       listingID: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
