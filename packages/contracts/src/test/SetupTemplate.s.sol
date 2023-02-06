@@ -30,7 +30,7 @@ contract SetupTemplate is TestSetupImports {
     return _ERC721PetSystem.mint(addy);
   }
 
-  function _nftToEntityID(uint256 id) internal virtual returns (uint256) {
+  function _petIDToEntityID(uint256 id) internal virtual returns (uint256) {
     // may introduce unchecked error if no ID minted
     return _ERC721PetSystem.nftToEntityID(id);
   }
