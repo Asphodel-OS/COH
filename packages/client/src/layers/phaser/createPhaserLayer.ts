@@ -1,6 +1,6 @@
 import { namespaceWorld } from '@latticexyz/recs';
 import CreatePhaserEngine from './engine/PhaserEngine';
-import { phaserConfig } from '../config';
+import { phaserConfig } from '../../config';
 
 /**
  * The Phaser layer is responsible for rendering game objects to the screen.

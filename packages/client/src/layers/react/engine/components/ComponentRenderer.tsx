@@ -6,7 +6,7 @@ import { Cell } from "./Cell";
 import styled from "styled-components";
 import { GridConfiguration, UIComponent } from "../types";
 import { useStream } from "@latticexyz/std-client";
-import { Layers } from "../../../types";
+import { Layers } from "../../../../types";
 
 const UIGrid = styled.div`
   display: grid;

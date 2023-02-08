@@ -1,7 +1,7 @@
 import { defineScaleConfig } from '@latticexyz/phaserx';
 import { SetupContractConfig } from "@latticexyz/std-client";
 import { Wallet } from "ethers";
-import { defineMainScene } from './phaser/scenes/MainScene';
+import { defineMainScene } from './layers/phaser/scenes/MainScene';
 
 const params = new URLSearchParams(window.location.search);
 

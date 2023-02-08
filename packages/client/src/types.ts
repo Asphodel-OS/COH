@@ -1,4 +1,4 @@
-import { NetworkLayer } from './network/types';
-import { PhaserLayer } from './phaser/types';
+import { NetworkLayer } from './layers/network/types';
+import { PhaserLayer } from './layers/phaser/types';
 
 export type Layers = { network: NetworkLayer; phaser: PhaserLayer };

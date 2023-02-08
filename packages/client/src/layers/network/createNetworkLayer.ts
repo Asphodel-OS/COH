@@ -1,9 +1,10 @@
 import { createWorld } from "@latticexyz/recs";
 import { createActionSystem, defineNumberComponent, setupMUDNetwork } from "@latticexyz/std-client";
-import { SystemTypes } from "../../types/SystemTypes";
-import { SystemAbis } from "../../types/SystemAbis.mjs";
+import { SystemTypes } from "../../../types/SystemTypes";
+import { SystemAbis } from "../../../types/SystemAbis.mjs";
 import { GameConfig, getNetworkConfig } from "./config";
 import { createFaucetService } from "@latticexyz/network";
+import { defineLoadingStateComponent } from "./componentDefs/LoadingStateComponent";
 
 export async function createNetworkLayer(config: GameConfig) {
   const world = createWorld();
@@ -14,6 +15,7 @@ export async function createNetworkLayer(config: GameConfig) {
         contractId: 'component.Counter',
       },
     }),
+    LoadingState: defineLoadingStateComponent(world),
   };
 
   const {

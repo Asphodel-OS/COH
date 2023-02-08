@@ -1,11 +1,11 @@
 /* eslint-disable prefer-const */
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { registerUIComponents as registerUIComponentsImport } from './react/components';
-import { Engine as EngineImport } from './react/engine/Engine';
-import { createNetworkLayer as createNetworkLayerImport } from './network/createNetworkLayer';
-import { createPhaserLayer as createPhaserLayerImport } from './phaser/createPhaserLayer';
-import {Layers} from './types'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { registerUIComponents as registerUIComponentsImport } from './layers/react/components';
+import { Engine as EngineImport } from './layers/react/engine/Engine';
+import { createNetworkLayer as createNetworkLayerImport } from './layers/network/createNetworkLayer';
+import { createPhaserLayer as createPhaserLayerImport } from './layers/phaser/createPhaserLayer';
+import { Layers } from './types';
 import {
   getComponentValue,
   removeComponent,
@@ -76,7 +76,8 @@ async function bootGame() {
 
     if (!networkLayerConfig) throw new Error('Invalid config');
 
-    if (!layers.network) layers.network = await createNetworkLayer(networkLayerConfig);
+    if (!layers.network)
+      layers.network = await createNetworkLayer(networkLayerConfig);
     if (!layers.phaser) layers.phaser = await createPhaserLayer(layers.network);
 
     Time.time.setPacemaker((setTimestamp) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Observable } from "rxjs";
-import { Layers } from "../../types";
+import { Layers } from "../../../types";
 
 export type GridConfiguration = { colStart: number; colEnd: number; rowStart: number; rowEnd: number };
 
