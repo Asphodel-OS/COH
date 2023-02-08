@@ -4,20 +4,13 @@ import { createActionSystem, defineNumberComponent, setupMUDNetwork } from "@lat
 import { SystemTypes } from "../../../types/SystemTypes";
 import { SystemAbis } from "../../../types/SystemAbis.mjs";
 import { GameConfig, getNetworkConfig } from "./config";
-import { defineLoadingStateComponent } from "./componentDefs/LoadingStateComponent";
+import { defineLoadingStateComponent } from "./components/definitions/LoadingStateComponent";
 import { createAdminAPI } from "./api/admin";
+import { createComponents } from "./components/register";
 
 export async function createNetworkLayer(config: GameConfig) {
   const world = createWorld();
-
-  const components = {
-    Counter: defineNumberComponent(world, {
-      metadata: {
-        contractId: 'component.Counter',
-      },
-    }),
-    LoadingState: defineLoadingStateComponent(world),
-  };
+  const components = createComponents(world);
 
   const {
     txQueue,
