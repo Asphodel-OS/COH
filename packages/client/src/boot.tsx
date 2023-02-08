@@ -40,22 +40,44 @@ async function bootGame() {
 
     const devMode = params.get('dev') === 'true';
 
-    worldAddress = params.get('worldAddress');
-    chainIdString = params.get('chainId');
-    jsonRpc = params.get('rpc') || undefined;
-    wsRpc = params.get('wsRpc') || undefined; // || (jsonRpc && jsonRpc.replace("http", "ws"));
-    checkpointUrl = params.get('checkpoint') || undefined;
-    snapshotUrl = params.get('snapshotUrl') || '';
-    let initialBlockNumberString = params.get('initialBlockNumber');
-    initialBlockNumber = initialBlockNumberString
-      ? parseInt(initialBlockNumberString)
-      : 0;
+    // LOCAL
+    if (devMode) {
+      worldAddress = params.get('worldAddress');
+      chainIdString = params.get('chainId');
+      jsonRpc = params.get('rpc') || undefined;
+      wsRpc = params.get('wsRpc') || undefined; // || (jsonRpc && jsonRpc.replace("http", "ws"));
+      checkpointUrl = params.get('checkpoint') || undefined;
+      snapshotUrl = params.get('snapshotUrl') || '';
+      let initialBlockNumberString = params.get('initialBlockNumber');
+      initialBlockNumber = initialBlockNumberString
+        ? parseInt(initialBlockNumberString)
+        : 0;
 
-    wallet = new Wallet(
-      '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
-    );
-    localStorage.setItem('burnerWallet', wallet.privateKey);
-    localStorage.setItem('burnerWalletAddress', wallet.publicKey);
+      wallet = new Wallet(
+        '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80'
+      );
+      localStorage.setItem('burnerPrivateKey', wallet.privateKey);
+      localStorage.setItem('burnerAddress', wallet.publicKey);
+
+      // TESTNET
+    } else {
+      relayServiceUrl = "https://ecs-relay.testnet-mud-services.linfra.xyz";
+      faucetServiceUrl = "https://faucet.testnet-mud-services.linfra.xyz";
+      snapshotUrl = "https://ecs-snapshot.testnet-mud-services.linfra.xyz";
+      jsonRpc = "https://follower.testnet-chain.linfra.xyz";
+      wsRpc = "wss://follower.testnet-chain.linfra.xyz";
+      worldAddress = "0xfEF57aF100788255165c470621d19d4673e9ED91";
+      chainIdString = "4242";
+      checkpointUrl = params.get("checkpoint") || undefined;
+      // let initialBlockNumberString = params.get("initialBlockNumber") || (testnet ? "474980" : "0");
+      // initialBlockNumber = initialBlockNumberString ? parseInt(initialBlockNumberString) : 0;
+      initialBlockNumber = 0;
+
+      let privateKey = localStorage.getItem("burnerWallet")
+      wallet = privateKey ? new Wallet(privateKey) : Wallet.createRandom();
+      localStorage.setItem("burnerWallet", wallet.privateKey);
+      localStorage.setItem("burnerWalletAddress", wallet.publicKey);
+    }
 
     let networkLayerConfig;
     if (worldAddress && wallet && chainIdString && jsonRpc) {
