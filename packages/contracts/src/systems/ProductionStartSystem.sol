@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import "solecs/System.sol";
+import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById } from "solecs/utils.sol";
 
@@ -24,7 +24,7 @@ contract ProductionStartSystem is System {
     );
     require(LibCharacter.getOperator(components, charID) == msg.sender, "Character: not urs");
     require(LibPet.getOwner(components, petID) == charID, "Pet: not urs");
-    require(LibNode.sharesLocation(components, nodeID, charID), "Node: must be in room");
+    require(LibCharacter.sharesLocation(components, charID, nodeID), "Node: must be in room");
     require(
       LibPet.getActiveProduction(components, petID) == 0,
       "Pet: active production already exists"

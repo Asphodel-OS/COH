@@ -31,22 +31,9 @@ library LibNode {
   }
 
   /////////////////
-  // CHECKS
-
-  // determines whether an entity shares a location with a node
-  function sharesLocation(
-    IUint256Component components,
-    uint256 id,
-    uint256 entityID
-  ) internal view returns (bool) {
-    LocationComponent LocC = LocationComponent(getAddressById(components, LocCompID));
-    return LocC.getValue(id) == LocC.getValue(entityID);
-  }
-
-  /////////////////
   // QUERIES
 
-  // returns an array of all nodes at a room location
+  // return an array of all nodes at a room location
   function getAllAtLocation(IUint256Component components, uint256 location)
     internal
     view

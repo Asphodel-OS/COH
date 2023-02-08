@@ -8,9 +8,8 @@ import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
 import { ID as IsCharacterComponentID } from "components/IsCharacterComponent.sol";
-import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
-import { LocationComponent, ID as LocationComponentID } from "components/LocationComponent.sol";
-import { OperatorComponent, ID as OperatorComponentID } from "components/OperatorComponent.sol";
+import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
+import { OperatorComponent, ID as OperatorCompID } from "components/OperatorComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
@@ -27,7 +26,8 @@ library LibCharacter {
     uint256 id,
     uint256 to
   ) internal {
-    LocationComponent(getAddressById(components, LocationComponentID)).set(id, to);
+    LocationComponent(getAddressById(components, LocCompID)).set(id, to);
+    updateLastTimestamp(components, id);
   }
 
   // Update the TimeLastAction of the character to the current time.
@@ -56,13 +56,14 @@ library LibCharacter {
   /////////////////
   // CHECKS
 
-  // determines whether the specified character is owned by the specified operator
-  function getOperator(IUint256Component components, uint256 charID)
-    internal
-    view
-    returns (address)
-  {
-    return OperatorComponent(getAddressById(components, OperatorComponentID)).getValue(charID);
+  // determines whether an entity shares a location with a node
+  function sharesLocation(
+    IUint256Component components,
+    uint256 id,
+    uint256 entityID
+  ) internal view returns (bool) {
+    LocationComponent LocC = LocationComponent(getAddressById(components, LocCompID));
+    return LocC.getValue(id) == LocC.getValue(entityID);
   }
 
   /////////////////
@@ -70,7 +71,16 @@ library LibCharacter {
 
   // gets the location of a specified character
   function getLocation(IUint256Component components, uint256 id) internal view returns (uint256) {
-    return LocationComponent(getAddressById(components, LocationComponentID)).getValue(id);
+    return LocationComponent(getAddressById(components, LocCompID)).getValue(id);
+  }
+
+  // get the operating wallet of a specified character
+  function getOperator(IUint256Component components, uint256 charID)
+    internal
+    view
+    returns (address)
+  {
+    return OperatorComponent(getAddressById(components, OperatorCompID)).getValue(charID);
   }
 
   /////////////////

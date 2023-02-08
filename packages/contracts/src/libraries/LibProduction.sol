@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
-import { IUint256Component } from "solecs/interfaces/IUint256Component.sol";
+import { IUint256Component as IUintComp } from "solecs/interfaces/IUint256Component.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
@@ -8,6 +8,7 @@ import { getAddressById, getComponentById } from "solecs/utils.sol";
 
 import { IdCharacterComponent, ID as IdCharCompID } from "components/IdCharacterComponent.sol";
 import { IdNodeComponent, ID as IdNodeCompID } from "components/IdNodeComponent.sol";
+import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IdPetComponent, ID as IdPetCompID } from "components/IdPetComponent.sol";
 import { IsProductionComponent, ID as IsProdCompID } from "components/IsProductionComponent.sol";
 import { StateComponent, ID as StateCompID } from "components/StateComponent.sol";
@@ -23,7 +24,7 @@ library LibProduction {
   // Creates a production for a character at a deposit. Assumes one doesn't already exist.
   function create(
     IWorld world,
-    IUint256Component components,
+    IUintComp components,
     uint256 nodeID,
     uint256 charID,
     uint256 petID
@@ -38,8 +39,16 @@ library LibProduction {
     return id;
   }
 
-  // Starts an _existing_ production if not already started.
-  function start(IUint256Component components, uint256 id) internal {
+  // Resets the starting block of a production to the current block
+  function reset(IUintComp components, uint256 id) internal {
+    TimeStartComponent(getAddressById(components, TimeStartCompID)).set(id, block.timestamp);
+  }
+
+  // Starts an _existing_ production if not already started. Update the owning character as needed.
+  function start(IUintComp components, uint256 id) internal {
+    uint256 ownerID = IdOwnerComponent(getAddressById(components, IdOwnerCompID)).getValue(id);
+    IdCharacterComponent(getAddressById(components, IdCharCompID)).set(id, ownerID);
+
     StateComponent StateC = StateComponent(getAddressById(components, StateCompID));
     if (!StateC.hasValue(id, "ACTIVE")) {
       reset(components, id);
@@ -48,23 +57,18 @@ library LibProduction {
   }
 
   // Stops an _existing_ production. All potential proceeds will be lost after this point.
-  function stop(IUint256Component components, uint256 id) internal {
+  function stop(IUintComp components, uint256 id) internal {
     StateComponent StateC = StateComponent(getAddressById(components, StateCompID));
     if (!StateC.hasValue(id, "INACTIVE")) {
       StateC.set(id, string("INACTIVE"));
     }
   }
 
-  // Resets the starting block of a production to the current block
-  function reset(IUint256Component components, uint256 id) internal {
-    TimeStartComponent(getAddressById(components, TimeStartCompID)).set(id, block.timestamp);
-  }
-
   /////////////////////
   // CALCULATIONS
 
   // Calculate the reward from an ACTIVE production using equipment and attributes.
-  function calc(IUint256Component components, uint256 id) internal view returns (uint256) {
+  function calc(IUintComp components, uint256 id) internal view returns (uint256) {
     uint256 petID = IdPetComponent(getAddressById(components, IdPetCompID)).getValue(id);
 
     if (!StateComponent(getAddressById(components, StateCompID)).hasValue(id, "ACTIVE")) {
@@ -81,7 +85,7 @@ library LibProduction {
   }
 
   // Get the duration since TimeStart of a production
-  function getDuration(IUint256Component components, uint256 id) internal view returns (uint256) {
+  function getDuration(IUintComp components, uint256 id) internal view returns (uint256) {
     uint256 startTime = TimeStartComponent(getAddressById(components, TimeStartCompID)).getValue(
       id
     );
@@ -89,10 +93,29 @@ library LibProduction {
   }
 
   /////////////////
+  // COMPONENT RETRIEVAL
+
+  function getNode(IUintComp components, uint256 id) internal view returns (uint256) {
+    return IdNodeComponent(getAddressById(components, IdNodeCompID)).getValue(id);
+  }
+
+  function getCharacter(IUintComp components, uint256 id) internal view returns (uint256) {
+    return IdCharacterComponent(getAddressById(components, IdCharCompID)).getValue(id);
+  }
+
+  function getPet(IUintComp components, uint256 id) internal view returns (uint256) {
+    return IdPetComponent(getAddressById(components, IdPetCompID)).getValue(id);
+  }
+
+  function getState(IUintComp components, uint256 id) internal view returns (string memory) {
+    return StateComponent(getAddressById(components, StateCompID)).getValue(id);
+  }
+
+  /////////////////
   // QUERIES
 
   // Retrieves all active productions of a character
-  function _getAllActive(IUint256Component components, uint256 charID)
+  function getAllActiveForCharacter(IUintComp components, uint256 charID)
     internal
     view
     returns (uint256[] memory)
@@ -102,7 +125,7 @@ library LibProduction {
 
   // Retrieves all productions based on any defined filters
   function _getAllX(
-    IUint256Component components,
+    IUintComp components,
     uint256 nodeID,
     uint256 charID,
     uint256 petID,
