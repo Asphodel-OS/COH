@@ -57,7 +57,7 @@ import { ProductionCollectSystem, ID as ProductionCollectSystemID } from "system
 import { ProductionStartSystem, ID as ProductionStartSystemID } from "systems/ProductionStartSystem.sol";
 import { ProductionStopSystem, ID as ProductionStopSystemID } from "systems/ProductionStopSystem.sol";
 
-contract TestSetupImports is MudTest {
+abstract contract TestSetupImports is MudTest {
 // Components vars
 BalanceComponent _BalanceComponent;
 CoinComponent _CoinComponent;

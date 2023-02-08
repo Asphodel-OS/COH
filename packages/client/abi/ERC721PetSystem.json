@@ -17,6 +17,16 @@
       "type": "constructor"
     },
     {
+      "inputs": [],
+      "name": "Ownable__NotOwner",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "Ownable__NotTransitiveOwner",
+      "type": "error"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {
@@ -471,7 +481,7 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "newOwner",
+          "name": "account",
           "type": "address"
         }
       ],
@@ -503,7 +513,7 @@
     "transferFrom(address,address,uint256)": "23b872dd",
     "transferOwnership(address)": "f2fde38b"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract IWorld\",\"name\":\"_world\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_components\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"arguments\",\"type\":\"bytes\"}],\"name\":\"execute\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"ownerAddy\",\"type\":\"address\"}],\"name\":\"executeTyped\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"mint\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"nftToEntityID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"owner()\":{\"returns\":{\"_0\":\"The address of the owner.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"owner()\":{\"notice\":\"Get the address of the owner\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/systems/ERC721PetSystem.sol\":\"ERC721PetSystem\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1000000},\"remappings\":[\":@latticexyz/=../../node_modules/@latticexyz/\",\":@rari-capital/=../../node_modules/@rari-capital/\",\":components/=src/components/\",\":ds-test/=../../node_modules/ds-test/src/\",\":forge-std/=../../node_modules/forge-std/src/\",\":libraries/=src/libraries/\",\":memmove/=../../node_modules/memmove/src/\",\":solecs/=../../node_modules/@latticexyz/solecs/src/\",\":solmate/=../../node_modules/@rari-capital/solmate/src/\",\":std-contracts/=../../node_modules/@latticexyz/std-contracts/src/\",\":systems/=src/systems/\",\":utils/=src/utils/\"]},\"sources\":{\"../../node_modules/@latticexyz/solecs/src/BareComponent.sol\":{\"keccak256\":\"0x83c5b0807bad5aac2d43d743f85fa3a5e6ed5c383183531f15b18ba623c914d9\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://357c7fbca45ba5a48fdf379f724dfd430994743a6ddd4a6b3a07ca9adad09fa7\",\"dweb:/ipfs/QmZBCUt8hLHNtZ5MeNzPav1CafLi3qPqUcYceLe596QC5t\"]},\"../../node_modules/@latticexyz/solecs/src/Component.sol\":{\"keccak256\":\"0x198a93725b185c4246a918cdc1488e1ac63c0ff43aba02e05d5ae7af8e2934f6\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://c27cdd88d01edf3b744c998988b19fce136fcb7c4412c6c01288c4fb5df45404\",\"dweb:/ipfs/Qme6M8x2SQPSUQuRPstERHYaQCQjyRFa4wTzFFPxd611mh\"]},\"../../node_modules/@latticexyz/solecs/src/LibTypes.sol\":{\"keccak256\":\"0xd75f7055d9c877aca922804806e39cabc6c4fc324ebf3708d0f79abc3d00be96\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://a4c61404cc167a0bac24effbd7768e2eb8ce250b6b7e000bde3523b97702321b\",\"dweb:/ipfs/QmYTwkL3U68CLk1xUCHRXbCkUnNtFpzd3EAgduN7PePp9Y\"]},\"../../node_modules/@latticexyz/solecs/src/MapSet.sol\":{\"keccak256\":\"0xc52e5e80fadf41a7dfc816c3dff56be07d95878e4675396f5f1af72e8b877382\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://8949a722206524859ec8b34e497cbf4c24352262ee9836267a1040751c9b70c2\",\"dweb:/ipfs/QmfFsMhE9mQ92WHHqdAuHFQovn1AfFNWJBgsZEKr658zoc\"]},\"../../node_modules/@latticexyz/solecs/src/Set.sol\":{\"keccak256\":\"0xf654640d2b227d6d97d884d074e13395fcbb959890faadb9df3626ab2d375d11\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://7143b84da7252eaefab3d013c98d0ef5e4af4257c11fae35d77fde711ff2ae3a\",\"dweb:/ipfs/QmYAgJZp8hQYhyhJwfopPMu5Td4qHJbZDJsuZPnM1f9EnP\"]},\"../../node_modules/@latticexyz/solecs/src/System.sol\":{\"keccak256\":\"0x90b5091d102b39023143a45ad2010fd3fac880af4f64b81b0c44a0e1d754827e\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://b526bd70125cbfdc4574a89734d3d66599cd982413ee8beb741879ff8641e625\",\"dweb:/ipfs/QmPGjq7n9g2YJ39Vta7X81hEZfbZcqxwndZNoEt5LzTR7L\"]},\"../../node_modules/@latticexyz/solecs/src/components/Uint256Component.sol\":{\"keccak256\":\"0xa1b35ebfde8dfba718c4ddbfb6cc2c4664cc88fce3cb6311385d6d1109e62ebe\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://769db28c3dab792a777004b6442c033c8ddc8d58eec8d24c618ab709944fb2f7\",\"dweb:/ipfs/QmUifBt9JUXxox8WjvMvym1HHSS4f2CZLm3pm7je8epW4s\"]},\"../../node_modules/@latticexyz/solecs/src/constants.sol\":{\"keccak256\":\"0x486b309f7eadc90994db01b9e0cc9fe2271183c4c572cb8a76fe768563bcc757\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://6cdb841c42cafb78fa8d0c22d782d925f711d59fe552369d1ac8021837246771\",\"dweb:/ipfs/QmRHdDnx7TPzaQ3rX4W8AT7e2uLA7t42houXkwx2zJ2pTL\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IComponent.sol\":{\"keccak256\":\"0xc3bc984925d40493b065769cfc804b5ae12c03ecc7635fb64b2558d21af34c0b\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://508bcd3e11e0cb6fdc163e3856c845c87cc6dd79595d9b83f5e466a6416cd8e0\",\"dweb:/ipfs/QmQZAff8UE2zwWXZtuZ7MGCE65grRCEg3ET7CebXeq1YM1\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IERC173.sol\":{\"keccak256\":\"0x90a8a25e49a0a5b34ec65d1795a374ceb6ff7a8f15ff1b22bbd669a7f9fde4ec\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://a943d58a14b9000f0f31621e247015475466f449c2e83175c4ad43607502426c\",\"dweb:/ipfs/QmZv721wBRGHctKKprt5eDgYg89sojSNB6Z1fpVEM3VspV\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IEntityContainer.sol\":{\"keccak256\":\"0x95ae0340082f859c0c31108323048c4d179a28df905ba8384f7ab8dd95d2d6a0\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://cbc49eba9e6b4eb603d2ae4189a83b8c9f0b858cd4236c94ebd23b8b06817378\",\"dweb:/ipfs/QmcTePiUxaua9NrUYWKPNMMPyaCxH1rMtniFkrSkTpwBak\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IEntityIndexer.sol\":{\"keccak256\":\"0xd6ca557fd8afe2f16679c67857affc55eb237dbc942a6390097122c65a19a52e\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://a1ea4345f6064267ed8ab657c945407d3c172e019664fe8ecdd069b1b7b44684\",\"dweb:/ipfs/QmNPv69EEjhA6dv1nC7VHv4JMb35Aop3We52QB5CaAGheF\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/ISystem.sol\":{\"keccak256\":\"0x255fb1bc4466509392b0adafc4e1ba9fcfa67cfab9256eb01b86e406a862b14a\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://7e9fee43da4bb31788f20877e30389e2216281c6fe6c7a9fb853d0a3c550931e\",\"dweb:/ipfs/QmPeepS9XU3AdpBBr6dHYo9zsiSrkep8jVMfx2whqHTKVP\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IUint256Component.sol\":{\"keccak256\":\"0x8846ddb1701b59f8cbf80225ea8e85bd2991ab6ee0515c011d79a265f47f93fe\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://959ba1dcc93439c82e53a1e9858bac831a3c003eae82fc35edd931d7e7da4f77\",\"dweb:/ipfs/QmQu2vGG9bDpuTHYJNSW6aXCp4FYCVzew2XpjVjZm59CAx\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IWorld.sol\":{\"keccak256\":\"0x3ec039b9b7946f2220dec9be1dc109f440405d78d26069d2ace759fd2f8b9c92\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://7ed943cc164b14f0fd82e6fdb9e300c6ad01a3e7a19caa9f2599f0378e30f48e\",\"dweb:/ipfs/QmfBXbWSdPbZzRQWpBqQqGBMq7owhZ15hxnrk9J7qjBaMA\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/Query.sol\":{\"keccak256\":\"0x3956cfb4b92afd3eccfea772480deb00ba573629bc0f36db5d948e2d168377cb\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://1aafe610e9283e1d7b1f45ba49cf77c8cf770241eeaa5317171df30b5f114c7d\",\"dweb:/ipfs/QmYShHHJqSfkdY3vcbKS18AuBpBmfwMUzebxZbPpgZDcfq\"]},\"../../node_modules/@latticexyz/solecs/src/utils.sol\":{\"keccak256\":\"0x43ba8acb22fd849af5f28fc7e1f543fdbde0a8828fb6143bd0297ffb538fcb5b\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://f0e231fd65850897ac8333a5d33d1b689ade55ae29c27a7d16822fb1e07306f7\",\"dweb:/ipfs/QmYcM1ojsiTAFQYxePi3hLJQXrGb1eKC67KPk9Wr9a8jMp\"]},\"../../node_modules/@latticexyz/std-contracts/src/components/AddressComponent.sol\":{\"keccak256\":\"0x61c851f7432b14c22c9b92a70ee548065f3feac5e885428bddcbe1b3b8ef1b81\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://39927e4ace849f66af6e966e483ff776f5e8968ab54fa8080312d39915c71137\",\"dweb:/ipfs/QmXjTz2TZLmTZJ7KqdpRVt1bbdmMAoZM5Qk1RpjHDWwCtX\"]},\"../../node_modules/@latticexyz/std-contracts/src/components/StringComponent.sol\":{\"keccak256\":\"0xd6443092d22fbc1614c187f4a3216d9547dd75c7e7dc615a72d5d99b2f5db1f1\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://9fb46afb6f24ba01783de7a80f43b5ed05321152f0f1e9200d9c5d2cea831070\",\"dweb:/ipfs/QmUeJKcVF634PDqR19ShhyP9GwX3t575ENTtqobvi2JVvX\"]},\"../../node_modules/@latticexyz/std-contracts/src/components/Uint256Component.sol\":{\"keccak256\":\"0x11a45a7d26ef695baf218f7655fb3ff5f73c42a8d3ee8d233a3c6142727f6f8b\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://8c337a89195751168d0303aac5b1586cb45f9fc6c7d6633795106fa6ef2b58d5\",\"dweb:/ipfs/QmWeLfhFKbhz813L692k7nv4rj8noRD7iZanpLCxnwZifS\"]},\"../../node_modules/@rari-capital/solmate/src/tokens/ERC721.sol\":{\"keccak256\":\"0xb59c7c25eca386f39da4819a9f70f89b73b7583d5f5127a83ffe5339800b1183\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://021348d61659d6f47fb650536c22665e15e17b1bc8f70ecfb6853a2564a21377\",\"dweb:/ipfs/QmcyMXAY26Xr4VibkJhXFJP2oviZC5JNJbUL9yueJYYXxM\"]},\"../../node_modules/memmove/src/Array.sol\":{\"keccak256\":\"0x0d7681d3392c34f811cebc9598c5e8f4eef6aba431dca9e1fa87267ba51a4515\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0ffb5179dd40ccacadc2cb26ac99e9ea5148796f6d21413d7e0f37913831bea1\",\"dweb:/ipfs/QmfJogaoqook5JgnUZKib6w6khzViUag3EQb1EZ8aUEasQ\"]},\"../../node_modules/memmove/src/LinkedList.sol\":{\"keccak256\":\"0x2374863d39689178dda92b841e77b835ba8fa550561be23b7861d2e52c0fe8c1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8538ec6ca6be4e1b25b74dfd2139586fa2b9dab8d49d91428ed64dc683884598\",\"dweb:/ipfs/Qma7Z6urenqG5Dzqwe8ouGiFH37mbsJEX83tqjSq1PTnRc\"]},\"src/components/ERC721EntityIndexPetComponent.sol\":{\"keccak256\":\"0xddbc9ccd4c9925296845d67f3e1b8c5a63df7f682b0a92a7a37947f3ba73166f\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://404e1c0203689234db0b2117f86c2d2e6ac6cb88495c5690b8e4a75592ae3620\",\"dweb:/ipfs/Qmc5KmPYpe9qamPphWB6RxhS34pvBe1F8ZCnSSfhEXu8in\"]},\"src/components/ERC721OwnedByPetComponent.sol\":{\"keccak256\":\"0x919c4c1a28b55d0fd3286e6ae87fdae1b5f2611529647d0ab94fe98854090cbc\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://a525b3045be49a486f9d20c2996606ccdbbb8ec4e4b3ca1049261ea06df18838\",\"dweb:/ipfs/QmaguA9AM9NMGHNsp2coHP3MaLyJWxwepgDqn42JVVvsCF\"]},\"src/components/MediaURIComponent.sol\":{\"keccak256\":\"0x7a4fa30d9bbb69537ea238f569ba5d0a1cbeb6aee026497a8e082ae5be27a037\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://0bf24d429e38a17184c723bb75594cf9799ababb9971f4b8e6b66e4fdbdadcbe\",\"dweb:/ipfs/QmZmDQyQHWNANJKKbN3gnDhxAc6ZaL1CKVob7QZoN2uHTZ\"]},\"src/systems/ERC721PetSystem.sol\":{\"keccak256\":\"0x93c8ecaa8a698a820d49bffb559c93d5999ae8a0ada508b3952df9cfbffa2fa4\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://1dc8de80e03570bb783d10034460c7609401a1b6e787113c898595d226fe828d\",\"dweb:/ipfs/QmVj9VeuzF7FUEwpj4sTkYxM2reZYQLXEk9YMerhQGt9vu\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.17+commit.8df45f5f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"contract IWorld\",\"name\":\"_world\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_components\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"Ownable__NotOwner\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"Ownable__NotTransitiveOwner\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"arguments\",\"type\":\"bytes\"}],\"name\":\"execute\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"ownerAddy\",\"type\":\"address\"}],\"name\":\"executeTyped\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"mint\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"nftToEntityID\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"owner()\":{\"returns\":{\"_0\":\"conrtact owner\"}},\"transferOwnership(address)\":{\"params\":{\"account\":\"address of new owner\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"owner()\":{\"notice\":\"get the ERC173 contract owner\"},\"transferOwnership(address)\":{\"notice\":\"transfer contract ownership to new account\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/systems/ERC721PetSystem.sol\":\"ERC721PetSystem\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1000000},\"remappings\":[\":@latticexyz/=../../node_modules/@latticexyz/\",\":@rari-capital/=../../node_modules/@rari-capital/\",\":@solidstate/=../../node_modules/@solidstate/\",\":components/=src/components/\",\":ds-test/=../../node_modules/ds-test/src/\",\":forge-std/=../../node_modules/forge-std/src/\",\":libraries/=src/libraries/\",\":memmove/=../../node_modules/memmove/src/\",\":solecs/=../../node_modules/@latticexyz/solecs/src/\",\":solmate/=../../node_modules/@rari-capital/solmate/src/\",\":std-contracts/=../../node_modules/@latticexyz/std-contracts/src/\",\":systems/=src/systems/\",\":utils/=src/utils/\"]},\"sources\":{\"../../node_modules/@latticexyz/solecs/src/BareComponent.sol\":{\"keccak256\":\"0x2cd722acd3cad5a9318bd5907a3d9f3849756727a5b2303eaf76aa7ea8caa65a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://890e17cd1f2f2ed87c99ca7b9383f7eabb31570989247a81e268a636b163a89a\",\"dweb:/ipfs/QmXJEKkMBQniSwHvC9aqHjRCaMohwkpPT7ssCtkL31j4FA\"]},\"../../node_modules/@latticexyz/solecs/src/Component.sol\":{\"keccak256\":\"0x40085c2f86bf6be7a756015025477aa46308b1618083ece93ae13093881a6874\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ca8653540b5674e50abfd4b4898009b472fc7fd2fba456146c1a1c44b615d83a\",\"dweb:/ipfs/QmSqbRng5fHuGUKgkFuNw3BfoefNteYU95sYi4g9QjCCNh\"]},\"../../node_modules/@latticexyz/solecs/src/LibTypes.sol\":{\"keccak256\":\"0xa3898035fd9fa865bcfc9861e3b5ecce36be3196fb27705e50a02fed9831f102\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://273284a35a950f6d0bc4223d345cf46c59972a00510ddbc4ba695ede38714798\",\"dweb:/ipfs/QmdqzKMaAfKWfBzUsrzsDMWnyxSKJRuEvrc6VTR5VarQaH\"]},\"../../node_modules/@latticexyz/solecs/src/MapSet.sol\":{\"keccak256\":\"0xe1a1f412b22d586c01a3e9e0e0af40893b880260f6765b9a5e23e56154dae1db\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f8aeddb1af783e43e8ca8a004954016c9f00d9d217d86454b3a3839ef0981288\",\"dweb:/ipfs/QmegHggcpmgGgL9xbZKqnWMwNMSqvs622MuhyEhR9bVfb9\"]},\"../../node_modules/@latticexyz/solecs/src/Ownable.sol\":{\"keccak256\":\"0x7572ffd98860b2539eacdbb2112ce3d25ad8521c5d95f91e21ea5588a6904209\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3516b95146224d3fc04c5cc2818161fa9504a048894f6dd905b1e42307494fc4\",\"dweb:/ipfs/QmTqvvAs1fSLzXVWjAgSt3TtE3MM3M1DFXRzkkSsixtVza\"]},\"../../node_modules/@latticexyz/solecs/src/OwnableWritable.sol\":{\"keccak256\":\"0x44e1afa8b4b2132122255943deb1ba8787693cd5893876a06643deed3052b859\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3761f562ad1a9fae0abf914e4e15592fb8b7dd231039448d20ad7dcfabf6de41\",\"dweb:/ipfs/QmbLN1mfNXYyrc4qxQauvBYTyJu9nR18t9xb54GY8xP3T7\"]},\"../../node_modules/@latticexyz/solecs/src/OwnableWritableStorage.sol\":{\"keccak256\":\"0x9f99bbacdfd6c5b0779bd18d3900dd4f957c5a0d89d5986815fae2eff8254df5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3ee736ebade674846118859290603b8ad2cc91efbe13e3621aa52fb4987cb0b4\",\"dweb:/ipfs/QmNUzZS4LPhBCacrPNjbQXLV4anrvNxQ2yPEPETj3sgbzW\"]},\"../../node_modules/@latticexyz/solecs/src/Set.sol\":{\"keccak256\":\"0xcddfd88e4fd1c183470f470dbe5e6fdd48ed0d26bd1ccefb8070a476bc8ba344\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e81ffd8a5b104abd04876a42d613378181009bae9368779223fabc1b1d514e46\",\"dweb:/ipfs/QmUywR2WzJfzPn1bRkd7e6Sy6jo3q9AjuQWU55BHKUiNME\"]},\"../../node_modules/@latticexyz/solecs/src/System.sol\":{\"keccak256\":\"0xa26b5061fdcbb516111cebd798db1ac8d7733cbf562700aa9892276f3e40e1e7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://471b323faa1baf8b14f3c0a4acf539643ac2fba105b13314066452ebaa228281\",\"dweb:/ipfs/QmRmTjgggZcziB9FH2oPyQGQAAnxEsubiY1gDC1vQz6uWW\"]},\"../../node_modules/@latticexyz/solecs/src/SystemStorage.sol\":{\"keccak256\":\"0x3adf624854f860099d0911cdc51b29e6690e413f2c260e3536552d223fe77b2b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9fa473135604adb13a95583e6cc8092bc82be534bdcdd915e1f344eb78fc645d\",\"dweb:/ipfs/QmYvRKgZ2iRVmSykLAtrrdsr27Eyg6QorhHGL5ZLE8wTTW\"]},\"../../node_modules/@latticexyz/solecs/src/components/Uint256Component.sol\":{\"keccak256\":\"0x6f4f16d1a14a8587d9bd21a7f33744d1ffb3cfd5309c6b8229236e5e2d84b465\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2dde592cc08fb85378b2b4c263434122c4e4a19a10a6a0b5857c48b002571470\",\"dweb:/ipfs/QmafCQgVugZuVfCNBQaFGFM2Qc9sWML4fG6Pct5ujRXt94\"]},\"../../node_modules/@latticexyz/solecs/src/constants.sol\":{\"keccak256\":\"0x024a3ff3077a272339b7baa96b826fd75f040d7cd2c6e13b9c8cf7ad16f789b8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1ddcb26a7703e9b03b34d5465010a4ae5ced137021c94987053544ad1156a644\",\"dweb:/ipfs/QmYue4gnb8noyoxxTchs5chZji7DKynKMp2x33RgRW6xqZ\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IComponent.sol\":{\"keccak256\":\"0xc25ab58cac1449fcd501ddcc56dade0653a7946adcd9eee2931bc095eda2a6b4\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c9505da36322f3b3de4dc0aaf0aec911e76be6cbd091f4d142070a7316df4629\",\"dweb:/ipfs/QmY5aGhwzBV5fXeLRDuzWMUfbPZGGdggbLdARhrkjmPBYW\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IERC173.sol\":{\"keccak256\":\"0x2bd9a729a3bfcfc445bc557a914aee17fcaf1c0f74b909b6a91a5d3755a699e9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://203741d681a686fb75f0715332e554083733f349100dfe11252c17fbe9cd094e\",\"dweb:/ipfs/QmaBXDHiU4ZdJ8K5jQZ3FfswMpWEqSPsBWGFkJMU2qmmWi\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IEntityContainer.sol\":{\"keccak256\":\"0x4506db1dcbdbe68a397107a57bfa3da888a889f14181a90eb728cfecc60700b8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://23f5c02d110f5abf6340a08a2a8b7e0b5668f211fe6baf41213e6c4f69dece10\",\"dweb:/ipfs/QmYfKeZMeEUNExsxjkCF5nGdw8KRyPe1t5tcGFTEkP7CkV\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IEntityIndexer.sol\":{\"keccak256\":\"0xd89023b2a5e9961be3c9d49d9f7f9ac7dcc416e3f43a8758dc058d1db2eea6b5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://3266ea1dd5a7f372f8814db24ac4981730f66fba8e6f90f614246ca5cec529b4\",\"dweb:/ipfs/QmQ71BtaBsDjfke46dndaTBVhyXAHxs5qs7d9GHJwVXuvw\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IOwnableWritable.sol\":{\"keccak256\":\"0x804db2685d65f5d4029431c47276b6ac43d3c329ea4ce75358928dbd4d11ee77\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a1d85dfe46f678ce4cf3a788092519251a24c2c015f9e858a81111b506b0ee78\",\"dweb:/ipfs/QmVmE4f8axCeh8V2kcs8nxYd27rSiwvXJbDbNCg3VZHSXY\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/ISystem.sol\":{\"keccak256\":\"0xbc1c0b0c72ab5e20ff7eae3cf53627aac367a2f9a65d2e87451a0313869d3bed\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2a7c4c30beb9b96c4e8112b9864f7bac5c761e61765e0dc359d926572feaa5a\",\"dweb:/ipfs/QmVNJbky7itfqBBdDCh8anSWMaHhXs2mKhzuW7hbCVWgj3\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IUint256Component.sol\":{\"keccak256\":\"0x12e2eaa4c5663048343e43a1994c446baacb16a4aacbe314ed5202d878751be9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://2d78184a1b1868773f2d5a7cf54bb42bccc666dc75cea14eeed15b8573fd000f\",\"dweb:/ipfs/QmemXPHPB7V8StWR8kZcKt3eDxB78sZFZW4Dp7TcEFTxx9\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/IWorld.sol\":{\"keccak256\":\"0x3ac1853f4cade8f432f5b3144e0c914b93f110ea3eabd85438cde39160716114\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1f0ba421b481b66d43c9da4de63171a79ffadc708956893bddf10eec666a0f4a\",\"dweb:/ipfs/QmdSyzQUDrP3MXt8JjgXt1QUgraUKBUPHE2CVzJiEwfMAK\"]},\"../../node_modules/@latticexyz/solecs/src/interfaces/Query.sol\":{\"keccak256\":\"0x987e47a4d3f076910382b4e8619f607ea15abdedd786d6095bd27126ff6f941c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8c3d57f9da85917b77e1043a179d3b516bc8c00a8880fdcb1bffca7e53169059\",\"dweb:/ipfs/QmaHxqsT1ZpS8toN88qxgbeaDSMvnhYv9J9FMjVnKrMgoP\"]},\"../../node_modules/@latticexyz/solecs/src/utils.sol\":{\"keccak256\":\"0x17f7831c03bdd77f0c7d98c94931d830fbbfa1878c365f54b12841c85611e24e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6ae566ee03c5050b239277ef4184b9e5dcb332c8cc65b032f8e0d9e46408ea6d\",\"dweb:/ipfs/QmetdhxahRf7FJk1kn8KgDmizU2zYk3jjt9qo6Gwz2M5YP\"]},\"../../node_modules/@latticexyz/std-contracts/src/components/AddressComponent.sol\":{\"keccak256\":\"0x89e047abf13d2924fcbe13f3fd4a421c7d63ff1533d7c46418ba6f4188d3a5b0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5dac16608b64fc5d2ae51a6066683eff6c17c5ed4615049e6721394a1e7ac628\",\"dweb:/ipfs/QmXk9X9KhkAnPayniNTxquou5pnNXpGxkKCY69ESZQFT6j\"]},\"../../node_modules/@latticexyz/std-contracts/src/components/StringComponent.sol\":{\"keccak256\":\"0xa7e8e699ed4a1bbc3867a3fad20b3ee585049ff4e6160a2e6edfcaf44569dbec\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://502d60861e08e23c765a60fd02959475a028bae788427d99db2d6c5e1e9f67d8\",\"dweb:/ipfs/QmQrRfvUuSBidhPoAK4QXXxRpLx2FBif9EhHB7TKibjP3i\"]},\"../../node_modules/@latticexyz/std-contracts/src/components/Uint256Component.sol\":{\"keccak256\":\"0xd132f60f772de6f2c2e2d68acdb861a14887741c18a12cd29292edfdca6703fc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://10b37ceaf7d1863ca8e2d30bdfaae0544fd58aa9be635679d39406daaebfa938\",\"dweb:/ipfs/QmViUCDBL6SVP9GUM41fKfN443stBtZZJ2LzXJSzVL7rmK\"]},\"../../node_modules/@rari-capital/solmate/src/tokens/ERC721.sol\":{\"keccak256\":\"0xb59c7c25eca386f39da4819a9f70f89b73b7583d5f5127a83ffe5339800b1183\",\"license\":\"AGPL-3.0-only\",\"urls\":[\"bzz-raw://021348d61659d6f47fb650536c22665e15e17b1bc8f70ecfb6853a2564a21377\",\"dweb:/ipfs/QmcyMXAY26Xr4VibkJhXFJP2oviZC5JNJbUL9yueJYYXxM\"]},\"../../node_modules/@solidstate/contracts/access/ownable/IOwnable.sol\":{\"keccak256\":\"0xd2d21c507ed587cd5de6cc016d4b9c7e956e468108b784455a400301707031c1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://091a98176309554295f1d471f888b1567d07e0250b11e23fa540739b6dfdce38\",\"dweb:/ipfs/Qme69DrKhhtwkSBMU456C3NxzXNMC7AJ4sVNMg5rKcrtPn\"]},\"../../node_modules/@solidstate/contracts/access/ownable/IOwnableInternal.sol\":{\"keccak256\":\"0x6237a634712261bd82d5c7753780d35f77af215406d1e59512052f743f8f1c60\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8e54ac6cd1b376224b8d148c704693ff3f7ac9f69954fd30ee3d949fa17210c3\",\"dweb:/ipfs/QmWjq37K3gg29XhFbepg5GbmmFYoyXb81sh2K1MnVZqG6y\"]},\"../../node_modules/@solidstate/contracts/access/ownable/Ownable.sol\":{\"keccak256\":\"0xe16b09090c1251f8cc97fb2cc10c86675e0d0d9f0fc0032b417c37c8dba2db5f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8482effd630de3e3eb3c66ce6bc5ddd12838381e6e585df42116b4fd7764e4bc\",\"dweb:/ipfs/Qma9ga6QS2SooCYKyB7J5EHE8uUGiAv49kosEyjHt9Zg79\"]},\"../../node_modules/@solidstate/contracts/access/ownable/OwnableInternal.sol\":{\"keccak256\":\"0x0185d24250a5e6fbafce443b9ba19bba761803e3e5d91ba423bfb1f5f0bbdbf9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://547fadeaec559ee824f4dd37b2ef972a061ca59576f5733cf643e00d88a4db52\",\"dweb:/ipfs/QmYx6rmRmZZQkoS8TykMVsz9ZvfQ8MfSPt6UzWJ8pyj8qF\"]},\"../../node_modules/@solidstate/contracts/access/ownable/OwnableStorage.sol\":{\"keccak256\":\"0x7385e2020de914f75cabdc83c6adf88ed21e9de14669a89b3832b80f4f8c7b73\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a367c512bf29fb4923ed5d2454783e3dae88e5e03dec216e65c3986f3c3a8995\",\"dweb:/ipfs/QmfYkD6osr6SQzod6wc7WPae6YvVnYbn2BjJuHrYL3ERXM\"]},\"../../node_modules/@solidstate/contracts/interfaces/IERC173.sol\":{\"keccak256\":\"0x9b18a5ad66323c65a81ecd62c3536db99115fe69a30b56a04409de941da7deb6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a93684363c5bfd4e31fa2cc2d3402e9451ba61c7dbb404e8e50658610fb2a555\",\"dweb:/ipfs/QmanFgF5v5GjBBrAEYCpaZyXRFRvzLGgB8SQcSEf9Dkj5Q\"]},\"../../node_modules/@solidstate/contracts/interfaces/IERC173Internal.sol\":{\"keccak256\":\"0x9644c3e56c9ecd1763f8aaa437d5d573a7f64a8d93ad7bea1a9c44beb5911b89\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c32cfda38b44878ab196d32eeb72823a9f9904e8193286c787caccfb2e5bfa75\",\"dweb:/ipfs/QmfBNKWUSKaJtYL3JJ3YFioXCVFeeakqQ4cR5XzAxxZkCx\"]},\"../../node_modules/@solidstate/contracts/utils/AddressUtils.sol\":{\"keccak256\":\"0x7d924db4dbd9210923ab08db77db3c77438014c255fd49fa208ebce283d991bf\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5189eebdf91899224a14b4cd5184fa9e67a9b8904e6d88ff9610944d06c63929\",\"dweb:/ipfs/QmRwNhfcp98pPgbzK4i9hbypHLTWPGYpuRCtEJRCTNASRm\"]},\"../../node_modules/@solidstate/contracts/utils/UintUtils.sol\":{\"keccak256\":\"0x5aaeaea22a0800402c6f2d8ce6185293bc64f74f6c390c1b1c53b624b43972f8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8b1c95c745da8ca4de7b68e65ef9122dab4e748c3ae3c9f5fd5aa7c65887c9d2\",\"dweb:/ipfs/QmX2KURY4JbM4NVFp5KPYsNxoJGA8n8w6SdAFdD5Pasgza\"]},\"../../node_modules/memmove/src/Array.sol\":{\"keccak256\":\"0x0d7681d3392c34f811cebc9598c5e8f4eef6aba431dca9e1fa87267ba51a4515\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0ffb5179dd40ccacadc2cb26ac99e9ea5148796f6d21413d7e0f37913831bea1\",\"dweb:/ipfs/QmfJogaoqook5JgnUZKib6w6khzViUag3EQb1EZ8aUEasQ\"]},\"../../node_modules/memmove/src/LinkedList.sol\":{\"keccak256\":\"0x2374863d39689178dda92b841e77b835ba8fa550561be23b7861d2e52c0fe8c1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8538ec6ca6be4e1b25b74dfd2139586fa2b9dab8d49d91428ed64dc683884598\",\"dweb:/ipfs/Qma7Z6urenqG5Dzqwe8ouGiFH37mbsJEX83tqjSq1PTnRc\"]},\"src/components/ERC721EntityIndexPetComponent.sol\":{\"keccak256\":\"0xddbc9ccd4c9925296845d67f3e1b8c5a63df7f682b0a92a7a37947f3ba73166f\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://404e1c0203689234db0b2117f86c2d2e6ac6cb88495c5690b8e4a75592ae3620\",\"dweb:/ipfs/Qmc5KmPYpe9qamPphWB6RxhS34pvBe1F8ZCnSSfhEXu8in\"]},\"src/components/ERC721OwnedByPetComponent.sol\":{\"keccak256\":\"0x919c4c1a28b55d0fd3286e6ae87fdae1b5f2611529647d0ab94fe98854090cbc\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://a525b3045be49a486f9d20c2996606ccdbbb8ec4e4b3ca1049261ea06df18838\",\"dweb:/ipfs/QmaguA9AM9NMGHNsp2coHP3MaLyJWxwepgDqn42JVVvsCF\"]},\"src/components/MediaURIComponent.sol\":{\"keccak256\":\"0x7a4fa30d9bbb69537ea238f569ba5d0a1cbeb6aee026497a8e082ae5be27a037\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://0bf24d429e38a17184c723bb75594cf9799ababb9971f4b8e6b66e4fdbdadcbe\",\"dweb:/ipfs/QmZmDQyQHWNANJKKbN3gnDhxAc6ZaL1CKVob7QZoN2uHTZ\"]},\"src/systems/ERC721PetSystem.sol\":{\"keccak256\":\"0x93c8ecaa8a698a820d49bffb559c93d5999ae8a0ada508b3952df9cfbffa2fa4\",\"license\":\"Unlicense\",\"urls\":[\"bzz-raw://1dc8de80e03570bb783d10034460c7609401a1b6e787113c898595d226fe828d\",\"dweb:/ipfs/QmVj9VeuzF7FUEwpj4sTkYxM2reZYQLXEk9YMerhQGt9vu\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.17+commit.8df45f5f"
@@ -526,6 +536,16 @@
           ],
           "stateMutability": "nonpayable",
           "type": "constructor"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "Ownable__NotOwner"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "Ownable__NotTransitiveOwner"
         },
         {
           "inputs": [
@@ -977,7 +997,7 @@
           "inputs": [
             {
               "internalType": "address",
-              "name": "newOwner",
+              "name": "account",
               "type": "address"
             }
           ],
@@ -991,7 +1011,12 @@
         "methods": {
           "owner()": {
             "returns": {
-              "_0": "The address of the owner."
+              "_0": "conrtact owner"
+            }
+          },
+          "transferOwnership(address)": {
+            "params": {
+              "account": "address of new owner"
             }
           }
         },
@@ -1001,7 +1026,10 @@
         "kind": "user",
         "methods": {
           "owner()": {
-            "notice": "Get the address of the owner"
+            "notice": "get the ERC173 contract owner"
+          },
+          "transferOwnership(address)": {
+            "notice": "transfer contract ownership to new account"
           }
         },
         "version": 1
@@ -1011,6 +1039,7 @@
       "remappings": [
         ":@latticexyz/=../../node_modules/@latticexyz/",
         ":@rari-capital/=../../node_modules/@rari-capital/",
+        ":@solidstate/=../../node_modules/@solidstate/",
         ":components/=src/components/",
         ":ds-test/=../../node_modules/ds-test/src/",
         ":forge-std/=../../node_modules/forge-std/src/",
@@ -1036,164 +1065,204 @@
     },
     "sources": {
       "../../node_modules/@latticexyz/solecs/src/BareComponent.sol": {
-        "keccak256": "0x83c5b0807bad5aac2d43d743f85fa3a5e6ed5c383183531f15b18ba623c914d9",
+        "keccak256": "0x2cd722acd3cad5a9318bd5907a3d9f3849756727a5b2303eaf76aa7ea8caa65a",
         "urls": [
-          "bzz-raw://357c7fbca45ba5a48fdf379f724dfd430994743a6ddd4a6b3a07ca9adad09fa7",
-          "dweb:/ipfs/QmZBCUt8hLHNtZ5MeNzPav1CafLi3qPqUcYceLe596QC5t"
+          "bzz-raw://890e17cd1f2f2ed87c99ca7b9383f7eabb31570989247a81e268a636b163a89a",
+          "dweb:/ipfs/QmXJEKkMBQniSwHvC9aqHjRCaMohwkpPT7ssCtkL31j4FA"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/Component.sol": {
-        "keccak256": "0x198a93725b185c4246a918cdc1488e1ac63c0ff43aba02e05d5ae7af8e2934f6",
+        "keccak256": "0x40085c2f86bf6be7a756015025477aa46308b1618083ece93ae13093881a6874",
         "urls": [
-          "bzz-raw://c27cdd88d01edf3b744c998988b19fce136fcb7c4412c6c01288c4fb5df45404",
-          "dweb:/ipfs/Qme6M8x2SQPSUQuRPstERHYaQCQjyRFa4wTzFFPxd611mh"
+          "bzz-raw://ca8653540b5674e50abfd4b4898009b472fc7fd2fba456146c1a1c44b615d83a",
+          "dweb:/ipfs/QmSqbRng5fHuGUKgkFuNw3BfoefNteYU95sYi4g9QjCCNh"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/LibTypes.sol": {
-        "keccak256": "0xd75f7055d9c877aca922804806e39cabc6c4fc324ebf3708d0f79abc3d00be96",
+        "keccak256": "0xa3898035fd9fa865bcfc9861e3b5ecce36be3196fb27705e50a02fed9831f102",
         "urls": [
-          "bzz-raw://a4c61404cc167a0bac24effbd7768e2eb8ce250b6b7e000bde3523b97702321b",
-          "dweb:/ipfs/QmYTwkL3U68CLk1xUCHRXbCkUnNtFpzd3EAgduN7PePp9Y"
+          "bzz-raw://273284a35a950f6d0bc4223d345cf46c59972a00510ddbc4ba695ede38714798",
+          "dweb:/ipfs/QmdqzKMaAfKWfBzUsrzsDMWnyxSKJRuEvrc6VTR5VarQaH"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/MapSet.sol": {
-        "keccak256": "0xc52e5e80fadf41a7dfc816c3dff56be07d95878e4675396f5f1af72e8b877382",
+        "keccak256": "0xe1a1f412b22d586c01a3e9e0e0af40893b880260f6765b9a5e23e56154dae1db",
         "urls": [
-          "bzz-raw://8949a722206524859ec8b34e497cbf4c24352262ee9836267a1040751c9b70c2",
-          "dweb:/ipfs/QmfFsMhE9mQ92WHHqdAuHFQovn1AfFNWJBgsZEKr658zoc"
+          "bzz-raw://f8aeddb1af783e43e8ca8a004954016c9f00d9d217d86454b3a3839ef0981288",
+          "dweb:/ipfs/QmegHggcpmgGgL9xbZKqnWMwNMSqvs622MuhyEhR9bVfb9"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
+      },
+      "../../node_modules/@latticexyz/solecs/src/Ownable.sol": {
+        "keccak256": "0x7572ffd98860b2539eacdbb2112ce3d25ad8521c5d95f91e21ea5588a6904209",
+        "urls": [
+          "bzz-raw://3516b95146224d3fc04c5cc2818161fa9504a048894f6dd905b1e42307494fc4",
+          "dweb:/ipfs/QmTqvvAs1fSLzXVWjAgSt3TtE3MM3M1DFXRzkkSsixtVza"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@latticexyz/solecs/src/OwnableWritable.sol": {
+        "keccak256": "0x44e1afa8b4b2132122255943deb1ba8787693cd5893876a06643deed3052b859",
+        "urls": [
+          "bzz-raw://3761f562ad1a9fae0abf914e4e15592fb8b7dd231039448d20ad7dcfabf6de41",
+          "dweb:/ipfs/QmbLN1mfNXYyrc4qxQauvBYTyJu9nR18t9xb54GY8xP3T7"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@latticexyz/solecs/src/OwnableWritableStorage.sol": {
+        "keccak256": "0x9f99bbacdfd6c5b0779bd18d3900dd4f957c5a0d89d5986815fae2eff8254df5",
+        "urls": [
+          "bzz-raw://3ee736ebade674846118859290603b8ad2cc91efbe13e3621aa52fb4987cb0b4",
+          "dweb:/ipfs/QmNUzZS4LPhBCacrPNjbQXLV4anrvNxQ2yPEPETj3sgbzW"
+        ],
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/Set.sol": {
-        "keccak256": "0xf654640d2b227d6d97d884d074e13395fcbb959890faadb9df3626ab2d375d11",
+        "keccak256": "0xcddfd88e4fd1c183470f470dbe5e6fdd48ed0d26bd1ccefb8070a476bc8ba344",
         "urls": [
-          "bzz-raw://7143b84da7252eaefab3d013c98d0ef5e4af4257c11fae35d77fde711ff2ae3a",
-          "dweb:/ipfs/QmYAgJZp8hQYhyhJwfopPMu5Td4qHJbZDJsuZPnM1f9EnP"
+          "bzz-raw://e81ffd8a5b104abd04876a42d613378181009bae9368779223fabc1b1d514e46",
+          "dweb:/ipfs/QmUywR2WzJfzPn1bRkd7e6Sy6jo3q9AjuQWU55BHKUiNME"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/System.sol": {
-        "keccak256": "0x90b5091d102b39023143a45ad2010fd3fac880af4f64b81b0c44a0e1d754827e",
+        "keccak256": "0xa26b5061fdcbb516111cebd798db1ac8d7733cbf562700aa9892276f3e40e1e7",
         "urls": [
-          "bzz-raw://b526bd70125cbfdc4574a89734d3d66599cd982413ee8beb741879ff8641e625",
-          "dweb:/ipfs/QmPGjq7n9g2YJ39Vta7X81hEZfbZcqxwndZNoEt5LzTR7L"
+          "bzz-raw://471b323faa1baf8b14f3c0a4acf539643ac2fba105b13314066452ebaa228281",
+          "dweb:/ipfs/QmRmTjgggZcziB9FH2oPyQGQAAnxEsubiY1gDC1vQz6uWW"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
+      },
+      "../../node_modules/@latticexyz/solecs/src/SystemStorage.sol": {
+        "keccak256": "0x3adf624854f860099d0911cdc51b29e6690e413f2c260e3536552d223fe77b2b",
+        "urls": [
+          "bzz-raw://9fa473135604adb13a95583e6cc8092bc82be534bdcdd915e1f344eb78fc645d",
+          "dweb:/ipfs/QmYvRKgZ2iRVmSykLAtrrdsr27Eyg6QorhHGL5ZLE8wTTW"
+        ],
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/components/Uint256Component.sol": {
-        "keccak256": "0xa1b35ebfde8dfba718c4ddbfb6cc2c4664cc88fce3cb6311385d6d1109e62ebe",
+        "keccak256": "0x6f4f16d1a14a8587d9bd21a7f33744d1ffb3cfd5309c6b8229236e5e2d84b465",
         "urls": [
-          "bzz-raw://769db28c3dab792a777004b6442c033c8ddc8d58eec8d24c618ab709944fb2f7",
-          "dweb:/ipfs/QmUifBt9JUXxox8WjvMvym1HHSS4f2CZLm3pm7je8epW4s"
+          "bzz-raw://2dde592cc08fb85378b2b4c263434122c4e4a19a10a6a0b5857c48b002571470",
+          "dweb:/ipfs/QmafCQgVugZuVfCNBQaFGFM2Qc9sWML4fG6Pct5ujRXt94"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/constants.sol": {
-        "keccak256": "0x486b309f7eadc90994db01b9e0cc9fe2271183c4c572cb8a76fe768563bcc757",
+        "keccak256": "0x024a3ff3077a272339b7baa96b826fd75f040d7cd2c6e13b9c8cf7ad16f789b8",
         "urls": [
-          "bzz-raw://6cdb841c42cafb78fa8d0c22d782d925f711d59fe552369d1ac8021837246771",
-          "dweb:/ipfs/QmRHdDnx7TPzaQ3rX4W8AT7e2uLA7t42houXkwx2zJ2pTL"
+          "bzz-raw://1ddcb26a7703e9b03b34d5465010a4ae5ced137021c94987053544ad1156a644",
+          "dweb:/ipfs/QmYue4gnb8noyoxxTchs5chZji7DKynKMp2x33RgRW6xqZ"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/interfaces/IComponent.sol": {
-        "keccak256": "0xc3bc984925d40493b065769cfc804b5ae12c03ecc7635fb64b2558d21af34c0b",
+        "keccak256": "0xc25ab58cac1449fcd501ddcc56dade0653a7946adcd9eee2931bc095eda2a6b4",
         "urls": [
-          "bzz-raw://508bcd3e11e0cb6fdc163e3856c845c87cc6dd79595d9b83f5e466a6416cd8e0",
-          "dweb:/ipfs/QmQZAff8UE2zwWXZtuZ7MGCE65grRCEg3ET7CebXeq1YM1"
+          "bzz-raw://c9505da36322f3b3de4dc0aaf0aec911e76be6cbd091f4d142070a7316df4629",
+          "dweb:/ipfs/QmY5aGhwzBV5fXeLRDuzWMUfbPZGGdggbLdARhrkjmPBYW"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/interfaces/IERC173.sol": {
-        "keccak256": "0x90a8a25e49a0a5b34ec65d1795a374ceb6ff7a8f15ff1b22bbd669a7f9fde4ec",
+        "keccak256": "0x2bd9a729a3bfcfc445bc557a914aee17fcaf1c0f74b909b6a91a5d3755a699e9",
         "urls": [
-          "bzz-raw://a943d58a14b9000f0f31621e247015475466f449c2e83175c4ad43607502426c",
-          "dweb:/ipfs/QmZv721wBRGHctKKprt5eDgYg89sojSNB6Z1fpVEM3VspV"
+          "bzz-raw://203741d681a686fb75f0715332e554083733f349100dfe11252c17fbe9cd094e",
+          "dweb:/ipfs/QmaBXDHiU4ZdJ8K5jQZ3FfswMpWEqSPsBWGFkJMU2qmmWi"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/interfaces/IEntityContainer.sol": {
-        "keccak256": "0x95ae0340082f859c0c31108323048c4d179a28df905ba8384f7ab8dd95d2d6a0",
+        "keccak256": "0x4506db1dcbdbe68a397107a57bfa3da888a889f14181a90eb728cfecc60700b8",
         "urls": [
-          "bzz-raw://cbc49eba9e6b4eb603d2ae4189a83b8c9f0b858cd4236c94ebd23b8b06817378",
-          "dweb:/ipfs/QmcTePiUxaua9NrUYWKPNMMPyaCxH1rMtniFkrSkTpwBak"
+          "bzz-raw://23f5c02d110f5abf6340a08a2a8b7e0b5668f211fe6baf41213e6c4f69dece10",
+          "dweb:/ipfs/QmYfKeZMeEUNExsxjkCF5nGdw8KRyPe1t5tcGFTEkP7CkV"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/interfaces/IEntityIndexer.sol": {
-        "keccak256": "0xd6ca557fd8afe2f16679c67857affc55eb237dbc942a6390097122c65a19a52e",
+        "keccak256": "0xd89023b2a5e9961be3c9d49d9f7f9ac7dcc416e3f43a8758dc058d1db2eea6b5",
         "urls": [
-          "bzz-raw://a1ea4345f6064267ed8ab657c945407d3c172e019664fe8ecdd069b1b7b44684",
-          "dweb:/ipfs/QmNPv69EEjhA6dv1nC7VHv4JMb35Aop3We52QB5CaAGheF"
+          "bzz-raw://3266ea1dd5a7f372f8814db24ac4981730f66fba8e6f90f614246ca5cec529b4",
+          "dweb:/ipfs/QmQ71BtaBsDjfke46dndaTBVhyXAHxs5qs7d9GHJwVXuvw"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
+      },
+      "../../node_modules/@latticexyz/solecs/src/interfaces/IOwnableWritable.sol": {
+        "keccak256": "0x804db2685d65f5d4029431c47276b6ac43d3c329ea4ce75358928dbd4d11ee77",
+        "urls": [
+          "bzz-raw://a1d85dfe46f678ce4cf3a788092519251a24c2c015f9e858a81111b506b0ee78",
+          "dweb:/ipfs/QmVmE4f8axCeh8V2kcs8nxYd27rSiwvXJbDbNCg3VZHSXY"
+        ],
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/interfaces/ISystem.sol": {
-        "keccak256": "0x255fb1bc4466509392b0adafc4e1ba9fcfa67cfab9256eb01b86e406a862b14a",
+        "keccak256": "0xbc1c0b0c72ab5e20ff7eae3cf53627aac367a2f9a65d2e87451a0313869d3bed",
         "urls": [
-          "bzz-raw://7e9fee43da4bb31788f20877e30389e2216281c6fe6c7a9fb853d0a3c550931e",
-          "dweb:/ipfs/QmPeepS9XU3AdpBBr6dHYo9zsiSrkep8jVMfx2whqHTKVP"
+          "bzz-raw://b2a7c4c30beb9b96c4e8112b9864f7bac5c761e61765e0dc359d926572feaa5a",
+          "dweb:/ipfs/QmVNJbky7itfqBBdDCh8anSWMaHhXs2mKhzuW7hbCVWgj3"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/interfaces/IUint256Component.sol": {
-        "keccak256": "0x8846ddb1701b59f8cbf80225ea8e85bd2991ab6ee0515c011d79a265f47f93fe",
+        "keccak256": "0x12e2eaa4c5663048343e43a1994c446baacb16a4aacbe314ed5202d878751be9",
         "urls": [
-          "bzz-raw://959ba1dcc93439c82e53a1e9858bac831a3c003eae82fc35edd931d7e7da4f77",
-          "dweb:/ipfs/QmQu2vGG9bDpuTHYJNSW6aXCp4FYCVzew2XpjVjZm59CAx"
+          "bzz-raw://2d78184a1b1868773f2d5a7cf54bb42bccc666dc75cea14eeed15b8573fd000f",
+          "dweb:/ipfs/QmemXPHPB7V8StWR8kZcKt3eDxB78sZFZW4Dp7TcEFTxx9"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/interfaces/IWorld.sol": {
-        "keccak256": "0x3ec039b9b7946f2220dec9be1dc109f440405d78d26069d2ace759fd2f8b9c92",
+        "keccak256": "0x3ac1853f4cade8f432f5b3144e0c914b93f110ea3eabd85438cde39160716114",
         "urls": [
-          "bzz-raw://7ed943cc164b14f0fd82e6fdb9e300c6ad01a3e7a19caa9f2599f0378e30f48e",
-          "dweb:/ipfs/QmfBXbWSdPbZzRQWpBqQqGBMq7owhZ15hxnrk9J7qjBaMA"
+          "bzz-raw://1f0ba421b481b66d43c9da4de63171a79ffadc708956893bddf10eec666a0f4a",
+          "dweb:/ipfs/QmdSyzQUDrP3MXt8JjgXt1QUgraUKBUPHE2CVzJiEwfMAK"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/interfaces/Query.sol": {
-        "keccak256": "0x3956cfb4b92afd3eccfea772480deb00ba573629bc0f36db5d948e2d168377cb",
+        "keccak256": "0x987e47a4d3f076910382b4e8619f607ea15abdedd786d6095bd27126ff6f941c",
         "urls": [
-          "bzz-raw://1aafe610e9283e1d7b1f45ba49cf77c8cf770241eeaa5317171df30b5f114c7d",
-          "dweb:/ipfs/QmYShHHJqSfkdY3vcbKS18AuBpBmfwMUzebxZbPpgZDcfq"
+          "bzz-raw://8c3d57f9da85917b77e1043a179d3b516bc8c00a8880fdcb1bffca7e53169059",
+          "dweb:/ipfs/QmaHxqsT1ZpS8toN88qxgbeaDSMvnhYv9J9FMjVnKrMgoP"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/solecs/src/utils.sol": {
-        "keccak256": "0x43ba8acb22fd849af5f28fc7e1f543fdbde0a8828fb6143bd0297ffb538fcb5b",
+        "keccak256": "0x17f7831c03bdd77f0c7d98c94931d830fbbfa1878c365f54b12841c85611e24e",
         "urls": [
-          "bzz-raw://f0e231fd65850897ac8333a5d33d1b689ade55ae29c27a7d16822fb1e07306f7",
-          "dweb:/ipfs/QmYcM1ojsiTAFQYxePi3hLJQXrGb1eKC67KPk9Wr9a8jMp"
+          "bzz-raw://6ae566ee03c5050b239277ef4184b9e5dcb332c8cc65b032f8e0d9e46408ea6d",
+          "dweb:/ipfs/QmetdhxahRf7FJk1kn8KgDmizU2zYk3jjt9qo6Gwz2M5YP"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/std-contracts/src/components/AddressComponent.sol": {
-        "keccak256": "0x61c851f7432b14c22c9b92a70ee548065f3feac5e885428bddcbe1b3b8ef1b81",
+        "keccak256": "0x89e047abf13d2924fcbe13f3fd4a421c7d63ff1533d7c46418ba6f4188d3a5b0",
         "urls": [
-          "bzz-raw://39927e4ace849f66af6e966e483ff776f5e8968ab54fa8080312d39915c71137",
-          "dweb:/ipfs/QmXjTz2TZLmTZJ7KqdpRVt1bbdmMAoZM5Qk1RpjHDWwCtX"
+          "bzz-raw://5dac16608b64fc5d2ae51a6066683eff6c17c5ed4615049e6721394a1e7ac628",
+          "dweb:/ipfs/QmXk9X9KhkAnPayniNTxquou5pnNXpGxkKCY69ESZQFT6j"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/std-contracts/src/components/StringComponent.sol": {
-        "keccak256": "0xd6443092d22fbc1614c187f4a3216d9547dd75c7e7dc615a72d5d99b2f5db1f1",
+        "keccak256": "0xa7e8e699ed4a1bbc3867a3fad20b3ee585049ff4e6160a2e6edfcaf44569dbec",
         "urls": [
-          "bzz-raw://9fb46afb6f24ba01783de7a80f43b5ed05321152f0f1e9200d9c5d2cea831070",
-          "dweb:/ipfs/QmUeJKcVF634PDqR19ShhyP9GwX3t575ENTtqobvi2JVvX"
+          "bzz-raw://502d60861e08e23c765a60fd02959475a028bae788427d99db2d6c5e1e9f67d8",
+          "dweb:/ipfs/QmQrRfvUuSBidhPoAK4QXXxRpLx2FBif9EhHB7TKibjP3i"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@latticexyz/std-contracts/src/components/Uint256Component.sol": {
-        "keccak256": "0x11a45a7d26ef695baf218f7655fb3ff5f73c42a8d3ee8d233a3c6142727f6f8b",
+        "keccak256": "0xd132f60f772de6f2c2e2d68acdb861a14887741c18a12cd29292edfdca6703fc",
         "urls": [
-          "bzz-raw://8c337a89195751168d0303aac5b1586cb45f9fc6c7d6633795106fa6ef2b58d5",
-          "dweb:/ipfs/QmWeLfhFKbhz813L692k7nv4rj8noRD7iZanpLCxnwZifS"
+          "bzz-raw://10b37ceaf7d1863ca8e2d30bdfaae0544fd58aa9be635679d39406daaebfa938",
+          "dweb:/ipfs/QmViUCDBL6SVP9GUM41fKfN443stBtZZJ2LzXJSzVL7rmK"
         ],
-        "license": "Unlicense"
+        "license": "MIT"
       },
       "../../node_modules/@rari-capital/solmate/src/tokens/ERC721.sol": {
         "keccak256": "0xb59c7c25eca386f39da4819a9f70f89b73b7583d5f5127a83ffe5339800b1183",
@@ -1202,6 +1271,78 @@
           "dweb:/ipfs/QmcyMXAY26Xr4VibkJhXFJP2oviZC5JNJbUL9yueJYYXxM"
         ],
         "license": "AGPL-3.0-only"
+      },
+      "../../node_modules/@solidstate/contracts/access/ownable/IOwnable.sol": {
+        "keccak256": "0xd2d21c507ed587cd5de6cc016d4b9c7e956e468108b784455a400301707031c1",
+        "urls": [
+          "bzz-raw://091a98176309554295f1d471f888b1567d07e0250b11e23fa540739b6dfdce38",
+          "dweb:/ipfs/Qme69DrKhhtwkSBMU456C3NxzXNMC7AJ4sVNMg5rKcrtPn"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@solidstate/contracts/access/ownable/IOwnableInternal.sol": {
+        "keccak256": "0x6237a634712261bd82d5c7753780d35f77af215406d1e59512052f743f8f1c60",
+        "urls": [
+          "bzz-raw://8e54ac6cd1b376224b8d148c704693ff3f7ac9f69954fd30ee3d949fa17210c3",
+          "dweb:/ipfs/QmWjq37K3gg29XhFbepg5GbmmFYoyXb81sh2K1MnVZqG6y"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@solidstate/contracts/access/ownable/Ownable.sol": {
+        "keccak256": "0xe16b09090c1251f8cc97fb2cc10c86675e0d0d9f0fc0032b417c37c8dba2db5f",
+        "urls": [
+          "bzz-raw://8482effd630de3e3eb3c66ce6bc5ddd12838381e6e585df42116b4fd7764e4bc",
+          "dweb:/ipfs/Qma9ga6QS2SooCYKyB7J5EHE8uUGiAv49kosEyjHt9Zg79"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@solidstate/contracts/access/ownable/OwnableInternal.sol": {
+        "keccak256": "0x0185d24250a5e6fbafce443b9ba19bba761803e3e5d91ba423bfb1f5f0bbdbf9",
+        "urls": [
+          "bzz-raw://547fadeaec559ee824f4dd37b2ef972a061ca59576f5733cf643e00d88a4db52",
+          "dweb:/ipfs/QmYx6rmRmZZQkoS8TykMVsz9ZvfQ8MfSPt6UzWJ8pyj8qF"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@solidstate/contracts/access/ownable/OwnableStorage.sol": {
+        "keccak256": "0x7385e2020de914f75cabdc83c6adf88ed21e9de14669a89b3832b80f4f8c7b73",
+        "urls": [
+          "bzz-raw://a367c512bf29fb4923ed5d2454783e3dae88e5e03dec216e65c3986f3c3a8995",
+          "dweb:/ipfs/QmfYkD6osr6SQzod6wc7WPae6YvVnYbn2BjJuHrYL3ERXM"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@solidstate/contracts/interfaces/IERC173.sol": {
+        "keccak256": "0x9b18a5ad66323c65a81ecd62c3536db99115fe69a30b56a04409de941da7deb6",
+        "urls": [
+          "bzz-raw://a93684363c5bfd4e31fa2cc2d3402e9451ba61c7dbb404e8e50658610fb2a555",
+          "dweb:/ipfs/QmanFgF5v5GjBBrAEYCpaZyXRFRvzLGgB8SQcSEf9Dkj5Q"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@solidstate/contracts/interfaces/IERC173Internal.sol": {
+        "keccak256": "0x9644c3e56c9ecd1763f8aaa437d5d573a7f64a8d93ad7bea1a9c44beb5911b89",
+        "urls": [
+          "bzz-raw://c32cfda38b44878ab196d32eeb72823a9f9904e8193286c787caccfb2e5bfa75",
+          "dweb:/ipfs/QmfBNKWUSKaJtYL3JJ3YFioXCVFeeakqQ4cR5XzAxxZkCx"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@solidstate/contracts/utils/AddressUtils.sol": {
+        "keccak256": "0x7d924db4dbd9210923ab08db77db3c77438014c255fd49fa208ebce283d991bf",
+        "urls": [
+          "bzz-raw://5189eebdf91899224a14b4cd5184fa9e67a9b8904e6d88ff9610944d06c63929",
+          "dweb:/ipfs/QmRwNhfcp98pPgbzK4i9hbypHLTWPGYpuRCtEJRCTNASRm"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@solidstate/contracts/utils/UintUtils.sol": {
+        "keccak256": "0x5aaeaea22a0800402c6f2d8ce6185293bc64f74f6c390c1b1c53b624b43972f8",
+        "urls": [
+          "bzz-raw://8b1c95c745da8ca4de7b68e65ef9122dab4e748c3ae3c9f5fd5aa7c65887c9d2",
+          "dweb:/ipfs/QmX2KURY4JbM4NVFp5KPYsNxoJGA8n8w6SdAFdD5Pasgza"
+        ],
+        "license": "MIT"
       },
       "../../node_modules/memmove/src/Array.sol": {
         "keccak256": "0x0d7681d3392c34f811cebc9598c5e8f4eef6aba431dca9e1fa87267ba51a4515",
@@ -1254,5 +1395,5 @@
     },
     "version": 1
   },
-  "id": 78
+  "id": 106
 }

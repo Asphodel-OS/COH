@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "./utils/TestSetupImports.sol";
 
-contract SetupTemplate is TestSetupImports {
+abstract contract SetupTemplate is TestSetupImports {
   uint256 petOneEntityID;
   uint256 petTwoEntityID;
   uint256 petThreeEntityID;
@@ -15,14 +15,14 @@ contract SetupTemplate is TestSetupImports {
   }
 
   /***********************
-  *   minting pets
-  ************************/
+   *   minting pets
+   ************************/
 
   function _mintPets(uint256 n) internal virtual {
     require(n <= 3, "MUDTest: max three non-admin test accounts");
     if (n > 0) petOneEntityID = _mintSinglePet(alice);
     if (n > 1) petTwoEntityID = _mintSinglePet(bob);
-    if (n > 2) petThreeEntityID = _mintSinglePet(eve); 
+    if (n > 2) petThreeEntityID = _mintSinglePet(eve);
   }
 
   function _mintSinglePet(address addy) internal virtual returns (uint256) {

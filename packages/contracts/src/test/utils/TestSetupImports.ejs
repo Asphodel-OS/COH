@@ -18,7 +18,7 @@ import { <%= component %>, ID as <%= component %>ID } from "components/<%- compo
 import { <%= system.name %>, ID as <%= system.name %>ID } from "systems/<%- system.name %>.sol";
 <% }); -%>
 
-contract TestSetupImports is MudTest {
+abstract contract TestSetupImports is MudTest {
 // Components vars
 <% components.forEach(component => { -%>
 <%= component %> _<%= component %>;

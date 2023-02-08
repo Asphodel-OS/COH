@@ -321,7 +321,7 @@ export interface StateComponent extends BaseContract {
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -333,7 +333,7 @@ export interface StateComponent extends BaseContract {
     world(overrides?: CallOverrides): Promise<[string]>;
 
     writeAccess(
-      arg0: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
@@ -412,7 +412,7 @@ export interface StateComponent extends BaseContract {
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -424,7 +424,7 @@ export interface StateComponent extends BaseContract {
   world(overrides?: CallOverrides): Promise<string>;
 
   writeAccess(
-    arg0: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -503,7 +503,7 @@ export interface StateComponent extends BaseContract {
     ): Promise<void>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -515,7 +515,7 @@ export interface StateComponent extends BaseContract {
     world(overrides?: CallOverrides): Promise<string>;
 
     writeAccess(
-      arg0: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
   };
@@ -604,7 +604,7 @@ export interface StateComponent extends BaseContract {
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -616,7 +616,7 @@ export interface StateComponent extends BaseContract {
     world(overrides?: CallOverrides): Promise<BigNumber>;
 
     writeAccess(
-      arg0: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -694,7 +694,7 @@ export interface StateComponent extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -706,7 +706,7 @@ export interface StateComponent extends BaseContract {
     world(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     writeAccess(
-      arg0: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

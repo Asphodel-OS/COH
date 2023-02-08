@@ -44,6 +44,7 @@ export interface IUint256ComponentInterface extends utils.Interface {
     "set(uint256,bytes)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unauthorizeWriter(address)": FunctionFragment;
+    "world()": FunctionFragment;
   };
 
   getFunction(
@@ -63,6 +64,7 @@ export interface IUint256ComponentInterface extends utils.Interface {
       | "set(uint256,bytes)"
       | "transferOwnership"
       | "unauthorizeWriter"
+      | "world"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -119,6 +121,7 @@ export interface IUint256ComponentInterface extends utils.Interface {
     functionFragment: "unauthorizeWriter",
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: "world", values?: undefined): string;
 
   decodeFunctionResult(
     functionFragment: "authorizeWriter",
@@ -165,6 +168,7 @@ export interface IUint256ComponentInterface extends utils.Interface {
     functionFragment: "unauthorizeWriter",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "world", data: BytesLike): Result;
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
@@ -273,7 +277,7 @@ export interface IUint256Component extends BaseContract {
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      _newOwner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -281,6 +285,8 @@ export interface IUint256Component extends BaseContract {
       writer: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    world(overrides?: CallOverrides): Promise<[string]>;
   };
 
   authorizeWriter(
@@ -344,7 +350,7 @@ export interface IUint256Component extends BaseContract {
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    _newOwner: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -352,6 +358,8 @@ export interface IUint256Component extends BaseContract {
     writer: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  world(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     authorizeWriter(
@@ -415,7 +423,7 @@ export interface IUint256Component extends BaseContract {
     ): Promise<void>;
 
     transferOwnership(
-      _newOwner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -423,6 +431,8 @@ export interface IUint256Component extends BaseContract {
       writer: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    world(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -496,7 +506,7 @@ export interface IUint256Component extends BaseContract {
     ): Promise<BigNumber>;
 
     transferOwnership(
-      _newOwner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -504,6 +514,8 @@ export interface IUint256Component extends BaseContract {
       writer: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    world(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -566,7 +578,7 @@ export interface IUint256Component extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      _newOwner: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -574,5 +586,7 @@ export interface IUint256Component extends BaseContract {
       writer: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
+
+    world(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
