@@ -1,8 +1,11 @@
+import { defineScaleConfig } from '@latticexyz/phaserx';
 import { SetupContractConfig } from "@latticexyz/std-client";
 import { Wallet } from "ethers";
+import { defineMainScene } from './layers/phaser/scenes/MainScene';
+
 const params = new URLSearchParams(window.location.search);
 
-export const config: SetupContractConfig = {
+export const networkConfig: SetupContractConfig = {
   clock: {
     period: 1000,
     initialTime: 0,
@@ -19,4 +22,21 @@ export const config: SetupContractConfig = {
   initialBlockNumber: Number(params.get("initialBlockNumber")) || 0,
   worldAddress: params.get("worldAddress")!,
   devMode: params.get("dev") === "true",
+};
+
+
+export const phaserConfig = {
+  parent: 'phaser-game',
+  pixelArt: true,
+  physics: {
+    default: 'arcade',
+    arcade: { debug: false, gravity: { y: 0 } },
+  },
+  scene: [defineMainScene()],
+  title: 'Cantodel',
+  scale: defineScaleConfig({
+    parent: 'phaser-game',
+    width: 544,
+    height: 288,
+  }),
 };
