@@ -6,7 +6,9 @@ export const systemToId = {
   ListingSetSystem: "system.ListingSet",
   MerchantCreateSystem: "system.MerchantCreate",
   NodeCreateSystem: "system.NodeCreate",
+  ProductionCollectSystem: "system.ProductionCollect",
   ProductionStartSystem: "system.ProductionStart",
+  ProductionStopSystem: "system.ProductionStop",
 };
 
 export const idToSystem = {
@@ -16,6 +18,8 @@ export const idToSystem = {
   "system.ListingSet": "ListingSetSystem",
   "system.MerchantCreate": "MerchantCreateSystem",
   "system.NodeCreate": "NodeCreateSystem",
+  "system.ProductionCollect": "ProductionCollectSystem",
   "system.ProductionStart": "ProductionStartSystem",
+  "system.ProductionStop": "ProductionStopSystem",
 };
   

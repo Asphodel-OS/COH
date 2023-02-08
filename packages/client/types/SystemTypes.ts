@@ -5,7 +5,9 @@ import { ListingSellSystem } from "./ethers-contracts/ListingSellSystem";
 import { ListingSetSystem } from "./ethers-contracts/ListingSetSystem";
 import { MerchantCreateSystem } from "./ethers-contracts/MerchantCreateSystem";
 import { NodeCreateSystem } from "./ethers-contracts/NodeCreateSystem";
+import { ProductionCollectSystem } from "./ethers-contracts/ProductionCollectSystem";
 import { ProductionStartSystem } from "./ethers-contracts/ProductionStartSystem";
+import { ProductionStopSystem } from "./ethers-contracts/ProductionStopSystem";
  
 export type SystemTypes = {
   "system.ERC721.pet": ERC721PetSystem;
@@ -14,5 +16,7 @@ export type SystemTypes = {
   "system.ListingSet": ListingSetSystem;
   "system.MerchantCreate": MerchantCreateSystem;
   "system.NodeCreate": NodeCreateSystem;
+  "system.ProductionCollect": ProductionCollectSystem;
   "system.ProductionStart": ProductionStartSystem;
+  "system.ProductionStop": ProductionStopSystem;
 };

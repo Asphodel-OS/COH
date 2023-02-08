@@ -2,11 +2,13 @@
   "components": [
     "BalanceComponent",
     "CoinComponent",
-    "ExitsComponent",
     "ERC721EntityIndexPetComponent",
     "ERC721OwnedByPetComponent",
+    "ExitsComponent",
+    "HashRateComponent",
     "IdCharacterComponent",
     "IdMerchantComponent",
+    "IdNodeComponent",
     "IdOwnerComponent",
     "IdPetComponent",
     "IndexItemComponent",
@@ -19,13 +21,16 @@
     "IsRegistryEntryComponent",
     "IsRoomComponent",
     "LocationComponent",
-    "NameComponent",
     "MediaURIComponent",
+    "NameComponent",
+    "NumCoresComponent",
     "OperatorComponent",
     "PriceBuyComponent",
     "PriceSellComponent",
     "StateComponent",
-    "TimeLastActionComponent"
+    "StorageSizeComponent",
+    "TimeLastActionComponent",
+    "TimeStartComponent"
   ],
   "systems": [
     {
@@ -33,7 +38,7 @@
       "writeAccess": [
         "ERC721EntityIndexPetComponent",
         "ERC721OwnedByPetComponent",
-        "MediaURIComponent" 
+        "MediaURIComponent"
       ]
     },
     {
@@ -69,8 +74,41 @@
         "NameComponent",
         "LocationComponent"
       ]
+    },
+    {
+      "name": "NodeCreateSystem",
+      "writeAccess": [
+        "IsNodeComponent",
+        "NameComponent",
+        "LocationComponent"
+      ]
+    },
+    {
+      "name": "ProductionCollectSystem",
+      "writeAccess": [
+        "CoinComponent",
+        "TimeStartComponent"
+      ]
+    },
+    {
+      "name": "ProductionStartSystem",
+      "writeAccess": [
+        "IsProductionComponent",
+        "IdNodeComponent",
+        "IdCharacterComponent",
+        "IdPetComponent",
+        "StateComponent",
+        "TimeStartComponent"
+      ]
+    },
+    {
+      "name": "ProductionStopSystem",
+      "writeAccess": [
+        "CoinComponent",
+        "StateComponent"
+      ]
     }
-  ], 
+  ],
   "libraries": [
     "LibCharacter",
     "LibCoin",
