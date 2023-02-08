@@ -13,16 +13,16 @@ contract MerchantCreateSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public onlyOwner returns (bytes memory) {
-    (uint256 location, string memory name) = abi.decode(arguments, (uint256, string));
+    (string memory name, uint256 location) = abi.decode(arguments, (string, uint256));
 
     return abi.encode(LibMerchant.createMerchant(world, components, location, name));
   }
 
-  function executeTyped(uint256 location, string memory name)
+  function executeTyped(string memory name, uint256 location)
     public
     onlyOwner
     returns (bytes memory)
   {
-    return execute(abi.encode(location, name));
+    return execute(abi.encode(name, location));
   }
 }

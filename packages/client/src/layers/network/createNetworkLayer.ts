@@ -1,14 +1,15 @@
+import { createFaucetService } from "@latticexyz/network";
 import { createWorld } from "@latticexyz/recs";
 import { createActionSystem, defineNumberComponent, setupMUDNetwork } from "@latticexyz/std-client";
 import { SystemTypes } from "../../../types/SystemTypes";
 import { SystemAbis } from "../../../types/SystemAbis.mjs";
 import { GameConfig, getNetworkConfig } from "./config";
-import { createFaucetService } from "@latticexyz/network";
 import { defineLoadingStateComponent } from "./componentDefs/LoadingStateComponent";
+import { createAdminAPI } from "./api/admin";
 
 export async function createNetworkLayer(config: GameConfig) {
   const world = createWorld();
-  
+
   const components = {
     Counter: defineNumberComponent(world, {
       metadata: {
@@ -42,6 +43,9 @@ export async function createNetworkLayer(config: GameConfig) {
     return address && faucet?.dripDev({ address });
   }
 
+  const adminAPI = createAdminAPI(systems);
+
+
   // --- CONTEXT --------------------------------------------------------------------
   const context = {
     world,
@@ -52,6 +56,9 @@ export async function createNetworkLayer(config: GameConfig) {
     startSync,
     network,
     actions,
+    api: {
+      admin: adminAPI,
+    },
     faucet,
   };
 
