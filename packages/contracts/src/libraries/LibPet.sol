@@ -119,9 +119,46 @@ library LibPet {
     ERC721OwnedByPetComponent(
       getAddressById(components, ERC721OwnedByPetComponentID)
     ).set(entityID, sender);
+    OperatorComponent(
+      getAddressById(components, OperatorComponentID)
+    ).set(entityID, sender);
 
     return entityID;
   }
+
+  // transfer ERC721 pet
+  function transferPet(
+    IUint256Component components,
+    uint256 nftID,
+    address to
+  ) internal {
+    // does not need to check for previous owner, ERC721 handles it
+
+    uint256 entityID = nftToEntityID(components, nftID);
+
+    ERC721OwnedByPetComponent(
+      getAddressById(components, ERC721OwnedByPetComponentID)
+    ).set(entityID, to);
+    OperatorComponent(
+      getAddressById(components, OperatorComponentID)
+    ).set(entityID, to);
+ 
+  }
+
+  function nftToEntityID(
+    IUint256Component components,
+    uint256 tokenID
+  ) internal view returns (uint256) {
+    ERC721EntityIndexPetComponent indexComp = ERC721EntityIndexPetComponent(
+      getAddressById(components, ERC721EntityIndexPetComponentID)
+    );
+
+    // no check if index exists; returning non existence will revert
+    return indexComp.getEntitiesWithValue(tokenID)[0];
+  }
+
+  /////////////////
+  // Auth
 
   // get pet owner
   function getPetOwner(
@@ -138,24 +175,21 @@ library LibPet {
     return ownedComp.getValue(entityID);
   }
 
-  // get owner or approved
-  // function getPetOwnerOrApproved(
-  //   IUint256Component components,
-  //   uint256 entityID,
-  //   address sender
-  // ) internal view returns (bool) {
-  //   // check for owner
-  //   if(getPetOwner(components, entityID) == sender) {
-  //     // owner!
-  //     return true;
-  //   }
+  // return owner or operator
+  function isPetOwnerOrOperator(
+    IUint256Component components,
+    uint256 entityID,
+    address sender
+  ) internal view returns (bool) {
+    if (getPetOwner(components, entityID) == sender) {
+      // is owner
+      return true;
+    }
 
-  //   PermitPetComponent permitComp = PermitPetComponent(getAddressById(components, PermitPetComponentID));
+    address operator = OperatorComponent(
+      getAddressById(components, OperatorComponentID)
+    ).getValue(entityID);
 
-  //   if (permitComp.getValue(entityID) == sender) {
-  //     return true;
-  //   }
-
-  //   return false;
-  // }
+    return operator==sender;
+  }
 }

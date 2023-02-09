@@ -65,19 +65,11 @@ contract ERC721PetSystem is System, ERC721 {
   *     MUD Hoppers  
   **********************/
   function nftToEntityID(uint256 tokenID) public view returns (uint256) {
-    ERC721EntityIndexPetComponent indexComp = ERC721EntityIndexPetComponent(
-      getAddressById(components, ERC721EntityIndexPetComponentID)
-    );
-
-    // no check if index exists; returning non existence will revert
-    return indexComp.getEntitiesWithValue(tokenID)[0];
+    return LibPet.nftToEntityID(components, tokenID);
   }
 
   function transferFrom(address from, address to, uint256 id) public virtual override {
-    ERC721OwnedByPetComponent(getAddressById(components, ERC721OwnedByPetComponentID)).set(
-      nftToEntityID(id),
-      to
-    );
+    LibPet.transferPet(components, id, to);
     
     super.transferFrom(from, to, id);
   }
