@@ -38,6 +38,7 @@
       "writeAccess": [
         "ERC721EntityIndexPetComponent",
         "ERC721OwnedByPetComponent",
+        "OperatorComponent",
         "MediaURIComponent"
       ]
     },
@@ -84,6 +85,12 @@
       ]
     },
     {
+      "name": "OperatorSetSystem",
+      "writeAccess": [
+        "OperatorComponent"
+      ]
+    },
+    {
       "name": "ProductionCollectSystem",
       "writeAccess": [
         "CoinComponent",
@@ -110,7 +117,7 @@
     }
   ],
   "libraries": [
-    "LibCharacter",
+    "LibOperator",
     "LibCoin",
     "LibInventory",
     "LibMerchant",

@@ -15,7 +15,7 @@
     "devnode": "mud devnode",
     "prepare": "mud types",
     "start": "yarn start:local",
-    "test": "mud test",
+    "test": "mud test && yarn abi:clean",
     "types": "mud types",
     "lint": "yarn prettier && yarn solhint",
     "----- INTERNAL -----": "---------------------------",

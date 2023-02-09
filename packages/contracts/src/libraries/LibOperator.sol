@@ -14,13 +14,8 @@ import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "compon
 import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
-// NOTE(ja): thinking we should handle minting and location movements here as well. It would be
-// good to standardize our libraries to operate around a specific object or set of objects
-library LibCharacter {
-  // // Create a character from an existing NFT. We should migrate ERC721 ownership checks here if possible
-  // function register() internal {}
-
-  // Move a character to a room
+library LibOperator {
+  // Move the operator to a room
   function move(
     IUint256Component components,
     uint256 id,
@@ -69,12 +64,12 @@ library LibCharacter {
   /////////////////
   // COMPONENT RETRIEVAL
 
-  // gets the location of a specified character
+  // gets the location of a specified operator
   function getLocation(IUint256Component components, uint256 id) internal view returns (uint256) {
     return LocationComponent(getAddressById(components, LocCompID)).getValue(id);
   }
 
-  // get the operating wallet of a specified character
+  // get the operating wallet of a specified pet
   function getOperator(IUint256Component components, uint256 charID)
     internal
     view

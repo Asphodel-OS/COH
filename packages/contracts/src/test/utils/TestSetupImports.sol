@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "std-contracts/test/MudTest.t.sol";
 
 // Libraries
-import "libraries/LibCharacter.sol";
+import "libraries/LibOperator.sol";
 import "libraries/LibCoin.sol";
 import "libraries/LibInventory.sol";
 import "libraries/LibMerchant.sol";
@@ -53,6 +53,7 @@ import { ListingSellSystem, ID as ListingSellSystemID } from "systems/ListingSel
 import { ListingSetSystem, ID as ListingSetSystemID } from "systems/ListingSetSystem.sol";
 import { MerchantCreateSystem, ID as MerchantCreateSystemID } from "systems/MerchantCreateSystem.sol";
 import { NodeCreateSystem, ID as NodeCreateSystemID } from "systems/NodeCreateSystem.sol";
+import { OperatorSetSystem, ID as OperatorSetSystemID } from "systems/OperatorSetSystem.sol";
 import { ProductionCollectSystem, ID as ProductionCollectSystemID } from "systems/ProductionCollectSystem.sol";
 import { ProductionStartSystem, ID as ProductionStartSystemID } from "systems/ProductionStartSystem.sol";
 import { ProductionStopSystem, ID as ProductionStopSystemID } from "systems/ProductionStopSystem.sol";
@@ -98,6 +99,7 @@ ListingSellSystem _ListingSellSystem;
 ListingSetSystem _ListingSetSystem;
 MerchantCreateSystem _MerchantCreateSystem;
 NodeCreateSystem _NodeCreateSystem;
+OperatorSetSystem _OperatorSetSystem;
 ProductionCollectSystem _ProductionCollectSystem;
 ProductionStartSystem _ProductionStartSystem;
 ProductionStopSystem _ProductionStopSystem;
@@ -143,6 +145,7 @@ _ListingSellSystem = ListingSellSystem(system(ListingSellSystemID));
 _ListingSetSystem = ListingSetSystem(system(ListingSetSystemID));
 _MerchantCreateSystem = MerchantCreateSystem(system(MerchantCreateSystemID));
 _NodeCreateSystem = NodeCreateSystem(system(NodeCreateSystemID));
+_OperatorSetSystem = OperatorSetSystem(system(OperatorSetSystemID));
 _ProductionCollectSystem = ProductionCollectSystem(system(ProductionCollectSystemID));
 _ProductionStartSystem = ProductionStartSystem(system(ProductionStartSystemID));
 _ProductionStopSystem = ProductionStopSystem(system(ProductionStopSystemID));

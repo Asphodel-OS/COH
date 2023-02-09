@@ -5,7 +5,7 @@ import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById } from "solecs/utils.sol";
 
-import { LibCharacter } from "libraries/LibCharacter.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
 import { LibCoin } from "libraries/LibCoin.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { Strings } from "utils/Strings.sol";
@@ -19,8 +19,8 @@ contract ProductionStopSystem is System {
   function execute(bytes memory arguments) public returns (bytes memory) {
     (uint256 charID, uint256 productionID) = abi.decode(arguments, (uint256, uint256));
     uint256 nodeID = LibProduction.getNode(components, productionID);
-    require(LibCharacter.getOperator(components, charID) == msg.sender, "Character: not urs");
-    require(LibCharacter.sharesLocation(components, charID, nodeID), "Node: must be in room");
+    require(LibOperator.getOperator(components, charID) == msg.sender, "Character: not urs");
+    require(LibOperator.sharesLocation(components, charID, nodeID), "Node: must be in room");
     require(
       Strings.equal(LibProduction.getState(components, productionID), "ACTIVE"),
       "Production: must be active"

@@ -33,6 +33,7 @@ export type { MerchantCreateSystem } from "./MerchantCreateSystem";
 export type { NameComponent } from "./NameComponent";
 export type { NodeCreateSystem } from "./NodeCreateSystem";
 export type { OperatorComponent } from "./OperatorComponent";
+export type { OperatorSetSystem } from "./OperatorSetSystem";
 export type { PriceBuyComponent } from "./PriceBuyComponent";
 export type { PriceSellComponent } from "./PriceSellComponent";
 export type { ProductionCollectSystem } from "./ProductionCollectSystem";
@@ -45,7 +46,6 @@ export type { TimeLastActionComponent } from "./TimeLastActionComponent";
 export type { TimeStartComponent } from "./TimeStartComponent";
 export type { Uint256ArrayBareComponent } from "./Uint256ArrayBareComponent";
 export type { Uint256BareComponent } from "./Uint256BareComponent";
-export type { Uint256Component } from "./Uint256Component";
 export * as factories from "./factories";
 export { AddressComponent__factory } from "./factories/AddressComponent__factory";
 export { BalanceComponent__factory } from "./factories/BalanceComponent__factory";
@@ -79,6 +79,7 @@ export { MerchantCreateSystem__factory } from "./factories/MerchantCreateSystem_
 export { NameComponent__factory } from "./factories/NameComponent__factory";
 export { NodeCreateSystem__factory } from "./factories/NodeCreateSystem__factory";
 export { OperatorComponent__factory } from "./factories/OperatorComponent__factory";
+export { OperatorSetSystem__factory } from "./factories/OperatorSetSystem__factory";
 export { PriceBuyComponent__factory } from "./factories/PriceBuyComponent__factory";
 export { PriceSellComponent__factory } from "./factories/PriceSellComponent__factory";
 export { ProductionCollectSystem__factory } from "./factories/ProductionCollectSystem__factory";
@@ -91,4 +92,3 @@ export { TimeLastActionComponent__factory } from "./factories/TimeLastActionComp
 export { TimeStartComponent__factory } from "./factories/TimeStartComponent__factory";
 export { Uint256ArrayBareComponent__factory } from "./factories/Uint256ArrayBareComponent__factory";
 export { Uint256BareComponent__factory } from "./factories/Uint256BareComponent__factory";
-export { Uint256Component__factory } from "./factories/Uint256Component__factory";
