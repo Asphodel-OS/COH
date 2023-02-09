@@ -74,6 +74,28 @@ library LibPet {
   }
 
   /////////////////
+  // OPERATORS
+  function getOperator(
+    IUint256Component components,
+    uint256 entityID
+  ) internal view returns (address) {
+    return OperatorComponent(
+      getAddressById(components, OperatorComponentID)
+    ).getValue(entityID);
+  }
+
+  function changeOperator(
+    IUint256Component components,
+    uint256 entityID,
+    address to
+  ) internal {
+   OperatorComponent(
+      getAddressById(components, OperatorComponentID)
+    ).set(entityID, to); 
+  }
+
+
+  /////////////////
   // QUERIES
 
   // Get the production of a pet. Return 0 if there are none.
@@ -186,9 +208,7 @@ library LibPet {
       return true;
     }
 
-    address operator = OperatorComponent(
-      getAddressById(components, OperatorComponentID)
-    ).getValue(entityID);
+    address operator = getOperator(components, entityID);
 
     return operator==sender;
   }

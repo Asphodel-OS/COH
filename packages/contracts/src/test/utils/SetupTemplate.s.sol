@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
 
-import "./utils/TestSetupImports.sol";
+import "./TestSetupImports.sol";
+
+import { Deploy } from "test/Deploy.sol";
+import "std-contracts/test/MudTest.t.sol";
 
 abstract contract SetupTemplate is TestSetupImports {
   uint256 petOneEntityID;
@@ -9,6 +12,8 @@ abstract contract SetupTemplate is TestSetupImports {
   uint256 petThreeEntityID;
 
   address constant _deployerAddress = address(0);
+  
+  constructor() MudTest(new Deploy()) {}
 
   function setUp() public virtual override {
     super.setUp();
@@ -30,8 +35,12 @@ abstract contract SetupTemplate is TestSetupImports {
     return _ERC721PetSystem.mint(addy);
   }
 
-  function _petIDToEntityID(uint256 id) internal virtual returns (uint256) {
-    // may introduce unchecked error if no ID minted
-    return _ERC721PetSystem.nftToEntityID(id);
+  function _transferPetNFT(
+    address from,
+    address to,
+    uint256 nftID
+  ) internal {
+    vm.prank(from);
+    _ERC721PetSystem.transferFrom(from, to, nftID);
   }
 }

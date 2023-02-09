@@ -38,6 +38,7 @@
       "writeAccess": [
         "ERC721EntityIndexPetComponent",
         "ERC721OwnedByPetComponent",
+        "OperatorComponent",
         "MediaURIComponent"
       ]
     },
@@ -81,6 +82,12 @@
         "IsNodeComponent",
         "NameComponent",
         "LocationComponent"
+      ]
+    },
+    {
+      "name": "OperatorSetSystem",
+      "writeAccess": [
+        "OperatorComponent"
       ]
     },
     {

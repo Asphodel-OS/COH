@@ -68,12 +68,36 @@ contract ERC721PetSystem is System, ERC721 {
     return LibPet.nftToEntityID(components, tokenID);
   }
 
-  function transferFrom(address from, address to, uint256 id) public virtual override {
+  function transferFrom(
+    address from, 
+    address to, 
+    uint256 id
+  ) public virtual override {
     LibPet.transferPet(components, id, to);
     
     super.transferFrom(from, to, id);
   }
 
+  function safeTransferFrom(
+    address from,
+    address to,
+    uint256 id
+  ) public virtual override {
+    LibPet.transferPet(components, id, to);
+
+    super.safeTransferFrom(from, to, id);
+  }
+
+  function safeTransferFrom(
+    address from,
+    address to,
+    uint256 id, 
+    bytes calldata data
+  ) public virtual override {
+    LibPet.transferPet(components, id, to);
+
+    super.safeTransferFrom(from, to, id, data);
+  }
   // required for MUD, not in use
   function execute(bytes memory arguments) public pure returns (bytes memory) {
     require(false, "execute not available");

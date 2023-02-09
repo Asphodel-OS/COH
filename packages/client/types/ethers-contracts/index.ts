@@ -33,6 +33,7 @@ export type { MerchantCreateSystem } from "./MerchantCreateSystem";
 export type { NameComponent } from "./NameComponent";
 export type { NodeCreateSystem } from "./NodeCreateSystem";
 export type { OperatorComponent } from "./OperatorComponent";
+export type { OperatorSetSystem } from "./OperatorSetSystem";
 export type { PriceBuyComponent } from "./PriceBuyComponent";
 export type { PriceSellComponent } from "./PriceSellComponent";
 export type { ProductionCollectSystem } from "./ProductionCollectSystem";
@@ -78,6 +79,7 @@ export { MerchantCreateSystem__factory } from "./factories/MerchantCreateSystem_
 export { NameComponent__factory } from "./factories/NameComponent__factory";
 export { NodeCreateSystem__factory } from "./factories/NodeCreateSystem__factory";
 export { OperatorComponent__factory } from "./factories/OperatorComponent__factory";
+export { OperatorSetSystem__factory } from "./factories/OperatorSetSystem__factory";
 export { PriceBuyComponent__factory } from "./factories/PriceBuyComponent__factory";
 export { PriceSellComponent__factory } from "./factories/PriceSellComponent__factory";
 export { ProductionCollectSystem__factory } from "./factories/ProductionCollectSystem__factory";
