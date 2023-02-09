@@ -9,6 +9,8 @@ import { getAddressById } from "solecs/utils.sol";
 
 import { ERC721 } from "solmate/tokens/ERC721.sol";
 
+import { LibPet } from "libraries/LibPet.sol";
+
 import { ERC721OwnedByPetComponent, ID as ERC721OwnedByPetComponentID } from "components/ERC721OwnedByPetComponent.sol";
 import { ERC721EntityIndexPetComponent, ID as ERC721EntityIndexPetComponentID } from "components/ERC721EntityIndexPetComponent.sol";
 import { MediaURIComponent, ID as MediaURIComponentID } from "components/MediaURIComponent.sol";
@@ -39,14 +41,7 @@ contract ERC721PetSystem is System, ERC721 {
   function mint(address to) public returns (uint256) {
     // require(tx.origin == msg.sender, "no contracts");
 
-    uint256 entityID = world.getUniqueEntityId();
-
-    ERC721EntityIndexPetComponent(
-      getAddressById(components, ERC721EntityIndexPetComponentID)
-    ).set(entityID, totalSupply);    
-    ERC721OwnedByPetComponent(
-      getAddressById(components, ERC721OwnedByPetComponentID)
-    ).set(entityID, to);
+    uint256 entityID = LibPet.createPet(components, world, totalSupply, to);
 
     // set metadata component
     //  here!

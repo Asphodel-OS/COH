@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "std-contracts/test/MudTest.t.sol";
 
 // Libraries
-import "libraries/LibCharacter.sol";
+import "libraries/LibOperator.sol";
 import "libraries/LibCoin.sol";
 import "libraries/LibInventory.sol";
 import "libraries/LibMerchant.sol";

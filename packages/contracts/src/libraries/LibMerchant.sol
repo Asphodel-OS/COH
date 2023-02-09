@@ -15,7 +15,7 @@ import { LocationComponent, ID as LocationComponentID } from "components/Locatio
 import { PriceBuyComponent, ID as PriceBuyComponentID } from "components/PriceBuyComponent.sol";
 import { PriceSellComponent, ID as PriceSellComponentID } from "components/PriceSellComponent.sol";
 import { IndexItemComponent, ID as IndexItemComponentID } from "components/IndexItemComponent.sol";
-import { LibCharacter } from "libraries/LibCharacter.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
 import { LibCoin } from "libraries/LibCoin.sol";
 import { LibInventory } from "libraries/LibInventory.sol";
 
@@ -177,7 +177,7 @@ library LibMerchant {
     uint256 charID
   ) internal view returns (bool can) {
     uint256 merchantID = getListingMerchantID(components, listingID);
-    return getLocation(components, merchantID) == LibCharacter.getLocation(components, charID);
+    return getLocation(components, merchantID) == LibOperator.getLocation(components, charID);
   }
 
   // gets all listings from a merchant

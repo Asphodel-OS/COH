@@ -8,6 +8,10 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
+import { ERC721OwnedByPetComponent, ID as ERC721OwnedByPetComponentID } from "components/ERC721OwnedByPetComponent.sol";
+import { ERC721EntityIndexPetComponent, ID as ERC721EntityIndexPetComponentID } from "components/ERC721EntityIndexPetComponent.sol";
+import { MediaURIComponent, ID as MediaURIComponentID } from "components/MediaURIComponent.sol";
+import { OperatorComponent, ID as OperatorComponentID } from "components/OperatorComponent.sol";
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { HashRateComponent, ID as HashRateCompID } from "components/HashRateComponent.sol";
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
@@ -96,4 +100,62 @@ library LibPet {
       result = results[0];
     }
   }
+
+  /////////////////
+  // ERC721
+
+  // create pet
+  function createPet(
+    IUint256Component components,
+    IWorld world,
+    uint256 nftID,
+    address sender
+  ) internal returns (uint256) {
+    uint256 entityID = world.getUniqueEntityId();
+    
+    ERC721EntityIndexPetComponent(
+      getAddressById(components, ERC721EntityIndexPetComponentID)
+    ).set(entityID, nftID);    
+    ERC721OwnedByPetComponent(
+      getAddressById(components, ERC721OwnedByPetComponentID)
+    ).set(entityID, sender);
+
+    return entityID;
+  }
+
+  // get pet owner
+  function getPetOwner(
+    IUint256Component components,
+    uint256 entityID
+  ) internal view returns (address) {
+    ERC721OwnedByPetComponent ownedComp = ERC721OwnedByPetComponent(
+      getAddressById(components, ERC721OwnedByPetComponentID)
+    ); 
+
+    // check if exists, can remove for optimisation
+    require(ownedComp.has(entityID), "pet does not exist");
+
+    return ownedComp.getValue(entityID);
+  }
+
+  // get owner or approved
+  // function getPetOwnerOrApproved(
+  //   IUint256Component components,
+  //   uint256 entityID,
+  //   address sender
+  // ) internal view returns (bool) {
+  //   // check for owner
+  //   if(getPetOwner(components, entityID) == sender) {
+  //     // owner!
+  //     return true;
+  //   }
+
+  //   PermitPetComponent permitComp = PermitPetComponent(getAddressById(components, PermitPetComponentID));
+
+  //   if (permitComp.getValue(entityID) == sender) {
+  //     return true;
+  //   }
+
+  //   return false;
+  // }
 }

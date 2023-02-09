@@ -110,7 +110,7 @@
     }
   ],
   "libraries": [
-    "LibCharacter",
+    "LibOperator",
     "LibCoin",
     "LibInventory",
     "LibMerchant",
