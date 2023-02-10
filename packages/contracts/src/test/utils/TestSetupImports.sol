@@ -28,6 +28,7 @@ import { IndexModifierComponent, ID as IndexModifierComponentID } from "componen
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
 import { IsInventoryComponent, ID as IsInventoryComponentID } from "components/IsInventoryComponent.sol";
 import { IsMerchantComponent, ID as IsMerchantComponentID } from "components/IsMerchantComponent.sol";
+import { IsModifierComponent, ID as IsModifierComponentID } from "components/IsModifierComponent.sol";
 import { IsNodeComponent, ID as IsNodeComponentID } from "components/IsNodeComponent.sol";
 import { IsOperatorComponent, ID as IsOperatorComponentID } from "components/IsOperatorComponent.sol";
 import { IsPetComponent, ID as IsPetComponentID } from "components/IsPetComponent.sol";
@@ -77,6 +78,7 @@ IndexModifierComponent _IndexModifierComponent;
 IndexPetComponent _IndexPetComponent;
 IsInventoryComponent _IsInventoryComponent;
 IsMerchantComponent _IsMerchantComponent;
+IsModifierComponent _IsModifierComponent;
 IsNodeComponent _IsNodeComponent;
 IsOperatorComponent _IsOperatorComponent;
 IsPetComponent _IsPetComponent;
@@ -127,6 +129,7 @@ _IndexModifierComponent = IndexModifierComponent(component(IndexModifierComponen
 _IndexPetComponent = IndexPetComponent(component(IndexPetComponentID));
 _IsInventoryComponent = IsInventoryComponent(component(IsInventoryComponentID));
 _IsMerchantComponent = IsMerchantComponent(component(IsMerchantComponentID));
+_IsModifierComponent = IsModifierComponent(component(IsModifierComponentID));
 _IsNodeComponent = IsNodeComponent(component(IsNodeComponentID));
 _IsOperatorComponent = IsOperatorComponent(component(IsOperatorComponentID));
 _IsPetComponent = IsPetComponent(component(IsPetComponentID));
