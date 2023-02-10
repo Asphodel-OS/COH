@@ -6,9 +6,8 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { IdCharacterComponent, ID as IdCharCompID } from "components/IdCharacterComponent.sol";
+import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComponent.sol";
 import { IdNodeComponent, ID as IdNodeCompID } from "components/IdNodeComponent.sol";
-import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IdPetComponent, ID as IdPetCompID } from "components/IdPetComponent.sol";
 import { IsProductionComponent, ID as IsProdCompID } from "components/IsProductionComponent.sol";
 import { StateComponent, ID as StateCompID } from "components/StateComponent.sol";
@@ -26,13 +25,13 @@ library LibProduction {
     IWorld world,
     IUintComp components,
     uint256 nodeID,
-    uint256 charID,
+    uint256 operatorID,
     uint256 petID
   ) internal returns (uint256) {
     uint256 id = world.getUniqueEntityId();
     IsProductionComponent(getAddressById(components, IsProdCompID)).set(id);
     IdNodeComponent(getAddressById(components, IdNodeCompID)).set(id, nodeID);
-    IdCharacterComponent(getAddressById(components, IdCharCompID)).set(id, charID);
+    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
     IdPetComponent(getAddressById(components, IdPetCompID)).set(id, petID);
     StateComponent(getAddressById(components, StateCompID)).set(id, string("ACTIVE"));
     TimeStartComponent(getAddressById(components, TimeStartCompID)).set(id, block.timestamp);
@@ -46,8 +45,8 @@ library LibProduction {
 
   // Starts an _existing_ production if not already started. Update the owning character as needed.
   function start(IUintComp components, uint256 id) internal {
-    uint256 ownerID = IdOwnerComponent(getAddressById(components, IdOwnerCompID)).getValue(id);
-    IdCharacterComponent(getAddressById(components, IdCharCompID)).set(id, ownerID);
+    uint256 ownerID = IdOperatorComponent(getAddressById(components, IdOpCompID)).getValue(id);
+    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, ownerID);
 
     StateComponent StateC = StateComponent(getAddressById(components, StateCompID));
     if (!StateC.hasValue(id, "ACTIVE")) {
@@ -99,8 +98,8 @@ library LibProduction {
     return IdNodeComponent(getAddressById(components, IdNodeCompID)).getValue(id);
   }
 
-  function getCharacter(IUintComp components, uint256 id) internal view returns (uint256) {
-    return IdCharacterComponent(getAddressById(components, IdCharCompID)).getValue(id);
+  function getOperator(IUintComp components, uint256 id) internal view returns (uint256) {
+    return IdOperatorComponent(getAddressById(components, IdOpCompID)).getValue(id);
   }
 
   function getPet(IUintComp components, uint256 id) internal view returns (uint256) {
@@ -115,25 +114,25 @@ library LibProduction {
   // QUERIES
 
   // Retrieves all active productions of a character
-  function getAllActiveForCharacter(IUintComp components, uint256 charID)
+  function getAllActiveForCharacter(IUintComp components, uint256 operatorID)
     internal
     view
     returns (uint256[] memory)
   {
-    return _getAllX(components, 0, charID, 0, "ACTIVE");
+    return _getAllX(components, 0, operatorID, 0, "ACTIVE");
   }
 
   // Retrieves all productions based on any defined filters
   function _getAllX(
     IUintComp components,
     uint256 nodeID,
-    uint256 charID,
+    uint256 operatorID,
     uint256 petID,
     string memory state
   ) internal view returns (uint256[] memory) {
     uint256 numFilters;
     if (nodeID != 0) numFilters++;
-    if (charID != 0) numFilters++;
+    if (operatorID != 0) numFilters++;
     if (petID != 0) numFilters++;
     if (!Strings.equal(state, "")) numFilters++;
 
@@ -148,11 +147,11 @@ library LibProduction {
         abi.encode(nodeID)
       );
     }
-    if (charID != 0) {
+    if (operatorID != 0) {
       fragments[++filterCount] = QueryFragment(
         QueryType.HasValue,
-        getComponentById(components, IdCharCompID),
-        abi.encode(charID)
+        getComponentById(components, IdOpCompID),
+        abi.encode(operatorID)
       );
     }
     if (petID != 0) {

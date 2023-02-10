@@ -2,20 +2,20 @@
   "components": [
     "BalanceComponent",
     "CoinComponent",
-    "ERC721EntityIndexPetComponent",
     "ERC721OwnedByPetComponent",
     "ExitsComponent",
     "HashRateComponent",
-    "IdCharacterComponent",
     "IdMerchantComponent",
     "IdNodeComponent",
+    "IdOperatorComponent",
     "IdOwnerComponent",
     "IdPetComponent",
     "IndexItemComponent",
-    "IsCharacterComponent",
+    "IndexPetComponent",
     "IsInventoryComponent",
     "IsMerchantComponent",
     "IsNodeComponent",
+    "IsOperatorComponent",
     "IsPetComponent",
     "IsProductionComponent",
     "IsRegistryEntryComponent",
@@ -24,7 +24,6 @@
     "MediaURIComponent",
     "NameComponent",
     "NumCoresComponent",
-    "OperatorComponent",
     "PriceBuyComponent",
     "PriceSellComponent",
     "StateComponent",
@@ -36,7 +35,7 @@
     {
       "name": "ERC721PetSystem",
       "writeAccess": [
-        "ERC721EntityIndexPetComponent",
+        "IndexPetComponent",
         "ERC721OwnedByPetComponent",
         "OperatorComponent",
         "MediaURIComponent"
@@ -102,7 +101,7 @@
       "writeAccess": [
         "IsProductionComponent",
         "IdNodeComponent",
-        "IdCharacterComponent",
+        "IdOperatorComponent",
         "IdPetComponent",
         "StateComponent",
         "TimeStartComponent"
@@ -117,7 +116,7 @@
     }
   ],
   "libraries": [
-    "LibCharacter",
+    "LibOperator",
     "LibCoin",
     "LibInventory",
     "LibMerchant",

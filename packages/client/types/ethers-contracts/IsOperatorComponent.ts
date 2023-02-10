@@ -27,11 +27,11 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface ERC721OwnedByPetComponentInterface extends utils.Interface {
+export interface IsOperatorComponentInterface extends utils.Interface {
   functions: {
     "authorizeWriter(address)": FunctionFragment;
     "getEntities()": FunctionFragment;
-    "getEntitiesWithValue(address)": FunctionFragment;
+    "getEntitiesWithValue(bool)": FunctionFragment;
     "getEntitiesWithValue(bytes)": FunctionFragment;
     "getRawValue(uint256)": FunctionFragment;
     "getSchema()": FunctionFragment;
@@ -42,7 +42,7 @@ export interface ERC721OwnedByPetComponentInterface extends utils.Interface {
     "registerIndexer(address)": FunctionFragment;
     "registerWorld(address)": FunctionFragment;
     "remove(uint256)": FunctionFragment;
-    "set(uint256,address)": FunctionFragment;
+    "set(uint256)": FunctionFragment;
     "set(uint256,bytes)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unauthorizeWriter(address)": FunctionFragment;
@@ -54,7 +54,7 @@ export interface ERC721OwnedByPetComponentInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "authorizeWriter"
       | "getEntities"
-      | "getEntitiesWithValue(address)"
+      | "getEntitiesWithValue(bool)"
       | "getEntitiesWithValue(bytes)"
       | "getRawValue"
       | "getSchema"
@@ -65,7 +65,7 @@ export interface ERC721OwnedByPetComponentInterface extends utils.Interface {
       | "registerIndexer"
       | "registerWorld"
       | "remove"
-      | "set(uint256,address)"
+      | "set(uint256)"
       | "set(uint256,bytes)"
       | "transferOwnership"
       | "unauthorizeWriter"
@@ -82,8 +82,8 @@ export interface ERC721OwnedByPetComponentInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getEntitiesWithValue(address)",
-    values: [PromiseOrValue<string>]
+    functionFragment: "getEntitiesWithValue(bool)",
+    values: [PromiseOrValue<boolean>]
   ): string;
   encodeFunctionData(
     functionFragment: "getEntitiesWithValue(bytes)",
@@ -117,8 +117,8 @@ export interface ERC721OwnedByPetComponentInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "set(uint256,address)",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: "set(uint256)",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "set(uint256,bytes)",
@@ -147,7 +147,7 @@ export interface ERC721OwnedByPetComponentInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getEntitiesWithValue(address)",
+    functionFragment: "getEntitiesWithValue(bool)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -173,7 +173,7 @@ export interface ERC721OwnedByPetComponentInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "remove", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "set(uint256,address)",
+    functionFragment: "set(uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -213,12 +213,12 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface ERC721OwnedByPetComponent extends BaseContract {
+export interface IsOperatorComponent extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ERC721OwnedByPetComponentInterface;
+  interface: IsOperatorComponentInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -247,8 +247,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
 
     getEntities(overrides?: CallOverrides): Promise<[BigNumber[]]>;
 
-    "getEntitiesWithValue(address)"(
-      value: PromiseOrValue<string>,
+    "getEntitiesWithValue(bool)"(
+      value: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
@@ -269,7 +269,7 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
     getValue(
       entity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<[boolean]>;
 
     has(
       entity: PromiseOrValue<BigNumberish>,
@@ -295,9 +295,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "set(uint256,address)"(
+    "set(uint256)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -332,8 +331,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
 
   getEntities(overrides?: CallOverrides): Promise<BigNumber[]>;
 
-  "getEntitiesWithValue(address)"(
-    value: PromiseOrValue<string>,
+  "getEntitiesWithValue(bool)"(
+    value: PromiseOrValue<boolean>,
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
@@ -354,7 +353,7 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
   getValue(
     entity: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<string>;
+  ): Promise<boolean>;
 
   has(
     entity: PromiseOrValue<BigNumberish>,
@@ -380,9 +379,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "set(uint256,address)"(
+  "set(uint256)"(
     entity: PromiseOrValue<BigNumberish>,
-    value: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -417,8 +415,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
 
     getEntities(overrides?: CallOverrides): Promise<BigNumber[]>;
 
-    "getEntitiesWithValue(address)"(
-      value: PromiseOrValue<string>,
+    "getEntitiesWithValue(bool)"(
+      value: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
@@ -439,7 +437,7 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
     getValue(
       entity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<string>;
+    ): Promise<boolean>;
 
     has(
       entity: PromiseOrValue<BigNumberish>,
@@ -465,9 +463,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "set(uint256,address)"(
+    "set(uint256)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -514,8 +511,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
 
     getEntities(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "getEntitiesWithValue(address)"(
-      value: PromiseOrValue<string>,
+    "getEntitiesWithValue(bool)"(
+      value: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -560,9 +557,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "set(uint256,address)"(
+    "set(uint256)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -598,8 +594,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
 
     getEntities(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "getEntitiesWithValue(address)"(
-      value: PromiseOrValue<string>,
+    "getEntitiesWithValue(bool)"(
+      value: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -644,9 +640,8 @@ export interface ERC721OwnedByPetComponent extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "set(uint256,address)"(
+    "set(uint256)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

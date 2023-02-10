@@ -15,7 +15,7 @@ import { LocationComponent, ID as LocationComponentID } from "components/Locatio
 import { PriceBuyComponent, ID as PriceBuyComponentID } from "components/PriceBuyComponent.sol";
 import { PriceSellComponent, ID as PriceSellComponentID } from "components/PriceSellComponent.sol";
 import { IndexItemComponent, ID as IndexItemComponentID } from "components/IndexItemComponent.sol";
-import { LibCharacter } from "libraries/LibCharacter.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
 import { LibCoin } from "libraries/LibCoin.sol";
 import { LibInventory } from "libraries/LibInventory.sol";
 
@@ -124,7 +124,7 @@ library LibMerchant {
   function buyFromListing(
     IWorld world,
     IUint256Component components,
-    uint256 charID,
+    uint256 operatorID,
     uint256 listingID,
     uint256 amt
   ) internal returns (bool) {
@@ -137,19 +137,19 @@ library LibMerchant {
       return false;
     }
 
-    uint256 inventoryID = LibInventory.get(components, charID, itemIndex);
+    uint256 inventoryID = LibInventory.get(components, operatorID, itemIndex);
     if (inventoryID == 0) {
-      LibInventory.create(world, components, charID, itemIndex);
+      LibInventory.create(world, components, operatorID, itemIndex);
     }
     LibInventory.incBalance(components, inventoryID, amt);
-    LibCoin.decBalance(components, charID, amt * price);
+    LibCoin.decBalance(components, operatorID, amt * price);
     return true;
   }
 
   // processes a sell for amt of item from a character to a listing
   function sellToListing(
     IUint256Component components,
-    uint256 charID,
+    uint256 operatorID,
     uint256 listingID,
     uint256 amt
   ) internal returns (bool) {
@@ -162,9 +162,9 @@ library LibMerchant {
       return false;
     }
 
-    uint256 inventoryID = LibInventory.get(components, charID, itemIndex);
+    uint256 inventoryID = LibInventory.get(components, operatorID, itemIndex);
     LibInventory.decBalance(components, inventoryID, amt);
-    LibCoin.incBalance(components, charID, amt * price);
+    LibCoin.incBalance(components, operatorID, amt * price);
     return true;
   }
 
@@ -174,10 +174,10 @@ library LibMerchant {
   function canTransactWithListing(
     IUint256Component components,
     uint256 listingID,
-    uint256 charID
+    uint256 operatorID
   ) internal view returns (bool can) {
     uint256 merchantID = getListingMerchantID(components, listingID);
-    return getLocation(components, merchantID) == LibCharacter.getLocation(components, charID);
+    return getLocation(components, merchantID) == LibOperator.getLocation(components, operatorID);
   }
 
   // gets all listings from a merchant

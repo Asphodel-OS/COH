@@ -8,7 +8,7 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { IdOwnerComponent, ID as IdOwnerComponentID } from "components/IdOwnerComponent.sol";
+import { IdOperatorComponent, ID as IdOperatorComponentID } from "components/IdOperatorComponent.sol";
 import { IndexItemComponent, ID as IndexItemComponentID } from "components/IndexItemComponent.sol";
 import { IsInventoryComponent, ID as IsInventoryComponentID } from "components/IsInventoryComponent.sol";
 import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
@@ -22,12 +22,12 @@ library LibInventory {
   function create(
     IWorld world,
     IUint256Component components,
-    uint256 entityID,
+    uint256 operatorID,
     uint256 itemIndex
   ) internal returns (uint256) {
     uint256 id = world.getUniqueEntityId();
     IsInventoryComponent(getAddressById(components, IsInventoryComponentID)).set(id);
-    IdOwnerComponent(getAddressById(components, IdOwnerComponentID)).set(id, entityID);
+    IdOperatorComponent(getAddressById(components, IdOperatorComponentID)).set(id, operatorID);
     IndexItemComponent(getAddressById(components, IndexItemComponentID)).set(id, itemIndex);
     return id;
   }
@@ -35,7 +35,7 @@ library LibInventory {
   // get the id of an inventory entity based on owner ID and item index
   function get(
     IUint256Component components,
-    uint256 entityID,
+    uint256 operatorID,
     uint256 itemIndex
   ) internal view returns (uint256) {
     QueryFragment[] memory fragments = new QueryFragment[](3);
@@ -46,8 +46,8 @@ library LibInventory {
     );
     fragments[1] = QueryFragment(
       QueryType.HasValue,
-      getComponentById(components, IdOwnerComponentID),
-      abi.encode(entityID)
+      getComponentById(components, IdOperatorComponentID),
+      abi.encode(operatorID)
     );
     fragments[2] = QueryFragment(
       QueryType.HasValue,
@@ -77,7 +77,7 @@ library LibInventory {
     );
     fragments[1] = QueryFragment(
       QueryType.HasValue,
-      getComponentById(components, IdOwnerComponentID),
+      getComponentById(components, IdOperatorComponentID),
       abi.encode(id)
     );
 
