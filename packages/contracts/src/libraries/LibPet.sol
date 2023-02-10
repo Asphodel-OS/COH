@@ -6,12 +6,11 @@ import { IUint256Component } from "solecs/interfaces/IUint256Component.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
-import { getAddressById, getComponentById } from "solecs/utils.sol";
+import { getAddressById, getComponentById, entityToAddress, addressToEntity } from "solecs/utils.sol";
 
 import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComponent.sol";
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
-import { AddressComponent, ID as AddressCompID } from "components/AddressComponent.sol";
 import { HashRateComponent, ID as HashRateCompID } from "components/HashRateComponent.sol";
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
@@ -24,12 +23,13 @@ library LibPet {
   // TODO: include attributes in this generation
   function create(
     IUint256Component components,
+    IWorld world,
     address owner,
     uint256 index
   ) internal returns (uint256) {
     uint256 id = world.getUniqueEntityId();
-    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, uint256(uint160(owner)));
-    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, uint256(uint160(owner)));
+    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
+    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, addressToEntity(owner));
     IndexPetComponent(getAddressById(components, IndexPetComponentID)).set(id, index);
     return id;
   }
@@ -110,28 +110,6 @@ library LibPet {
   }
 
   /////////////////
-  // OPERATORS
-  function getOperator(
-    IUint256Component components,
-    uint256 entityID
-  ) internal view returns (address) {
-    return OperatorComponent(
-      getAddressById(components, OperatorComponentID)
-    ).getValue(entityID);
-  }
-
-  function changeOperator(
-    IUint256Component components,
-    uint256 entityID,
-    address to
-  ) internal {
-   OperatorComponent(
-      getAddressById(components, OperatorComponentID)
-    ).set(entityID, to); 
-  }
-
-
-  /////////////////
   // QUERIES
 
   // get the entity ID of a pet from its index (tokenID)
@@ -185,19 +163,18 @@ library LibPet {
   ) internal {
     // does not need to check for previous owner, ERC721 handles it
     uint256 id = indexToID(components, index);
-    uint256 toID = uint256(uint160(to));
+    uint256 toID = addressToEntity(to);
     setOwner(components, id, toID);
     setOperator(components, id, toID);
   }
 
   // return whether owner or operator
-  // NOTE: is this function necessary?
   function isOwnerOrOperator(
     IUint256Component components,
     uint256 id,
     address sender
   ) internal view returns (bool) {
-    uint256 senderAsID = uint256(uint160(sender));
+    uint256 senderAsID = addressToEntity(sender);
     return getOwner(components, id) == senderAsID || getOperator(components, id) == senderAsID;
   }
 }

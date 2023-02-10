@@ -64,7 +64,7 @@ library LibPrototype {
     uint256 entityID
   ) internal {
     require(
-      PrototypeComponent(getAddressById(components, PrototypeComponentID)).has(prototypeID),
+      PrototypeComponent(getAddressById(components, PrototypeComponentID)).has(entityID),
       "Trying to delete non-existing prototype"
     ); 
 

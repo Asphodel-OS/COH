@@ -9,10 +9,10 @@ contract ERC721PetTest is SetupTemplate {
     address addy
   ) internal {
     // owner and component must be the same
-    uint256 entityID = LibPet.nftToEntityID(components, tokenID);
+    uint256 entityID = LibPet.indexToID(components, tokenID);
     assertEq(
       _ERC721PetSystem.ownerOf(tokenID),
-      _ERC721OwnedByPetComponent.getValue(entityID)
+      entityToAddress(_IdOwnerComponent.getValue(entityID))
     );
     assertEq(
       _ERC721PetSystem.ownerOf(tokenID),
@@ -25,8 +25,8 @@ contract ERC721PetTest is SetupTemplate {
     address operator
   ) internal {
     assertEq(
-      _OperatorComponent.getValue(entityID),
-      operator
+      _IdOperatorComponent.getValue(entityID),
+      addressToEntity(operator)
     );
   }
 

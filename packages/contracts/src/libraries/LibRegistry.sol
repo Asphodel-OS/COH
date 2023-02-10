@@ -48,7 +48,7 @@ library LibRegistry {
     // creates prototype and assigns it a registryID
     LibPrototype.create(components, entityToAdd, componentIDs, values);
 
-    add(compoents, registryID, index, entityToAdd);
+    add(components, registryID, index, entityToAdd);
   }
 
   function copyPrototype(
