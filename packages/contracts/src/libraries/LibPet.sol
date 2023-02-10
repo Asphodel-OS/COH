@@ -23,7 +23,6 @@ library LibPet {
   // NOTE: we may need to create an Operator/Owner entities here if they dont exist
   // TODO: include attributes in this generation
   function create(
-    IWorld world,
     IUint256Component components,
     address owner,
     uint256 index
