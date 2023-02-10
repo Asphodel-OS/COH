@@ -1,17 +1,15 @@
 import { defineScene } from '@latticexyz/phaserx';
+import { room001, room002, room003 } from '../rooms/';
 
 export function defineMainScene() {
   return {
     ['Main']: defineScene({
       key: 'Main',
-      preload:() =>   {
-         //
+      preload: (scene: any) => {
+        scene.rooms = [room001(), room002(), room003()];
       },
-      create:(scene) => {
-        //
-        scene.add.text(50, 150, "Welcome", {
-          fontSize: "40px",
-        });
+      create: (scene: any) => {
+        scene.rooms[0].create(scene);
       },
     }),
   };

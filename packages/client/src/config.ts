@@ -32,7 +32,7 @@ export const phaserConfig = {
     default: 'arcade',
     arcade: { debug: false, gravity: { y: 0 } },
   },
-  scene: [defineMainScene()],
+  scene: [defineMainScene().Main],
   title: 'Cantodel',
   scale: defineScaleConfig({
     parent: 'phaser-game',
