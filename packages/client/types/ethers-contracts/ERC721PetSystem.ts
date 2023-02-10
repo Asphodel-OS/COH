@@ -37,7 +37,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     "isApprovedForAll(address,address)": FunctionFragment;
     "mint(address)": FunctionFragment;
     "name()": FunctionFragment;
-    "nftToEntityID(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
@@ -45,6 +44,7 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
+    "tokenIDToEntityID(uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
@@ -61,7 +61,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
       | "isApprovedForAll"
       | "mint"
       | "name"
-      | "nftToEntityID"
       | "owner"
       | "ownerOf"
       | "safeTransferFrom(address,address,uint256)"
@@ -69,6 +68,7 @@ export interface ERC721PetSystemInterface extends utils.Interface {
       | "setApprovalForAll"
       | "supportsInterface"
       | "symbol"
+      | "tokenIDToEntityID"
       | "tokenURI"
       | "totalSupply"
       | "transferFrom"
@@ -104,10 +104,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "nftToEntityID",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
@@ -139,6 +135,10 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "tokenIDToEntityID",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "tokenURI",
     values: [PromiseOrValue<BigNumberish>]
@@ -177,10 +177,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "nftToEntityID",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(
@@ -200,6 +196,10 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenIDToEntityID",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
@@ -341,11 +341,6 @@ export interface ERC721PetSystem extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nftToEntityID(
-      tokenID: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
@@ -380,6 +375,11 @@ export interface ERC721PetSystem extends BaseContract {
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
+
+    tokenIDToEntityID(
+      petIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
@@ -440,11 +440,6 @@ export interface ERC721PetSystem extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nftToEntityID(
-    tokenID: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
   owner(overrides?: CallOverrides): Promise<string>;
 
   ownerOf(
@@ -479,6 +474,11 @@ export interface ERC721PetSystem extends BaseContract {
   ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
+
+  tokenIDToEntityID(
+    petIndex: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   tokenURI(
     tokenID: PromiseOrValue<BigNumberish>,
@@ -539,11 +539,6 @@ export interface ERC721PetSystem extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nftToEntityID(
-      tokenID: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     owner(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(
@@ -578,6 +573,11 @@ export interface ERC721PetSystem extends BaseContract {
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
+
+    tokenIDToEntityID(
+      petIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
@@ -683,11 +683,6 @@ export interface ERC721PetSystem extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nftToEntityID(
-      tokenID: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
@@ -722,6 +717,11 @@ export interface ERC721PetSystem extends BaseContract {
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
+
+    tokenIDToEntityID(
+      petIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
@@ -783,11 +783,6 @@ export interface ERC721PetSystem extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nftToEntityID(
-      tokenID: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
@@ -822,6 +817,11 @@ export interface ERC721PetSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    tokenIDToEntityID(
+      petIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,

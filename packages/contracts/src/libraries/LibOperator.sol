@@ -7,15 +7,22 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { ID as IsCharacterComponentID } from "components/IsCharacterComponent.sol";
+import { IsOperatorComponent, ID as IsOperatorCompID } from "components/IsOperatorComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
-import { OperatorComponent, ID as OperatorCompID } from "components/OperatorComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
 library LibOperator {
-  // Move the operator to a room
+  // Create an account operator
+  function create(IUint256Component components, address addr) internal returns (uint256) {
+    uint256 id = uint256(uint160(addr));
+    IsOperatorComponent(getAddressById(components, IsOperatorCompID)).set(id);
+    LocationComponent(getAddressById(components, LocCompID)).set(id, 1);
+    return id;
+  }
+
+  // Move the Address to a room
   function move(
     IUint256Component components,
     uint256 id,
@@ -64,18 +71,14 @@ library LibOperator {
   /////////////////
   // COMPONENT RETRIEVAL
 
-  // gets the location of a specified operator
-  function getLocation(IUint256Component components, uint256 id) internal view returns (uint256) {
-    return LocationComponent(getAddressById(components, LocCompID)).getValue(id);
+  // get the operating wallet of a specified pet
+  function getAddress(uint256 id) internal pure returns (address) {
+    return address(uint160(id));
   }
 
-  // get the operating wallet of a specified pet
-  function getOperator(IUint256Component components, uint256 charID)
-    internal
-    view
-    returns (address)
-  {
-    return OperatorComponent(getAddressById(components, OperatorCompID)).getValue(charID);
+  // gets the location of a specified account operator
+  function getLocation(IUint256Component components, uint256 id) internal view returns (uint256) {
+    return LocationComponent(getAddressById(components, LocCompID)).getValue(id);
   }
 
   /////////////////

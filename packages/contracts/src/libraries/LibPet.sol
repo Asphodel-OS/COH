@@ -8,30 +8,38 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { ERC721OwnedByPetComponent, ID as ERC721OwnedByPetComponentID } from "components/ERC721OwnedByPetComponent.sol";
-import { ERC721EntityIndexPetComponent, ID as ERC721EntityIndexPetComponentID } from "components/ERC721EntityIndexPetComponent.sol";
-import { MediaURIComponent, ID as MediaURIComponentID } from "components/MediaURIComponent.sol";
-import { OperatorComponent, ID as OperatorComponentID } from "components/OperatorComponent.sol";
+import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComponent.sol";
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
+import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
+import { AddressComponent, ID as AddressCompID } from "components/AddressComponent.sol";
 import { HashRateComponent, ID as HashRateCompID } from "components/HashRateComponent.sol";
+import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { StorageSizeComponent, ID as StorSizeCompID } from "components/StorageSizeComponent.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 
 library LibPet {
-  // create an inventory entity for an entity
+  // create a pet entity, set its owner and operator for an entity
+  // NOTE: we may need to create an Operator/Owner entities here if they dont exist
+  // TODO: include attributes in this generation
   function create(
     IWorld world,
     IUint256Component components,
-    uint256 charID,
-    uint256 hashRate,
-    uint256 storageSize
+    address owner,
+    uint256 index
   ) internal returns (uint256) {
     uint256 id = world.getUniqueEntityId();
-    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, charID);
-    HashRateComponent(getAddressById(components, HashRateCompID)).set(id, hashRate);
-    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, storageSize);
+    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, uint256(uint160(owner)));
+    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, uint256(uint160(owner)));
+    IndexPetComponent(getAddressById(components, IndexPetComponentID)).set(id, index);
     return id;
+  }
+
+  // set a pet's stats from its attributes
+  // TODO: update this to actually calculate the values
+  function setStats(IUint256Component components, uint256 id) internal {
+    HashRateComponent(getAddressById(components, HashRateCompID)).set(id, 0);
+    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, 0);
   }
 
   /////////////////
@@ -60,43 +68,63 @@ library LibPet {
   /////////////////
   // COMPONENT RETRIEVAL
 
-  function name(
-    IUint256Component components,
-    uint256 id,
-    string memory _name
-  ) internal {
-    NameComponent(getAddressById(components, NameCompID)).set(id, _name);
+  // get the name of this pet
+  function getName(IUint256Component components, uint256 id) internal view returns (string memory) {
+    return NameComponent(getAddressById(components, NameCompID)).getValue(id);
   }
 
-  // get the owner of this pet
+  function getMediaURI(IUint256Component components, uint256 id)
+    internal
+    view
+    returns (string memory)
+  {
+    return MediaURIComponent(getAddressById(components, MediaURICompID)).getValue(id);
+  }
+
+  // get the entity ID of the pet operator
+  function getOperator(IUint256Component components, uint256 id) internal view returns (uint256) {
+    return IdOperatorComponent(getAddressById(components, IdOpCompID)).getValue(id);
+  }
+
+  // get the entity ID of the pet owner
   function getOwner(IUint256Component components, uint256 id) internal view returns (uint256) {
     return IdOwnerComponent(getAddressById(components, IdOwnerCompID)).getValue(id);
   }
 
   /////////////////
-  // OPERATORS
-  function getOperator(
-    IUint256Component components,
-    uint256 entityID
-  ) internal view returns (address) {
-    return OperatorComponent(
-      getAddressById(components, OperatorComponentID)
-    ).getValue(entityID);
-  }
+  // SETTERS
 
-  function changeOperator(
+  function setOperator(
     IUint256Component components,
-    uint256 entityID,
-    address to
+    uint256 id,
+    uint256 operatorID
   ) internal {
-   OperatorComponent(
-      getAddressById(components, OperatorComponentID)
-    ).set(entityID, to); 
+    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
   }
 
+  function setOwner(
+    IUint256Component components,
+    uint256 id,
+    uint256 ownerID
+  ) internal {
+    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, ownerID);
+  }
 
   /////////////////
   // QUERIES
+
+  // get the entity ID of a pet from its index (tokenID)
+  function indexToID(IUint256Component components, uint256 index)
+    internal
+    view
+    returns (uint256 result)
+  {
+    uint256[] memory results = IndexPetComponent(getAddressById(components, IndexPetComponentID))
+      .getEntitiesWithValue(index);
+    if (results.length > 0) {
+      result = results[0];
+    }
+  }
 
   // Get the production of a pet. Return 0 if there are none.
   function getNodeProduction(
@@ -126,90 +154,29 @@ library LibPet {
   /////////////////
   // ERC721
 
-  // create pet
-  function createPet(
-    IUint256Component components,
-    IWorld world,
-    uint256 nftID,
-    address sender
-  ) internal returns (uint256) {
-    uint256 entityID = world.getUniqueEntityId();
-    
-    ERC721EntityIndexPetComponent(
-      getAddressById(components, ERC721EntityIndexPetComponentID)
-    ).set(entityID, nftID);    
-    ERC721OwnedByPetComponent(
-      getAddressById(components, ERC721OwnedByPetComponentID)
-    ).set(entityID, sender);
-    OperatorComponent(
-      getAddressById(components, OperatorComponentID)
-    ).set(entityID, sender);
-
-    return entityID;
-  }
-
   // transfer ERC721 pet
+  // NOTE/TODO: we need to be careful here about the flow on transferring pets
+  // what needs to be updated? does an operator for the address exist?
   function transferPet(
     IUint256Component components,
-    uint256 nftID,
+    uint256 index,
     address to
   ) internal {
     // does not need to check for previous owner, ERC721 handles it
-
-    uint256 entityID = nftToEntityID(components, nftID);
-
-    ERC721OwnedByPetComponent(
-      getAddressById(components, ERC721OwnedByPetComponentID)
-    ).set(entityID, to);
-    OperatorComponent(
-      getAddressById(components, OperatorComponentID)
-    ).set(entityID, to);
- 
+    uint256 id = indexToID(components, index);
+    uint256 toID = uint256(uint160(to));
+    setOwner(components, id, toID);
+    setOperator(components, id, toID);
   }
 
-  function nftToEntityID(
+  // return whether owner or operator
+  // NOTE: is this function necessary?
+  function isOwnerOrOperator(
     IUint256Component components,
-    uint256 tokenID
-  ) internal view returns (uint256) {
-    ERC721EntityIndexPetComponent indexComp = ERC721EntityIndexPetComponent(
-      getAddressById(components, ERC721EntityIndexPetComponentID)
-    );
-
-    // no check if index exists; returning non existence will revert
-    return indexComp.getEntitiesWithValue(tokenID)[0];
-  }
-
-  /////////////////
-  // Auth
-
-  // get pet owner
-  function getPetOwner(
-    IUint256Component components,
-    uint256 entityID
-  ) internal view returns (address) {
-    ERC721OwnedByPetComponent ownedComp = ERC721OwnedByPetComponent(
-      getAddressById(components, ERC721OwnedByPetComponentID)
-    ); 
-
-    // check if exists, can remove for optimisation
-    require(ownedComp.has(entityID), "pet does not exist");
-
-    return ownedComp.getValue(entityID);
-  }
-
-  // return owner or operator
-  function isPetOwnerOrOperator(
-    IUint256Component components,
-    uint256 entityID,
+    uint256 id,
     address sender
   ) internal view returns (bool) {
-    if (getPetOwner(components, entityID) == sender) {
-      // is owner
-      return true;
-    }
-
-    address operator = getOperator(components, entityID);
-
-    return operator==sender;
+    uint256 senderAsID = uint256(uint160(sender));
+    return getOwner(components, id) == senderAsID || getOperator(components, id) == senderAsID;
   }
 }

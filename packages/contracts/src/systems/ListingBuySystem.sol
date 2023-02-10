@@ -19,7 +19,7 @@ contract ListingBuySystem is System {
       arguments,
       (uint256, uint256, uint256)
     );
-    require(LibOperator.getOperator(components, charID) == msg.sender, "Character: not urs");
+    // require(LibOperator.getOperator(components, charID) == msg.sender, "Character: not urs");
     require(
       LibMerchant.canTransactWithListing(components, charID, listingID),
       "Merchant: character must be in room"

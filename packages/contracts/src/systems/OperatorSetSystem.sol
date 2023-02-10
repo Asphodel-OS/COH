@@ -15,21 +15,15 @@ contract OperatorSetSystem is System {
   function execute(bytes memory arguments) public returns (bytes memory) {
     (uint256 entityID, address to) = abi.decode(arguments, (uint256, address));
 
-    // only pet owner can set operator
-    require(
-      LibPet.getPetOwner(components, entityID) == msg.sender,
-      "not pet owner!"
-    );
-    LibPet.changeOperator(components, entityID, to);
+    // NOTE: when updating the operator/owner of an entity we should be checking whether the
+    // entity is currently owner/operated by the calling address.
+    // require(LibPet.getOwner(components, entityID) == msg.sender, "Pet: not urs");
+    LibPet.setOperator(components, entityID, uint256(uint160(to)));
 
     return abi.encode(to);
   }
 
-  function executeTyped(
-    uint256 entityID, 
-    address to
-  ) public returns (bytes memory)
-  {
+  function executeTyped(uint256 entityID, address to) public returns (bytes memory) {
     return execute(abi.encode(entityID, to));
   }
 }

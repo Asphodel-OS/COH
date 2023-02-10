@@ -22,7 +22,7 @@ contract ProductionStartSystem is System {
       arguments,
       (uint256, uint256, uint256)
     );
-    require(LibOperator.getOperator(components, charID) == msg.sender, "Character: not urs");
+    // require(LibOperator.getOperator(components, charID) == msg.sender, "Character: not urs");
     require(LibPet.getOwner(components, petID) == charID, "Pet: not urs");
     require(LibOperator.sharesLocation(components, charID, nodeID), "Node: must be in room");
     require(
