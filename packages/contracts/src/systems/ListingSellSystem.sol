@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 
-import { LibOperator } from "libraries/LibOperator.sol";
+import { LibCharacter } from "libraries/LibCharacter.sol";
 import { LibMerchant } from "libraries/LibMerchant.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
@@ -19,7 +19,7 @@ contract ListingSellSystem is System {
       arguments,
       (uint256, uint256, uint256)
     );
-    require(LibOperator.getOperator(components, charID) == msg.sender, "Character: not urs");
+    require(LibCharacter.getOperator(components, charID) == msg.sender, "Character: not urs");
     require(
       LibMerchant.canTransactWithListing(components, charID, listingID),
       "Merchant: character must be in room"

@@ -14,7 +14,7 @@ import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "compon
 import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
-library LibOperator {
+library LibCharacter {
   // Move the operator to a room
   function move(
     IUint256Component components,

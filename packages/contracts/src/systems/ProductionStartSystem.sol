@@ -5,7 +5,7 @@ import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById } from "solecs/utils.sol";
 
-import { LibOperator } from "libraries/LibOperator.sol";
+import { LibCharacter } from "libraries/LibCharacter.sol";
 import { LibNode } from "libraries/LibNode.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
@@ -22,15 +22,15 @@ contract ProductionStartSystem is System {
       arguments,
       (uint256, uint256, uint256)
     );
-    require(LibOperator.getOperator(components, charID) == msg.sender, "Character: not urs");
+    require(LibCharacter.getOperator(components, charID) == msg.sender, "Character: not urs");
     require(LibPet.getOwner(components, petID) == charID, "Pet: not urs");
-    require(LibOperator.sharesLocation(components, charID, nodeID), "Node: must be in room");
+    require(LibCharacter.sharesLocation(components, charID, nodeID), "Node: must be in room");
     require(
       LibPet.getActiveProduction(components, petID) == 0,
       "Pet: active production already exists"
     );
     require(
-      LibOperator.getActiveNodeProduction(components, charID, nodeID) == 0,
+      LibCharacter.getActiveNodeProduction(components, charID, nodeID) == 0,
       "Character: active production exists on this node"
     );
 
