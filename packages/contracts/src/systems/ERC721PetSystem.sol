@@ -41,7 +41,14 @@ contract ERC721PetSystem is System, ERC721 {
   function mint(address to) public returns (uint256) {
     // require(tx.origin == msg.sender, "no contracts");
 
-    uint256 entityID = LibPet.createPet(components, world, totalSupply, to);
+    uint256 entityID = LibPet.create(
+      components, 
+      world, 
+      totalSupply, 
+      to,
+      1, // hashrate
+      1  // storage size
+    );
 
     // set metadata component
     //  here!

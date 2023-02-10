@@ -19,19 +19,38 @@ import { StorageSizeComponent, ID as StorSizeCompID } from "components/StorageSi
 import { LibProduction } from "libraries/LibProduction.sol";
 
 library LibPet {
-  // create an inventory entity for an entity
+
+  // Mint a pet
   function create(
-    IWorld world,
     IUint256Component components,
-    uint256 charID,
+    IWorld world,
+    uint256 nftID,
+    address sender,
     uint256 hashRate,
     uint256 storageSize
   ) internal returns (uint256) {
-    uint256 id = world.getUniqueEntityId();
-    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, charID);
-    HashRateComponent(getAddressById(components, HashRateCompID)).set(id, hashRate);
-    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, storageSize);
-    return id;
+    uint256 entityID = world.getUniqueEntityId();
+    
+    // ERC721 and ownership components
+    ERC721EntityIndexPetComponent(
+      getAddressById(components, ERC721EntityIndexPetComponentID)
+    ).set(entityID, nftID);    
+    ERC721OwnedByPetComponent(
+      getAddressById(components, ERC721OwnedByPetComponentID)
+    ).set(entityID, sender);
+    OperatorComponent(
+      getAddressById(components, OperatorComponentID)
+    ).set(entityID, sender);
+
+    // Base stats components
+    HashRateComponent(
+      getAddressById(components, HashRateCompID)
+    ).set(entityID, hashRate);
+    StorageSizeComponent(
+      getAddressById(components, StorSizeCompID)
+    ).set(entityID, storageSize);
+
+    return entityID;
   }
 
   /////////////////
@@ -127,26 +146,7 @@ library LibPet {
   // ERC721
 
   // create pet
-  function createPet(
-    IUint256Component components,
-    IWorld world,
-    uint256 nftID,
-    address sender
-  ) internal returns (uint256) {
-    uint256 entityID = world.getUniqueEntityId();
-    
-    ERC721EntityIndexPetComponent(
-      getAddressById(components, ERC721EntityIndexPetComponentID)
-    ).set(entityID, nftID);    
-    ERC721OwnedByPetComponent(
-      getAddressById(components, ERC721OwnedByPetComponentID)
-    ).set(entityID, sender);
-    OperatorComponent(
-      getAddressById(components, OperatorComponentID)
-    ).set(entityID, sender);
 
-    return entityID;
-  }
 
   // transfer ERC721 pet
   function transferPet(
