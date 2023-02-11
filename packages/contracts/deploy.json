@@ -40,6 +40,7 @@
     {
       "name": "ERC721PetSystem",
       "writeAccess": [
+        "IsPetComponent",
         "IndexPetComponent",
         "IdOwnerComponent",
         "IdOperatorComponent",

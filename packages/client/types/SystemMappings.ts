@@ -2,7 +2,7 @@
 export const systemToId = {
   ERC721PetSystem: "system.ERC721.pet",
   ListingBuySystem: "system.ListingBuy",
-  ListingSellSystem: "system.ListingSell",
+  ListingSellSystem: "system.ListingBuy",
   ListingSetSystem: "system.ListingSet",
   MerchantCreateSystem: "system.MerchantCreate",
   NodeCreateSystem: "system.NodeCreate",
@@ -15,7 +15,7 @@ export const systemToId = {
 export const idToSystem = {
   "system.ERC721.pet": "ERC721PetSystem",
   "system.ListingBuy": "ListingBuySystem",
-  "system.ListingSell": "ListingSellSystem",
+  "system.ListingBuy": "ListingSellSystem",
   "system.ListingSet": "ListingSetSystem",
   "system.MerchantCreate": "MerchantCreateSystem",
   "system.NodeCreate": "NodeCreateSystem",

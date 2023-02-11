@@ -30,7 +30,7 @@ import type {
 export interface ProductionStartSystemInterface extends utils.Interface {
   functions: {
     "execute(bytes)": FunctionFragment;
-    "executeTyped(uint256,uint256,uint256)": FunctionFragment;
+    "executeTyped(uint256,uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -49,11 +49,7 @@ export interface ProductionStartSystemInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "executeTyped",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -124,9 +120,8 @@ export interface ProductionStartSystem extends BaseContract {
     ): Promise<ContractTransaction>;
 
     executeTyped(
-      charID: PromiseOrValue<BigNumberish>,
-      nodeID: PromiseOrValue<BigNumberish>,
       petID: PromiseOrValue<BigNumberish>,
+      nodeID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -144,9 +139,8 @@ export interface ProductionStartSystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   executeTyped(
-    charID: PromiseOrValue<BigNumberish>,
-    nodeID: PromiseOrValue<BigNumberish>,
     petID: PromiseOrValue<BigNumberish>,
+    nodeID: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -164,9 +158,8 @@ export interface ProductionStartSystem extends BaseContract {
     ): Promise<string>;
 
     executeTyped(
-      charID: PromiseOrValue<BigNumberish>,
-      nodeID: PromiseOrValue<BigNumberish>,
       petID: PromiseOrValue<BigNumberish>,
+      nodeID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -196,9 +189,8 @@ export interface ProductionStartSystem extends BaseContract {
     ): Promise<BigNumber>;
 
     executeTyped(
-      charID: PromiseOrValue<BigNumberish>,
-      nodeID: PromiseOrValue<BigNumberish>,
       petID: PromiseOrValue<BigNumberish>,
+      nodeID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -217,9 +209,8 @@ export interface ProductionStartSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
-      charID: PromiseOrValue<BigNumberish>,
-      nodeID: PromiseOrValue<BigNumberish>,
       petID: PromiseOrValue<BigNumberish>,
+      nodeID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

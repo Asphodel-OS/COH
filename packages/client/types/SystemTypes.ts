@@ -13,7 +13,7 @@ import { ProductionStopSystem } from "./ethers-contracts/ProductionStopSystem";
 export type SystemTypes = {
   "system.ERC721.pet": ERC721PetSystem;
   "system.ListingBuy": ListingBuySystem;
-  "system.ListingSell": ListingSellSystem;
+  "system.ListingBuy": ListingSellSystem;
   "system.ListingSet": ListingSetSystem;
   "system.MerchantCreate": MerchantCreateSystem;
   "system.NodeCreate": NodeCreateSystem;
