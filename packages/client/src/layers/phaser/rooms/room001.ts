@@ -8,6 +8,13 @@ export function room001() {
     },
     create: (scene: PhaserScene) => {
       scene.add.image(900, 500, 'room001').setScale(10);
+
+      scene.add
+        .rectangle(500, 820, 200, 180)
+        .setInteractive()
+        .on('pointerdown', () => {
+          // code for couch
+        });
     },
   };
 }
