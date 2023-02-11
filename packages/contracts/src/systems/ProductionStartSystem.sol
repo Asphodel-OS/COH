@@ -18,37 +18,28 @@ contract ProductionStartSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public returns (bytes memory) {
-    (uint256 charID, uint256 nodeID, uint256 petID) = abi.decode(
-      arguments,
-      (uint256, uint256, uint256)
-    );
-    // require(LibOperator.getOperator(components, charID) == msg.sender, "Character: not urs");
-    require(LibPet.getOwner(components, petID) == charID, "Pet: not urs");
-    require(LibOperator.sharesLocation(components, charID, nodeID), "Node: must be in room");
+    (uint256 petID, uint256 nodeID) = abi.decode(arguments, (uint256, uint256));
+    uint256 operatorID = uint256(uint160(msg.sender));
+
+    require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
+    require(LibOperator.sharesLocation(components, operatorID, nodeID), "Node: must be in room");
     require(
       LibPet.getActiveProduction(components, petID) == 0,
       "Pet: active production already exists"
     );
-    require(
-      LibOperator.getActiveNodeProduction(components, charID, nodeID) == 0,
-      "Character: active production exists on this node"
-    );
 
-    uint256 id = LibPet.getNodeProduction(components, petID, nodeID);
+    uint256 id = LibProduction.getForPet(components, petID);
     if (id == 0) {
-      id = LibProduction.create(world, components, nodeID, charID, petID);
+      id = LibProduction.create(world, components, nodeID, petID);
     } else {
+      LibProduction.setNode(components, id, nodeID);
       LibProduction.start(components, id);
     }
 
     return abi.encode(id);
   }
 
-  function executeTyped(
-    uint256 charID,
-    uint256 nodeID,
-    uint256 petID
-  ) public returns (bytes memory) {
-    return execute(abi.encode(charID, nodeID, petID));
+  function executeTyped(uint256 petID, uint256 nodeID) public returns (bytes memory) {
+    return execute(abi.encode(petID, nodeID));
   }
 }
