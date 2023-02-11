@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import { IComponent } from "solecs/interfaces/IComponent.sol";
-import { IUint256Component } from "solecs/interfaces/IUint256Component.sol";
+import { IUint256Component as IUintComp } from "solecs/interfaces/IUint256Component.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
@@ -11,6 +11,7 @@ import { getAddressById, getComponentById, entityToAddress, addressToEntity } fr
 import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComponent.sol";
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
+import { IsPetComponent, ID as IsPetCompID } from "components/IsPetComponent.sol";
 import { HashRateComponent, ID as HashRateCompID } from "components/HashRateComponent.sol";
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
@@ -22,21 +23,24 @@ library LibPet {
   // NOTE: we may need to create an Operator/Owner entities here if they dont exist
   // TODO: include attributes in this generation
   function create(
-    IUint256Component components,
+    IUintComp components,
     IWorld world,
     address owner,
-    uint256 index
+    uint256 index,
+    string memory uri
   ) internal returns (uint256) {
     uint256 id = world.getUniqueEntityId();
+    IsPetComponent(getAddressById(components, IsPetCompID)).set(id);
+    IndexPetComponent(getAddressById(components, IndexPetComponentID)).set(id, index);
     IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
     IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, addressToEntity(owner));
-    IndexPetComponent(getAddressById(components, IndexPetComponentID)).set(id, index);
+    MediaURIComponent(getAddressById(components, MediaURICompID)).set(id, uri);
     return id;
   }
 
   // set a pet's stats from its attributes
   // TODO: update this to actually calculate the values
-  function setStats(IUint256Component components, uint256 id) internal {
+  function setStats(IUintComp components, uint256 id) internal {
     HashRateComponent(getAddressById(components, HashRateCompID)).set(id, 0);
     StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, 0);
   }
@@ -46,21 +50,13 @@ library LibPet {
 
   // calculate and return the total storage size of a pet (including equipment)
   // TODO: include equipment
-  function getTotalStorage(IUint256Component components, uint256 id)
-    internal
-    view
-    returns (uint256)
-  {
+  function getTotalStorage(IUintComp components, uint256 id) internal view returns (uint256) {
     return StorageSizeComponent(getAddressById(components, StorSizeCompID)).getValue(id);
   }
 
   // calculate and return the total hash rate of a pet (including equipment)
   // TODO: include equipment
-  function getTotalHashRate(IUint256Component components, uint256 id)
-    internal
-    view
-    returns (uint256)
-  {
+  function getTotalHashRate(IUintComp components, uint256 id) internal view returns (uint256) {
     return HashRateComponent(getAddressById(components, HashRateCompID)).getValue(id);
   }
 
@@ -68,25 +64,21 @@ library LibPet {
   // COMPONENT RETRIEVAL
 
   // get the name of this pet
-  function getName(IUint256Component components, uint256 id) internal view returns (string memory) {
+  function getName(IUintComp components, uint256 id) internal view returns (string memory) {
     return NameComponent(getAddressById(components, NameCompID)).getValue(id);
   }
 
-  function getMediaURI(IUint256Component components, uint256 id)
-    internal
-    view
-    returns (string memory)
-  {
+  function getMediaURI(IUintComp components, uint256 id) internal view returns (string memory) {
     return MediaURIComponent(getAddressById(components, MediaURICompID)).getValue(id);
   }
 
   // get the entity ID of the pet operator
-  function getOperator(IUint256Component components, uint256 id) internal view returns (uint256) {
+  function getOperator(IUintComp components, uint256 id) internal view returns (uint256) {
     return IdOperatorComponent(getAddressById(components, IdOpCompID)).getValue(id);
   }
 
   // get the entity ID of the pet owner
-  function getOwner(IUint256Component components, uint256 id) internal view returns (uint256) {
+  function getOwner(IUintComp components, uint256 id) internal view returns (uint256) {
     return IdOwnerComponent(getAddressById(components, IdOwnerCompID)).getValue(id);
   }
 
@@ -94,7 +86,7 @@ library LibPet {
   // SETTERS
 
   function setOperator(
-    IUint256Component components,
+    IUintComp components,
     uint256 id,
     uint256 operatorID
   ) internal {
@@ -102,7 +94,7 @@ library LibPet {
   }
 
   function setOwner(
-    IUint256Component components,
+    IUintComp components,
     uint256 id,
     uint256 ownerID
   ) internal {
@@ -113,11 +105,7 @@ library LibPet {
   // QUERIES
 
   // get the entity ID of a pet from its index (tokenID)
-  function indexToID(IUint256Component components, uint256 index)
-    internal
-    view
-    returns (uint256 result)
-  {
+  function indexToID(IUintComp components, uint256 index) internal view returns (uint256 result) {
     uint256[] memory results = IndexPetComponent(getAddressById(components, IndexPetComponentID))
       .getEntitiesWithValue(index);
     if (results.length > 0) {
@@ -127,11 +115,11 @@ library LibPet {
 
   // Get the production of a pet. Return 0 if there are none.
   function getNodeProduction(
-    IUint256Component components,
+    IUintComp components,
     uint256 id,
     uint256 nodeID
   ) internal view returns (uint256 result) {
-    uint256[] memory results = LibProduction._getAllX(components, nodeID, 0, id, "");
+    uint256[] memory results = LibProduction._getAllX(components, nodeID, id, "");
     if (results.length > 0) {
       result = results[0];
     }
@@ -139,12 +127,12 @@ library LibPet {
 
   // Get the production of a pet. Return 0 if there are none.
   // We can assume pets can only commit to one active production.
-  function getActiveProduction(IUint256Component components, uint256 id)
+  function getActiveProduction(IUintComp components, uint256 id)
     internal
     view
     returns (uint256 result)
   {
-    uint256[] memory results = LibProduction._getAllX(components, 0, 0, id, "ACTIVE");
+    uint256[] memory results = LibProduction._getAllX(components, 0, id, "ACTIVE");
     if (results.length > 0) {
       result = results[0];
     }
@@ -155,9 +143,9 @@ library LibPet {
 
   // transfer ERC721 pet
   // NOTE/TODO: we need to be careful here about the flow on transferring pets
-  // what needs to be updated? does an operator for the address exist?
+  // what needs to be updated? does an operator entity for the destination address exist?
   function transferPet(
-    IUint256Component components,
+    IUintComp components,
     uint256 index,
     address to
   ) internal {
@@ -170,7 +158,7 @@ library LibPet {
 
   // return whether owner or operator
   function isOwnerOrOperator(
-    IUint256Component components,
+    IUintComp components,
     uint256 id,
     address sender
   ) internal view returns (bool) {
