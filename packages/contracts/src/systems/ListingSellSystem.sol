@@ -6,10 +6,10 @@ import { IWorld } from "solecs/interfaces/IWorld.sol";
 
 import { LibListing } from "libraries/LibListing.sol";
 
-uint256 constant ID = uint256(keccak256("system.ListingBuy"));
+uint256 constant ID = uint256(keccak256("system.ListingSell"));
 
-// ListingBuySystem allows a character to buy an item listed with a merchant
-contract ListingBuySystem is System {
+// ListingSellSystem allows a character to buy an item listed with a merchant
+contract ListingSellSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public returns (bytes memory) {
