@@ -6,11 +6,9 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-// import { IdPetComponent, ID as IdPetCompID } from "components/IdPetComponent.sol";
 import { IsNodeComponent, ID as IsNodeCompID } from "components/IsNodeComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
-import { LibPet } from "libraries/LibPet.sol";
 
 /*
  * LibNode handles all retrieval and manipulation of mining nodes/productions

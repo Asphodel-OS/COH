@@ -4,6 +4,7 @@
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -26,10 +27,10 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface OperatorSetSystemInterface extends utils.Interface {
+export interface PetSetOpertatorSystemInterface extends utils.Interface {
   functions: {
     "execute(bytes)": FunctionFragment;
-    "executeTyped(address)": FunctionFragment;
+    "executeTyped(uint256,address)": FunctionFragment;
     "owner()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -48,7 +49,7 @@ export interface OperatorSetSystemInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "executeTyped",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -86,12 +87,12 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface OperatorSetSystem extends BaseContract {
+export interface PetSetOpertatorSystem extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: OperatorSetSystemInterface;
+  interface: PetSetOpertatorSystemInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -119,7 +120,8 @@ export interface OperatorSetSystem extends BaseContract {
     ): Promise<ContractTransaction>;
 
     executeTyped(
-      operator: PromiseOrValue<string>,
+      entityID: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -137,7 +139,8 @@ export interface OperatorSetSystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   executeTyped(
-    operator: PromiseOrValue<string>,
+    entityID: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -155,7 +158,8 @@ export interface OperatorSetSystem extends BaseContract {
     ): Promise<string>;
 
     executeTyped(
-      operator: PromiseOrValue<string>,
+      entityID: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -185,7 +189,8 @@ export interface OperatorSetSystem extends BaseContract {
     ): Promise<BigNumber>;
 
     executeTyped(
-      operator: PromiseOrValue<string>,
+      entityID: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -204,7 +209,8 @@ export interface OperatorSetSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
-      operator: PromiseOrValue<string>,
+      entityID: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

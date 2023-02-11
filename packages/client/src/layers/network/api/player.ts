@@ -2,35 +2,48 @@ import { BigNumberish } from "ethers";
 
 export function createPlayerAPI(systems: any) {
   /*********************
+   *     OPERATOR
+   *********************/
+  // @dev moves the operator to another room from their current location
+  // @param location  destination room location
+  function moveOperator(location: number) {
+    return systems["system.OperatorMove"].executeTyped(location);
+  }
+
+  // @dev sets the operator of an Owner wallet. should be set by Owner wallet
+  // @param operator  address of the operator wallet
+  function setOperator(operator: BigNumberish) {
+    return systems["system.OperatorSet"].executeTyped(operator);
+  }
+
+  /*********************
    *     Listings
    *********************/
   // TODO: update these once listing logic is changed to utilize operator
 
   // @dev allows a character to buy an item through a merchant listing entity
-  // @param characterID  entity ID of character
   // @param listingID    entity ID of listing
   // @param amt          amount to buy
   // @return bool        (promise) whether the transaction was successful
   function buyFromListing(
-    characterID: BigNumberish,
     listingID: BigNumberish,
     amt: number
   ) {
-    return systems["system.ListingBuy"].executeTyped(characterID, listingID, amt);
+    return systems["system.ListingBuy"].executeTyped(listingID, amt);
   }
 
   // @dev allows a character to sell an item through a merchant listing entity
-  // @param characterID  entity ID of character
   // @param listingID    entity ID of listing
   // @param amt          amount to sell
   // @return bool        (promise) whether the transaction was successful
   function sellToListing(
-    characterID: BigNumberish,
     listingID: BigNumberish,
     amt: number
   ) {
-    return systems["system.ListingSell"].executeTyped(characterID, listingID, amt);
+    return systems["system.ListingSell"].executeTyped(listingID, amt);
   }
+
+
 
   /*********************
    *    PRODUCTIONS 
@@ -38,18 +51,18 @@ export function createPlayerAPI(systems: any) {
   // TODO: update these once production logic is changed to utilize operator
 
   // @dev retrieves the amount due from a passive deposit production and resets the starting point
-  function collectProduction(charID: BigNumberish, depositID: BigNumberish) {
-    return systems["system.ProductionCollect"].executeTyped(charID, depositID);
+  function collectProduction(depositID: BigNumberish) {
+    return systems["system.ProductionCollect"].executeTyped(depositID);
   }
 
   // @dev starts a deposit production for a character. If none exists, it creates one.
-  function startProduction(charID: BigNumberish, depositID: BigNumberish) {
-    return systems["system.ProductionStart"].executeTyped(charID, depositID);
+  function startProduction(depositID: BigNumberish) {
+    return systems["system.ProductionStart"].executeTyped(depositID);
   }
 
   // @dev retrieves the amount due from a passive deposit production and stops it.
-  function stopProduction(charID: BigNumberish, depositID: BigNumberish) {
-    return systems["system.ProductionStop"].executeTyped(charID, depositID);
+  function stopProduction(depositID: BigNumberish) {
+    return systems["system.ProductionStop"].executeTyped(depositID);
   }
 
 
@@ -57,6 +70,10 @@ export function createPlayerAPI(systems: any) {
     listing: {
       buy: buyFromListing,
       sell: sellToListing,
+    },
+    operator: {
+      move: moveOperator,
+      set: setOperator,
     },
     production: {
       collect: collectProduction,

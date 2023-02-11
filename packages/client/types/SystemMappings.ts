@@ -6,10 +6,13 @@ export const systemToId = {
   ListingSetSystem: "system.ListingSet",
   MerchantCreateSystem: "system.MerchantCreate",
   NodeCreateSystem: "system.NodeCreate",
-  OperatorSetSystem: "system.operator.set",
+  OperatorMoveSystem: "system.OperatorMove",
+  OperatorSetSystem: "system.OperatorSet",
+  PetSetOperatorSystem: "system.PetSetOperator",
   ProductionCollectSystem: "system.ProductionCollect",
   ProductionStartSystem: "system.ProductionStart",
   ProductionStopSystem: "system.ProductionStop",
+  RoomCreateSystem: "system.RoomCreate",
 };
 
 export const idToSystem = {
@@ -19,9 +22,12 @@ export const idToSystem = {
   "system.ListingSet": "ListingSetSystem",
   "system.MerchantCreate": "MerchantCreateSystem",
   "system.NodeCreate": "NodeCreateSystem",
-  "system.operator.set": "OperatorSetSystem",
+  "system.OperatorMove": "OperatorMoveSystem",
+  "system.OperatorSet": "OperatorSetSystem",
+  "system.PetSetOperator": "PetSetOperatorSystem",
   "system.ProductionCollect": "ProductionCollectSystem",
   "system.ProductionStart": "ProductionStartSystem",
   "system.ProductionStop": "ProductionStopSystem",
+  "system.RoomCreate": "RoomCreateSystem",
 };
   

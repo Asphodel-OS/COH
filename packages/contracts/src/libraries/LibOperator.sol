@@ -5,19 +5,25 @@ import { IUint256Component as IComponents } from "solecs/interfaces/IUint256Comp
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
-import { getAddressById, getComponentById } from "solecs/utils.sol";
+import { getAddressById, getComponentById, addressToEntity } from "solecs/utils.sol";
 
+import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IsOperatorComponent, ID as IsOperatorCompID } from "components/IsOperatorComponent.sol";
+import { BlockLastComponent, ID as BlockLastCompID } from "components/BlockLastComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
-import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
 library LibOperator {
   // Create an account operator
-  function create(IComponents components, address addr) internal returns (uint256) {
+  function create(
+    IComponents components,
+    address addr,
+    address owner
+  ) internal returns (uint256) {
     uint256 id = uint256(uint160(addr));
     IsOperatorComponent(getAddressById(components, IsOperatorCompID)).set(id);
+    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
     LocationComponent(getAddressById(components, LocCompID)).set(id, 1);
     return id;
   }
@@ -29,15 +35,12 @@ library LibOperator {
     uint256 to
   ) internal {
     LocationComponent(getAddressById(components, LocCompID)).set(id, to);
-    updateLastTimestamp(components, id);
+    updateLastActionBlock(components, id);
   }
 
-  // Update the TimeLastAction of the character to the current time.
-  function updateLastTimestamp(IComponents components, uint256 id) internal {
-    TimeLastActionComponent(getAddressById(components, TimeLastActionComponentID)).set(
-      id,
-      block.timestamp
-    );
+  // Update the BlockLast of the character to the current time.
+  function updateLastActionBlock(IComponents components, uint256 id) internal {
+    BlockLastComponent(getAddressById(components, BlockLastCompID)).set(id, block.number);
   }
 
   /////////////////
@@ -79,5 +82,33 @@ library LibOperator {
   // gets the location of a specified account operator
   function getLocation(IComponents components, uint256 id) internal view returns (uint256) {
     return LocationComponent(getAddressById(components, LocCompID)).getValue(id);
+  }
+
+  // gets the location of a specified account operator
+  function getOwner(IComponents components, uint256 id) internal view returns (uint256) {
+    return IdOwnerComponent(getAddressById(components, IdOwnerCompID)).getValue(id);
+  }
+
+  /////////////////
+  // QUERIES
+
+  // get the operator of an owner
+  function getForOwner(IComponents components, uint256 ownerID)
+    internal
+    view
+    returns (uint256 result)
+  {
+    QueryFragment[] memory fragments = new QueryFragment[](2);
+    fragments[0] = QueryFragment(QueryType.Has, getComponentById(components, IsOperatorCompID), "");
+    fragments[1] = QueryFragment(
+      QueryType.HasValue,
+      getComponentById(components, IdOwnerCompID),
+      abi.encode(ownerID)
+    );
+
+    uint256[] memory results = LibQuery.query(fragments);
+    if (results.length > 0) {
+      result = results[0];
+    }
   }
 }
