@@ -16,7 +16,7 @@ import RoomCreateSystem from "../abi/RoomCreateSystem.json";
 export const SystemAbis = {
   "system.ERC721.pet": ERC721PetSystem.abi,
   "system.ListingBuy": ListingBuySystem.abi,
-  "system.ListingBuy": ListingSellSystem.abi,
+  "system.ListingSell": ListingSellSystem.abi,
   "system.ListingSet": ListingSetSystem.abi,
   "system.MerchantCreate": MerchantCreateSystem.abi,
   "system.NodeCreate": NodeCreateSystem.abi,

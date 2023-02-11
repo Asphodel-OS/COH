@@ -11,7 +11,7 @@ uint256 constant ID = uint256(keccak256("system.PetSetOperator"));
 
 // NOTE: this may not be the ideal flow for setting operators. likely, we'll instead
 // want to update the owner on transfer and just clear out the operator
-contract PetSetOpertatorSystem is System {
+contract PetSetOperatorSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public returns (bytes memory) {

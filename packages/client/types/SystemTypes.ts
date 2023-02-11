@@ -16,7 +16,7 @@ import { RoomCreateSystem } from "./ethers-contracts/RoomCreateSystem";
 export type SystemTypes = {
   "system.ERC721.pet": ERC721PetSystem;
   "system.ListingBuy": ListingBuySystem;
-  "system.ListingBuy": ListingSellSystem;
+  "system.ListingSell": ListingSellSystem;
   "system.ListingSet": ListingSetSystem;
   "system.MerchantCreate": MerchantCreateSystem;
   "system.NodeCreate": NodeCreateSystem;
