@@ -13,6 +13,7 @@
     "IndexModifierComponent",
     "IndexPetComponent",
     "IsInventoryComponent",
+    "IsListingComponent",
     "IsMerchantComponent",
     "IsNodeComponent",
     "IsOperatorComponent",
@@ -39,6 +40,7 @@
     {
       "name": "ERC721PetSystem",
       "writeAccess": [
+        "IsPetComponent",
         "IndexPetComponent",
         "IdOwnerComponent",
         "IdOperatorComponent",
@@ -50,7 +52,7 @@
       "writeAccess": [
         "BalanceComponent",
         "CoinComponent",
-        "IdOwnerComponent",
+        "IdOperatorComponent",
         "IndexItemComponent",
         "IsInventoryComponent"
       ]
@@ -65,6 +67,7 @@
     {
       "name": "ListingSetSystem",
       "writeAccess": [
+        "IsListingComponent",
         "IdMerchantComponent",
         "IndexItemComponent",
         "PriceBuyComponent",
@@ -105,7 +108,6 @@
       "writeAccess": [
         "IsProductionComponent",
         "IdNodeComponent",
-        "IdOperatorComponent",
         "IdPetComponent",
         "StateComponent",
         "TimeStartComponent"

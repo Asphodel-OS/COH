@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 
-import { LibMerchant } from "libraries/LibMerchant.sol";
+import { LibListing } from "libraries/LibListing.sol";
 
 uint256 constant ID = uint256(keccak256("system.ListingSet"));
 
@@ -18,17 +18,11 @@ contract ListingSetSystem is System {
       (uint256, uint256, uint256, uint256)
     );
 
-    return
-      abi.encode(
-        LibMerchant.getOrCreateListing(
-          world,
-          components,
-          merchantID,
-          itemIndex,
-          buyPrice,
-          sellPrice
-        )
-      );
+    uint256 id = LibListing.get(components, merchantID, itemIndex);
+    if (id == 0) {
+      id = LibListing.create(world, components, merchantID, itemIndex, buyPrice, sellPrice);
+    }
+    return abi.encode(id);
   }
 
   function executeTyped(

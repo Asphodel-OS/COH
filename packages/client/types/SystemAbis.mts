@@ -13,7 +13,7 @@ import ProductionStopSystem from "../abi/ProductionStopSystem.json";
 export const SystemAbis = {
   "system.ERC721.pet": ERC721PetSystem.abi,
   "system.ListingBuy": ListingBuySystem.abi,
-  "system.ListingSell": ListingSellSystem.abi,
+  "system.ListingBuy": ListingSellSystem.abi,
   "system.ListingSet": ListingSetSystem.abi,
   "system.MerchantCreate": MerchantCreateSystem.abi,
   "system.NodeCreate": NodeCreateSystem.abi,

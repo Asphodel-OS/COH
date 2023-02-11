@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
-import { IUint256Component as IUintComp } from "solecs/interfaces/IUint256Component.sol";
+import { IUint256Component as IComponents } from "solecs/interfaces/IUint256Component.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComponent.sol";
+import { ID as IdOpCompID } from "components/IdOperatorComponent.sol";
 import { IdNodeComponent, ID as IdNodeCompID } from "components/IdNodeComponent.sol";
 import { IdPetComponent, ID as IdPetCompID } from "components/IdPetComponent.sol";
 import { IsProductionComponent, ID as IsProdCompID } from "components/IsProductionComponent.sol";
 import { StateComponent, ID as StateCompID } from "components/StateComponent.sol";
 import { TimeStartComponent, ID as TimeStartCompID } from "components/TimeStartComponent.sol";
-import { LibCoin } from "libraries/LibCoin.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { Strings } from "utils/Strings.sol";
 
@@ -20,18 +19,19 @@ import { Strings } from "utils/Strings.sol";
  * LibNode handles all retrieval and manipulation of mining nodes/productions
  */
 library LibProduction {
-  // Creates a production for a character at a deposit. Assumes one doesn't already exist.
+  /////////////////////
+  // INTERACTIONS
+
+  // Creates a production for a pet at a deposit. Assumes one doesn't already exist.
   function create(
     IWorld world,
-    IUintComp components,
+    IComponents components,
     uint256 nodeID,
-    uint256 operatorID,
     uint256 petID
   ) internal returns (uint256) {
     uint256 id = world.getUniqueEntityId();
     IsProductionComponent(getAddressById(components, IsProdCompID)).set(id);
     IdNodeComponent(getAddressById(components, IdNodeCompID)).set(id, nodeID);
-    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
     IdPetComponent(getAddressById(components, IdPetCompID)).set(id, petID);
     StateComponent(getAddressById(components, StateCompID)).set(id, string("ACTIVE"));
     TimeStartComponent(getAddressById(components, TimeStartCompID)).set(id, block.timestamp);
@@ -39,15 +39,12 @@ library LibProduction {
   }
 
   // Resets the starting block of a production to the current block
-  function reset(IUintComp components, uint256 id) internal {
+  function reset(IComponents components, uint256 id) internal {
     TimeStartComponent(getAddressById(components, TimeStartCompID)).set(id, block.timestamp);
   }
 
   // Starts an _existing_ production if not already started. Update the owning character as needed.
-  function start(IUintComp components, uint256 id) internal {
-    uint256 ownerID = IdOperatorComponent(getAddressById(components, IdOpCompID)).getValue(id);
-    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, ownerID);
-
+  function start(IComponents components, uint256 id) internal {
     StateComponent StateC = StateComponent(getAddressById(components, StateCompID));
     if (!StateC.hasValue(id, "ACTIVE")) {
       reset(components, id);
@@ -56,10 +53,22 @@ library LibProduction {
   }
 
   // Stops an _existing_ production. All potential proceeds will be lost after this point.
-  function stop(IUintComp components, uint256 id) internal {
+  function stop(IComponents components, uint256 id) internal {
     StateComponent StateC = StateComponent(getAddressById(components, StateCompID));
     if (!StateC.hasValue(id, "INACTIVE")) {
       StateC.set(id, string("INACTIVE"));
+    }
+  }
+
+  // set the node of a production
+  function setNode(
+    IComponents components,
+    uint256 id,
+    uint256 nodeID
+  ) internal {
+    IdNodeComponent NodeC = IdNodeComponent(getAddressById(components, IdNodeCompID));
+    if (NodeC.getValue(id) != nodeID) {
+      NodeC.set(id, nodeID);
     }
   }
 
@@ -67,7 +76,7 @@ library LibProduction {
   // CALCULATIONS
 
   // Calculate the reward from an ACTIVE production using equipment and attributes.
-  function calc(IUintComp components, uint256 id) internal view returns (uint256) {
+  function calc(IComponents components, uint256 id) internal view returns (uint256) {
     uint256 petID = IdPetComponent(getAddressById(components, IdPetCompID)).getValue(id);
 
     if (!StateComponent(getAddressById(components, StateCompID)).hasValue(id, "ACTIVE")) {
@@ -84,7 +93,7 @@ library LibProduction {
   }
 
   // Get the duration since TimeStart of a production
-  function getDuration(IUintComp components, uint256 id) internal view returns (uint256) {
+  function getDuration(IComponents components, uint256 id) internal view returns (uint256) {
     uint256 startTime = TimeStartComponent(getAddressById(components, TimeStartCompID)).getValue(
       id
     );
@@ -94,45 +103,50 @@ library LibProduction {
   /////////////////
   // COMPONENT RETRIEVAL
 
-  function getNode(IUintComp components, uint256 id) internal view returns (uint256) {
+  function getNode(IComponents components, uint256 id) internal view returns (uint256) {
     return IdNodeComponent(getAddressById(components, IdNodeCompID)).getValue(id);
   }
 
-  function getOperator(IUintComp components, uint256 id) internal view returns (uint256) {
-    return IdOperatorComponent(getAddressById(components, IdOpCompID)).getValue(id);
-  }
-
-  function getPet(IUintComp components, uint256 id) internal view returns (uint256) {
+  function getPet(IComponents components, uint256 id) internal view returns (uint256) {
     return IdPetComponent(getAddressById(components, IdPetCompID)).getValue(id);
   }
 
-  function getState(IUintComp components, uint256 id) internal view returns (string memory) {
+  function getState(IComponents components, uint256 id) internal view returns (string memory) {
     return StateComponent(getAddressById(components, StateCompID)).getValue(id);
   }
 
   /////////////////
   // QUERIES
 
-  // Retrieves all active productions of a character
-  function getAllActiveForCharacter(IUintComp components, uint256 operatorID)
+  // get an active production of a pet. assumed 1 at most
+  function getActiveForPet(IComponents components, uint256 petID)
     internal
     view
-    returns (uint256[] memory)
+    returns (uint256 result)
   {
-    return _getAllX(components, 0, operatorID, 0, "ACTIVE");
+    uint256[] memory results = _getAllX(components, 0, petID, "ACTIVE");
+    if (results.length != 0) {
+      result = results[0];
+    }
+  }
+
+  // get a production by a pet. assumed only 1
+  function getForPet(IComponents components, uint256 petID) internal view returns (uint256 result) {
+    uint256[] memory results = _getAllX(components, 0, petID, "");
+    if (results.length != 0) {
+      result = results[0];
+    }
   }
 
   // Retrieves all productions based on any defined filters
   function _getAllX(
-    IUintComp components,
+    IComponents components,
     uint256 nodeID,
-    uint256 operatorID,
     uint256 petID,
     string memory state
   ) internal view returns (uint256[] memory) {
     uint256 numFilters;
     if (nodeID != 0) numFilters++;
-    if (operatorID != 0) numFilters++;
     if (petID != 0) numFilters++;
     if (!Strings.equal(state, "")) numFilters++;
 
@@ -145,13 +159,6 @@ library LibProduction {
         QueryType.HasValue,
         getComponentById(components, IdNodeCompID),
         abi.encode(nodeID)
-      );
-    }
-    if (operatorID != 0) {
-      fragments[++filterCount] = QueryFragment(
-        QueryType.HasValue,
-        getComponentById(components, IdOpCompID),
-        abi.encode(operatorID)
       );
     }
     if (petID != 0) {

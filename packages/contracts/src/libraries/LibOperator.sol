@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { IUint256Component } from "solecs/interfaces/IUint256Component.sol";
+import { IUint256Component as IComponents } from "solecs/interfaces/IUint256Component.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
@@ -15,7 +15,7 @@ import { LibRoom } from "libraries/LibRoom.sol";
 
 library LibOperator {
   // Create an account operator
-  function create(IUint256Component components, address addr) internal returns (uint256) {
+  function create(IComponents components, address addr) internal returns (uint256) {
     uint256 id = uint256(uint160(addr));
     IsOperatorComponent(getAddressById(components, IsOperatorCompID)).set(id);
     LocationComponent(getAddressById(components, LocCompID)).set(id, 1);
@@ -24,7 +24,7 @@ library LibOperator {
 
   // Move the Address to a room
   function move(
-    IUint256Component components,
+    IComponents components,
     uint256 id,
     uint256 to
   ) internal {
@@ -33,7 +33,7 @@ library LibOperator {
   }
 
   // Update the TimeLastAction of the character to the current time.
-  function updateLastTimestamp(IUint256Component components, uint256 id) internal {
+  function updateLastTimestamp(IComponents components, uint256 id) internal {
     TimeLastActionComponent(getAddressById(components, TimeLastActionComponentID)).set(
       id,
       block.timestamp
@@ -47,7 +47,7 @@ library LibOperator {
   // This function assumes that the entity id provided belongs to a character.
   // NOTE(ja): This function can include any other checks we want moving forward.
   function canMoveTo(
-    IUint256Component components,
+    IComponents components,
     uint256 id,
     uint256 to
   ) internal view returns (bool) {
@@ -60,7 +60,7 @@ library LibOperator {
 
   // determines whether an entity shares a location with a node
   function sharesLocation(
-    IUint256Component components,
+    IComponents components,
     uint256 id,
     uint256 entityID
   ) internal view returns (bool) {
@@ -77,22 +77,7 @@ library LibOperator {
   }
 
   // gets the location of a specified account operator
-  function getLocation(IUint256Component components, uint256 id) internal view returns (uint256) {
+  function getLocation(IComponents components, uint256 id) internal view returns (uint256) {
     return LocationComponent(getAddressById(components, LocCompID)).getValue(id);
-  }
-
-  /////////////////
-  // QUERIES
-
-  // Get the active productions of a character on a node. Return 0 if there are none.
-  function getActiveNodeProduction(
-    IUint256Component components,
-    uint256 id,
-    uint256 nodeID
-  ) internal view returns (uint256 result) {
-    uint256[] memory results = LibProduction._getAllX(components, nodeID, id, 0, "");
-    if (results.length > 0) {
-      result = results[0];
-    }
   }
 }
