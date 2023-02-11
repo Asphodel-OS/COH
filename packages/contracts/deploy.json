@@ -1,6 +1,7 @@
 {
   "components": [
     "BalanceComponent",
+    "BlockLastComponent",
     "CoinComponent",
     "ExitsComponent",
     "HashRateComponent",
@@ -91,7 +92,21 @@
       ]
     },
     {
+      "name": "OperatorMoveSystem",
+      "writeAccess": [
+        "LocationComponent"
+      ]
+    },
+    {
       "name": "OperatorSetSystem",
+      "writeAccess": [
+        "IsOperatorComponent",
+        "IdOwnerComponent",
+        "LocationComponent"
+      ]
+    },
+    {
+      "name": "PetSetOperatorSystem",
       "writeAccess": [
         "IdOperatorComponent"
       ]

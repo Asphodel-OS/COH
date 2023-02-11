@@ -15,6 +15,7 @@ import "libraries/LibRoom.sol";
 
 // Components
 import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
+import { BlockLastComponent, ID as BlockLastComponentID } from "components/BlockLastComponent.sol";
 import { CoinComponent, ID as CoinComponentID } from "components/CoinComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
 import { HashRateComponent, ID as HashRateComponentID } from "components/HashRateComponent.sol";
@@ -57,7 +58,9 @@ import { ListingSellSystem, ID as ListingSellSystemID } from "systems/ListingSel
 import { ListingSetSystem, ID as ListingSetSystemID } from "systems/ListingSetSystem.sol";
 import { MerchantCreateSystem, ID as MerchantCreateSystemID } from "systems/MerchantCreateSystem.sol";
 import { NodeCreateSystem, ID as NodeCreateSystemID } from "systems/NodeCreateSystem.sol";
+import { OperatorMoveSystem, ID as OperatorMoveSystemID } from "systems/OperatorMoveSystem.sol";
 import { OperatorSetSystem, ID as OperatorSetSystemID } from "systems/OperatorSetSystem.sol";
+import { PetSetOperatorSystem, ID as PetSetOperatorSystemID } from "systems/PetSetOperatorSystem.sol";
 import { ProductionCollectSystem, ID as ProductionCollectSystemID } from "systems/ProductionCollectSystem.sol";
 import { ProductionStartSystem, ID as ProductionStartSystemID } from "systems/ProductionStartSystem.sol";
 import { ProductionStopSystem, ID as ProductionStopSystemID } from "systems/ProductionStopSystem.sol";
@@ -65,6 +68,7 @@ import { ProductionStopSystem, ID as ProductionStopSystemID } from "systems/Prod
 abstract contract TestSetupImports is MudTest {
 // Components vars
 BalanceComponent _BalanceComponent;
+BlockLastComponent _BlockLastComponent;
 CoinComponent _CoinComponent;
 ExitsComponent _ExitsComponent;
 HashRateComponent _HashRateComponent;
@@ -107,7 +111,9 @@ ListingSellSystem _ListingSellSystem;
 ListingSetSystem _ListingSetSystem;
 MerchantCreateSystem _MerchantCreateSystem;
 NodeCreateSystem _NodeCreateSystem;
+OperatorMoveSystem _OperatorMoveSystem;
 OperatorSetSystem _OperatorSetSystem;
+PetSetOperatorSystem _PetSetOperatorSystem;
 ProductionCollectSystem _ProductionCollectSystem;
 ProductionStartSystem _ProductionStartSystem;
 ProductionStopSystem _ProductionStopSystem;
@@ -116,6 +122,7 @@ function setUp() public virtual override {
 super.setUp();
 
 _BalanceComponent = BalanceComponent(component(BalanceComponentID));
+_BlockLastComponent = BlockLastComponent(component(BlockLastComponentID));
 _CoinComponent = CoinComponent(component(CoinComponentID));
 _ExitsComponent = ExitsComponent(component(ExitsComponentID));
 _HashRateComponent = HashRateComponent(component(HashRateComponentID));
@@ -157,7 +164,9 @@ _ListingSellSystem = ListingSellSystem(system(ListingSellSystemID));
 _ListingSetSystem = ListingSetSystem(system(ListingSetSystemID));
 _MerchantCreateSystem = MerchantCreateSystem(system(MerchantCreateSystemID));
 _NodeCreateSystem = NodeCreateSystem(system(NodeCreateSystemID));
+_OperatorMoveSystem = OperatorMoveSystem(system(OperatorMoveSystemID));
 _OperatorSetSystem = OperatorSetSystem(system(OperatorSetSystemID));
+_PetSetOperatorSystem = PetSetOperatorSystem(system(PetSetOperatorSystemID));
 _ProductionCollectSystem = ProductionCollectSystem(system(ProductionCollectSystemID));
 _ProductionStartSystem = ProductionStartSystem(system(ProductionStartSystemID));
 _ProductionStopSystem = ProductionStopSystem(system(ProductionStopSystemID));
