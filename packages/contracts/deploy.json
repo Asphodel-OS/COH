@@ -13,6 +13,7 @@
     "IndexModifierComponent",
     "IndexPetComponent",
     "IsInventoryComponent",
+    "IsListingComponent",
     "IsMerchantComponent",
     "IsNodeComponent",
     "IsOperatorComponent",
@@ -50,7 +51,7 @@
       "writeAccess": [
         "BalanceComponent",
         "CoinComponent",
-        "IdOwnerComponent",
+        "IdOperatorComponent",
         "IndexItemComponent",
         "IsInventoryComponent"
       ]
@@ -65,6 +66,7 @@
     {
       "name": "ListingSetSystem",
       "writeAccess": [
+        "IsListingComponent",
         "IdMerchantComponent",
         "IndexItemComponent",
         "PriceBuyComponent",
@@ -105,7 +107,6 @@
       "writeAccess": [
         "IsProductionComponent",
         "IdNodeComponent",
-        "IdOperatorComponent",
         "IdPetComponent",
         "StateComponent",
         "TimeStartComponent"
