@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { defineScene } from '@latticexyz/phaserx';
 import { room001, room002, room003 } from '../rooms/';
-import { PhaserScene } from '../types';
+import { PhaserScene, Room } from '../types';
 
 export function defineMainScene() {
   return {
@@ -9,6 +9,10 @@ export function defineMainScene() {
       key: 'Main',
       preload: (scene: PhaserScene) => {
         scene.rooms = [room001(), room002(), room003()];
+
+        scene.rooms.forEach((room: Room)=>{
+          if(room.preload) room.preload!(scene);
+        })
       },
       create: (scene: PhaserScene) => {
         scene.rooms![0].create(scene);
