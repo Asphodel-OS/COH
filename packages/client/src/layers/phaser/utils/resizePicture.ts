@@ -14,7 +14,7 @@ export const resizePicture = () => {
   } else if (windowWidth <= 1536 && windowHeight <= 864) {
     scale = 0.82;
   } else if (windowWidth <= 1920 && windowHeight <= 1080) {
-    scale = 0.95;
+    scale = 0.85;
   } else {
     scale = 1;
   }
