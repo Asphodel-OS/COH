@@ -19,7 +19,186 @@ import { LibModifier } from "libraries/LibModifier.sol";
 
 // import { console } from "forge-std/console.sol";
 
+uint256 constant PERM_LENGTH = 6;
+uint256 constant EQUIP_LENGTH = 6;
+uint256 constant SLOT_A = 0;
+uint256 constant SLOT_B = 1;
+
 library LibPetTraits {
+  ///////////////
+  // MINTING
+
+  function setPermTraits(
+    IUintComp components,
+    IWorld world,
+    uint256 entityID,
+    uint256[] memory registryIDs
+  ) internal {
+    require(registryIDs.length == PERM_LENGTH, "wrong num base traits");
+
+    uint256[] memory arr = new uint256[](PERM_LENGTH);
+    for (uint256 i; i < arr.length; i++) {
+      arr[i] = LibModifier.addToPet(components, world, entityID, registryIDs[i]);
+    }
+
+    PetTraitsPermanentComponent(
+      getAddressById(components, PetTraitsPermanentCompID)
+    ).set(entityID, arr);
+  }
+
+  // force sets to [SLOT_A, SLOT_B, mod slots]
+  function setTempTraits(
+    IUintComp components,
+    IWorld world,
+    uint256 entityID,
+    uint256 slotA,
+    uint256 slotB,
+    uint256[] memory modSlots
+  ) internal {
+    // change this for customisable max
+    require(modSlots.length + 2 <= EQUIP_LENGTH, "wrong num equip traits");
+
+    uint256[] memory arr = new uint256[](modSlots.length + 2);
+    arr[0] = LibModifier.addToPet(components, world, entityID, slotA);
+    arr[1] = LibModifier.addToPet(components, world, entityID, slotB);
+    for (uint256 i = 2; i < arr.length; i++) {
+      arr[i] = LibModifier.addToPet(components, world, entityID, modSlots[i]);
+    }
+
+    PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).set(entityID, arr);  
+  }
+
+  ///////////////
+  // SWAPPING
+
+  function swapSlotA(
+    IUintComp components,
+    uint256 petID,
+    uint256 slot
+  ) internal {
+    uint256[] memory arr = PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).getValue(petID);
+
+    if(arr[SLOT_A] != 0) LibModifier.setInactive(components, arr[SLOT_A]);
+    arr[SLOT_A] = petID;
+    LibModifier.setActive(components, petID);
+    
+    PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).set(petID, arr);
+  }
+
+  function swapSlotB(
+    IUintComp components,
+    uint256 petID,
+    uint256 slot
+  ) internal {
+    uint256[] memory arr = PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).getValue(petID);
+
+    if(arr[SLOT_B] != 0) LibModifier.setInactive(components, arr[SLOT_B]);
+    arr[SLOT_B] = petID;
+    LibModifier.setActive(components, slot);
+    
+    PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).set(petID, arr);
+  }
+
+  // swaps a mod slot. returns false if no swap
+  function swapModSlot(
+    IUintComp components,
+    uint256 petID,
+    uint256 mod
+  ) internal returns (bool) {
+    uint256[] memory arr = PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).getValue(petID);
+
+    for (uint256 i = 2; i < arr.length; i++) {
+      if (arr[i] == mod) {
+        // replace mod, will never replace a 0 mod
+        LibModifier.setInactive(components, arr[i]);
+        arr[i] = mod;
+        LibModifier.setActive(components, mod);
+        
+        PetTraitsEquippedComponent(
+          getAddressById(components, PetTraitsEquippedCompID)
+        ).set(petID, arr);
+        
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // only do 1 by 1
+  function addModSlot(
+    IUintComp components,
+    uint256 petID,
+    uint256 mod
+  ) internal returns (bool) {
+    uint256[] memory arr = PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).getValue(petID); 
+
+    require(arr.length < EQUIP_LENGTH, "max equip length");
+
+    uint256[] memory result = new uint256[](arr.length + 1);
+    for (uint256 i; i < arr.length; i++) {
+      if (arr[i] == mod) {
+        // returns false if mod is already installed
+        return false;
+      }
+      result[i] = arr[i];
+    }
+
+    result[arr.length] = mod;
+
+    PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).set(petID, result);
+
+    return true;
+  }
+
+  function removeModSlot(
+    IUintComp components,
+    uint256 petID,
+    uint256 mod
+  ) internal returns (bool removed) {
+    uint256[] memory arr = PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).getValue(petID); 
+
+    require(arr.length > 2, "min equip length");
+
+    uint256[] memory result = new uint256[](arr.length - 1);
+    for (uint256 i = 2; i < result.length; i++) {
+      if (arr[i] == mod) {
+        // returns true if removed
+        LibModifier.setInactive(components, arr[i]);
+        result[i] = arr[arr.length - 1];
+        removed = true;
+      } else {
+        result[i] = arr[i];
+      }
+    }
+
+    PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).set(petID, result);
+
+    return removed;
+  }
+
+  ///////////////////
+  // HARDCODE PLACEHOLDER, leaving here for now
   // hardcoded placeholder, fake registry 
   function placeholderRegistry(
     IUintComp components,
