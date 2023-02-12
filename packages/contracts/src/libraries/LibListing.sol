@@ -66,8 +66,8 @@ library LibListing {
     }
 
     uint256 inventoryID = LibInventory.get(components, operatorID, itemIndex);
-    LibInventory.incBalance(components, inventoryID, amt);
-    LibCoin.decBalance(components, operatorID, amt * price);
+    LibInventory.inc(components, inventoryID, amt);
+    LibCoin.dec(components, operatorID, amt * price);
     return true;
   }
 
@@ -87,8 +87,8 @@ library LibListing {
     }
 
     uint256 inventoryID = LibInventory.get(components, operatorID, itemIndex);
-    LibInventory.decBalance(components, inventoryID, amt);
-    LibCoin.incBalance(components, operatorID, amt * price);
+    LibInventory.dec(components, inventoryID, amt);
+    LibCoin.inc(components, operatorID, amt * price);
     return true;
   }
 
