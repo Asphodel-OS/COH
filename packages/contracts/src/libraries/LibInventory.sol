@@ -7,10 +7,10 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { IdOperatorComponent, ID as IdOperatorComponentID } from "components/IdOperatorComponent.sol";
-import { IndexItemComponent, ID as IndexItemComponentID } from "components/IndexItemComponent.sol";
-import { IsInventoryComponent, ID as IsInventoryComponentID } from "components/IsInventoryComponent.sol";
-import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
+import { IdHolderComponent, ID as IdHolderCompID } from "components/IdHolderComponent.sol";
+import { IndexItemComponent, ID as IndexItemCompID } from "components/IndexItemComponent.sol";
+import { IsInventoryComponent, ID as IsInventoryCompID } from "components/IsInventoryComponent.sol";
+import { BalanceComponent, ID as BalanceCompID } from "components/BalanceComponent.sol";
 
 library LibInventory {
   /////////////////
@@ -20,13 +20,13 @@ library LibInventory {
   function create(
     IWorld world,
     IComponents components,
-    uint256 operatorID,
+    uint256 holderID,
     uint256 itemIndex
   ) internal returns (uint256) {
     uint256 id = world.getUniqueEntityId();
-    IsInventoryComponent(getAddressById(components, IsInventoryComponentID)).set(id);
-    IdOperatorComponent(getAddressById(components, IdOperatorComponentID)).set(id, operatorID);
-    IndexItemComponent(getAddressById(components, IndexItemComponentID)).set(id, itemIndex);
+    IsInventoryComponent(getAddressById(components, IsInventoryCompID)).set(id);
+    IdHolderComponent(getAddressById(components, IdHolderCompID)).set(id, holderID);
+    IndexItemComponent(getAddressById(components, IndexItemCompID)).set(id, itemIndex);
     return id;
   }
 
@@ -72,20 +72,22 @@ library LibInventory {
     uint256 id,
     uint256 amt
   ) internal {
-    BalanceComponent(getAddressById(components, BalanceComponentID)).set(id, amt);
+    BalanceComponent(getAddressById(components, BalanceCompID)).set(id, amt);
   }
 
   /////////////////
-  // COMPONENT GETTERS
+  // COMPONENT RETRIEVAL
 
-  // get the balance of an inventory
   function getBalance(IComponents components, uint256 id) internal view returns (uint256) {
-    return BalanceComponent(getAddressById(components, BalanceComponentID)).getValue(id);
+    return BalanceComponent(getAddressById(components, BalanceCompID)).getValue(id);
   }
 
-  // get the item type of an inventory
   function getItemIndex(IComponents components, uint256 id) internal view returns (uint256) {
-    return IndexItemComponent(getAddressById(components, IndexItemComponentID)).getValue(id);
+    return IndexItemComponent(getAddressById(components, IndexItemCompID)).getValue(id);
+  }
+
+  function getHolder(IComponents components, uint256 id) internal view returns (uint256) {
+    return IdHolderComponent(getAddressById(components, IdHolderCompID)).getValue(id);
   }
 
   /////////////////
@@ -94,23 +96,23 @@ library LibInventory {
   // get the id of an inventory entity based on owner ID and item index
   function get(
     IComponents components,
-    uint256 operatorID,
+    uint256 holderID,
     uint256 itemIndex
   ) internal view returns (uint256) {
     QueryFragment[] memory fragments = new QueryFragment[](3);
     fragments[0] = QueryFragment(
       QueryType.Has,
-      getComponentById(components, IsInventoryComponentID),
+      getComponentById(components, IsInventoryCompID),
       ""
     );
     fragments[1] = QueryFragment(
       QueryType.HasValue,
-      getComponentById(components, IdOperatorComponentID),
-      abi.encode(operatorID)
+      getComponentById(components, IdHolderCompID),
+      abi.encode(holderID)
     );
     fragments[2] = QueryFragment(
       QueryType.HasValue,
-      getComponentById(components, IndexItemComponentID),
+      getComponentById(components, IndexItemCompID),
       abi.encode(itemIndex)
     );
 
@@ -127,12 +129,12 @@ library LibInventory {
     QueryFragment[] memory fragments = new QueryFragment[](2);
     fragments[0] = QueryFragment(
       QueryType.Has,
-      getComponentById(components, IsInventoryComponentID),
+      getComponentById(components, IsInventoryCompID),
       ""
     );
     fragments[1] = QueryFragment(
       QueryType.HasValue,
-      getComponentById(components, IdOperatorComponentID),
+      getComponentById(components, IdHolderCompID),
       abi.encode(id)
     );
 

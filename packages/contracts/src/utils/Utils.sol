@@ -1,0 +1,45 @@
+// SPDX-License-Identifier: Unlicense
+pragma solidity ^0.8.0;
+
+import { IUint256Component as IComponents } from "solecs/interfaces/IUint256Component.sol";
+import { getAddressById, getComponentById } from "solecs/utils.sol";
+
+import { ID as IsRequestCompID } from "components/IsRequestComponent.sol";
+import { ID as IsTradeCompID } from "components/IsTradeComponent.sol";
+import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
+
+// maybe keep a bunch of generic component value comparisons in here. seems useful as many
+// comparisons seem to be redundant across libraries while others don't have a clear domain
+library Utils {
+  /////////////////
+  // ARCHETYPE CHECKS
+  // Check whether an entity is a Request.
+  function isRequest(IComponents components, uint256 id) internal view returns (bool) {
+    return _isX(components, IsRequestCompID, id);
+  }
+
+  // Check whether an entity is a Trade.
+  function isTrade(IComponents components, uint256 id) internal view returns (bool) {
+    return _isX(components, IsTradeCompID, id);
+  }
+
+  function _isX(
+    IComponents components,
+    uint256 componentID,
+    uint256 id
+  ) internal view returns (bool) {
+    return getComponentById(components, componentID).has(id);
+  }
+
+  /////////////////
+  // VALUE COMPARISONS
+
+  function sameLocation(
+    IComponents components,
+    uint256 a,
+    uint256 b
+  ) internal view returns (bool) {
+    LocationComponent LocC = LocationComponent(getAddressById(components, LocCompID));
+    return LocC.getValue(a) == LocC.getValue(b);
+  }
+}
