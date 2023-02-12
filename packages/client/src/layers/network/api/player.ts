@@ -2,6 +2,15 @@ import { BigNumberish } from "ethers";
 
 export function createPlayerAPI(systems: any) {
   /*********************
+   *    Pet ERC721
+   *********************/ 
+  // @dev 
+  // @param address   address to mint to
+  function mintPet(address: BigNumberish) {
+    return systems["system.ERC721.pet"].executeTyped(address);
+  }
+
+  /*********************
    *     OPERATOR
    *********************/
   // @dev moves the operator to another room from their current location
@@ -67,6 +76,9 @@ export function createPlayerAPI(systems: any) {
 
 
   return {
+    ERC721: {
+      mint: mintPet
+    },
     listing: {
       buy: buyFromListing,
       sell: sellToListing,
