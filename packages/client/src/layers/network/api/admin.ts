@@ -2,7 +2,26 @@ import { BigNumberish } from "ethers";
 
 export function createAdminAPI(systems: any) {
   function init() {
+    createRoom("room0", 0, [1]);
+    createRoom("room1", 1, [2, 3]);
+    createRoom("room2", 2, [1]);
+    createRoom("room3", 3, [1]);
 
+    createNode("room2 node", 2);
+    createNode("room3 node", 3);
+
+    createMerchant("room1 merchant", 1);
+    createMerchant("room2 merchant", 2);
+
+    // TODO: can only set listings after know merchant IDs, how to address this?
+  }
+
+  // @dev creates a merchant with the name at the specified room
+  // @param location  room ID
+  // @param name      name of the merchant
+  // @return uint     (promise) entity ID of the merchant
+  function createMerchant(name: string, location: number) {
+    return systems["system.MerchantCreate"].executeTyped(name, location);
   }
 
   // @dev creates an emission node at the specified location
@@ -11,17 +30,14 @@ export function createAdminAPI(systems: any) {
   // @return uint     entity ID of the deposit
   function createNode(
     name: string,
-    location: BigNumberish,
+    location: number,
   ) {
     return systems["system.NodeCreate"].executeTyped(name, location);
   }
 
-  // @dev creates a merchant with the name at the specified room
-  // @param location  room ID
-  // @param name      name of the merchant
-  // @return uint     (promise) entity ID of the merchant
-  function createMerchant(location: BigNumberish, name: string) {
-    return systems["system.MerchantCreate"].executeTyped(location, name);
+  // @dev creates a room with name, location and exits. cannot overwrite room at location
+  function createRoom(name: string, location: number, exits: number[]) {
+    return systems["system.MerchantCreate"].executeTyped(name, location, exits);
   }
 
   // @dev allows a character to sell an item through a merchant listing entity
@@ -32,7 +48,7 @@ export function createAdminAPI(systems: any) {
   // @return uint       (promise) entity ID of the listing
   function setListing(
     merchantID: BigNumberish,
-    itemIndex: BigNumberish,
+    itemIndex: number,
     buyPrice: number,
     sellPrice: number
   ) {
@@ -43,6 +59,7 @@ export function createAdminAPI(systems: any) {
     init,
     createMerchant,
     createNode,
+    createRoom,
     setListing,
   };
 }

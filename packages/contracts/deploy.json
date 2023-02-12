@@ -1,6 +1,7 @@
 {
   "components": [
     "BalanceComponent",
+    "BlockLastComponent",
     "CoinComponent",
     "ExitsComponent",
     "HashRateComponent",
@@ -13,6 +14,7 @@
     "IndexModifierComponent",
     "IndexPetComponent",
     "IsInventoryComponent",
+    "IsListingComponent",
     "IsMerchantComponent",
     "IsModifierComponent",
     "IsNodeComponent",
@@ -40,6 +42,7 @@
     {
       "name": "ERC721PetSystem",
       "writeAccess": [
+        "IsPetComponent",
         "IndexPetComponent",
         "IdOwnerComponent",
         "IdOperatorComponent",
@@ -51,7 +54,7 @@
       "writeAccess": [
         "BalanceComponent",
         "CoinComponent",
-        "IdOwnerComponent",
+        "IdOperatorComponent",
         "IndexItemComponent",
         "IsInventoryComponent"
       ]
@@ -66,6 +69,7 @@
     {
       "name": "ListingSetSystem",
       "writeAccess": [
+        "IsListingComponent",
         "IdMerchantComponent",
         "IndexItemComponent",
         "PriceBuyComponent",
@@ -89,7 +93,21 @@
       ]
     },
     {
+      "name": "OperatorMoveSystem",
+      "writeAccess": [
+        "LocationComponent"
+      ]
+    },
+    {
       "name": "OperatorSetSystem",
+      "writeAccess": [
+        "IsOperatorComponent",
+        "IdOwnerComponent",
+        "LocationComponent"
+      ]
+    },
+    {
+      "name": "PetSetOperatorSystem",
       "writeAccess": [
         "IdOperatorComponent"
       ]
@@ -106,7 +124,6 @@
       "writeAccess": [
         "IsProductionComponent",
         "IdNodeComponent",
-        "IdOperatorComponent",
         "IdPetComponent",
         "StateComponent",
         "TimeStartComponent"

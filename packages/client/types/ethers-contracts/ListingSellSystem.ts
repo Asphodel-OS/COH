@@ -30,7 +30,7 @@ import type {
 export interface ListingSellSystemInterface extends utils.Interface {
   functions: {
     "execute(bytes)": FunctionFragment;
-    "executeTyped(uint256,uint256,uint256)": FunctionFragment;
+    "executeTyped(uint256,uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -49,11 +49,7 @@ export interface ListingSellSystemInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "executeTyped",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -124,7 +120,6 @@ export interface ListingSellSystem extends BaseContract {
     ): Promise<ContractTransaction>;
 
     executeTyped(
-      charID: PromiseOrValue<BigNumberish>,
       listingID: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -144,7 +139,6 @@ export interface ListingSellSystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   executeTyped(
-    charID: PromiseOrValue<BigNumberish>,
     listingID: PromiseOrValue<BigNumberish>,
     amt: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -164,7 +158,6 @@ export interface ListingSellSystem extends BaseContract {
     ): Promise<string>;
 
     executeTyped(
-      charID: PromiseOrValue<BigNumberish>,
       listingID: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -196,7 +189,6 @@ export interface ListingSellSystem extends BaseContract {
     ): Promise<BigNumber>;
 
     executeTyped(
-      charID: PromiseOrValue<BigNumberish>,
       listingID: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -217,7 +209,6 @@ export interface ListingSellSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
-      charID: PromiseOrValue<BigNumberish>,
       listingID: PromiseOrValue<BigNumberish>,
       amt: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }

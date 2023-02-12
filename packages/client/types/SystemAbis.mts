@@ -5,10 +5,13 @@ import ListingSellSystem from "../abi/ListingSellSystem.json";
 import ListingSetSystem from "../abi/ListingSetSystem.json";
 import MerchantCreateSystem from "../abi/MerchantCreateSystem.json";
 import NodeCreateSystem from "../abi/NodeCreateSystem.json";
+import OperatorMoveSystem from "../abi/OperatorMoveSystem.json";
 import OperatorSetSystem from "../abi/OperatorSetSystem.json";
+import PetSetOperatorSystem from "../abi/PetSetOperatorSystem.json";
 import ProductionCollectSystem from "../abi/ProductionCollectSystem.json";
 import ProductionStartSystem from "../abi/ProductionStartSystem.json";
 import ProductionStopSystem from "../abi/ProductionStopSystem.json";
+import RoomCreateSystem from "../abi/RoomCreateSystem.json";
 
 export const SystemAbis = {
   "system.ERC721.pet": ERC721PetSystem.abi,
@@ -17,8 +20,11 @@ export const SystemAbis = {
   "system.ListingSet": ListingSetSystem.abi,
   "system.MerchantCreate": MerchantCreateSystem.abi,
   "system.NodeCreate": NodeCreateSystem.abi,
-  "system.operator.set": OperatorSetSystem.abi,
+  "system.OperatorMove": OperatorMoveSystem.abi,
+  "system.OperatorSet": OperatorSetSystem.abi,
+  "system.PetSetOperator": PetSetOperatorSystem.abi,
   "system.ProductionCollect": ProductionCollectSystem.abi,
   "system.ProductionStart": ProductionStartSystem.abi,
   "system.ProductionStop": ProductionStopSystem.abi,
+  "system.RoomCreate": RoomCreateSystem.abi,
 };

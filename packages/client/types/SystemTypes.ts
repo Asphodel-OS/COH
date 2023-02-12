@@ -5,10 +5,13 @@ import { ListingSellSystem } from "./ethers-contracts/ListingSellSystem";
 import { ListingSetSystem } from "./ethers-contracts/ListingSetSystem";
 import { MerchantCreateSystem } from "./ethers-contracts/MerchantCreateSystem";
 import { NodeCreateSystem } from "./ethers-contracts/NodeCreateSystem";
+import { OperatorMoveSystem } from "./ethers-contracts/OperatorMoveSystem";
 import { OperatorSetSystem } from "./ethers-contracts/OperatorSetSystem";
+import { PetSetOperatorSystem } from "./ethers-contracts/PetSetOperatorSystem";
 import { ProductionCollectSystem } from "./ethers-contracts/ProductionCollectSystem";
 import { ProductionStartSystem } from "./ethers-contracts/ProductionStartSystem";
 import { ProductionStopSystem } from "./ethers-contracts/ProductionStopSystem";
+import { RoomCreateSystem } from "./ethers-contracts/RoomCreateSystem";
  
 export type SystemTypes = {
   "system.ERC721.pet": ERC721PetSystem;
@@ -17,8 +20,11 @@ export type SystemTypes = {
   "system.ListingSet": ListingSetSystem;
   "system.MerchantCreate": MerchantCreateSystem;
   "system.NodeCreate": NodeCreateSystem;
-  "system.operator.set": OperatorSetSystem;
+  "system.OperatorMove": OperatorMoveSystem;
+  "system.OperatorSet": OperatorSetSystem;
+  "system.PetSetOperator": PetSetOperatorSystem;
   "system.ProductionCollect": ProductionCollectSystem;
   "system.ProductionStart": ProductionStartSystem;
   "system.ProductionStop": ProductionStopSystem;
+  "system.RoomCreate": RoomCreateSystem;
 };

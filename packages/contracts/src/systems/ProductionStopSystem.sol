@@ -7,6 +7,7 @@ import { getAddressById } from "solecs/utils.sol";
 
 import { LibOperator } from "libraries/LibOperator.sol";
 import { LibCoin } from "libraries/LibCoin.sol";
+import { LibPet } from "libraries/LibPet.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { Strings } from "utils/Strings.sol";
 
@@ -17,22 +18,25 @@ contract ProductionStopSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public returns (bytes memory) {
-    (uint256 charID, uint256 productionID) = abi.decode(arguments, (uint256, uint256));
+    uint256 productionID = abi.decode(arguments, (uint256));
+    uint256 operatorID = uint256(uint160(msg.sender));
+    uint256 petID = LibProduction.getPet(components, productionID);
     uint256 nodeID = LibProduction.getNode(components, productionID);
-    // require(LibOperator.getOperator(components, charID) == msg.sender, "Character: not urs");
-    require(LibOperator.sharesLocation(components, charID, nodeID), "Node: must be in room");
+
+    require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
+    require(LibOperator.sharesLocation(components, operatorID, nodeID), "Node: must be in room");
     require(
       Strings.equal(LibProduction.getState(components, productionID), "ACTIVE"),
       "Production: must be active"
     );
 
     uint256 amt = LibProduction.calc(components, productionID);
-    LibCoin.incBalance(components, charID, amt);
+    LibCoin.incBalance(components, operatorID, amt);
     LibProduction.stop(components, productionID);
     return abi.encode(amt);
   }
 
-  function executeTyped(uint256 charID, uint256 productionID) public returns (bytes memory) {
-    return execute(abi.encode(charID, productionID));
+  function executeTyped(uint256 productionID) public returns (bytes memory) {
+    return execute(abi.encode(productionID));
   }
 }

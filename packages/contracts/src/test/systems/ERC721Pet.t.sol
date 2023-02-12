@@ -4,37 +4,25 @@ pragma solidity ^0.8.0;
 import "test/utils/SetupTemplate.s.sol";
 
 contract ERC721PetTest is SetupTemplate {
-  function _assertOwnership(
-    uint256 tokenID,
-    address addy
-  ) internal {
+  function _assertOwnership(uint256 tokenID, address addy) internal {
     // owner and component must be the same
     uint256 entityID = LibPet.indexToID(components, tokenID);
     assertEq(
       _ERC721PetSystem.ownerOf(tokenID),
       entityToAddress(_IdOwnerComponent.getValue(entityID))
     );
-    assertEq(
-      _ERC721PetSystem.ownerOf(tokenID),
-      addy
-    );
+    assertEq(_ERC721PetSystem.ownerOf(tokenID), addy);
   }
 
-  function _assertOperator(
-    uint256 entityID,
-    address operator
-  ) internal {
-    assertEq(
-      _IdOperatorComponent.getValue(entityID),
-      addressToEntity(operator)
-    );
+  function _assertOperator(uint256 entityID, address operator) internal {
+    assertEq(_IdOperatorComponent.getValue(entityID), addressToEntity(operator));
   }
 
   function testMint() public {
     _mintPets(1);
 
     _assertOwnership(0, alice);
-    _assertOperator(petOneEntityID, alice);    
+    _assertOperator(petOneEntityID, alice);
   }
 
   function testTransfer() public {
@@ -66,7 +54,7 @@ contract ERC721PetTest is SetupTemplate {
     _mintPets(1);
 
     vm.prank(alice);
-    _OperatorSetSystem.executeTyped(petOneEntityID, bob);
+    _PetSetOperatorSystem.executeTyped(petOneEntityID, bob);
 
     _assertOwnership(0, alice);
     _assertOperator(petOneEntityID, bob);

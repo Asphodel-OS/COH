@@ -4,7 +4,6 @@
 import type {
   BaseContract,
   BigNumber,
-  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -30,7 +29,7 @@ import type {
 export interface OperatorSetSystemInterface extends utils.Interface {
   functions: {
     "execute(bytes)": FunctionFragment;
-    "executeTyped(uint256,address)": FunctionFragment;
+    "executeTyped(address)": FunctionFragment;
     "owner()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -49,7 +48,7 @@ export interface OperatorSetSystemInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "executeTyped",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -120,8 +119,7 @@ export interface OperatorSetSystem extends BaseContract {
     ): Promise<ContractTransaction>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -139,8 +137,7 @@ export interface OperatorSetSystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   executeTyped(
-    entityID: PromiseOrValue<BigNumberish>,
-    to: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -158,8 +155,7 @@ export interface OperatorSetSystem extends BaseContract {
     ): Promise<string>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -189,8 +185,7 @@ export interface OperatorSetSystem extends BaseContract {
     ): Promise<BigNumber>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -209,8 +204,7 @@ export interface OperatorSetSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
-      to: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
