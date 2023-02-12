@@ -33,6 +33,8 @@
     "PriceBuyComponent",
     "PriceSellComponent",
     "PrototypeComponent",
+    "PetTraitsEquippedComponent",
+    "PetTraitsPermanentComponent",
     "StateComponent",
     "StorageSizeComponent",
     "TimeLastActionComponent",
@@ -42,11 +44,7 @@
     {
       "name": "ERC721PetSystem",
       "writeAccess": [
-        "IsPetComponent",
-        "IndexPetComponent",
-        "IdOwnerComponent",
-        "IdOperatorComponent",
-        "MediaURIComponent"
+        "*"
       ]
     },
     {
