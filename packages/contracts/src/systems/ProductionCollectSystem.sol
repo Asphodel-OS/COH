@@ -6,10 +6,10 @@ import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById } from "solecs/utils.sol";
 
 import { LibCoin } from "libraries/LibCoin.sol";
-import { LibOperator } from "libraries/LibOperator.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { Strings } from "utils/Strings.sol";
+import { Utils } from "utils/Utils.sol";
 
 uint256 constant ID = uint256(keccak256("system.ProductionCollect"));
 
@@ -24,7 +24,7 @@ contract ProductionCollectSystem is System {
     uint256 nodeID = LibProduction.getNode(components, productionID);
 
     require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
-    require(LibOperator.sharesLocation(components, operatorID, nodeID), "Node: must be in room");
+    require(Utils.sameLocation(components, operatorID, nodeID), "Node: must be in room");
     require(
       Strings.equal(LibProduction.getState(components, productionID), "ACTIVE"),
       "Production: must be active"

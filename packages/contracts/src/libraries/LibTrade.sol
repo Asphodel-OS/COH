@@ -5,7 +5,7 @@ import { IUint256Component as IComponents } from "solecs/interfaces/IUint256Comp
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
-import { getAddressById, getComponentById, addressToEntity, getSystemAddressById } from "solecs/utils.sol";
+import { getAddressById, getComponentById } from "solecs/utils.sol";
 
 import { IdOperatorComponent, ID as IdOperatorCompID } from "components/IdOperatorComponent.sol";
 import { IdRequesteeComponent, ID as IdReqeeCompID } from "components/IdRequesteeComponent.sol";
@@ -96,12 +96,21 @@ library LibTrade {
   // CHECKS
 
   // Check whether an operator is the requester or requestee in a trade.
-  function isParticipant(
+  function hasParticipant(
     IComponents components,
     uint256 id,
     uint256 entityID
   ) internal view returns (bool) {
     return getRequester(components, id) == entityID || getRequestee(components, id) == entityID;
+  }
+
+  // Check whether a trade has the specified state.
+  function hasState(
+    IComponents components,
+    uint256 id,
+    string memory state
+  ) internal view returns (bool) {
+    return StateComponent(getAddressById(components, StateCompID)).hasValue(id, state);
   }
 
   // Check whether a trade is confirmed by both parties. Assumes exactly 2 parties
@@ -113,7 +122,7 @@ library LibTrade {
   }
 
   /////////////////
-  // COMPONENT GETTERS
+  // COMPONENT RETRIEVAL
 
   function getRequestee(IComponents components, uint256 id) internal view returns (uint256) {
     return IdRequesteeComponent(getAddressById(components, IdReqeeCompID)).getValue(id);
@@ -131,8 +140,8 @@ library LibTrade {
   /////////////////
   // QUERIES
 
-  // Gets active trade request Alice => Bob. Identified by IsTrade, IsRequest. Assume only 1.
-  function getRequests(
+  // Gets active trade request Alice => Bob. Identified by IsTrade, INITIATED. Assume only 1.
+  function getRequest(
     IComponents components,
     uint256 aliceID,
     uint256 bobID

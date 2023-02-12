@@ -5,10 +5,10 @@ import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById } from "solecs/utils.sol";
 
-import { LibOperator } from "libraries/LibOperator.sol";
 import { LibNode } from "libraries/LibNode.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
+import { Utils } from "utils/Utils.sol";
 
 uint256 constant ID = uint256(keccak256("system.ProductionStart"));
 
@@ -22,7 +22,7 @@ contract ProductionStartSystem is System {
     uint256 operatorID = uint256(uint160(msg.sender));
 
     require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
-    require(LibOperator.sharesLocation(components, operatorID, nodeID), "Node: must be in room");
+    require(Utils.sameLocation(components, operatorID, nodeID), "Node: must be in room");
     require(
       LibPet.getActiveProduction(components, petID) == 0,
       "Pet: active production already exists"

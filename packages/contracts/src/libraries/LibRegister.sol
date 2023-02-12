@@ -128,7 +128,7 @@ library LibRegister {
   }
 
   /////////////////
-  // COMPONENT GETTERS
+  // COMPONENT RETRIEVAL
 
   function getDelegatee(IComponents components, uint256 id) internal view returns (uint256) {
     return IdDelegateeComponent(getAddressById(components, IdDelegateeCompID)).getValue(id);
@@ -145,7 +145,7 @@ library LibRegister {
   /////////////////
   // QUERIES
 
-  // get a register for a delegator, delegatee combo
+  // Get the active register for a delegator, delegatee combo. Assume only 1
   function get(
     IComponents components,
     uint256 delegatorID,

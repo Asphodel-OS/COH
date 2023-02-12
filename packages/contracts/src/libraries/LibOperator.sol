@@ -15,6 +15,9 @@ import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
 library LibOperator {
+  /////////////////
+  // INTERACTIONS
+
   // Create an account operator
   function create(
     IComponents components,
@@ -44,7 +47,7 @@ library LibOperator {
   }
 
   /////////////////
-  // CALCULATIONS
+  // CHECKS
 
   // Check whether a character can move to a location from where they currently are.
   // This function assumes that the entity id provided belongs to a character.
@@ -58,10 +61,8 @@ library LibOperator {
     return LibRoom.isValidPath(components, from, to);
   }
 
-  /////////////////
-  // CHECKS
-
   // determines whether an entity shares a location with a node
+  // TODO: this is already generalized, move to shared library?
   function sharesLocation(
     IComponents components,
     uint256 id,
