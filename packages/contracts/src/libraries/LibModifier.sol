@@ -3,16 +3,18 @@ pragma solidity ^0.8.0;
 
 import { IUint256Component } from "solecs/interfaces/IUint256Component.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
-import { getAddressById } from "solecs/utils.sol";
+import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
+import { LibQuery } from "solecs/LibQuery.sol";
+import { getAddressById, getComponentById } from "solecs/utils.sol";
 
 import { LibRegistry } from "libraries/LibRegistry.sol";
 
 import { ModifierStatusComponent, ID as ModifierStatusComponentID } from "components/ModifierStatusComponent.sol";
 import { ModifierTypeComponent, ID as ModifierTypeComponentID } from "components/ModifierTypeComponent.sol";
 import { ModifierValueComponent, ID as ModifierValueComponentID } from "components/ModifierValueComponent.sol";
+import { IsModifierComponent, ID as IsModifierComponentID } from "components/IsModifierComponent.sol";
 import { IndexModifierComponent, ID as IndexModifierComponentID } from "components/IndexModifierComponent.sol";
-import { IdOwnerComponent, ID as IdOwnerComponentID } from "components/IdOwnerComponent.sol";
-
+import { IdPetComponent, ID as IdPetComponentID } from "components/IdPetComponent.sol";
 import { ID as PrototypeComponentID } from "components/PrototypeComponent.sol";
 
 enum ModStatus {
@@ -47,8 +49,8 @@ library LibModifier {
       entityID
     );
 
-    IdOwnerComponent(
-      getAddressById(components, IdOwnerComponentID)
+    IdPetComponent(
+      getAddressById(components, IdPetComponentID)
     ).set(entityID, petID);
     writeStatus(components, entityID, ModStatus.INACTIVE);
     
@@ -92,10 +94,54 @@ library LibModifier {
 
   ///////////////
   // QUERY
-  // function _getAllX
+  function _getAllX(
+    IUint256Component components,
+    uint256 petID,
+    uint256 modIndex,
+    ModStatus modStatus,
+    ModType modType
+  ) internal view returns (uint256[] memory) {
+    uint256 numFilters;
+    if (petID != 0) numFilters++;
+    if (modIndex != 0) numFilters++;
+    if (modStatus != ModStatus.NULL) numFilters++;
+    if (modType != ModType.NULL) numFilters++;
 
+    QueryFragment[] memory fragments = new QueryFragment[](numFilters + 1);
+    fragments[0] = QueryFragment(QueryType.Has, getComponentById(components, IsModifierComponentID), "");
 
+    uint256 filterCount;
+    if (petID != 0) {
+      fragments[++filterCount] = QueryFragment(
+        QueryType.HasValue,
+        getComponentById(components, IdPetComponentID),
+        abi.encode(petID)
+      );
+    }
+    if (modIndex != 0) {
+      fragments[++filterCount] = QueryFragment(
+        QueryType.HasValue,
+        getComponentById(components, IndexModifierComponentID),
+        abi.encode(modIndex)
+      );
+    }
+    if (modStatus != ModStatus.NULL) {
+      fragments[++filterCount] = QueryFragment(
+        QueryType.HasValue,
+        getComponentById(components, ModifierStatusComponentID),
+        abi.encode(statusToUint256(modStatus))
+      );
+    }
+    if (modType != ModType.NULL) {
+      fragments[++filterCount] = QueryFragment(
+        QueryType.HasValue,
+        getComponentById(components, ModifierTypeComponentID),
+        abi.encode(modTypeToUint256(modType))
+      );
+    }
 
+    return LibQuery.query(fragments);
+  }
 
   ///////////////
   // HOPPERS

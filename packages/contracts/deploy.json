@@ -16,6 +16,7 @@
     "IsInventoryComponent",
     "IsListingComponent",
     "IsMerchantComponent",
+    "IsModifierComponent",
     "IsNodeComponent",
     "IsOperatorComponent",
     "IsPetComponent",
