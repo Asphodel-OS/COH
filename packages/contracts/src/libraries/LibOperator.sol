@@ -28,6 +28,16 @@ library LibOperator {
     return id;
   }
 
+  function change(
+    IComponents components,
+    address addr, 
+    address owner
+  ) internal returns (uint256) {
+    uint256 id = uint256(uint160(addr));
+    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
+    return id;
+  }
+
   // Move the Address to a room
   function move(
     IComponents components,
