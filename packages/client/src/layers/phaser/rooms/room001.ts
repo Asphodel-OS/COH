@@ -13,12 +13,11 @@ export function room001() {
     create: (scene: PhaserScene) => {
       scene.add.image(window.innerWidth / 2, window.innerHeight / 2, 'room001').setScale(scale * 8.3);
 
-      const couch = scene.add.rectangle(500, 820, 200, 180);
+      const couch = scene.add.rectangle(450, 700, 200, 180, 0xff0000);
 
       triggerObjectModal(
         couch,
-        'This couch is the perfect addition to your protected area room. With its comfortable design, this couch offers a cozy and secure place to relax.'
-      );
+        'This is a couch used for testing the item description component. ');
     },
   };
 }

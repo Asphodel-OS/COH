@@ -8,10 +8,10 @@ export function registerObjectModal() {
   registerUIComponent(
     'ObjectModal',
     {
-      colStart: 35,
-      colEnd: 65,
-      rowStart: 27,
-      rowEnd: 63,
+      colStart: 15,
+      colEnd: 85,
+      rowStart: 75,
+      rowEnd: 95,
     },
     (layers) => of(layers),
     () => {
@@ -28,9 +28,11 @@ export function registerObjectModal() {
         <ModalWrapper id="object_modal">
           <ModalContent>
             <Description>{description}</Description>
-            <Button style={{ pointerEvents: 'auto' }} onClick={hideModal}>
+            <div style={{textAlign: "right"}}>
+            <Button style={{ pointerEvents: 'auto', width: "30%"}} onClick={hideModal}>
               Close
             </Button>
+            </div>
           </ModalContent>
         </ModalWrapper>
       );
