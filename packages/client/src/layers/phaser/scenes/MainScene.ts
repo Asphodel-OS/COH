@@ -15,7 +15,7 @@ export function defineMainScene() {
         })
       },
       create: (scene: PhaserScene) => {
-        scene.rooms![0].create(scene);
+        scene.rooms![1].create(scene);
       },
     }),
   };
