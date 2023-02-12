@@ -41,8 +41,8 @@ library LibPet {
   // set a pet's stats from its attributes
   // TODO: update this to actually calculate the values
   function setStats(IUintComp components, uint256 id) internal {
-    HashRateComponent(getAddressById(components, HashRateCompID)).set(id, 0);
-    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, 0);
+    HashRateComponent(getAddressById(components, HashRateCompID)).set(id, 11);
+    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, 11);
   }
 
   /////////////////

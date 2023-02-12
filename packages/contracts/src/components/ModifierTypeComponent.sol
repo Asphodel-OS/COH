@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.0;
-import "std-contracts/components/Uint256Component.sol";
+import "std-contracts/components/StringComponent.sol";
 
 uint256 constant ID = uint256(keccak256("component.ModifierType"));
 
-// actual value is represented in a Enum in LibModifier
-contract ModifierTypeComponent is Uint256Component {
-  constructor(address world) Uint256Component(world, ID) {}
+// change to string, allow direct display for FE
+contract ModifierTypeComponent is StringComponent {
+  constructor(address world) StringComponent(world, ID) {}
 }

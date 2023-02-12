@@ -15,7 +15,10 @@ import { ModifierValueComponent, ID as ModifierValueComponentID } from "componen
 import { IsModifierComponent, ID as IsModifierComponentID } from "components/IsModifierComponent.sol";
 import { IndexModifierComponent, ID as IndexModifierComponentID } from "components/IndexModifierComponent.sol";
 import { IdPetComponent, ID as IdPetComponentID } from "components/IdPetComponent.sol";
+import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { ID as PrototypeComponentID } from "components/PrototypeComponent.sol";
+
+import { Strings } from "utils/Strings.sol";
 
 enum ModStatus {
   NULL,
@@ -23,13 +26,13 @@ enum ModStatus {
   ACTIVE
 }
 
-enum ModType {
-  NULL,
-  BASE,
-  ADD,
-  MUL,
-  UMUL
-}
+// enum ModType {
+//   NULL,
+//   BASE,
+//   ADD,
+//   MUL,
+//   UMUL
+// }
 
 library LibModifier {
   ///////////////
@@ -57,6 +60,7 @@ library LibModifier {
     return entityID;
   }
 
+
   ///////////////
   // REGISTRY
   function createIndex(
@@ -64,21 +68,24 @@ library LibModifier {
     IWorld world,
     uint256 index,
     uint256 modValue,
-    ModType modType
+    string memory modType,
+    string memory name
   ) internal returns (uint256) {
     uint256 entityID = world.getUniqueEntityId();
 
-    uint256[] memory componentIDs = new uint256[](4);
+    uint256[] memory componentIDs = new uint256[](5);
     componentIDs[0] = ModifierValueComponentID;
     componentIDs[1] = ModifierTypeComponentID;
     componentIDs[2] = ModifierStatusComponentID;
-    componentIDs[3] = PrototypeComponentID;
+    componentIDs[3] = NameCompID;
+    componentIDs[4] = PrototypeComponentID;
 
-    bytes[] memory values = new bytes[](4);
+    bytes[] memory values = new bytes[](5);
     values[0] = abi.encode(modValue);
-    values[1] = abi.encode(modTypeToUint256(modType));
+    values[1] = abi.encode(modType);
     values[2] = abi.encode(statusToUint256(ModStatus.NULL));
-    values[3] = new bytes(0);
+    values[3] = abi.encode(name);
+    values[4] = new bytes(0);
 
     LibRegistry.addPrototype(
       components,
@@ -99,13 +106,13 @@ library LibModifier {
     uint256 petID,
     uint256 modIndex,
     ModStatus modStatus,
-    ModType modType
+    string memory modType
   ) internal view returns (uint256[] memory) {
     uint256 numFilters;
     if (petID != 0) numFilters++;
     if (modIndex != 0) numFilters++;
     if (modStatus != ModStatus.NULL) numFilters++;
-    if (modType != ModType.NULL) numFilters++;
+    if (!Strings.equal(modType, "")) numFilters++;
 
     QueryFragment[] memory fragments = new QueryFragment[](numFilters + 1);
     fragments[0] = QueryFragment(QueryType.Has, getComponentById(components, IsModifierComponentID), "");
@@ -132,11 +139,11 @@ library LibModifier {
         abi.encode(statusToUint256(modStatus))
       );
     }
-    if (modType != ModType.NULL) {
+    if (!Strings.equal(modType, "")) {
       fragments[++filterCount] = QueryFragment(
         QueryType.HasValue,
         getComponentById(components, ModifierTypeComponentID),
-        abi.encode(modTypeToUint256(modType))
+        abi.encode(modType)
       );
     }
 
@@ -163,24 +170,4 @@ library LibModifier {
       getAddressById(components, ModifierStatusComponentID)
     ).set(entityID, statusToUint256(status));
   }
-
-  // converts ModType Enum to Uint256
-  function modTypeToUint256(
-    ModType modType
-  ) internal pure returns (uint256) {
-    return uint256(modType);
-  }
-
-  // writes modType to component from enum
-  function writeModType(
-    IUint256Component components,
-    uint256 entityID,
-    ModType modType
-  ) internal {
-    ModifierTypeComponent(
-      getAddressById(components, ModifierTypeComponentID)
-    ).set(entityID, modTypeToUint256(modType));
-  }
-
-
 }

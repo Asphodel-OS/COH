@@ -6,6 +6,7 @@ import { System } from "solecs/System.sol";
 import { ERC721 } from "solmate/tokens/ERC721.sol";
 
 import { LibPet } from "libraries/LibPet.sol";
+import { LibPetTraits } from "libraries/LibPetTraits.sol";
 
 uint256 constant ID = uint256(keccak256("system.ERC721.pet"));
 string constant NFT_NAME = "Kamigotchi";
@@ -28,9 +29,16 @@ contract ERC721PetSystem is System, ERC721 {
 
   function mint(address to) public returns (uint256) {
     // require(tx.origin == msg.sender, "no contracts");
-    string memory uri = "";
+    
+    // TODO: PLACEHOLDER, replace later
+    string memory uri = "https://kamigotchi.nyc3.cdn.digitaloceanspaces.com/placeholder.png";
     uint256 entityID = LibPet.create(components, world, to, totalSupply, uri);
-    // TODO: set metadata here
+
+
+    LibPet.setStats(components, entityID);
+
+    LibPetTraits.placeholderRegistry(components, world);
+    LibPetTraits.placeholderTraits(components, world, entityID);
 
     _mint(to, totalSupply);
     totalSupply++;
