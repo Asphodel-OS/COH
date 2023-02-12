@@ -20,7 +20,7 @@ contract OperatorSetSystem is System {
     uint256 ownerID = uint256(uint160(msg.sender));
     uint256 operatorID = LibOperator.getForOwner(components, ownerID);
 
-    require(operatorID == 0, "Operator: already set for owner");
+    // require(operatorID == 0, "Operator: already set for owner");
 
     operatorID = LibOperator.create(components, operator, msg.sender);
 
