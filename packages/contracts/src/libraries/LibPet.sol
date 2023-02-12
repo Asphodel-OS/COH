@@ -19,6 +19,9 @@ import { StorageSizeComponent, ID as StorSizeCompID } from "components/StorageSi
 import { LibProduction } from "libraries/LibProduction.sol";
 
 library LibPet {
+  /////////////////
+  // INTERACTIONS
+
   // create a pet entity, set its owner and operator for an entity
   // NOTE: we may need to create an Operator/Owner entities here if they dont exist
   // TODO: include attributes in this generation

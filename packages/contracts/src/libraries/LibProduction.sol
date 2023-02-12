@@ -16,7 +16,7 @@ import { LibPet } from "libraries/LibPet.sol";
 import { Strings } from "utils/Strings.sol";
 
 /*
- * LibNode handles all retrieval and manipulation of mining nodes/productions
+ * LibProduction handles all retrieval and manipulation of mining nodes/productions
  */
 library LibProduction {
   /////////////////////

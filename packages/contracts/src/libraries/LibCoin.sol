@@ -9,50 +9,46 @@ import { CoinComponent, ID as CoinComponentID } from "components/CoinComponent.s
 
 library LibCoin {
   // gets the coin balance of an entity
-  function getBalance(IUint256Component components, uint256 entityID)
-    internal
-    view
-    returns (uint256)
-  {
+  function get(IUint256Component components, uint256 entityID) internal view returns (uint256) {
     return CoinComponent(getAddressById(components, CoinComponentID)).getValue(entityID);
   }
 
   // transfers the specified coin amt from=>to entity
-  function transferBalance(
+  function transfer(
     IUint256Component components,
     uint256 fromID,
     uint256 toID,
     uint256 amt
   ) internal {
-    decBalance(components, fromID, amt);
-    incBalance(components, toID, amt);
+    dec(components, fromID, amt);
+    inc(components, toID, amt);
   }
 
   // increases the coin balance of an entity by amt
-  function incBalance(
+  function inc(
     IUint256Component components,
     uint256 entityID,
     uint256 amt
   ) internal {
-    uint256 balance = getBalance(components, entityID);
-    setBalance(components, entityID, balance + amt);
+    uint256 balance = get(components, entityID);
+    _set(components, entityID, balance + amt);
   }
 
   // decreases the coin balance of an entity by amt
-  function decBalance(
+  function dec(
     IUint256Component components,
     uint256 entityID,
     uint256 amt
   ) internal {
-    uint256 balance = getBalance(components, entityID);
+    uint256 balance = get(components, entityID);
     require(balance >= amt, "Coin: insufficient balance");
     unchecked {
-      setBalance(components, entityID, balance - amt);
+      _set(components, entityID, balance - amt);
     }
   }
 
   // sets the coin balance of an entity
-  function setBalance(
+  function _set(
     IUint256Component components,
     uint256 entityID,
     uint256 amt

@@ -31,7 +31,7 @@ contract ProductionStopSystem is System {
     );
 
     uint256 amt = LibProduction.calc(components, productionID);
-    LibCoin.incBalance(components, operatorID, amt);
+    LibCoin.inc(components, operatorID, amt);
     LibProduction.stop(components, productionID);
     return abi.encode(amt);
   }
