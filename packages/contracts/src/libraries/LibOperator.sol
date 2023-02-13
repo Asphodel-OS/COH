@@ -9,8 +9,9 @@ import { getAddressById, getComponentById, addressToEntity } from "solecs/utils.
 
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IsOperatorComponent, ID as IsOperatorCompID } from "components/IsOperatorComponent.sol";
+import { AddressPlayerComponent, ID as AddrPlayerCompID } from "components/AddressPlayerComponent.sol";
+import { BlockLastComponent, ID as BlockLastCompID } from "components/BlockLastComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
-import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
 library LibOperator {
@@ -19,24 +20,25 @@ library LibOperator {
 
   // Create an account operator
   function create(
+    IWorld world,
     IComponents components,
-    address addr,
-    address owner
+    address playerAddr,
+    address ownerAddr
   ) internal returns (uint256) {
-    uint256 id = uint256(uint160(addr));
+    uint256 id = world.getUniqueEntityId();
     IsOperatorComponent(getAddressById(components, IsOperatorCompID)).set(id);
-    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
+    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(ownerAddr));
     LocationComponent(getAddressById(components, LocCompID)).set(id, 1);
+    AddressPlayerComponent(getAddressById(components, AddrPlayerCompID)).set(id, playerAddr);
     return id;
   }
 
-  function change(
+  function setAddress(
     IComponents components,
-    address addr,
-    address owner
+    uint256 id,
+    address addr
   ) internal returns (uint256) {
-    uint256 id = uint256(uint160(addr));
-    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
+    AddressPlayerComponent(getAddressById(components, AddrPlayerCompID)).set(id, addr);
     return id;
   }
 
@@ -64,23 +66,12 @@ library LibOperator {
     return LibRoom.isValidPath(components, from, to);
   }
 
-  // determines whether an entity shares a location with a node
-  // TODO: this is already generalized, move to shared library?
-  function sharesLocation(
-    IComponents components,
-    uint256 id,
-    uint256 entityID
-  ) internal view returns (bool) {
-    LocationComponent LocC = LocationComponent(getAddressById(components, LocCompID));
-    return LocC.getValue(id) == LocC.getValue(entityID);
-  }
-
   /////////////////
   // COMPONENT RETRIEVAL
 
-  // get the operating wallet of a specified pet
-  function getAddress(uint256 id) internal pure returns (address) {
-    return address(uint160(id));
+  // get the address of an operator
+  function getAddress(IComponents components, uint256 id) internal view returns (address) {
+    return AddressPlayerComponent(getAddressById(components, AddrPlayerCompID)).getValue(id);
   }
 
   // gets the location of a specified account operator
@@ -88,7 +79,7 @@ library LibOperator {
     return LocationComponent(getAddressById(components, LocCompID)).getValue(id);
   }
 
-  // gets the location of a specified account operator
+  // gets the OwnerID (address) of a specified account operator as a uint
   function getOwner(IComponents components, uint256 id) internal view returns (uint256) {
     return IdOwnerComponent(getAddressById(components, IdOwnerCompID)).getValue(id);
   }
@@ -96,23 +87,73 @@ library LibOperator {
   /////////////////
   // QUERIES
 
-  // get the operator of an owner
-  function getForOwner(IComponents components, uint256 ownerID)
+  // Get an operator entity by Wallet address. Assume only 1.
+  function getByAddress(IComponents components, address wallet)
     internal
     view
     returns (uint256 result)
   {
-    QueryFragment[] memory fragments = new QueryFragment[](2);
-    fragments[0] = QueryFragment(QueryType.Has, getComponentById(components, IsOperatorCompID), "");
-    fragments[1] = QueryFragment(
-      QueryType.HasValue,
-      getComponentById(components, IdOwnerCompID),
-      abi.encode(ownerID)
-    );
-
-    uint256[] memory results = LibQuery.query(fragments);
+    uint256[] memory results = _getAllX(components, wallet, 0, 0);
     if (results.length > 0) {
       result = results[0];
     }
+  }
+
+  // Get the operator of an owner. Assume only 1.
+  function getByOwner(IComponents components, uint256 ownerID)
+    internal
+    view
+    returns (uint256 result)
+  {
+    uint256[] memory results = _getAllX(components, address(0), ownerID, 0);
+    if (results.length > 0) {
+      result = results[0];
+    }
+  }
+
+  // Get the operator of an owner by the owner's address. Assume only 1.
+  function getByOwner(IComponents components, address owner) internal view returns (uint256) {
+    return getByOwner(components, addressToEntity(owner));
+  }
+
+  // Get all operator entities matching the specified filters.
+  function _getAllX(
+    IComponents components,
+    address wallet,
+    uint256 ownerID,
+    uint256 location
+  ) internal view returns (uint256[] memory) {
+    uint256 numFilters;
+    if (wallet != address(0)) numFilters++;
+    if (ownerID != 0) numFilters++;
+    if (location != 0) numFilters++;
+
+    QueryFragment[] memory fragments = new QueryFragment[](numFilters + 1);
+    fragments[0] = QueryFragment(QueryType.Has, getComponentById(components, IsOperatorCompID), "");
+
+    uint256 filterCount;
+    if (wallet != address(0)) {
+      fragments[++filterCount] = QueryFragment(
+        QueryType.HasValue,
+        getComponentById(components, AddrPlayerCompID),
+        abi.encode(wallet)
+      );
+    }
+    if (ownerID != 0) {
+      fragments[++filterCount] = QueryFragment(
+        QueryType.HasValue,
+        getComponentById(components, IdOwnerCompID),
+        abi.encode(ownerID)
+      );
+    }
+    if (location != 0) {
+      fragments[++filterCount] = QueryFragment(
+        QueryType.HasValue,
+        getComponentById(components, LocCompID),
+        abi.encode(location)
+      );
+    }
+
+    return LibQuery.query(fragments);
   }
 }

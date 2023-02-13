@@ -12,7 +12,7 @@ abstract contract SetupTemplate is TestSetupImports {
   uint256 petThreeEntityID;
 
   address constant _deployerAddress = address(0);
-  
+
   constructor() MudTest(new Deploy()) {}
 
   function setUp() public virtual override {

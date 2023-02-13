@@ -38,6 +38,7 @@
     "ModifierValueComponent",
     "NameComponent",
     "NumCoresComponent",
+    "AddressPlayerComponent",
     "PriceBuyComponent",
     "PriceSellComponent",
     "PrototypeComponent",
@@ -111,6 +112,7 @@
       "name": "OperatorSetSystem",
       "writeAccess": [
         "IsOperatorComponent",
+        "AddressPlayerComponent",
         "IdOwnerComponent",
         "LocationComponent"
       ]

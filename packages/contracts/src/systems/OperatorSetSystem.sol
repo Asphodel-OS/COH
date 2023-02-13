@@ -8,24 +8,19 @@ import { LibOperator } from "libraries/LibOperator.sol";
 
 uint256 constant ID = uint256(keccak256("system.OperatorSet"));
 
-// OperatorSetSystem sets the operator of an owner wallet
-// TODO: update operator to autogenerate its ID and maintain an Addr component instead
-// once this is done, add a check for the input address not already being assigned to an operator
-// and remove the check for the operator already being set for an owner
+// OperatorSetSystem sets the address of an operator, identified by its owner
 contract OperatorSetSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public returns (bytes memory) {
-    address operator = abi.decode(arguments, (address));
-    uint256 ownerID = uint256(uint160(msg.sender));
-    uint256 operatorID = LibOperator.getForOwner(components, ownerID);
+    address newOperator = abi.decode(arguments, (address));
+    uint256 operatorID = LibOperator.getByOwner(components, msg.sender);
 
     if (operatorID == 0) {
-      operatorID = LibOperator.create(components, operator, msg.sender);
-    } else {
-      LibOperator.change(components, operator, msg.sender);
+      operatorID = LibOperator.create(world, components, newOperator, msg.sender);
     }
 
+    LibOperator.setAddress(components, operatorID, msg.sender);
     return abi.encode(operatorID);
   }
 

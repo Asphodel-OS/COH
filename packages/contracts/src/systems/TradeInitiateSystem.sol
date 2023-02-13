@@ -4,8 +4,8 @@ pragma solidity ^0.8.0;
 import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 
-import { LibTrade } from "libraries/LibTrade.sol";
 import { LibOperator } from "libraries/LibOperator.sol";
+import { LibTrade } from "libraries/LibTrade.sol";
 import { Utils } from "utils/Utils.sol";
 
 uint256 constant ID = uint256(keccak256("system.TradeInitiate"));
@@ -16,7 +16,7 @@ contract TradeInitiateSystem is System {
 
   function execute(bytes memory arguments) public returns (bytes memory) {
     uint256 toID = abi.decode(arguments, (uint256));
-    uint256 operatorID = uint256(uint160(msg.sender));
+    uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
 
     // requirements
     require(operatorID != toID, "Trade: no self-trade !!");
