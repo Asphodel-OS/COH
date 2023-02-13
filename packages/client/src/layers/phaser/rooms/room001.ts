@@ -24,13 +24,12 @@ export function room001() {
         coordinates.x,
         coordinates.y,
         coordinates.width,
-        coordinates.height,
-        0xff0000
+        coordinates.height
       );
 
-      const inventory = scene.add.rectangle(850, 400, 200, 180, 0xff0000);
+      const inventory = scene.add.rectangle(850, 400, 200, 180);
 
-      const petlist = scene.add.rectangle(350, 400, 200, 180, 0xff0000);
+      const petlist = scene.add.rectangle(350, 400, 200, 180);
 
       triggerObjectModal(
         couch,
