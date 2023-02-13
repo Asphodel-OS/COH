@@ -3,6 +3,7 @@ import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
 import styled, { keyframes } from 'styled-components';
+import './font.css';
 
 export function registerObjectModal() {
   registerUIComponent(
@@ -65,6 +66,9 @@ const ModalContent = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   padding: 20px;
   width: 99%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
 `;
 
 const Button = styled.button`
@@ -80,11 +84,13 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
   justify-content: center;
+  font-family: Pixel;
 `;
 
 const Description = styled.p`
-  font-size: 18px;
+  font-size: 22px;
   color: #333;
   text-align: center;
   padding: 20px;
+  font-family: Pixel;
 `;
