@@ -55,8 +55,10 @@ contract EquipModifierPetSystem is System {
       LibPetTraits.addModSlot(components, petID, toAdd);
     }
 
+    (uint256 hr, uint256 ss) = LibPetTraits.updateValues(components, petID);
     Utils.updateLastBlock(components, operatorID);
-    return "";
+
+    return abi.encode(hr, ss);
   }
 
   function executeTyped(

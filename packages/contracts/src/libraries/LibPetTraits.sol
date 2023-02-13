@@ -13,7 +13,7 @@ import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComp
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { PetTraitsEquippedComponent, ID as PetTraitsEquippedCompID } from "components/PetTraitsEquippedComponent.sol";
 import { PetTraitsPermanentComponent, ID as PetTraitsPermanentCompID } from "components/PetTraitsPermanentComponent.sol";
-import { StorageSizeComponent, ID as StorSizeCompID } from "components/StorageSizeComponent.sol";
+import { StorageSizeComponent, ID as StorageSizeCompID } from "components/StorageSizeComponent.sol";
 
 import { LibModifier } from "libraries/LibModifier.sol";
 import { LibInventory } from "libraries/LibInventory.sol";
@@ -69,6 +69,35 @@ library LibPetTraits {
     PetTraitsEquippedComponent(
       getAddressById(components, PetTraitsEquippedCompID)
     ).set(entityID, arr);  
+  }
+
+  ///////////////
+  // CAL
+
+  function updateValues(
+    IUintComp components,
+    uint256 petID
+  ) internal returns (uint256 hashrate, uint256 storageSize) {
+    uint256[] memory perms = PetTraitsPermanentComponent(
+      getAddressById(components, PetTraitsPermanentCompID)
+    ).getValue(petID);
+
+    uint256 tempStore;
+    (hashrate, tempStore) = LibModifier.calArray(components, 0, perms);
+    
+    uint256[] memory equips = PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).getValue(petID);
+
+    (hashrate, storageSize) = LibModifier.calArray(components, hashrate, equips);
+    storageSize = storageSize + tempStore;
+
+    HashRateComponent(
+      getAddressById(components, HashRateCompID)
+    ).set(petID, hashrate);
+    StorageSizeComponent(
+      getAddressById(components, StorageSizeCompID)
+    ).set(petID, storageSize);
   }
 
   ///////////////
