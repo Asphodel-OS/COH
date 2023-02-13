@@ -7,6 +7,7 @@
     "HashRateComponent",
     "IdDelegateeComponent",
     "IdDelegatorComponent",
+    "IdHolderComponent",
     "IdMerchantComponent",
     "IdNodeComponent",
     "IdOperatorComponent",
