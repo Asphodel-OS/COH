@@ -13,6 +13,11 @@ export const systemToId = {
   ProductionStartSystem: "system.ProductionStart",
   ProductionStopSystem: "system.ProductionStop",
   RoomCreateSystem: "system.RoomCreate",
+  TradeAcceptSystem: "system.TradeAccept",
+  TradeAddToSystem: "system.TradeAddTo",
+  TradeCancelSystem: "system.TradeCancel",
+  TradeConfirmSystem: "system.TradeConfirm",
+  TradeInitiateSystem: "system.TradeInitiate",
 };
 
 export const idToSystem = {
@@ -29,5 +34,10 @@ export const idToSystem = {
   "system.ProductionStart": "ProductionStartSystem",
   "system.ProductionStop": "ProductionStopSystem",
   "system.RoomCreate": "RoomCreateSystem",
+  "system.TradeAccept": "TradeAcceptSystem",
+  "system.TradeAddTo": "TradeAddToSystem",
+  "system.TradeCancel": "TradeCancelSystem",
+  "system.TradeConfirm": "TradeConfirmSystem",
+  "system.TradeInitiate": "TradeInitiateSystem",
 };
   

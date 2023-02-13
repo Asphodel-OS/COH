@@ -16,7 +16,7 @@ import { LibPet } from "libraries/LibPet.sol";
 import { Strings } from "utils/Strings.sol";
 
 /*
- * LibNode handles all retrieval and manipulation of mining nodes/productions
+ * LibProduction handles all retrieval and manipulation of mining nodes/productions
  */
 library LibProduction {
   /////////////////////
@@ -109,10 +109,6 @@ library LibProduction {
 
   function getPet(IComponents components, uint256 id) internal view returns (uint256) {
     return IdPetComponent(getAddressById(components, IdPetCompID)).getValue(id);
-  }
-
-  function getState(IComponents components, uint256 id) internal view returns (string memory) {
-    return StateComponent(getAddressById(components, StateCompID)).getValue(id);
   }
 
   /////////////////

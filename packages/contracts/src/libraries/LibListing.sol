@@ -66,8 +66,8 @@ library LibListing {
     }
 
     uint256 inventoryID = LibInventory.get(components, operatorID, itemIndex);
-    LibInventory.incBalance(components, inventoryID, amt);
-    LibCoin.decBalance(components, operatorID, amt * price);
+    LibInventory.inc(components, inventoryID, amt);
+    LibCoin.dec(components, operatorID, amt * price);
     return true;
   }
 
@@ -87,8 +87,8 @@ library LibListing {
     }
 
     uint256 inventoryID = LibInventory.get(components, operatorID, itemIndex);
-    LibInventory.decBalance(components, inventoryID, amt);
-    LibCoin.incBalance(components, operatorID, amt * price);
+    LibInventory.dec(components, inventoryID, amt);
+    LibCoin.inc(components, operatorID, amt * price);
     return true;
   }
 
@@ -103,21 +103,6 @@ library LibListing {
   // return the item index of a listing
   function getItemIndex(IComponents components, uint256 id) internal view returns (uint256) {
     return IndexItemComponent(getAddressById(components, IndexItemCompID)).getValue(id);
-  }
-
-  /////////////////
-  // CHECKS
-
-  // check whether an operator can transact with a listing
-  function canTransact(
-    IComponents components,
-    uint256 id,
-    uint256 operatorID
-  ) internal view returns (bool can) {
-    uint256 merchantID = getMerchant(components, id);
-    return
-      LibMerchant.getLocation(components, merchantID) ==
-      LibOperator.getLocation(components, operatorID);
   }
 
   /////////////////

@@ -9,12 +9,14 @@ import { getAddressById, getComponentById, addressToEntity } from "solecs/utils.
 
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IsOperatorComponent, ID as IsOperatorCompID } from "components/IsOperatorComponent.sol";
-import { BlockLastComponent, ID as BlockLastCompID } from "components/BlockLastComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
 library LibOperator {
+  /////////////////
+  // INTERACTIONS
+
   // Create an account operator
   function create(
     IComponents components,
@@ -28,6 +30,16 @@ library LibOperator {
     return id;
   }
 
+  function change(
+    IComponents components,
+    address addr,
+    address owner
+  ) internal returns (uint256) {
+    uint256 id = uint256(uint160(addr));
+    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
+    return id;
+  }
+
   // Move the Address to a room
   function move(
     IComponents components,
@@ -35,16 +47,10 @@ library LibOperator {
     uint256 to
   ) internal {
     LocationComponent(getAddressById(components, LocCompID)).set(id, to);
-    updateLastActionBlock(components, id);
-  }
-
-  // Update the BlockLast of the character to the current time.
-  function updateLastActionBlock(IComponents components, uint256 id) internal {
-    BlockLastComponent(getAddressById(components, BlockLastCompID)).set(id, block.number);
   }
 
   /////////////////
-  // CALCULATIONS
+  // CHECKS
 
   // Check whether a character can move to a location from where they currently are.
   // This function assumes that the entity id provided belongs to a character.
@@ -58,10 +64,8 @@ library LibOperator {
     return LibRoom.isValidPath(components, from, to);
   }
 
-  /////////////////
-  // CHECKS
-
   // determines whether an entity shares a location with a node
+  // TODO: this is already generalized, move to shared library?
   function sharesLocation(
     IComponents components,
     uint256 id,
