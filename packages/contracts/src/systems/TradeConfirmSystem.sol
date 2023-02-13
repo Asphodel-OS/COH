@@ -33,6 +33,8 @@ contract TradeConfirmSystem is System {
     if (LibTrade.isDoubleConfirmed(components, tradeID)) {
       tradeComplete = LibTrade.process(world, components, tradeID);
     }
+
+    Utils.updateLastBlock(components, operatorID);
     return abi.encode(tradeComplete);
   }
 

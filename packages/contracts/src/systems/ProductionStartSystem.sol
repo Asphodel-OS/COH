@@ -33,6 +33,7 @@ contract ProductionStartSystem is System {
       LibProduction.start(components, id);
     }
 
+    Utils.updateLastBlock(components, operatorID);
     return abi.encode(id);
   }
 

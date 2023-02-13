@@ -20,13 +20,14 @@ contract ListingBuySystem is System {
 
     require(Utils.sameRoom(components, listingID, operatorID), "Merchant: must be in room");
 
-    // create an inventory for the operator if one doesn't exist
+    // create an inventory for the operator first if one doesn't exist
     uint256 itemIndex = LibListing.getItemIndex(components, listingID);
     if (LibInventory.get(components, operatorID, itemIndex) == 0) {
       LibInventory.create(world, components, operatorID, itemIndex);
     }
-
     LibListing.buyFrom(components, listingID, operatorID, amt);
+
+    Utils.updateLastBlock(components, operatorID);
     return "";
   }
 

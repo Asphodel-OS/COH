@@ -25,6 +25,7 @@ contract TradeAcceptSystem is System {
     require(LibTrade.getRequestee(components, tradeID) == operatorID, "Trade: must be requestee");
 
     LibTrade.accept(world, components, tradeID);
+    Utils.updateLastBlock(components, operatorID);
     return "";
   }
 

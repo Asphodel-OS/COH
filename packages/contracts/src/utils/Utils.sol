@@ -6,6 +6,7 @@ import { getAddressById, getComponentById } from "solecs/utils.sol";
 
 import { ID as IsRequestCompID } from "components/IsRequestComponent.sol";
 import { ID as IsTradeCompID } from "components/IsTradeComponent.sol";
+import { BlockLastComponent, ID as BlockLastCompID } from "components/BlockLastComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
 import { StateComponent, ID as StateCompID } from "components/StateComponent.sol";
 
@@ -52,5 +53,13 @@ library Utils {
   ) internal view returns (bool) {
     LocationComponent LocC = LocationComponent(getAddressById(components, LocCompID));
     return LocC.getValue(a) == LocC.getValue(b);
+  }
+
+  /////////////////
+  // COMMON UPDATES
+
+  // Update the BlockLast of an entity. Commonly used for throttling actions on operators.
+  function updateLastBlock(IComponents components, uint256 id) internal {
+    BlockLastComponent(getAddressById(components, BlockLastCompID)).set(id, block.number);
   }
 }

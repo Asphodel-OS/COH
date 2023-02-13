@@ -30,6 +30,7 @@ contract TradeAddToSystem is System {
 
     uint256 registerID = LibRegister.get(components, operatorID, tradeID);
     LibRegister.addTo(world, components, registerID, itemIndex, amt);
+    Utils.updateLastBlock(components, operatorID);
     return "";
   }
 

@@ -58,6 +58,7 @@
       "name": "ListingBuySystem",
       "writeAccess": [
         "BalanceComponent",
+        "BlockLastComponent",
         "CoinComponent",
         "IdOperatorComponent",
         "IndexItemComponent",
@@ -68,6 +69,7 @@
       "name": "ListingSellSystem",
       "writeAccess": [
         "BalanceComponent",
+        "BlockLastComponent",
         "CoinComponent"
       ]
     },
@@ -85,21 +87,22 @@
       "name": "MerchantCreateSystem",
       "writeAccess": [
         "IsMerchantComponent",
-        "NameComponent",
-        "LocationComponent"
+        "LocationComponent",
+        "NameComponent"
       ]
     },
     {
       "name": "NodeCreateSystem",
       "writeAccess": [
         "IsNodeComponent",
-        "NameComponent",
-        "LocationComponent"
+        "LocationComponent",
+        "NameComponent"
       ]
     },
     {
       "name": "OperatorMoveSystem",
       "writeAccess": [
+        "BlockLastComponent",
         "LocationComponent"
       ]
     },
@@ -121,6 +124,7 @@
       "name": "ProductionCollectSystem",
       "writeAccess": [
         "CoinComponent",
+        "BlockLastComponent",
         "TimeStartComponent"
       ]
     },
@@ -128,6 +132,7 @@
       "name": "ProductionStartSystem",
       "writeAccess": [
         "IsProductionComponent",
+        "BlockLastComponent",
         "IdNodeComponent",
         "IdPetComponent",
         "StateComponent",
@@ -137,6 +142,7 @@
     {
       "name": "ProductionStopSystem",
       "writeAccess": [
+        "BlockLastComponent",
         "CoinComponent",
         "StateComponent"
       ]
@@ -144,8 +150,9 @@
     {
       "name": "TradeAcceptSystem",
       "writeAccess": [
-        "IsRequestComponent",
         "IsRegisterComponent",
+        "IsRequestComponent",
+        "BlockLastComponent",
         "IdDelegatorComponent",
         "IdDelegateeComponent",
         "StateComponent"
@@ -156,6 +163,7 @@
       "writeAccess": [
         "IsInventoryComponent",
         "BalanceComponent",
+        "BlockLastComponent",
         "IdHolderComponent",
         "IndexItemComponent"
       ]
@@ -163,6 +171,7 @@
     {
       "name": "TradeCancelSystem",
       "writeAccess": [
+        "BlockLastComponent",
         "CoinComponent",
         "StateComponent"
       ]
@@ -170,6 +179,7 @@
     {
       "name": "TradeConfirmSystem",
       "writeAccess": [
+        "BlockLastComponent",
         "CoinComponent",
         "StateComponent"
       ]
@@ -179,6 +189,7 @@
       "writeAccess": [
         "IsTradeComponent",
         "IsRequestComponent",
+        "BlockLastComponent",
         "IdRequesteeComponent",
         "IdRequesterComponent",
         "StateComponent"
