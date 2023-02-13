@@ -1,0 +1,76 @@
+import { BigNumber } from "ethers";
+import React, { useState, useEffect } from "react";
+import { map, merge } from "rxjs";
+import { Has, HasValue, NotValue, runQuery, } from "@latticexyz/recs";
+
+import { registerUIComponent } from "../engine/store";
+
+export function registerRequestQueue() {
+  registerUIComponent(
+    "RequestQueue",
+
+    // Grid Config
+    {
+      colStart: 0,
+      colEnd: 0,
+      rowStart: 0,
+      rowEnd: 0,
+    },
+
+    // Requirement (Data Manangement)
+    (layers) => {
+      const {
+        network: {
+          world,
+          api: { player },
+          network,
+          components: {
+            PlayerAddress,
+            OperatorID,
+            IsRequest,
+            IsTrade,
+            RequesteeID,
+            State
+          },
+          actions,
+        },
+      } = layers;
+
+      return merge(OperatorID.update$, RequesteeID.update$).pipe(  // controlled character
+        map(() => {
+          // get the operator entity of the controlling wallet
+          const operatorIndex = Array.from(runQuery([
+            HasValue(PlayerAddress, { value: network.connectedAddress.get() })
+          ]))[0];
+
+          const tradeRequestIndices = Array.from(runQuery([
+            Has(IsRequest),
+            Has(IsTrade),
+            HasValue(RequesteeID, { value: world.entities[operatorIndex] }),
+            NotValue(State, { value: "CANCELED" }),
+          ]));
+
+          return {
+            world,
+            actions,
+            data: {
+              operatorIndex,
+              requests: {
+                trade: tradeRequestIndices,
+              },
+            } as any,
+            api: player,
+          };
+        })
+      );
+    },
+
+    // Render
+    ({ world, actions, data, api }) => {
+      // Actions to support on each request:
+      // accept trade
+      // cancel trade
+      return (<div></div>);
+    }
+  );
+}
