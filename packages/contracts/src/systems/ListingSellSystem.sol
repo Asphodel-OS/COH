@@ -5,6 +5,7 @@ import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 
 import { LibListing } from "libraries/LibListing.sol";
+import { Utils } from "utils/Utils.sol";
 
 uint256 constant ID = uint256(keccak256("system.ListingSell"));
 
@@ -16,7 +17,7 @@ contract ListingSellSystem is System {
     (uint256 listingID, uint256 amt) = abi.decode(arguments, (uint256, uint256));
     uint256 operatorID = uint256(uint160(msg.sender));
 
-    require(LibListing.canTransact(components, listingID, operatorID), "Merchant: must be in room");
+    require(Utils.sameRoom(components, listingID, operatorID), "Merchant: must be in room");
 
     LibListing.sellTo(components, listingID, operatorID, amt);
     return "";

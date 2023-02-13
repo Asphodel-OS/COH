@@ -111,10 +111,6 @@ library LibProduction {
     return IdPetComponent(getAddressById(components, IdPetCompID)).getValue(id);
   }
 
-  function getState(IComponents components, uint256 id) internal view returns (string memory) {
-    return StateComponent(getAddressById(components, StateCompID)).getValue(id);
-  }
-
   /////////////////
   // QUERIES
 

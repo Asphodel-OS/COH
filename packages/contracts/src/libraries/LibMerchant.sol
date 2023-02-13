@@ -33,11 +33,6 @@ library LibMerchant {
   /////////////////
   // COMPONENT RETRIEVAL
 
-  // gets the location of a specified merchant
-  function getLocation(IComponents components, uint256 id) internal view returns (uint256) {
-    return LocationComponent(getAddressById(components, LocationCompID)).getValue(id);
-  }
-
   // gets the name of a specified merchant
   function getName(IComponents components, uint256 id) internal view returns (string memory) {
     return NameComponent(getAddressById(components, NameCompID)).getValue(id);

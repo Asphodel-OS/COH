@@ -20,7 +20,7 @@ contract TradeInitiateSystem is System {
 
     // requirements
     require(operatorID != toID, "Trade: no self-trade !!");
-    require(Utils.sameLocation(components, operatorID, toID), "Trade: must be in same room");
+    require(Utils.sameRoom(components, operatorID, toID), "Trade: must be in same room");
     require(LibTrade.getRequest(components, operatorID, toID) == 0, "Trade: request exists");
 
     // Create a trade instance for this trade request

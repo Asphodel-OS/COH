@@ -106,21 +106,6 @@ library LibListing {
   }
 
   /////////////////
-  // CHECKS
-
-  // check whether an operator can transact with a listing
-  function canTransact(
-    IComponents components,
-    uint256 id,
-    uint256 operatorID
-  ) internal view returns (bool can) {
-    uint256 merchantID = getMerchant(components, id);
-    return
-      LibMerchant.getLocation(components, merchantID) ==
-      LibOperator.getLocation(components, operatorID);
-  }
-
-  /////////////////
   // QUERIES
 
   // gets an item listing from a merchant by its index

@@ -7,12 +7,14 @@ import { getAddressById, getComponentById } from "solecs/utils.sol";
 import { ID as IsRequestCompID } from "components/IsRequestComponent.sol";
 import { ID as IsTradeCompID } from "components/IsTradeComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
+import { StateComponent, ID as StateCompID } from "components/StateComponent.sol";
 
 // maybe keep a bunch of generic component value comparisons in here. seems useful as many
 // comparisons seem to be redundant across libraries while others don't have a clear domain
 library Utils {
   /////////////////
   // ARCHETYPE CHECKS
+
   // Check whether an entity is a Request.
   function isRequest(IComponents components, uint256 id) internal view returns (bool) {
     return _isX(components, IsRequestCompID, id);
@@ -34,7 +36,16 @@ library Utils {
   /////////////////
   // VALUE COMPARISONS
 
-  function sameLocation(
+  // Check whether an entity has the specified state.
+  function hasState(
+    IComponents components,
+    uint256 id,
+    string memory state
+  ) internal view returns (bool) {
+    return StateComponent(getAddressById(components, StateCompID)).hasValue(id, state);
+  }
+
+  function sameRoom(
     IComponents components,
     uint256 a,
     uint256 b

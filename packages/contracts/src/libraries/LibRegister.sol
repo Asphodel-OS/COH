@@ -138,10 +138,6 @@ library LibRegister {
     return IdDelegatorComponent(getAddressById(components, IdDelegatorCompID)).getValue(id);
   }
 
-  function getState(IComponents components, uint256 id) internal view returns (string memory) {
-    return StateComponent(getAddressById(components, StateCompID)).getValue(id);
-  }
-
   /////////////////
   // QUERIES
 

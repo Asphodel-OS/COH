@@ -22,7 +22,7 @@ contract TradeConfirmSystem is System {
     // TODO: add same room check once disabling of room switching enforced on FE
     require(Utils.isTrade(components, tradeID), "Trade: not a trade");
     require(LibTrade.hasParticipant(components, tradeID, operatorID), "Trade: must be participant");
-    require(LibTrade.hasState(components, tradeID, "ACCEPTED"), "Trade: must be accepted");
+    require(Utils.hasState(components, tradeID, "ACCEPTED"), "Trade: must be accepted");
 
     // Set the register to CONFIRMED.
     uint256 registerID = LibRegister.get(components, operatorID, tradeID);
