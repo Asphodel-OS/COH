@@ -23,8 +23,8 @@ contract TradeInitiateSystem is System {
     require(Utils.sameRoom(components, operatorID, toID), "Trade: must be in same room");
     require(LibTrade.getRequest(components, operatorID, toID) == 0, "Trade: request exists");
 
-    // Create a trade instance for this trade request
     uint256 tradeID = LibTrade.create(world, components, operatorID, toID);
+    Utils.updateLastBlock(components, operatorID);
     return abi.encode(tradeID);
   }
 

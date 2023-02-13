@@ -5,6 +5,7 @@ import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 
 import { LibOperator } from "libraries/LibOperator.sol";
+import { Utils } from "utils/Utils.sol";
 
 uint256 constant ID = uint256(keccak256("system.OperatorMove"));
 
@@ -19,6 +20,7 @@ contract OperatorMoveSystem is System {
     require(LibOperator.canMoveTo(components, operatorID, to), "Operator: unreachable location");
 
     LibOperator.move(components, operatorID, to);
+    Utils.updateLastBlock(components, operatorID);
     return "";
   }
 

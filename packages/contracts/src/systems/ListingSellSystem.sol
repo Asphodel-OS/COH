@@ -20,6 +20,7 @@ contract ListingSellSystem is System {
     require(Utils.sameRoom(components, listingID, operatorID), "Merchant: must be in room");
 
     LibListing.sellTo(components, listingID, operatorID, amt);
+    Utils.updateLastBlock(components, operatorID);
     return "";
   }
 

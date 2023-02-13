@@ -9,7 +9,6 @@ import { getAddressById, getComponentById, addressToEntity } from "solecs/utils.
 
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IsOperatorComponent, ID as IsOperatorCompID } from "components/IsOperatorComponent.sol";
-import { BlockLastComponent, ID as BlockLastCompID } from "components/BlockLastComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
@@ -33,7 +32,7 @@ library LibOperator {
 
   function change(
     IComponents components,
-    address addr, 
+    address addr,
     address owner
   ) internal returns (uint256) {
     uint256 id = uint256(uint160(addr));
@@ -48,12 +47,6 @@ library LibOperator {
     uint256 to
   ) internal {
     LocationComponent(getAddressById(components, LocCompID)).set(id, to);
-    updateLastActionBlock(components, id);
-  }
-
-  // Update the BlockLast of the character to the current time.
-  function updateLastActionBlock(IComponents components, uint256 id) internal {
-    BlockLastComponent(getAddressById(components, BlockLastCompID)).set(id, block.number);
   }
 
   /////////////////
