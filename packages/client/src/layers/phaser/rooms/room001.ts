@@ -1,6 +1,8 @@
 import { PhaserScene } from '../types';
 import room001mage from '../../../public/assets/room1.png';
-import { triggerObjectModal } from '../utils/trigerObjectModal';
+import { triggerObjectModal } from '../utils/triggerObjectModal';
+import { triggerInventoryModal } from '../utils/triggerInventoryModal';
+import { triggerPetListModal } from '../utils/triggerPetListModal';
 import { resizePicture } from '../utils/resizePicture';
 import { getCouchCoordinates } from '../utils/coordinates';
 
@@ -26,10 +28,24 @@ export function room001() {
         0xff0000
       );
 
+      const inventory = scene.add.rectangle(850, 400, 200, 180, 0xff0000);
+
+      const petlist = scene.add.rectangle(350, 400, 200, 180, 0xff0000);
+
       triggerObjectModal(
         couch,
-        'This is a couch used for testing the item description component. '
+        'This is a couch used for testing the item description component.'
       );
+
+      triggerInventoryModal(
+        inventory
+      );
+
+      triggerPetListModal(
+        petlist
+      );
+
+
     },
   };
 }

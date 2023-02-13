@@ -5,19 +5,19 @@ import { dataStore } from '../store/createStore';
 import styled, { keyframes } from 'styled-components';
 import './font.css';
 
-export function registerObjectModal() {
+export function registerInventory() {
   registerUIComponent(
-    'ObjectModal',
+    'Inventory',
     {
-      colStart: 15,
-      colEnd: 85,
-      rowStart: 75,
-      rowEnd: 95,
+      colStart: 69,
+      colEnd: 99,
+      rowStart: 5,
+      rowEnd: 25,
     },
     (layers) => of(layers),
     () => {
       const hideModal = () => {
-        const modalId = window.document.getElementById('object_modal');
+        const modalId = window.document.getElementById('inventory_modal');
         if (modalId) modalId.style.display = 'none';
       };
 
@@ -26,9 +26,14 @@ export function registerObjectModal() {
       } = dataStore();
 
       return (
-        <ModalWrapper id="object_modal">
+        <ModalWrapper id="inventory_modal">
           <ModalContent>
-            <Description>{description}</Description>
+          <TypeHeading>
+            Consumables
+          </TypeHeading>
+          <TypeHeading>
+            Equipment
+          </TypeHeading>
             <div style={{textAlign: "right"}}>
             <Button style={{ pointerEvents: 'auto', width: "30%"}} onClick={hideModal}>
               Close
@@ -93,6 +98,14 @@ const Description = styled.p`
   font-size: 22px;
   color: #333;
   text-align: center;
+  padding: 20px;
+  font-family: Pixel;
+`;
+
+const TypeHeading = styled.p`
+  font-size: 20px;
+  color: #333;
+  text-align: left;
   padding: 20px;
   font-family: Pixel;
 `;
