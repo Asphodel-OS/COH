@@ -16,7 +16,6 @@ export function room001() {
         .image(window.innerWidth / 2, window.innerHeight / 2, 'room001')
         .setScale(scale * 8.3);
 
-        console.log(scale);
       const coordinates = getCouchCoordinates(scale);
 
       const couch = scene.add.rectangle(
