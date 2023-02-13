@@ -16,6 +16,7 @@ import { PetTraitsPermanentComponent, ID as PetTraitsPermanentCompID } from "com
 import { StorageSizeComponent, ID as StorSizeCompID } from "components/StorageSizeComponent.sol";
 
 import { LibModifier } from "libraries/LibModifier.sol";
+import { LibInventory } from "libraries/LibInventory.sol";
 
 // import { console } from "forge-std/console.sol";
 
@@ -77,14 +78,17 @@ library LibPetTraits {
     IUintComp components,
     uint256 petID,
     uint256 slot
-  ) internal {
+  ) internal returns (uint256 removed) {
     uint256[] memory arr = PetTraitsEquippedComponent(
       getAddressById(components, PetTraitsEquippedCompID)
     ).getValue(petID);
 
-    if(arr[SLOT_A] != 0) LibModifier.setInactive(components, arr[SLOT_A]);
-    arr[SLOT_A] = petID;
-    LibModifier.setActive(components, petID);
+    if(arr[SLOT_A] != 0) {
+      removed = arr[SLOT_A];
+      LibModifier.setInactive(components, arr[SLOT_A]);
+    }
+    arr[SLOT_A] = slot;
+    LibModifier.setActive(components, slot);
     
     PetTraitsEquippedComponent(
       getAddressById(components, PetTraitsEquippedCompID)
@@ -95,13 +99,16 @@ library LibPetTraits {
     IUintComp components,
     uint256 petID,
     uint256 slot
-  ) internal {
+  ) internal returns (uint256 removed) {
     uint256[] memory arr = PetTraitsEquippedComponent(
       getAddressById(components, PetTraitsEquippedCompID)
     ).getValue(petID);
 
-    if(arr[SLOT_B] != 0) LibModifier.setInactive(components, arr[SLOT_B]);
-    arr[SLOT_B] = petID;
+    if(arr[SLOT_B] != 0) {
+      removed = arr[SLOT_B];
+      LibModifier.setInactive(components, arr[SLOT_B]);
+    }
+    arr[SLOT_B] = slot;
     LibModifier.setActive(components, slot);
     
     PetTraitsEquippedComponent(
@@ -195,6 +202,48 @@ library LibPetTraits {
     ).set(petID, result);
 
     return removed;
+  }
+
+  //////////////////
+  // Multi-invenotry bridge
+  // INVARIENT: item and modifier IDs are the same
+
+  // removes mod from inventor active
+  // creates mod entity, removes balance
+  function invToMod(
+    IUintComp components,
+    IWorld world,
+    uint256 petID,
+    uint256 operatorID,
+    uint256 mod
+  ) internal returns (uint256) {
+    // get item inventory
+    uint256 invID = LibInventory.get(components, operatorID, mod);
+    require(invID != 0, "no inventory");
+    LibInventory.dec(components, invID, 1);
+
+    // create and set entity
+    return LibModifier.addToPet(components, world, petID, mod);
+  }
+
+  // deletes mod item and adds to inv
+  function modToInv(
+    IUintComp components,
+    IWorld world,
+    uint256 petID,
+    uint256 operatorID,
+    uint256 modID
+  ) internal {
+    // get mod index
+    uint256 modIndex = LibModifier.getIndex(components, modID);
+    
+    // delete entry
+    LibModifier.remove(components, modID);
+
+    // get item inventory
+    uint256 invID = LibInventory.get(components, operatorID, modIndex);
+    if (invID == 0) invID = LibInventory.create(world, components, petID, modIndex);
+    LibInventory.inc(components, invID, 1);
   }
 
   ///////////////////

@@ -8,6 +8,7 @@ import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
 import { LibRegistry } from "libraries/LibRegistry.sol";
+import { LibPrototype } from "libraries/LibPrototype.sol";
 
 import { ModifierStatusComponent, ID as ModifierStatusComponentID } from "components/ModifierStatusComponent.sol";
 import { ModifierTypeComponent, ID as ModifierTypeComponentID } from "components/ModifierTypeComponent.sol";
@@ -60,6 +61,16 @@ library LibModifier {
     writeStatus(components, entityID, ModStatus.ACTIVE);
     
     return entityID;
+  }
+
+  function remove(
+    IUint256Component components,
+    uint256 entityID
+  ) internal {
+    LibPrototype.remove(components, entityID);
+    IdPetComponent(
+      getAddressById(components, IdPetComponentID)
+    ).remove(entityID);
   }
 
   function setActive(
@@ -137,19 +148,21 @@ library LibModifier {
   ) internal returns (uint256) {
     uint256 entityID = world.getUniqueEntityId();
 
-    uint256[] memory componentIDs = new uint256[](5);
+    uint256[] memory componentIDs = new uint256[](6);
     componentIDs[0] = ModifierValueComponentID;
     componentIDs[1] = ModifierTypeComponentID;
     componentIDs[2] = ModifierStatusComponentID;
     componentIDs[3] = NameCompID;
-    componentIDs[4] = PrototypeComponentID;
+    componentIDs[4] = IndexModifierComponentID;
+    componentIDs[5] = PrototypeComponentID;
 
-    bytes[] memory values = new bytes[](5);
+    bytes[] memory values = new bytes[](6);
     values[0] = abi.encode(modValue);
     values[1] = abi.encode(modType);
     values[2] = abi.encode(statusToUint256(ModStatus.NULL));
     values[3] = abi.encode(name);
-    values[4] = new bytes(0);
+    values[4] = abi.encode(index);
+    values[5] = new bytes(0);
 
     LibRegistry.addPrototype(
       components,
@@ -177,6 +190,13 @@ library LibModifier {
     uint256 id
   ) internal view returns (uint256) {
     return ModifierValueComponent(getAddressById(components, ModifierValueComponentID)).getValue(id);
+  }
+  
+  function getIndex(
+    IUint256Component components, 
+    uint256 id
+  ) internal view returns (uint256) {
+    return IndexModifierComponent(getAddressById(components, IndexModifierComponentID)).getValue(id);
   }
 
   ///////////////
