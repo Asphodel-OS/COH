@@ -3,8 +3,6 @@ export const resizePicture = () => {
   const windowWidth = document.documentElement.clientWidth;
   const windowHeight = document.documentElement.clientHeight;
 
-  console.log(windowHeight, windowWidth)
-
   if (windowWidth <= 360 && windowHeight <= 640) {
     scale = 0.15;
   } else if (windowWidth <= 440 && windowHeight <= 900) {
