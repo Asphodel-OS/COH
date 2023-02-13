@@ -6,6 +6,7 @@ import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById } from "solecs/utils.sol";
 
 import { LibNode } from "libraries/LibNode.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { Utils } from "utils/Utils.sol";
@@ -19,7 +20,7 @@ contract ProductionStartSystem is System {
 
   function execute(bytes memory arguments) public returns (bytes memory) {
     (uint256 petID, uint256 nodeID) = abi.decode(arguments, (uint256, uint256));
-    uint256 operatorID = uint256(uint160(msg.sender));
+    uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
 
     require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
     require(Utils.sameRoom(components, operatorID, nodeID), "Node: must be in room");

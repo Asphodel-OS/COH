@@ -19,17 +19,18 @@ library LibPrototype {
     // does not add prototypeComponent! put bytes(0) for prototype
     require(componentIDs.length == values.length, "LibPrototype: values diff length");
 
-    PrototypeComponent(
-      getAddressById(components, PrototypeComponentID)
-    ).set(entityID, componentIDs);
+    PrototypeComponent(getAddressById(components, PrototypeComponentID)).set(
+      entityID,
+      componentIDs
+    );
 
-    for(uint256 i; i < componentIDs.length; i++) {
-      if(componentIDs[i] == PrototypeComponentID) {
+    for (uint256 i; i < componentIDs.length; i++) {
+      if (componentIDs[i] == PrototypeComponentID) {
         PrototypeComponent c = PrototypeComponent(getAddressById(components, PrototypeComponentID));
-        c.set(entityID, componentIDs); 
+        c.set(entityID, componentIDs);
       } else {
         IComponent c = IComponent(getAddressById(components, componentIDs[i]));
-        c.set(entityID, values[i]); 
+        c.set(entityID, values[i]);
       }
     }
 
@@ -56,17 +57,14 @@ library LibPrototype {
     }
 
     // not strictly needed ig
-    return entityID; 
+    return entityID;
   }
 
-  function remove(
-    IUint256Component components,
-    uint256 entityID
-  ) internal {
+  function remove(IUint256Component components, uint256 entityID) internal {
     require(
       PrototypeComponent(getAddressById(components, PrototypeComponentID)).has(entityID),
       "Trying to delete non-existing prototype"
-    ); 
+    );
 
     uint256[] memory componentIDs = PrototypeComponent(
       getAddressById(components, PrototypeComponentID)

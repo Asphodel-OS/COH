@@ -6,6 +6,7 @@ import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById } from "solecs/utils.sol";
 
 import { LibCoin } from "libraries/LibCoin.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 import { Strings } from "utils/Strings.sol";
@@ -19,7 +20,7 @@ contract ProductionCollectSystem is System {
 
   function execute(bytes memory arguments) public returns (bytes memory) {
     uint256 productionID = abi.decode(arguments, (uint256));
-    uint256 operatorID = uint256(uint160(msg.sender));
+    uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
     uint256 petID = LibProduction.getPet(components, productionID);
     uint256 nodeID = LibProduction.getNode(components, productionID);
 

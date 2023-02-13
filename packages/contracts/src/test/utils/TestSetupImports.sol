@@ -59,6 +59,7 @@ import { ModifierTypeComponent, ID as ModifierTypeComponentID } from "components
 import { ModifierValueComponent, ID as ModifierValueComponentID } from "components/ModifierValueComponent.sol";
 import { NameComponent, ID as NameComponentID } from "components/NameComponent.sol";
 import { NumCoresComponent, ID as NumCoresComponentID } from "components/NumCoresComponent.sol";
+import { AddressPlayerComponent, ID as AddressPlayerComponentID } from "components/AddressPlayerComponent.sol";
 import { PriceBuyComponent, ID as PriceBuyComponentID } from "components/PriceBuyComponent.sol";
 import { PriceSellComponent, ID as PriceSellComponentID } from "components/PriceSellComponent.sol";
 import { PrototypeComponent, ID as PrototypeComponentID } from "components/PrototypeComponent.sol";
@@ -128,6 +129,7 @@ ModifierTypeComponent _ModifierTypeComponent;
 ModifierValueComponent _ModifierValueComponent;
 NameComponent _NameComponent;
 NumCoresComponent _NumCoresComponent;
+AddressPlayerComponent _AddressPlayerComponent;
 PriceBuyComponent _PriceBuyComponent;
 PriceSellComponent _PriceSellComponent;
 PrototypeComponent _PrototypeComponent;
@@ -198,6 +200,7 @@ _ModifierTypeComponent = ModifierTypeComponent(component(ModifierTypeComponentID
 _ModifierValueComponent = ModifierValueComponent(component(ModifierValueComponentID));
 _NameComponent = NameComponent(component(NameComponentID));
 _NumCoresComponent = NumCoresComponent(component(NumCoresComponentID));
+_AddressPlayerComponent = AddressPlayerComponent(component(AddressPlayerComponentID));
 _PriceBuyComponent = PriceBuyComponent(component(PriceBuyComponentID));
 _PriceSellComponent = PriceSellComponent(component(PriceSellComponentID));
 _PrototypeComponent = PrototypeComponent(component(PrototypeComponentID));

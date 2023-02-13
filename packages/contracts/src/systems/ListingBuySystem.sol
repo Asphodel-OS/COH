@@ -4,8 +4,9 @@ pragma solidity ^0.8.0;
 import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 
-import { LibListing } from "libraries/LibListing.sol";
 import { LibInventory } from "libraries/LibInventory.sol";
+import { LibListing } from "libraries/LibListing.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
 import { Utils } from "utils/Utils.sol";
 
 uint256 constant ID = uint256(keccak256("system.ListingBuy"));
@@ -16,7 +17,7 @@ contract ListingBuySystem is System {
 
   function execute(bytes memory arguments) public returns (bytes memory) {
     (uint256 listingID, uint256 amt) = abi.decode(arguments, (uint256, uint256));
-    uint256 operatorID = uint256(uint160(msg.sender));
+    uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
 
     require(Utils.sameRoom(components, listingID, operatorID), "Merchant: must be in room");
 

@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 
+import { LibOperator } from "libraries/LibOperator.sol";
 import { LibRegister } from "libraries/LibRegister.sol";
 import { LibTrade } from "libraries/LibTrade.sol";
 import { Utils } from "utils/Utils.sol";
@@ -19,7 +20,7 @@ contract TradeAddToSystem is System {
       arguments,
       (uint256, uint256, uint256)
     );
-    uint256 operatorID = uint256(uint160(msg.sender));
+    uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
 
     // requirements
     // TODO: add same room check once disabling of room switching enforced on FE
