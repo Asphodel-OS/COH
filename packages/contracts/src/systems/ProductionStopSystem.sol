@@ -24,11 +24,8 @@ contract ProductionStopSystem is System {
     uint256 nodeID = LibProduction.getNode(components, productionID);
 
     require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
-    require(Utils.sameLocation(components, operatorID, nodeID), "Node: must be in room");
-    require(
-      Strings.equal(LibProduction.getState(components, productionID), "ACTIVE"),
-      "Production: must be active"
-    );
+    require(Utils.sameRoom(components, operatorID, nodeID), "Node: must be in room");
+    require(Utils.hasState(components, productionID, "ACTIVE"), "Production: must be active");
 
     uint256 amt = LibProduction.calc(components, productionID);
     LibCoin.inc(components, operatorID, amt);

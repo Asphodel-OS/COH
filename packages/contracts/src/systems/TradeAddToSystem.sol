@@ -26,7 +26,7 @@ contract TradeAddToSystem is System {
     // TODO: add restriction from adding to register when already confirmed
     require(Utils.isTrade(components, tradeID), "Trade: not a trade");
     require(LibTrade.hasParticipant(components, tradeID, operatorID), "Trade: must be participant");
-    require(LibTrade.hasState(components, tradeID, "ACCEPTED"), "Trade: must be accepted");
+    require(Utils.hasState(components, tradeID, "ACCEPTED"), "Trade: must be accepted");
 
     uint256 registerID = LibRegister.get(components, operatorID, tradeID);
     LibRegister.addTo(world, components, registerID, itemIndex, amt);

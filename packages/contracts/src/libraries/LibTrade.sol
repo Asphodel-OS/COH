@@ -15,6 +15,7 @@ import { IsTradeComponent, ID as IsTradeCompID } from "components/IsTradeCompone
 import { StateComponent, ID as StateCompID } from "components/StateComponent.sol";
 import { LibRegister } from "libraries/LibRegister.sol";
 import { Strings } from "utils/Strings.sol";
+import { Utils } from "utils/Utils.sol";
 
 // @dev State = [ INITIATED | ACCEPTED | CONFIRMED | CANCELED ]
 library LibTrade {
@@ -115,10 +116,10 @@ library LibTrade {
 
   // Check whether a trade is confirmed by both parties. Assumes exactly 2 parties
   function isDoubleConfirmed(IComponents components, uint256 id) internal view returns (bool) {
-    uint256[] memory registerIDs = LibTrade.getRegisters(components, id);
-    string memory state1 = LibRegister.getState(components, registerIDs[0]);
-    string memory state2 = LibRegister.getState(components, registerIDs[1]);
-    return Strings.equal(state1, "CONFIRMED") && Strings.equal(state2, "CONFIRMED");
+    uint256[] memory registers = LibTrade.getRegisters(components, id);
+    return
+      Utils.hasState(components, registers[0], "CONFIRMED") &&
+      Utils.hasState(components, registers[1], "CONFIRMED");
   }
 
   /////////////////
@@ -130,11 +131,6 @@ library LibTrade {
 
   function getRequester(IComponents components, uint256 id) internal view returns (uint256) {
     return IdRequesterComponent(getAddressById(components, IdReqerCompID)).getValue(id);
-  }
-
-  // Get the state of this trade
-  function getState(IComponents components, uint256 id) internal view returns (string memory) {
-    return StateComponent(getAddressById(components, StateCompID)).getValue(id);
   }
 
   /////////////////

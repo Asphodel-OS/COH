@@ -22,11 +22,8 @@ contract ProductionStartSystem is System {
     uint256 operatorID = uint256(uint160(msg.sender));
 
     require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
-    require(Utils.sameLocation(components, operatorID, nodeID), "Node: must be in room");
-    require(
-      LibPet.getActiveProduction(components, petID) == 0,
-      "Pet: active production already exists"
-    );
+    require(Utils.sameRoom(components, operatorID, nodeID), "Node: must be in room");
+    require(LibPet.getActiveProduction(components, petID) == 0, "Pet: active production exists");
 
     uint256 id = LibProduction.getForPet(components, petID);
     if (id == 0) {
