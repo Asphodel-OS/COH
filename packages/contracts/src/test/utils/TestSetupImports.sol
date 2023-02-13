@@ -4,14 +4,21 @@ pragma solidity ^0.8.0;
 import "std-contracts/test/MudTest.t.sol";
 
 // Libraries
-import "libraries/LibOperator.sol";
 import "libraries/LibCoin.sol";
 import "libraries/LibInventory.sol";
+import "libraries/LibListing.sol";
 import "libraries/LibMerchant.sol";
+import "libraries/LibModifier.sol";
 import "libraries/LibNode.sol";
+import "libraries/LibOperator.sol";
 import "libraries/LibPet.sol";
+import "libraries/LibPetTraits.sol";
 import "libraries/LibProduction.sol";
+import "libraries/LibPrototype.sol";
+import "libraries/LibRegister.sol";
+import "libraries/LibRegistry.sol";
 import "libraries/LibRoom.sol";
+import "libraries/LibTrade.sol";
 
 // Components
 import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
@@ -19,11 +26,15 @@ import { BlockLastComponent, ID as BlockLastComponentID } from "components/Block
 import { CoinComponent, ID as CoinComponentID } from "components/CoinComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
 import { HashRateComponent, ID as HashRateComponentID } from "components/HashRateComponent.sol";
+import { IdDelegateeComponent, ID as IdDelegateeComponentID } from "components/IdDelegateeComponent.sol";
+import { IdDelegatorComponent, ID as IdDelegatorComponentID } from "components/IdDelegatorComponent.sol";
 import { IdMerchantComponent, ID as IdMerchantComponentID } from "components/IdMerchantComponent.sol";
 import { IdNodeComponent, ID as IdNodeComponentID } from "components/IdNodeComponent.sol";
 import { IdOperatorComponent, ID as IdOperatorComponentID } from "components/IdOperatorComponent.sol";
 import { IdOwnerComponent, ID as IdOwnerComponentID } from "components/IdOwnerComponent.sol";
 import { IdPetComponent, ID as IdPetComponentID } from "components/IdPetComponent.sol";
+import { IdRequesteeComponent, ID as IdRequesteeComponentID } from "components/IdRequesteeComponent.sol";
+import { IdRequesterComponent, ID as IdRequesterComponentID } from "components/IdRequesterComponent.sol";
 import { IndexItemComponent, ID as IndexItemComponentID } from "components/IndexItemComponent.sol";
 import { IndexModifierComponent, ID as IndexModifierComponentID } from "components/IndexModifierComponent.sol";
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
@@ -35,8 +46,11 @@ import { IsNodeComponent, ID as IsNodeComponentID } from "components/IsNodeCompo
 import { IsOperatorComponent, ID as IsOperatorComponentID } from "components/IsOperatorComponent.sol";
 import { IsPetComponent, ID as IsPetComponentID } from "components/IsPetComponent.sol";
 import { IsProductionComponent, ID as IsProductionComponentID } from "components/IsProductionComponent.sol";
+import { IsRegisterComponent, ID as IsRegisterComponentID } from "components/IsRegisterComponent.sol";
 import { IsRegistryEntryComponent, ID as IsRegistryEntryComponentID } from "components/IsRegistryEntryComponent.sol";
+import { IsRequestComponent, ID as IsRequestComponentID } from "components/IsRequestComponent.sol";
 import { IsRoomComponent, ID as IsRoomComponentID } from "components/IsRoomComponent.sol";
+import { IsTradeComponent, ID as IsTradeComponentID } from "components/IsTradeComponent.sol";
 import { LocationComponent, ID as LocationComponentID } from "components/LocationComponent.sol";
 import { MediaURIComponent, ID as MediaURIComponentID } from "components/MediaURIComponent.sol";
 import { ModifierStatusComponent, ID as ModifierStatusComponentID } from "components/ModifierStatusComponent.sol";
@@ -67,6 +81,11 @@ import { PetSetOperatorSystem, ID as PetSetOperatorSystemID } from "systems/PetS
 import { ProductionCollectSystem, ID as ProductionCollectSystemID } from "systems/ProductionCollectSystem.sol";
 import { ProductionStartSystem, ID as ProductionStartSystemID } from "systems/ProductionStartSystem.sol";
 import { ProductionStopSystem, ID as ProductionStopSystemID } from "systems/ProductionStopSystem.sol";
+import { TradeAcceptSystem, ID as TradeAcceptSystemID } from "systems/TradeAcceptSystem.sol";
+import { TradeAddToSystem, ID as TradeAddToSystemID } from "systems/TradeAddToSystem.sol";
+import { TradeCancelSystem, ID as TradeCancelSystemID } from "systems/TradeCancelSystem.sol";
+import { TradeConfirmSystem, ID as TradeConfirmSystemID } from "systems/TradeConfirmSystem.sol";
+import { TradeInitiateSystem, ID as TradeInitiateSystemID } from "systems/TradeInitiateSystem.sol";
 
 abstract contract TestSetupImports is MudTest {
 // Components vars
@@ -75,11 +94,15 @@ BlockLastComponent _BlockLastComponent;
 CoinComponent _CoinComponent;
 ExitsComponent _ExitsComponent;
 HashRateComponent _HashRateComponent;
+IdDelegateeComponent _IdDelegateeComponent;
+IdDelegatorComponent _IdDelegatorComponent;
 IdMerchantComponent _IdMerchantComponent;
 IdNodeComponent _IdNodeComponent;
 IdOperatorComponent _IdOperatorComponent;
 IdOwnerComponent _IdOwnerComponent;
 IdPetComponent _IdPetComponent;
+IdRequesteeComponent _IdRequesteeComponent;
+IdRequesterComponent _IdRequesterComponent;
 IndexItemComponent _IndexItemComponent;
 IndexModifierComponent _IndexModifierComponent;
 IndexPetComponent _IndexPetComponent;
@@ -91,8 +114,11 @@ IsNodeComponent _IsNodeComponent;
 IsOperatorComponent _IsOperatorComponent;
 IsPetComponent _IsPetComponent;
 IsProductionComponent _IsProductionComponent;
+IsRegisterComponent _IsRegisterComponent;
 IsRegistryEntryComponent _IsRegistryEntryComponent;
+IsRequestComponent _IsRequestComponent;
 IsRoomComponent _IsRoomComponent;
+IsTradeComponent _IsTradeComponent;
 LocationComponent _LocationComponent;
 MediaURIComponent _MediaURIComponent;
 ModifierStatusComponent _ModifierStatusComponent;
@@ -123,6 +149,11 @@ PetSetOperatorSystem _PetSetOperatorSystem;
 ProductionCollectSystem _ProductionCollectSystem;
 ProductionStartSystem _ProductionStartSystem;
 ProductionStopSystem _ProductionStopSystem;
+TradeAcceptSystem _TradeAcceptSystem;
+TradeAddToSystem _TradeAddToSystem;
+TradeCancelSystem _TradeCancelSystem;
+TradeConfirmSystem _TradeConfirmSystem;
+TradeInitiateSystem _TradeInitiateSystem;
 
 function setUp() public virtual override {
 super.setUp();
@@ -132,11 +163,15 @@ _BlockLastComponent = BlockLastComponent(component(BlockLastComponentID));
 _CoinComponent = CoinComponent(component(CoinComponentID));
 _ExitsComponent = ExitsComponent(component(ExitsComponentID));
 _HashRateComponent = HashRateComponent(component(HashRateComponentID));
+_IdDelegateeComponent = IdDelegateeComponent(component(IdDelegateeComponentID));
+_IdDelegatorComponent = IdDelegatorComponent(component(IdDelegatorComponentID));
 _IdMerchantComponent = IdMerchantComponent(component(IdMerchantComponentID));
 _IdNodeComponent = IdNodeComponent(component(IdNodeComponentID));
 _IdOperatorComponent = IdOperatorComponent(component(IdOperatorComponentID));
 _IdOwnerComponent = IdOwnerComponent(component(IdOwnerComponentID));
 _IdPetComponent = IdPetComponent(component(IdPetComponentID));
+_IdRequesteeComponent = IdRequesteeComponent(component(IdRequesteeComponentID));
+_IdRequesterComponent = IdRequesterComponent(component(IdRequesterComponentID));
 _IndexItemComponent = IndexItemComponent(component(IndexItemComponentID));
 _IndexModifierComponent = IndexModifierComponent(component(IndexModifierComponentID));
 _IndexPetComponent = IndexPetComponent(component(IndexPetComponentID));
@@ -148,8 +183,11 @@ _IsNodeComponent = IsNodeComponent(component(IsNodeComponentID));
 _IsOperatorComponent = IsOperatorComponent(component(IsOperatorComponentID));
 _IsPetComponent = IsPetComponent(component(IsPetComponentID));
 _IsProductionComponent = IsProductionComponent(component(IsProductionComponentID));
+_IsRegisterComponent = IsRegisterComponent(component(IsRegisterComponentID));
 _IsRegistryEntryComponent = IsRegistryEntryComponent(component(IsRegistryEntryComponentID));
+_IsRequestComponent = IsRequestComponent(component(IsRequestComponentID));
 _IsRoomComponent = IsRoomComponent(component(IsRoomComponentID));
+_IsTradeComponent = IsTradeComponent(component(IsTradeComponentID));
 _LocationComponent = LocationComponent(component(LocationComponentID));
 _MediaURIComponent = MediaURIComponent(component(MediaURIComponentID));
 _ModifierStatusComponent = ModifierStatusComponent(component(ModifierStatusComponentID));
@@ -179,5 +217,10 @@ _PetSetOperatorSystem = PetSetOperatorSystem(system(PetSetOperatorSystemID));
 _ProductionCollectSystem = ProductionCollectSystem(system(ProductionCollectSystemID));
 _ProductionStartSystem = ProductionStartSystem(system(ProductionStartSystemID));
 _ProductionStopSystem = ProductionStopSystem(system(ProductionStopSystemID));
+_TradeAcceptSystem = TradeAcceptSystem(system(TradeAcceptSystemID));
+_TradeAddToSystem = TradeAddToSystem(system(TradeAddToSystemID));
+_TradeCancelSystem = TradeCancelSystem(system(TradeCancelSystemID));
+_TradeConfirmSystem = TradeConfirmSystem(system(TradeConfirmSystemID));
+_TradeInitiateSystem = TradeInitiateSystem(system(TradeInitiateSystemID));
 }
 }

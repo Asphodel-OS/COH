@@ -5,11 +5,15 @@
     "CoinComponent",
     "ExitsComponent",
     "HashRateComponent",
+    "IdDelegateeComponent",
+    "IdDelegatorComponent",
     "IdMerchantComponent",
     "IdNodeComponent",
     "IdOperatorComponent",
     "IdOwnerComponent",
     "IdPetComponent",
+    "IdRequesteeComponent",
+    "IdRequesterComponent",
     "IndexItemComponent",
     "IndexModifierComponent",
     "IndexPetComponent",
@@ -21,8 +25,11 @@
     "IsOperatorComponent",
     "IsPetComponent",
     "IsProductionComponent",
+    "IsRegisterComponent",
     "IsRegistryEntryComponent",
+    "IsRequestComponent",
     "IsRoomComponent",
+    "IsTradeComponent",
     "LocationComponent",
     "MediaURIComponent",
     "ModifierStatusComponent",
@@ -133,16 +140,66 @@
         "CoinComponent",
         "StateComponent"
       ]
+    },
+    {
+      "name": "TradeAcceptSystem",
+      "writeAccess": [
+        "IsRequestComponent",
+        "IsRegisterComponent",
+        "IdDelegatorComponent",
+        "IdDelegateeComponent",
+        "StateComponent"
+      ]
+    },
+    {
+      "name": "TradeAddToSystem",
+      "writeAccess": [
+        "IsInventoryComponent",
+        "BalanceComponent",
+        "IdHolderComponent",
+        "IndexItemComponent"
+      ]
+    },
+    {
+      "name": "TradeCancelSystem",
+      "writeAccess": [
+        "CoinComponent",
+        "StateComponent"
+      ]
+    },
+    {
+      "name": "TradeConfirmSystem",
+      "writeAccess": [
+        "CoinComponent",
+        "StateComponent"
+      ]
+    },
+    {
+      "name": "TradeInitiateSystem",
+      "writeAccess": [
+        "IsTradeComponent",
+        "IsRequestComponent",
+        "IdRequesteeComponent",
+        "IdRequesterComponent",
+        "StateComponent"
+      ]
     }
   ],
   "libraries": [
-    "LibOperator",
     "LibCoin",
     "LibInventory",
+    "LibListing",
     "LibMerchant",
+    "LibModifier",
     "LibNode",
+    "LibOperator",
     "LibPet",
+    "LibPetTraits",
     "LibProduction",
-    "LibRoom"
+    "LibPrototype",
+    "LibRegister",
+    "LibRegistry",
+    "LibRoom",
+    "LibTrade"
   ]
 }

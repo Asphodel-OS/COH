@@ -12,6 +12,11 @@ import ProductionCollectSystem from "../abi/ProductionCollectSystem.json";
 import ProductionStartSystem from "../abi/ProductionStartSystem.json";
 import ProductionStopSystem from "../abi/ProductionStopSystem.json";
 import RoomCreateSystem from "../abi/RoomCreateSystem.json";
+import TradeAcceptSystem from "../abi/TradeAcceptSystem.json";
+import TradeAddToSystem from "../abi/TradeAddToSystem.json";
+import TradeCancelSystem from "../abi/TradeCancelSystem.json";
+import TradeConfirmSystem from "../abi/TradeConfirmSystem.json";
+import TradeInitiateSystem from "../abi/TradeInitiateSystem.json";
 
 export const SystemAbis = {
   "system.ERC721.pet": ERC721PetSystem.abi,
@@ -27,4 +32,9 @@ export const SystemAbis = {
   "system.ProductionStart": ProductionStartSystem.abi,
   "system.ProductionStop": ProductionStopSystem.abi,
   "system.RoomCreate": RoomCreateSystem.abi,
+  "system.TradeAccept": TradeAcceptSystem.abi,
+  "system.TradeAddTo": TradeAddToSystem.abi,
+  "system.TradeCancel": TradeCancelSystem.abi,
+  "system.TradeConfirm": TradeConfirmSystem.abi,
+  "system.TradeInitiate": TradeInitiateSystem.abi,
 };

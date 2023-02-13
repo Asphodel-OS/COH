@@ -12,6 +12,11 @@ import { ProductionCollectSystem } from "./ethers-contracts/ProductionCollectSys
 import { ProductionStartSystem } from "./ethers-contracts/ProductionStartSystem";
 import { ProductionStopSystem } from "./ethers-contracts/ProductionStopSystem";
 import { RoomCreateSystem } from "./ethers-contracts/RoomCreateSystem";
+import { TradeAcceptSystem } from "./ethers-contracts/TradeAcceptSystem";
+import { TradeAddToSystem } from "./ethers-contracts/TradeAddToSystem";
+import { TradeCancelSystem } from "./ethers-contracts/TradeCancelSystem";
+import { TradeConfirmSystem } from "./ethers-contracts/TradeConfirmSystem";
+import { TradeInitiateSystem } from "./ethers-contracts/TradeInitiateSystem";
  
 export type SystemTypes = {
   "system.ERC721.pet": ERC721PetSystem;
@@ -27,4 +32,9 @@ export type SystemTypes = {
   "system.ProductionStart": ProductionStartSystem;
   "system.ProductionStop": ProductionStopSystem;
   "system.RoomCreate": RoomCreateSystem;
+  "system.TradeAccept": TradeAcceptSystem;
+  "system.TradeAddTo": TradeAddToSystem;
+  "system.TradeCancel": TradeCancelSystem;
+  "system.TradeConfirm": TradeConfirmSystem;
+  "system.TradeInitiate": TradeInitiateSystem;
 };
