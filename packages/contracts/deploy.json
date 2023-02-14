@@ -7,6 +7,7 @@
     "HashRateComponent",
     "IdDelegateeComponent",
     "IdDelegatorComponent",
+    "IdHolderComponent",
     "IdMerchantComponent",
     "IdNodeComponent",
     "IdOperatorComponent",
@@ -37,6 +38,7 @@
     "ModifierValueComponent",
     "NameComponent",
     "NumCoresComponent",
+    "AddressPlayerComponent",
     "PriceBuyComponent",
     "PriceSellComponent",
     "PrototypeComponent",
@@ -110,6 +112,7 @@
       "name": "OperatorSetSystem",
       "writeAccess": [
         "IsOperatorComponent",
+        "AddressPlayerComponent",
         "IdOwnerComponent",
         "LocationComponent"
       ]

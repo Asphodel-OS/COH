@@ -2,11 +2,15 @@
 pragma solidity ^0.8.0;
 
 import { IUint256Component as IComponents } from "solecs/interfaces/IUint256Component.sol";
+import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
+import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
+import { ID as AddrPlayerCompID } from "components/AddressPlayerComponent.sol";
 import { ID as IsRequestCompID } from "components/IsRequestComponent.sol";
 import { ID as IsTradeCompID } from "components/IsTradeComponent.sol";
 import { BlockLastComponent, ID as BlockLastCompID } from "components/BlockLastComponent.sol";
+import { ID as IsOperatorCompID } from "components/IsOperatorComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
 import { StateComponent, ID as StateCompID } from "components/StateComponent.sol";
 
@@ -61,5 +65,26 @@ library Utils {
   // Update the BlockLast of an entity. Commonly used for throttling actions on operators.
   function updateLastBlock(IComponents components, uint256 id) internal {
     BlockLastComponent(getAddressById(components, BlockLastCompID)).set(id, block.number);
+  }
+
+  // QUERIES
+
+  // Get all operator entities matching the specified filters.
+  function getOperatorByAddress(IComponents components, address wallet)
+    internal
+    view
+    returns (uint256 result)
+  {
+    QueryFragment[] memory fragments = new QueryFragment[](2);
+    fragments[0] = QueryFragment(QueryType.Has, getComponentById(components, IsOperatorCompID), "");
+    fragments[1] = QueryFragment(
+      QueryType.HasValue,
+      getComponentById(components, AddrPlayerCompID),
+      abi.encode(wallet)
+    );
+    uint256[] memory results = LibQuery.query(fragments);
+    if (results.length > 0) {
+      result = results[0];
+    }
   }
 }

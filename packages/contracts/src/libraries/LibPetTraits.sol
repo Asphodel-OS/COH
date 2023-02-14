@@ -286,100 +286,100 @@ library LibPetTraits {
     LibModifier.createIndex(
       components,
       world,
-      101,          // index
-      11,         // modValue
-      "ADD",      // modType
-      "Pickaxe"   // name
+      101, // index
+      11, // modValue
+      "ADD", // modType
+      "Pickaxe" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      102,          // index
-      22,         // modValue
-      "STORAGE",      // modType
-      "Bagpack"   // name
+      102, // index
+      22, // modValue
+      "STORAGE", // modType
+      "Bagpack" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      103,          // index
-      33,         // modValue
-      "ADD",      // modType
-      "Gloves"   // name
+      103, // index
+      33, // modValue
+      "ADD", // modType
+      "Gloves" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      104,          // index
-      44,         // modValue
-      "MUL",      // modType
-      "Persona"   // name
+      104, // index
+      44, // modValue
+      "MUL", // modType
+      "Persona" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      105,          // index
-      55,         // modValue
-      "STORAGE",      // modType
-      "Pockets"   // name
+      105, // index
+      55, // modValue
+      "STORAGE", // modType
+      "Pockets" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      106,          // index
-      66,         // modValue
-      "UMUL",      // modType
-      "PowerOfFriendship"   // name
+      106, // index
+      66, // modValue
+      "UMUL", // modType
+      "PowerOfFriendship" // name
     );
 
     // 1 - 6, permanent body traits
     LibModifier.createIndex(
       components,
       world,
-      1,          // index
-      1,         // modValue
-      "MUL",      // modType
-      "Color"   // name
+      1, // index
+      1, // modValue
+      "MUL", // modType
+      "Color" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      2,          // index
-      2,         // modValue
-      "ADD",      // modType
-      "Body"   // name
+      2, // index
+      2, // modValue
+      "ADD", // modType
+      "Body" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      3,          // index
-      3,         // modValue
-      "STORAGE",      // modType
-      "Hand"   // name
+      3, // index
+      3, // modValue
+      "STORAGE", // modType
+      "Hand" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      4,          // index
-      4,         // modValue
-      "MUL",      // modType
-      "Eyes"   // name
+      4, // index
+      4, // modValue
+      "MUL", // modType
+      "Eyes" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      5,          // index
-      5,         // modValue
-      "STORAGE",      // modType
-      "Mouth"   // name
+      5, // index
+      5, // modValue
+      "STORAGE", // modType
+      "Mouth" // name
     );
     LibModifier.createIndex(
       components,
       world,
-      6,          // index
-      6,         // modValue
-      "ADD",      // modType
-      "Background"   // name
+      6, // index
+      6, // modValue
+      "ADD", // modType
+      "Background" // name
     );
   }
 
@@ -394,9 +394,10 @@ library LibPetTraits {
       arrPerm[i] = LibModifier.addToPet(components, world, entityID, i + 1);
     }
 
-    PetTraitsPermanentComponent(
-      getAddressById(components, PetTraitsPermanentCompID)
-    ).set(entityID, arrPerm);
+    PetTraitsPermanentComponent(getAddressById(components, PetTraitsPermanentCompID)).set(
+      entityID,
+      arrPerm
+    );
 
     // equipped
     uint256[] memory arrEquip = new uint256[](6);
@@ -404,9 +405,9 @@ library LibPetTraits {
       arrEquip[i] = LibModifier.addToPet(components, world, entityID, 100 + i + 1);
     }
 
-    PetTraitsEquippedComponent(
-      getAddressById(components, PetTraitsEquippedCompID)
-    ).set(entityID, arrEquip); 
+    PetTraitsEquippedComponent(getAddressById(components, PetTraitsEquippedCompID)).set(
+      entityID,
+      arrEquip
+    );
   }
-
 }

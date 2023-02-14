@@ -5,19 +5,19 @@ import { dataStore } from '../store/createStore';
 import styled, { keyframes } from 'styled-components';
 import './font.css';
 
-export function registerObjectModal() {
+export function registerPetList() {
   registerUIComponent(
-    'ObjectModal',
+    'PetList',
     {
-      colStart: 15,
-      colEnd: 85,
-      rowStart: 75,
-      rowEnd: 95,
+      colStart: 5,
+      colEnd: 35,
+      rowStart: 5,
+      rowEnd: 35,
     },
     (layers) => of(layers),
     () => {
       const hideModal = () => {
-        const modalId = window.document.getElementById('object_modal');
+        const modalId = window.document.getElementById('petlist_modal');
         if (modalId) modalId.style.display = 'none';
       };
 
@@ -26,9 +26,29 @@ export function registerObjectModal() {
       } = dataStore();
 
       return (
-        <ModalWrapper id="object_modal">
+        <ModalWrapper id="petlist_modal">
           <ModalContent>
-            <Description>{description}</Description>
+            <TypeHeading>
+              Your Kami
+            </TypeHeading>
+            <KamiBox>
+              <KamiImage src="https://i.imgur.com/JkEsu5f.gif"/>
+              <KamiFacts>
+              <Description> "I am in agony" </Description>
+              </KamiFacts>
+            </KamiBox>
+            <KamiBox>
+              <KamiImage src="https://i.imgur.com/Ut0wOld.gif"/>
+              <KamiFacts>
+              <Description> "Uwu" </Description>
+              </KamiFacts>
+            </KamiBox>
+            <KamiBox>
+              <KamiImage src="https://i.imgur.com/kXZN3Te.gif"/>
+              <KamiFacts>
+              <Description> "Mine tokens now" </Description>
+              </KamiFacts>
+            </KamiBox>
             <div style={{textAlign: "right"}}>
             <Button style={{ pointerEvents: 'auto', width: "30%"}} onClick={hideModal}>
               Close
@@ -89,10 +109,51 @@ const Button = styled.button`
   font-family: Pixel;
 `;
 
+const KamiBox = styled.div`
+  background-color: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  color: black;
+  text-decoration: none;
+  display: grid;
+  font-size: 18px;
+  margin: 3px 2px;
+  border-radius: 5px;
+  font-family: Pixel;
+`;
+
+const KamiFacts = styled.div`
+  background-color: #ffffff;
+  color: black;
+  font-size: 18px;
+  margin: 0px;
+  padding: 0px;
+  grid-column: 2 / span 1000;
+`;
+
 const Description = styled.p`
-  font-size: 22px;
+  font-size: 16px;
   color: #333;
-  text-align: center;
+  text-align: left;
   padding: 20px;
   font-family: Pixel;
+`;
+
+const TypeHeading = styled.p`
+  font-size: 20px;
+  color: #333;
+  text-align: left;
+  padding: 20px;
+  font-family: Pixel;
+`;
+
+const KamiImage = styled.img`
+  border-style: solid;
+  border-width: 0px 2px 0px 0px;
+  border-color: black;
+  height: 90px;
+  margin: 0px;
+  padding: 0px;
+  grid-column: 1 / span 1;
 `;

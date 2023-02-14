@@ -15,7 +15,7 @@ contract OperatorMoveSystem is System {
 
   function execute(bytes memory arguments) public returns (bytes memory) {
     uint256 to = abi.decode(arguments, (uint256));
-    uint256 operatorID = uint256(uint160(msg.sender));
+    uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
 
     require(LibOperator.canMoveTo(components, operatorID, to), "Operator: unreachable location");
 

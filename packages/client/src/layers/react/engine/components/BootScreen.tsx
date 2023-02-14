@@ -9,7 +9,7 @@ export const BootScreen: React.FC<{ initialOpacity?: number }> = ({ children, in
 
   return (
     <Container>
-      <img src={mud} style={{ opacity }}></img>
+      <Logo src={mud}/>
       <div>{children || <>&nbsp;</>}</div>
     </Container>
   );
@@ -33,9 +33,9 @@ const Container = styled.div`
   div {
     font-family: "Space Grotesk", sans-serif;
   }
+`;
 
-  img {
-    transition: all 2s ease;
-    width: 100px;
-  }
+const Logo = styled.img`
+transition: all 2s ease;
+width: 800px;
 `;

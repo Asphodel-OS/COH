@@ -48,12 +48,7 @@ library LibModifier {
   ) internal returns (uint256) {
     uint256 entityID = world.getUniqueEntityId();
 
-    LibRegistry.copyPrototype(
-      components,
-      IndexModifierComponentID,
-      index,
-      entityID
-    );
+    LibRegistry.copyPrototype(components, IndexModifierComponentID, index, entityID);
 
     IdPetComponent(
       getAddressById(components, IdPetComponentID)
@@ -215,7 +210,11 @@ library LibModifier {
     if (!Strings.equal(modType, "")) numFilters++;
 
     QueryFragment[] memory fragments = new QueryFragment[](numFilters + 1);
-    fragments[0] = QueryFragment(QueryType.Has, getComponentById(components, IsModifierComponentID), "");
+    fragments[0] = QueryFragment(
+      QueryType.Has,
+      getComponentById(components, IsModifierComponentID),
+      ""
+    );
 
     uint256 filterCount;
     if (petID != 0) {
@@ -254,9 +253,7 @@ library LibModifier {
   // HOPPERS
 
   // converts ModStatus Enum to Uint256
-  function statusToUint256(
-    ModStatus status
-  ) internal pure returns (uint256) {
+  function statusToUint256(ModStatus status) internal pure returns (uint256) {
     return uint256(status);
   }
 
@@ -266,8 +263,9 @@ library LibModifier {
     uint256 entityID,
     ModStatus status
   ) internal {
-    ModifierStatusComponent(
-      getAddressById(components, ModifierStatusComponentID)
-    ).set(entityID, statusToUint256(status));
+    ModifierStatusComponent(getAddressById(components, ModifierStatusComponentID)).set(
+      entityID,
+      statusToUint256(status)
+    );
   }
 }

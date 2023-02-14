@@ -26,9 +26,10 @@ library LibPet {
   // NOTE: we may need to create an Operator/Owner entities here if they dont exist
   // TODO: include attributes in this generation
   function create(
-    IUintComp components,
     IWorld world,
+    IUintComp components,
     address owner,
+    uint256 operatorID,
     uint256 index,
     string memory uri
   ) internal returns (uint256) {
@@ -36,7 +37,7 @@ library LibPet {
     IsPetComponent(getAddressById(components, IsPetCompID)).set(id);
     IndexPetComponent(getAddressById(components, IndexPetComponentID)).set(id, index);
     IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
-    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, addressToEntity(owner));
+    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
     MediaURIComponent(getAddressById(components, MediaURICompID)).set(id, uri);
     return id;
   }
@@ -145,18 +146,19 @@ library LibPet {
   // ERC721
 
   // transfer ERC721 pet
-  // NOTE/TODO: we need to be careful here about the flow on transferring pets
-  // what needs to be updated? does an operator entity for the destination address exist?
-  function transferPet(
+  // NOTE: it doesnt seem we actually need IdOwner directly on the pet as it can be
+  // directly accessed through the operator entity.
+  function transfer(
     IUintComp components,
     uint256 index,
-    address to
+    uint256 operatorID
   ) internal {
     // does not need to check for previous owner, ERC721 handles it
     uint256 id = indexToID(components, index);
-    uint256 toID = addressToEntity(to);
-    setOwner(components, id, toID);
-    setOperator(components, id, toID);
+    uint256 ownerID = getOwner(components, operatorID);
+
+    setOwner(components, id, ownerID);
+    setOperator(components, id, operatorID);
   }
 
   // return whether owner or operator
