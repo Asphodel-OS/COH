@@ -85,7 +85,6 @@ export function registerInventory() {
             data: {
               operator: {
                 id: operatorID,
-                index: operatorIndex,
                 inventories,
                 coin: getComponentValue(Coin, operatorIndex)?.value as number,
               },
