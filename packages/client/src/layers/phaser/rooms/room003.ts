@@ -1,10 +1,18 @@
+import { PhaserScene } from '../types';
+import { resizePicture } from '../utils/resizePicture';
+import room003image from '../../../public/assets/room3.png';
+
+const scale = resizePicture();
+
 export function room003() {
   return {
-    create: (scene: any) => {
-      scene.add.text(50, 150, 'Room 3', {
-        fontSize: '40px',
-        color: 'white',
-      });
+    preload: (scene: PhaserScene) => {
+      scene.load.image('room003', room003image);
+    },
+    create: (scene: PhaserScene) => {
+      scene.add
+        .image(window.innerWidth / 2, window.innerHeight / 2, 'room003')
+        .setScale(scale * 8.3);
     },
   };
 }

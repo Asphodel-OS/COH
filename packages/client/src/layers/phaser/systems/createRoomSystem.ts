@@ -1,10 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import {
-  defineSystem,
-  Has,
-  HasValue,
-  runQuery,
-} from '@latticexyz/recs';
+import { defineSystem, Has, HasValue, runQuery } from '@latticexyz/recs';
 import { NetworkLayer } from '../../network/types';
 import { PhaserLayer, PhaserScene } from '../types';
 import { getCurrentRoom } from '../utils';
@@ -13,7 +8,7 @@ export function createRoomSystem(network: NetworkLayer, phaser: PhaserLayer) {
   const {
     network: { connectedAddress },
     world,
-    components: { Location, CharacterID },
+    components: { Location, PlayerAddress },
   } = network;
 
   const {
@@ -26,11 +21,11 @@ export function createRoomSystem(network: NetworkLayer, phaser: PhaserLayer) {
 
   const myMain = Main as PhaserScene;
 
-  const characterEntityNumber = Array.from(
-    runQuery([HasValue(CharacterID, { value: connectedAddress.get() })])
-  )[0];
-  
-  defineSystem(world, [Has(CharacterID), Has(Location)], async (update) => {
+  defineSystem(world, [Has(PlayerAddress), Has(Location)], async (update) => {
+    const characterEntityNumber = Array.from(
+      runQuery([HasValue(PlayerAddress, { value: connectedAddress.get() })])
+    )[0];
+
     if (characterEntityNumber == update.entity) {
       const currentRoom = getCurrentRoom(Location, update.entity);
 
