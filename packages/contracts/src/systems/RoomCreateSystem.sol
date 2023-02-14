@@ -24,11 +24,11 @@ contract RoomCreateSystem is System {
     return abi.encode(LibRoom.create(world, components, name, location, exits));
   }
 
-  function executeTyped(string memory name, uint256 location)
+  function executeTyped(string memory name, uint256 location, uint256[] memory exits)
     public
     onlyOwner
     returns (bytes memory)
   {
-    return execute(abi.encode(name, location));
+    return execute(abi.encode(name, location, exits));
   }
 }

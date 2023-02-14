@@ -11,12 +11,13 @@ abstract contract SetupTemplate is TestSetupImports {
   uint256 petTwoEntityID;
   uint256 petThreeEntityID;
 
-  address constant _deployerAddress = address(0);
-
   constructor() MudTest(new Deploy()) {}
 
   function setUp() public virtual override {
     super.setUp();
+
+    // temp: remove later
+    _ERC721PetSystem.init();
   }
 
   /***********************
@@ -43,4 +44,12 @@ abstract contract SetupTemplate is TestSetupImports {
     vm.prank(from);
     _ERC721PetSystem.transferFrom(from, to, nftID);
   }
+
+  /***********************
+   *   room create
+   ************************/
+   function _roomCreate(string memory name, uint256 location, uint256[] memory exits) internal {
+    vm.prank(deployer);
+    _RoomCreateSystem.executeTyped(name, location, exits);
+   }
 }

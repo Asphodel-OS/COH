@@ -84,6 +84,7 @@ import { ProductionCollectSystem, ID as ProductionCollectSystemID } from "system
 import { ProductionStartSystem, ID as ProductionStartSystemID } from "systems/ProductionStartSystem.sol";
 import { ProductionStopSystem, ID as ProductionStopSystemID } from "systems/ProductionStopSystem.sol";
 import { TradeAcceptSystem, ID as TradeAcceptSystemID } from "systems/TradeAcceptSystem.sol";
+import { RoomCreateSystem, ID as RoomCreateSystemID } from "systems/RoomCreateSystem.sol";
 import { TradeAddToSystem, ID as TradeAddToSystemID } from "systems/TradeAddToSystem.sol";
 import { TradeCancelSystem, ID as TradeCancelSystemID } from "systems/TradeCancelSystem.sol";
 import { TradeConfirmSystem, ID as TradeConfirmSystemID } from "systems/TradeConfirmSystem.sol";
@@ -154,6 +155,7 @@ ProductionCollectSystem _ProductionCollectSystem;
 ProductionStartSystem _ProductionStartSystem;
 ProductionStopSystem _ProductionStopSystem;
 TradeAcceptSystem _TradeAcceptSystem;
+RoomCreateSystem _RoomCreateSystem;
 TradeAddToSystem _TradeAddToSystem;
 TradeCancelSystem _TradeCancelSystem;
 TradeConfirmSystem _TradeConfirmSystem;
@@ -224,6 +226,7 @@ _ProductionCollectSystem = ProductionCollectSystem(system(ProductionCollectSyste
 _ProductionStartSystem = ProductionStartSystem(system(ProductionStartSystemID));
 _ProductionStopSystem = ProductionStopSystem(system(ProductionStopSystemID));
 _TradeAcceptSystem = TradeAcceptSystem(system(TradeAcceptSystemID));
+_RoomCreateSystem = RoomCreateSystem(system(RoomCreateSystemID));
 _TradeAddToSystem = TradeAddToSystem(system(TradeAddToSystemID));
 _TradeCancelSystem = TradeCancelSystem(system(TradeCancelSystemID));
 _TradeConfirmSystem = TradeConfirmSystem(system(TradeConfirmSystemID));
