@@ -29,7 +29,7 @@ export function registerDetectMint() {
         );
 
         document.getElementById('detectMint')!.style.display = 'none';
-        document.getElementById('minting')!.style.display = 'block';
+        document.getElementById('mint_process')!.style.display = 'block';
       };
 
       return (

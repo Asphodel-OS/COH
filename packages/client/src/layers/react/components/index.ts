@@ -9,7 +9,7 @@ import { registerPetList } from './PetList';
 import { registerRequestQueue } from './RequestQueue';
 import { registerTradeWindow } from './TradeWindow';
 import { registerDetectMint } from './DetectMint';
-import { registerMinted } from './Minted';
+import { registerMintProcess } from './MintProcess';
 
 export function registerUIComponents() {
   registerLoadingState();
@@ -22,6 +22,6 @@ export function registerUIComponents() {
   registerTradeWindow();
   registerInventoryButton();
   registerObjectModal();
-  registerMinted();
+  registerMintProcess();
   registerActionQueue();
 }
