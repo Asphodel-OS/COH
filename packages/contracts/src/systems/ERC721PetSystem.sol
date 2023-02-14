@@ -26,7 +26,7 @@ contract ERC721PetSystem is System, ERC721 {
 
   // temporary init function to prevent circular dependency
   bool inited;
-  function init() internal {
+  function init() public {
     if(!inited) {
       LibPetTraits.placeholderRegistry(components, world);
       inited = true;
@@ -38,7 +38,6 @@ contract ERC721PetSystem is System, ERC721 {
    **********************/
 
   function mint(address to) public returns (uint256) {
-    init();
     // require(tx.origin == msg.sender, "no contracts");
     ++totalSupply; // arrays start at 1 here :3
 
@@ -54,7 +53,7 @@ contract ERC721PetSystem is System, ERC721 {
     // TODO: set stats based on the generated traits of the pet.
     uint256 petID = LibPet.create(world, components, to, operatorID, totalSupply, uri);
     LibPetTraits.placeholderTraits(components, world, petID);
-    LibPet.setStats(components, petID);
+    // LibPet.setStats(components, petID);
 
     _mint(to, totalSupply); // should we run this at the beginning or end?
     return petID;

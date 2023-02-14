@@ -7,7 +7,7 @@ export function createPlayerAPI(systems: any) {
   // @dev 
   // @param address   address to mint to
   function mintPet(address: BigNumberish) {
-    return systems["system.ERC721.pet"].executeTyped(address);
+    return systems["system.ERC721.pet"].mint(address);
   }
 
   /*********************
