@@ -26,16 +26,17 @@ export function registerMerchantWindow() {
           api: { player },
           network,
           components: {
-            PlayerAddress,
-            OperatorID,
             Coin,
             IsListing,
             IsInventory,
             IsMerchant,
+            IsOperator,
             ItemIndex,
             Location,
             MerchantID,
             Name,
+            OperatorID,
+            PlayerAddress,
             PriceBuy,
             PriceSell,
           },
@@ -64,12 +65,16 @@ export function registerMerchantWindow() {
         }
       }
 
-      return merge(OperatorID.update$, Location.update$).pipe(  // controlled character
+      return merge(OperatorID.update$, Location.update$).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
           const operatorIndex = Array.from(runQuery([
+            Has(IsOperator),
             HasValue(PlayerAddress, { value: network.connectedAddress.get() })
           ]))[0];
+          const operatorID = world.entities[operatorIndex];
+
+          // get player location and list of merchants in this room
           const location = getComponentValue(Location, operatorIndex)?.value as number;
           const merchantResults = runQuery([
             Has(IsMerchant),
@@ -101,9 +106,9 @@ export function registerMerchantWindow() {
             api: player,
             data: {
               operator: {
-                id: world.entities[operatorIndex],
+                id: operatorID,
                 index: operatorIndex,
-                // inventory,
+                // inventory, // we probably want this, filtered by the sellable items
                 coin: getComponentValue(Coin, operatorIndex)?.value as number,
               },
               merchant,

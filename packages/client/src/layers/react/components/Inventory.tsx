@@ -25,13 +25,14 @@ export function registerInventory() {
           api: { player },
           network,
           components: {
-            PlayerAddress,
-            OperatorID,
             Balance,
             Coin,
             HolderID,
             IsInventory,
+            IsOperator,
             ItemIndex,
+            OperatorID,
+            PlayerAddress,
           },
           actions,
         },
@@ -39,12 +40,12 @@ export function registerInventory() {
 
       // get a Inventory object by index
       const getInventory = (index: EntityIndex) => {
-        const itemIndex = getComponentValue(ItemIndex, index)?.value as EntityIndex;
+        const itemIndex = getComponentValue(ItemIndex, index)?.value as number;
         return {
           id: world.entities[index],
           index,
           item: {
-            index: itemIndex as number,
+            index: itemIndex, // this is the solecs index rather than the cached index 
             // name: getComponentValue(Name, itemIndex)?.value as string,
             // description: ???, // are we intending to save this onchain or on FE?
           },
@@ -52,13 +53,16 @@ export function registerInventory() {
         }
       }
 
-      return merge(OperatorID.update$, Balance.update$).pipe(  // controlled character
+      return merge(OperatorID.update$, Balance.update$).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
           const operatorIndex = Array.from(runQuery([
+            Has(IsOperator),
             HasValue(PlayerAddress, { value: network.connectedAddress.get() })
           ]))[0];
           const operatorID = world.entities[operatorIndex];
+
+          // get the list of inventory indices for this account
           const inventoryResults = runQuery([
             Has(IsInventory),
             HasValue(HolderID, { value: operatorID }),
