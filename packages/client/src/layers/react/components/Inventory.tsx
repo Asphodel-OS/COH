@@ -5,8 +5,7 @@ import { EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } fro
 
 import './font.css';
 import { registerUIComponent } from '../engine/store';
-import { dataStore } from '../store/createStore';
-
+import './font.css';
 
 export function registerInventory() {
   registerUIComponent(
@@ -101,21 +100,16 @@ export function registerInventory() {
         if (modalId) modalId.style.display = 'none';
       };
 
-      const {
-        objectData: { description },
-      } = dataStore();
-
       return (
         <ModalWrapper id="inventory_modal">
           <ModalContent>
-            <TypeHeading>
-              Consumables
-            </TypeHeading>
-            <TypeHeading>
-              Equipment
-            </TypeHeading>
-            <div style={{ textAlign: "right" }}>
-              <Button style={{ pointerEvents: 'auto', width: "30%" }} onClick={hideModal}>
+            <TypeHeading>Consumables</TypeHeading>
+            <TypeHeading>Equipment</TypeHeading>
+            <div style={{ textAlign: 'right' }}>
+              <Button
+                style={{ pointerEvents: 'auto', width: '30%' }}
+                onClick={hideModal}
+              >
                 Close
               </Button>
             </div>
@@ -171,14 +165,6 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
   justify-content: center;
-  font-family: Pixel;
-`;
-
-const Description = styled.p`
-  font-size: 22px;
-  color: #333;
-  text-align: center;
-  padding: 20px;
   font-family: Pixel;
 `;
 

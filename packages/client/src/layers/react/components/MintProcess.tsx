@@ -3,9 +3,9 @@ import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import styled, { keyframes } from 'styled-components';
 
-export function registerMinted() {
+export function registerMintProcess() {
   registerUIComponent(
-    'Minted',
+    'MintProcess',
     {
       colStart: 40,
       colEnd: 60,
@@ -16,7 +16,7 @@ export function registerMinted() {
 
     () => {
       const hideMint = () => {
-        document.getElementById('minting')!.style.display = 'none';
+        document.getElementById('mint_process')!.style.display = 'none';
       };
       const [mintSuccess, setMintSuccess] = useState(false);
 
@@ -26,7 +26,7 @@ export function registerMinted() {
 
       return (
         <ContainerWrapper>
-          <MintContainer id="minting" style={{ display: 'none' }}>
+          <MintContainer id="mint_process" style={{ display: 'none' }}>
             {!mintSuccess ? (
               <MintProcess>Minting...</MintProcess>
             ) : (
