@@ -45,10 +45,14 @@ export function registerDetectMint() {
       )[0];
 
       const handleMinting = async () => {
-        await player.ERC721.mint(connectedAddress.get()!);
+        try {
+          await player.ERC721.mint(connectedAddress.get()!);
 
-        document.getElementById('detectMint')!.style.display = 'none';
-        document.getElementById('mint_process')!.style.display = 'block';
+          document.getElementById('detectMint')!.style.display = 'none';
+          document.getElementById('mint_process')!.style.display = 'block';
+        } catch (e) {
+          //
+        }
       };
 
       useEffect(() => {
