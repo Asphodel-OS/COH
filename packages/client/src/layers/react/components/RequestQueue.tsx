@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers";
 import React, { useState, useEffect } from "react";
 import { map, merge } from "rxjs";
-import { Has, HasValue, NotValue, runQuery, } from "@latticexyz/recs";
+import { EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery, } from "@latticexyz/recs";
 
 import { registerUIComponent } from "../engine/store";
 
@@ -31,13 +31,23 @@ export function registerRequestQueue() {
             OperatorID,
             PlayerAddress,
             RequesteeID,
+            RequesterID,
             State
           },
           actions,
         },
       } = layers;
 
-      return merge(OperatorID.update$, RequesteeID.update$).pipe(  // controlled character
+      // gets a Request object from an index
+      const getRequest = (index: EntityIndex) => {
+        return {
+          id: world.entities[index],
+          index,
+          requester: getComponentValue(RequesterID, index)?.value as string,
+        }
+      }
+
+      return merge(OperatorID.update$, RequesteeID.update$).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
           const operatorIndex = Array.from(runQuery([
@@ -46,14 +56,17 @@ export function registerRequestQueue() {
           ]))[0];
           const operatorID = world.entities[operatorIndex];
 
-          // TODO: get more details
           // get all requests based on type
-          const tradeRequestIndices = Array.from(runQuery([
+          let tradeRequests: any = [];
+          const tradeResults = Array.from(runQuery([
             Has(IsRequest),
             Has(IsTrade),
             HasValue(RequesteeID, { value: world.entities[operatorIndex] }),
             NotValue(State, { value: "CANCELED" }),
           ]));
+          for (let i = 0; i < tradeResults.length; i++) {
+            tradeRequests.push(getRequest(tradeResults[i]));
+          }
 
           return {
             world,
@@ -65,7 +78,9 @@ export function registerRequestQueue() {
                 index: operatorIndex,
               },
               requests: {
-                trade: tradeRequestIndices,
+                // guild: guildRequests,
+                // party: partyRequests,
+                trade: tradeRequests,
               },
             } as any,
           };
