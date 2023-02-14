@@ -25,7 +25,7 @@ library LibRegistry {
       new bytes(0)
     );
     fragments[1] = QueryFragment(
-      QueryType.Has,
+      QueryType.HasValue,
       getComponentById(components, registryID),
       abi.encode(index)
     );
