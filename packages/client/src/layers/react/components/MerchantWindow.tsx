@@ -98,6 +98,7 @@ export function registerMerchantWindow() {
           return {
             world,
             actions,
+            api: player,
             data: {
               operator: {
                 id: world.entities[operatorIndex],
@@ -108,14 +109,13 @@ export function registerMerchantWindow() {
               merchant,
               listings,
             } as any,
-            api: player,
           };
         })
       );
     },
 
     // Render
-    ({ world, actions, data, api }) => {
+    ({ world, actions, api, data }) => {
       // hide this component if merchant.index == 0
 
       // Actions to support within trade window:
