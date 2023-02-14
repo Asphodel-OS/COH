@@ -1,7 +1,7 @@
 import React from 'react';
 import { map, merge } from 'rxjs';
-import { EntityIndex, getComponentValue, Has, HasValue, NotValue, runQuery, } from "@latticexyz/recs";
 import styled, { keyframes } from 'styled-components';
+import { EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } from "@latticexyz/recs";
 
 import './font.css';
 import { registerUIComponent } from '../engine/store';
@@ -66,6 +66,7 @@ export function registerInventory() {
           const inventoryResults = runQuery([
             Has(IsInventory),
             HasValue(HolderID, { value: operatorID }),
+            NotValue(Balance, { value: 0 }),
           ]);
 
           // if we have inventories for the operator, list below
