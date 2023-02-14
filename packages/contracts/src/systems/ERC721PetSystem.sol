@@ -24,11 +24,21 @@ contract ERC721PetSystem is System, ERC721 {
     ERC721(NFT_NAME, NFT_SYMBOL)
   {}
 
+  // temporary init function to prevent circular dependency
+  bool inited;
+  function init() internal {
+    if(!inited) {
+      LibPetTraits.placeholderRegistry(components, world);
+      inited = true;
+    }
+  }
+
   /*********************
    *  Public Functions
    **********************/
 
   function mint(address to) public returns (uint256) {
+    init();
     // require(tx.origin == msg.sender, "no contracts");
     ++totalSupply; // arrays start at 1 here :3
 
@@ -38,12 +48,11 @@ contract ERC721PetSystem is System, ERC721 {
     // Get the operator for this owner(to). Create one if it doesn't exist.
     uint256 operatorID = LibOperator.getByOwner(components, to);
     if (operatorID == 0) {
-      LibOperator.create(world, components, to, to);
+      operatorID = LibOperator.create(world, components, to, to);
     }
 
     // TODO: set stats based on the generated traits of the pet.
     uint256 petID = LibPet.create(world, components, to, operatorID, totalSupply, uri);
-    LibPetTraits.placeholderRegistry(components, world);
     LibPetTraits.placeholderTraits(components, world, petID);
     LibPet.setStats(components, petID);
 
@@ -72,7 +81,7 @@ contract ERC721PetSystem is System, ERC721 {
     // Get the operator for the new owner(to). Create one if it doesn't exist.
     uint256 operatorID = LibOperator.getByOwner(components, to);
     if (operatorID == 0) {
-      LibOperator.create(world, components, to, to);
+      operatorID = LibOperator.create(world, components, to, to);
     }
 
     // ownership checks and updates should keep us safe from the ERC721 side
