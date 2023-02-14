@@ -26,15 +26,16 @@ export function registerMiningModal() {
           api: { player },
           network,
           components: {
-            PlayerAddress,
-            OperatorID,
             IsPet,
             IsNode,
+            IsOperator,
             IsProduction,
             Location,
             Name,
             NodeID,
+            OperatorID,
             PetID,
+            PlayerAddress,
             State,
             TimeStart,
           },
@@ -83,12 +84,16 @@ export function registerMiningModal() {
         }
       }
 
-      return merge(OperatorID.update$, Location.update$, TimeStart.update$, State.update$).pipe(  // controlled character
+      return merge(OperatorID.update$, Location.update$, TimeStart.update$, State.update$).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
           const operatorIndex = Array.from(runQuery([
+            Has(IsOperator),
             HasValue(PlayerAddress, { value: network.connectedAddress.get() })
           ]))[0];
+          const operatorID = world.entities[operatorIndex];
+
+          // get player location and list of nodes in this room
           const location = getComponentValue(Location, operatorIndex)?.value as number;
           const nodeResults = runQuery([
             Has(IsNode),
@@ -106,15 +111,15 @@ export function registerMiningModal() {
             }
           }
 
-
-
           return {
             world,
             actions,
             api: player,
             data: {
-              operatorID: world.entities[operatorIndex],
-              operatorIndex,
+              operator: {
+                id: operatorID,
+                index: operatorIndex,
+              },
               node,
               production,
             } as any,

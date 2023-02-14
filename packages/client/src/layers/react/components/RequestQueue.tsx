@@ -25,10 +25,11 @@ export function registerRequestQueue() {
           api: { player },
           network,
           components: {
-            PlayerAddress,
-            OperatorID,
+            IsOperator,
             IsRequest,
             IsTrade,
+            OperatorID,
+            PlayerAddress,
             RequesteeID,
             State
           },
@@ -40,9 +41,13 @@ export function registerRequestQueue() {
         map(() => {
           // get the operator entity of the controlling wallet
           const operatorIndex = Array.from(runQuery([
+            Has(IsOperator),
             HasValue(PlayerAddress, { value: network.connectedAddress.get() })
           ]))[0];
+          const operatorID = world.entities[operatorIndex];
 
+          // TODO: get more details
+          // get all requests based on type
           const tradeRequestIndices = Array.from(runQuery([
             Has(IsRequest),
             Has(IsTrade),
@@ -55,7 +60,10 @@ export function registerRequestQueue() {
             actions,
             api: player,
             data: {
-              operatorIndex,
+              operator: {
+                id: operatorID,
+                index: operatorIndex,
+              },
               requests: {
                 trade: tradeRequestIndices,
               },

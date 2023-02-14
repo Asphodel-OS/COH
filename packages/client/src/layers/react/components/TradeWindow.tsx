@@ -26,17 +26,18 @@ export function registerTradeWindow() {
           api: { player },
           network,
           components: {
-            PlayerAddress,
-            OperatorID,
             Balance,
             Coin,
             DelegateeID,
             DelegatorID,
             HolderID,
             IsInventory,
+            IsOperator,
             IsRegister,
             IsTrade,
             ItemIndex,
+            OperatorID,
+            PlayerAddress,
             RequesterID,
             RequesteeID,
             State
@@ -79,11 +80,11 @@ export function registerTradeWindow() {
         ]));
 
         // reorganize inventory into lists
-        let itemTypes: Number[] = [], itemType: Number;
-        let balances: Number[] = [], balance: Number;
+        let itemTypes: number[] = [], itemType: number;
+        let balances: number[] = [], balance: number;
         for (let i = 0; i < inventoryIndices.length; i++) {
-          itemType = getComponentValue(ItemIndex, inventoryIndices[i])?.value as Number;
-          balance = getComponentValue(Balance, inventoryIndices[i])?.value as Number;
+          itemType = getComponentValue(ItemIndex, inventoryIndices[i])?.value as number;
+          balance = getComponentValue(Balance, inventoryIndices[i])?.value as number;
           itemTypes.push(itemType);
           balances.push(balance);
         }
@@ -100,12 +101,14 @@ export function registerTradeWindow() {
       }
 
       // NOTE: we really want precise data subscriptions for this one, a nightmare without
-      return merge(OperatorID.update$, State.update$, DelegateeID.update$, IsInventory.update$).pipe(  // controlled character
+      return merge(OperatorID.update$, State.update$, DelegateeID.update$, IsInventory.update$).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
           const operatorIndex = Array.from(runQuery([
+            Has(IsOperator),
             HasValue(PlayerAddress, { value: network.connectedAddress.get() })
           ]))[0];
+          const operatorID = world.entities[operatorIndex];
 
           const tradeIndex = getActiveTradeIndex(operatorIndex);
           let myRegisterIndex, myRegister;
@@ -134,8 +137,10 @@ export function registerTradeWindow() {
             actions,
             api: player,
             data: {
-              operatorID: world.entities[operatorIndex],
-              operatorIndex,
+              operator: {
+                id: operatorID,
+                index: operatorIndex,
+              },
               trade: {
                 id: world.entities[tradeIndex],
                 index: tradeIndex,
