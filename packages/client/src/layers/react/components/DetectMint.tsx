@@ -1,8 +1,9 @@
-import React from 'react';
-import { of } from 'rxjs';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import React, { useEffect, useState } from 'react';
+import { map } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
-import { BigNumber } from 'ethers';
 import styled, { keyframes } from 'styled-components';
+import { HasValue, runQuery } from '@latticexyz/recs';
 
 export function registerDetectMint() {
   registerUIComponent(
@@ -13,27 +14,53 @@ export function registerDetectMint() {
       rowStart: 40,
       rowEnd: 60,
     },
-    (layers) => of(layers),
-
     (layers) => {
       const {
         network: {
-          components: { PetID },
-          api: { player },
+          components: { PetIndex },
         },
       } = layers;
 
-      const handleMinting = () => {
-        player.ERC721.mint(
-          BigNumber.from(localStorage.getItem('burnerWalletAddress'))
-        );
+      return PetIndex.update$.pipe(
+        map(() => {
+          return {
+            layers,
+          };
+        })
+      );
+    },
+
+    ({ layers }) => {
+      const {
+        network: {
+          components: { PlayerAddress },
+          api: { player },
+          network: { connectedAddress },
+        },
+      } = layers;
+
+      const [isDivVisible, setIsDivVisible] = useState(false);
+      const hasPlayerMinted = Array.from(
+        runQuery([HasValue(PlayerAddress, { value: connectedAddress.get() })])
+      )[0];
+
+      const handleMinting = async () => {
+        await player.ERC721.mint(connectedAddress.get()!);
 
         document.getElementById('detectMint')!.style.display = 'none';
         document.getElementById('mint_process')!.style.display = 'block';
       };
 
+      useEffect(() => {
+        if (hasPlayerMinted != undefined) return setIsDivVisible(false);
+        return setIsDivVisible(true);
+      }, [setIsDivVisible, hasPlayerMinted]);
+
       return (
-        <ModalWrapper id="detectMint">
+        <ModalWrapper
+          id="detectMint"
+          style={{ display: isDivVisible ? 'block' : 'none' }}
+        >
           <ModalContent>
             <Description>You didin't mint</Description>
             <Button style={{ pointerEvents: 'auto' }} onClick={handleMinting}>
@@ -56,7 +83,6 @@ const fadeIn = keyframes`
 `;
 
 const ModalWrapper = styled.div`
-  display: block;
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
