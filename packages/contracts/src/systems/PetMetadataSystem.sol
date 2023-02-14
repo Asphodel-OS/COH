@@ -8,12 +8,22 @@ import { LibString } from "solady/utils/LibString.sol";
 
 import { LibPet } from "libraries/LibPet.sol";
 import { LibPetTraits } from "libraries/LibPetTraits.sol";
+import { LibMetadata } from "libraries/LibMetadata.sol";
 
-import { ID as PetSystemID } from "systems/ERC721PetSystem.sol";
+import { UNREVEALED_URI, ID as PetSystemID } from "systems/ERC721PetSystem.sol";
+
+import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
+import { PetTraitsPermanentComponent, ID as PetTraitsPermanentCompID } from "components/PetTraitsPermanentComponent.sol";
 
 uint256 constant ID = uint256(keccak256("system.ERC721.metadata"));
 
 contract PetMetadataSystem is System {
+  uint256 _maxElements;
+  uint256 _numElements;
+  uint256 _seed;
+  bool _revealed;
+  string _baseURI;
+
   constructor(IWorld _world, address _components)
     System(_world, _components)
   {}
@@ -30,37 +40,56 @@ contract PetMetadataSystem is System {
     _;
   }
 
+  // sets metadata with a random seed. unimplemented for now
   function execute(bytes memory arguments) public onlyPetSystem returns (bytes memory) {
-    require(false, "execute not available");
-    arguments = "";
+    // reveals individual metadata
+    require(_revealed, "collection not yet revealed");
+    (uint256 entityID) = abi.decode(arguments, (uint256));
+
+    MediaURIComponent mediaComp = MediaURIComponent(getAddressById(components, MediaURICompID));
+
+    require(LibString.eq(mediaComp.getValue(entityID), UNREVEALED_URI), "alr revealed!");
+
+    // generate packed result, set image
+    uint256 packed = LibMetadata._generateFromSeed(_seed, _maxElements, _numElements);
+    mediaComp.set(entityID, LibString.concat(
+      _baseURI,
+      LibString.concat(LibString.toString(packed), ".png")
+    ));
+
+    PetTraitsPermanentComponent(getAddressById(components, PetTraitsPermanentCompID)).set(
+      entityID,
+      LibMetadata._packedToArray(packed, _numElements)
+    );
+
     return "";
   }
 
-  function executeTyped(address ownerAddy) public onlyPetSystem returns (bytes memory) {
-    return execute(abi.encode(ownerAddy));
+  function executeTyped(uint256 entityID) public onlyPetSystem returns (bytes memory) {
+    return execute(abi.encode(entityID));
   }
 
   /*********************
    *  METADATA ASSEMBLER
   **********************/
 
-        //     "{",
-        // //\"external_url\": \"https://asphodel.xyz\",",
-        // 
-        // "\"image\": \"", baseURI, imageId.toString(),  ".svg\",",
-        // "\"name\": "\"NAME\","
-        // "\"description\": "\"Kamigotchi\",", 
-        // //"\"attributes\": [",
-        // //"{\"trait_type\": \"Vigor\", \"value\": \"", vigor.toString(), "\",}",
-        // //"{\"trait_type\": \"Mind\", \"value\": \"", mind.toString(), "\"},",
-        // //"{\"trait_type\": \"Guile\", \"value\": \"", guile.toString(), "\"}",
-        // //"]",
-        // "}" 
-
   function tokenURI(uint256 tokenID) public view returns (string memory) {
     uint256 petID = LibPet.indexToID(components, tokenID);
     // return LibPet.getMediaURI(components, petID);
-    return _getBaseTraits(petID);
+    // return _getBaseTraits(petID);
+
+    return string(abi.encodePacked(
+      '{ \n',
+      '"external_url": "https://kamigotchi.io",\n',
+      '"name": "', LibPet.getName(components, petID), '",\n',
+      '"description": ', '"a lil network spirit :3",\n',
+      '"attributes": [\n',
+      _getBaseTraits(petID),
+      _getSlotTraits(petID),
+      '],\n',
+      '"image": "', LibPet.getMediaURI(components, petID), '"\n',
+      '}'
+    ));
   }
 
   function _getBaseTraits(uint256 entityID) public view returns (string memory) {
@@ -68,24 +97,23 @@ contract PetMetadataSystem is System {
 
     // getting values of base traits. values are hardcoded to array position
     string[] memory names = new string[](6);
+    names[0] = "Color";
+    names[1] = "Body";
+    names[2] = "Hand";
+    names[3] = "Eyes";
+    names[4] = "Mouth";
+    names[5] = "Background";
     string[] memory values = LibPetTraits.getNames(
       components, LibPetTraits.getPermArray(components, entityID)
     );
 
     for (uint256 i; i < names.length; i++) {
-      // string memory entry = LibString.concat(
-      //   '{\"trait_type\": \" ',
-      //   names[i]
-      // );
-      // entry = LibString.concat(
-      //   '
-      // )
       string memory entry = string(abi.encodePacked(
         '{"trait_type": "', 
         names[i], 
-        '", "value": ",',
+        '", "value": "',
         values[i], 
-        '}'
+        '"},\n'
       ));
 
       result = string(abi.encodePacked(result, entry));
@@ -93,4 +121,52 @@ contract PetMetadataSystem is System {
 
     return result;
   }
+
+  function _getSlotTraits(uint256 entityID) public view returns (string memory) {
+    string memory result = "";
+    
+    string[] memory names = new string[](2);
+    names[0] = "Slot A";
+    names[1] = "Slot B";
+    string[] memory values = LibPetTraits.getNames(
+      components, LibPetTraits.getEquipArray(components, entityID)
+    );
+
+    for (uint256 i; i < names.length; i++) {
+      string memory entry = string(abi.encodePacked(
+        '{"trait_type": "', 
+        names[i], 
+        '", "value": "',
+        values[i], 
+        '"},\n'
+      ));
+
+      result = string(abi.encodePacked(result, entry));
+    }
+
+    return result;
+  }
+
+  /*********************
+   *  CONFIG FUNCTIONS 
+  **********************/ 
+
+  // set max variables for metadata lib
+  function _setMaxElements(
+    uint256[] memory max
+  ) public onlyOwner {
+    _numElements = max.length;
+    _maxElements = LibMetadata._generateMaxElements(max);
+  }
+
+  // sets a seed. maybe VRF in future
+function _setRevealed(
+  uint256 seed,
+  string memory baseURI
+) public onlyOwner {
+  require(!_revealed, "already revealed");
+  _seed = seed;
+  _baseURI = baseURI;
+  _revealed = true;
+}
 }

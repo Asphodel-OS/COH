@@ -7,6 +7,7 @@ import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById, entityToAddress, addressToEntity } from "solecs/utils.sol";
+import { LibString } from "solady/utils/LibString.sol";
 
 import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComponent.sol";
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
@@ -39,6 +40,9 @@ library LibPet {
     IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
     IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
     MediaURIComponent(getAddressById(components, MediaURICompID)).set(id, uri);
+    NameComponent(getAddressById(components, NameCompID)).set(
+      id, LibString.concat("kamigotchi ", LibString.toString(index))
+    );
     return id;
   }
 

@@ -30,8 +30,11 @@ import type {
 export interface PetMetadataSystemInterface extends utils.Interface {
   functions: {
     "_getBaseTraits(uint256)": FunctionFragment;
+    "_getSlotTraits(uint256)": FunctionFragment;
+    "_setMaxElements(uint256[])": FunctionFragment;
+    "_setRevealed(uint256,string)": FunctionFragment;
     "execute(bytes)": FunctionFragment;
-    "executeTyped(address)": FunctionFragment;
+    "executeTyped(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -40,6 +43,9 @@ export interface PetMetadataSystemInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "_getBaseTraits"
+      | "_getSlotTraits"
+      | "_setMaxElements"
+      | "_setRevealed"
       | "execute"
       | "executeTyped"
       | "owner"
@@ -52,12 +58,24 @@ export interface PetMetadataSystemInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "_getSlotTraits",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_setMaxElements",
+    values: [PromiseOrValue<BigNumberish>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_setRevealed",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "execute",
     values: [PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "executeTyped",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -71,6 +89,18 @@ export interface PetMetadataSystemInterface extends utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "_getBaseTraits",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_getSlotTraits",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_setMaxElements",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_setRevealed",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
@@ -136,13 +166,29 @@ export interface PetMetadataSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    _getSlotTraits(
+      entityID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    _setMaxElements(
+      max: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    _setRevealed(
+      seed: PromiseOrValue<BigNumberish>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     execute(
       arguments: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     executeTyped(
-      ownerAddy: PromiseOrValue<string>,
+      entityID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -164,13 +210,29 @@ export interface PetMetadataSystem extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  _getSlotTraits(
+    entityID: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  _setMaxElements(
+    max: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  _setRevealed(
+    seed: PromiseOrValue<BigNumberish>,
+    baseURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   execute(
     arguments: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   executeTyped(
-    ownerAddy: PromiseOrValue<string>,
+    entityID: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -192,13 +254,29 @@ export interface PetMetadataSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    _getSlotTraits(
+      entityID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    _setMaxElements(
+      max: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    _setRevealed(
+      seed: PromiseOrValue<BigNumberish>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     execute(
       arguments: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     executeTyped(
-      ownerAddy: PromiseOrValue<string>,
+      entityID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -232,13 +310,29 @@ export interface PetMetadataSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    _getSlotTraits(
+      entityID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    _setMaxElements(
+      max: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    _setRevealed(
+      seed: PromiseOrValue<BigNumberish>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     execute(
       arguments: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     executeTyped(
-      ownerAddy: PromiseOrValue<string>,
+      entityID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -261,13 +355,29 @@ export interface PetMetadataSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    _getSlotTraits(
+      entityID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    _setMaxElements(
+      max: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    _setRevealed(
+      seed: PromiseOrValue<BigNumberish>,
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     execute(
       arguments: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
-      ownerAddy: PromiseOrValue<string>,
+      entityID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
