@@ -1,7 +1,7 @@
-import { BigNumber } from "ethers";
 import React, { useState, useEffect } from "react";
 import { map, merge } from "rxjs";
-import { EntityIndex, getComponentValue, Has, HasValue, NotValue, runQuery, } from "@latticexyz/recs";
+import { BigNumber } from "ethers";
+import { EntityIndex, Has, HasValue, getComponentValue, runQuery, } from "@latticexyz/recs";
 
 import { registerUIComponent } from "../engine/store";
 
