@@ -8,14 +8,15 @@ export function defineMainScene() {
     ['Main']: defineScene({
       key: 'Main',
       preload: (scene: PhaserScene) => {
-        scene.rooms = [room001(), room002(), room003()];
+        scene.rooms = [room001(),room001(), room002(), room003()];
 
-        scene.rooms.forEach((room: Room)=>{
-          if(room.preload) room.preload!(scene);
-        })
+        scene.rooms?.forEach((room: Room) => {
+          if(room == undefined) return;
+          if (room.preload) room.preload!(scene);
+        });
       },
       create: (scene: PhaserScene) => {
-        scene.rooms![0].create(scene);
+        scene.rooms![1].create(scene);
       },
     }),
   };
