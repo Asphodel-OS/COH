@@ -132,6 +132,7 @@ export function registerTradeWindow() {
           return {
             world,
             actions,
+            api: player,
             data: {
               operatorID: world.entities[operatorIndex],
               operatorIndex,
@@ -144,14 +145,13 @@ export function registerTradeWindow() {
                 }
               },
             } as any,
-            api: player,
           };
         })
       );
     },
 
     // Render
-    ({ world, actions, data, api }) => {
+    ({ world, actions, api, data }) => {
       // hide this component if trade.index == 0
 
       // Actions to support within trade window:

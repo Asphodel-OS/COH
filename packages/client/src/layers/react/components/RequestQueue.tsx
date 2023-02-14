@@ -53,20 +53,20 @@ export function registerRequestQueue() {
           return {
             world,
             actions,
+            api: player,
             data: {
               operatorIndex,
               requests: {
                 trade: tradeRequestIndices,
               },
             } as any,
-            api: player,
           };
         })
       );
     },
 
     // Render
-    ({ world, actions, data, api }) => {
+    ({ world, actions, api, data }) => {
       // Actions to support on each request:
       // accept trade
       // cancel trade

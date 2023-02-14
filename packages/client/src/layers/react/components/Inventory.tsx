@@ -76,6 +76,7 @@ export function registerInventory() {
           return {
             world,
             actions,
+            api: player,
             data: {
               operator: {
                 id: operatorID,
@@ -84,12 +85,13 @@ export function registerInventory() {
                 coin: getComponentValue(Coin, operatorIndex)?.value as number,
               },
             } as any,
-            api: player,
           };
         })
       );
     },
-    () => {
+
+    // RENDER
+    ({ world, actions, api, data }) => {
       const hideModal = () => {
         const modalId = window.document.getElementById('inventory_modal');
         if (modalId) modalId.style.display = 'none';
