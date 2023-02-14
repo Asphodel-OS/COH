@@ -9,8 +9,8 @@ export function registerInventory() {
   registerUIComponent(
     'Inventory',
     {
-      colStart: 69,
-      colEnd: 99,
+      colStart: 34,
+      colEnd: 64,
       rowStart: 5,
       rowEnd: 25,
     },
@@ -42,7 +42,7 @@ export function registerInventory() {
           id: world.entities[index],
           index,
           item: {
-            index: itemIndex, // this is the solecs index rather than the cached index 
+            index: itemIndex, // this is the solecs index rather than the cached index
             // name: getComponentValue(Name, itemIndex)?.value as string,
             // description: ???, // are we intending to save this onchain or on FE?
           },
@@ -105,7 +105,7 @@ export function registerInventory() {
             <TypeHeading>Equipment</TypeHeading>
             <div style={{ textAlign: 'right' }}>
               <Button
-                style={{ pointerEvents: 'auto', width: '30%' }}
+                style={{ pointerEvents: 'auto'}}
                 onClick={hideModal}
               >
                 Close

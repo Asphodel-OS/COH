@@ -12,6 +12,7 @@ import { registerRequestQueue } from './RequestQueue';
 import { registerTradeWindow } from './TradeWindow';
 import { registerDetectMint } from './DetectMint';
 import { registerMintProcess } from './MintProcess';
+import { registerChat } from './Chat';
 
 export function registerUIComponents() {
   registerLoadingState();
@@ -27,5 +28,6 @@ export function registerUIComponents() {
   registerChatButton();
   registerObjectModal();
   registerMintProcess();
+  registerChat();
   registerActionQueue();
 }

@@ -9,10 +9,10 @@ export function registerInventoryButton() {
   registerUIComponent(
     'InventoryButton',
     {
-      colStart: 88,
-      colEnd: 100,
-      rowStart: 88,
-      rowEnd: 100,
+      colStart: 87,
+      colEnd: 99,
+      rowStart: 87,
+      rowEnd: 99,
     },
     (layers) => of(layers),
     () => {

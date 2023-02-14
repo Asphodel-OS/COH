@@ -5,19 +5,19 @@ import { dataStore } from '../store/createStore';
 import styled, { keyframes } from 'styled-components';
 import './font.css';
 
-export function registerPetList() {
+export function registerChat() {
   registerUIComponent(
-    'PetList',
+    'Chat',
     {
-      colStart: 3,
-      colEnd: 33,
+      colStart: 65,
+      colEnd: 99,
       rowStart: 5,
       rowEnd: 35,
     },
     (layers) => of(layers),
     () => {
       const hideModal = () => {
-        const modalId = window.document.getElementById('petlist_modal');
+        const modalId = window.document.getElementById('chat_modal');
         if (modalId) modalId.style.display = 'none';
       };
 
@@ -26,23 +26,11 @@ export function registerPetList() {
       } = dataStore();
 
       return (
-        <ModalWrapper id="petlist_modal">
+        <ModalWrapper id="chat_modal">
           <ModalContent>
             <TypeHeading>
-              Your Kami
+              Chat
             </TypeHeading>
-            <KamiBox>
-              <KamiImage src="https://i.imgur.com/JkEsu5f.gif"/>
-              <KamiFacts>
-              <Description> "I am in agony" </Description>
-              </KamiFacts>
-            </KamiBox>
-            <KamiBox>
-              <KamiImage src="https://i.imgur.com/Ut0wOld.gif"/>
-              <KamiFacts>
-              <Description> "Uwu" </Description>
-              </KamiFacts>
-            </KamiBox>
             <div style={{textAlign: "right"}}>
             <Button style={{ pointerEvents: 'auto'}} onClick={hideModal}>
               Close
