@@ -8,16 +8,20 @@ import { registerInventoryButton } from './InventoryButton';
 import { registerPetList } from './PetList';
 import { registerRequestQueue } from './RequestQueue';
 import { registerTradeWindow } from './TradeWindow';
+import { registerDetectMint } from './DetectMint';
+import { registerMinted } from './Minted';
 
 export function registerUIComponents() {
-  registerObjectModal();
+  registerLoadingState();
+  registerDetectMint();
   registerInventory();
   registerPetList();
-  registerActionQueue();
-  registerLoadingState();
   registerMerchantWindow();
   registerMiningModal();
   registerRequestQueue();
   registerTradeWindow();
   registerInventoryButton();
+  registerObjectModal();
+  registerMinted();
+  registerActionQueue();
 }
