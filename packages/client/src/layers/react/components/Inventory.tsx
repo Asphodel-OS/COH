@@ -1,9 +1,12 @@
 import React from 'react';
-import { of } from 'rxjs';
+import { map, merge } from 'rxjs';
+import { EntityIndex, getComponentValue, Has, HasValue, NotValue, runQuery, } from "@latticexyz/recs";
+import styled, { keyframes } from 'styled-components';
+
+import './font.css';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
-import styled, { keyframes } from 'styled-components';
-import './font.css';
+
 
 export function registerInventory() {
   registerUIComponent(
@@ -14,7 +17,78 @@ export function registerInventory() {
       rowStart: 5,
       rowEnd: 25,
     },
-    (layers) => of(layers),
+    // Requirement (Data Manangement)
+    (layers) => {
+      const {
+        network: {
+          world,
+          api: { player },
+          network,
+          components: {
+            PlayerAddress,
+            OperatorID,
+            Balance,
+            Coin,
+            HolderID,
+            IsInventory,
+            ItemIndex,
+          },
+          actions,
+        },
+      } = layers;
+
+      // get a Inventory object by index
+      const getInventory = (index: EntityIndex) => {
+        const itemIndex = getComponentValue(ItemIndex, index)?.value as EntityIndex;
+        return {
+          id: world.entities[index],
+          index,
+          item: {
+            index: itemIndex as number,
+            // name: getComponentValue(Name, itemIndex)?.value as string,
+            // description: ???, // are we intending to save this onchain or on FE?
+          },
+          balance: getComponentValue(Balance, index)?.value as number,
+        }
+      }
+
+      return merge(OperatorID.update$, Balance.update$).pipe(  // controlled character
+        map(() => {
+          // get the operator entity of the controlling wallet
+          const operatorIndex = Array.from(runQuery([
+            HasValue(PlayerAddress, { value: network.connectedAddress.get() })
+          ]))[0];
+          const operatorID = world.entities[operatorIndex];
+          const inventoryResults = runQuery([
+            Has(IsInventory),
+            HasValue(HolderID, { value: operatorID }),
+          ]);
+
+          // if we have inventories for the operator, list below
+          let inventories: any = [];
+          let inventory, inventoryIndex;
+          if (inventoryResults.size != 0) {
+            inventoryIndex = Array.from(inventoryResults)[0];
+            inventory = getInventory(inventoryIndex);
+            inventories.push(inventory);
+          }
+
+          return {
+            world,
+            actions,
+            data: {
+              operator: {
+                id: operatorID,
+                index: operatorIndex,
+                inventories,
+                coin: getComponentValue(Coin, operatorIndex)?.value as number,
+              },
+            } as any,
+            api: player,
+          };
+        })
+      );
+    },
     () => {
       const hideModal = () => {
         const modalId = window.document.getElementById('inventory_modal');
@@ -28,16 +102,16 @@ export function registerInventory() {
       return (
         <ModalWrapper id="inventory_modal">
           <ModalContent>
-          <TypeHeading>
-            Consumables
-          </TypeHeading>
-          <TypeHeading>
-            Equipment
-          </TypeHeading>
-            <div style={{textAlign: "right"}}>
-            <Button style={{ pointerEvents: 'auto', width: "30%"}} onClick={hideModal}>
-              Close
-            </Button>
+            <TypeHeading>
+              Consumables
+            </TypeHeading>
+            <TypeHeading>
+              Equipment
+            </TypeHeading>
+            <div style={{ textAlign: "right" }}>
+              <Button style={{ pointerEvents: 'auto', width: "30%" }} onClick={hideModal}>
+                Close
+              </Button>
             </div>
           </ModalContent>
         </ModalWrapper>
