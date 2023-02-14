@@ -139,11 +139,9 @@ export function registerTradeWindow() {
             data: {
               operator: {
                 id: operatorID,
-                index: operatorIndex,
               },
               trade: {
                 id: world.entities[tradeIndex],
-                index: tradeIndex,
                 registers: {
                   mine: myRegister,
                   yours: yourRegister,

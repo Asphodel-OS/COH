@@ -77,7 +77,6 @@ export function registerPetList() {
             data: {
               operator: {
                 id: operatorID,
-                index: operatorIndex,
               },
               pets,
             } as any,

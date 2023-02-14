@@ -118,7 +118,6 @@ export function registerMiningModal() {
             data: {
               operator: {
                 id: operatorID,
-                index: operatorIndex,
               },
               node,
               production,

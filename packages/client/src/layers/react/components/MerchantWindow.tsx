@@ -107,7 +107,6 @@ export function registerMerchantWindow() {
             data: {
               operator: {
                 id: operatorID,
-                index: operatorIndex,
                 // inventory, // we probably want this, filtered by the sellable items
                 coin: getComponentValue(Coin, operatorIndex)?.value as number,
               },
