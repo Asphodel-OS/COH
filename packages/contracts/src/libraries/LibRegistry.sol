@@ -3,9 +3,13 @@ pragma solidity ^0.8.0;
 
 import { Uint256Component } from "std-contracts/components/Uint256Component.sol";
 import { IUint256Component } from "solecs/interfaces/IUint256Component.sol";
-import { getAddressById } from "solecs/utils.sol";
+import { getAddressById, getComponentById } from "solecs/utils.sol";
+import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
+import { LibQuery } from "solecs/LibQuery.sol";
 
 import { LibPrototype } from "libraries/LibPrototype.sol";
+
+import { IsRegistryEntryComponent, ID as IsRegistryEntryCompID } from "components/IsRegistryEntryComponent.sol";
 
 library LibRegistry {
   // returns entity at registry
@@ -14,9 +18,19 @@ library LibRegistry {
     uint256 registryID,
     uint256 index
   ) internal view returns (uint256) {
-    IUint256Component comp = IUint256Component(getAddressById(components, registryID));
-
-    uint256[] memory results = comp.getEntitiesWithValue(index);
+    QueryFragment[] memory fragments = new QueryFragment[](2);
+    fragments[0] = QueryFragment(
+      QueryType.Has,
+      getComponentById(components, IsRegistryEntryCompID),
+      new bytes(0)
+    );
+    fragments[1] = QueryFragment(
+      QueryType.Has,
+      getComponentById(components, registryID),
+      abi.encode(index)
+    );
+    
+    uint256[] memory results = LibQuery.query(fragments);
 
     require(results.length == 1, "index does not exist in registry");
     // hardcoded to first index. should not create multiple indexes with same id
@@ -30,11 +44,11 @@ library LibRegistry {
     uint256 index,
     uint256 entityToAdd
   ) internal {
+    // no check
     Uint256Component comp = Uint256Component(getAddressById(components, registryID));
-
-    require(comp.getEntitiesWithValue(index).length == 0, "already has index");
-
+    IsRegistryEntryComponent isComp = IsRegistryEntryComponent(getAddressById(components, IsRegistryEntryCompID));
     comp.set(entityToAdd, index);
+    isComp.set(entityToAdd);
   }
 
   function addPrototype(

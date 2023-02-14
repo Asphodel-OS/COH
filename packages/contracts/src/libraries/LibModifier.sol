@@ -8,6 +8,7 @@ import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
 import { LibRegistry } from "libraries/LibRegistry.sol";
+import { LibPrototype } from "libraries/LibPrototype.sol";
 
 import { ModifierStatusComponent, ID as ModifierStatusComponentID } from "components/ModifierStatusComponent.sol";
 import { ModifierTypeComponent, ID as ModifierTypeComponentID } from "components/ModifierTypeComponent.sol";
@@ -37,6 +38,8 @@ enum ModStatus {
 library LibModifier {
   ///////////////
   // PETS
+
+  // sets at active
   function addToPet(
     IUint256Component components,
     IWorld world,
@@ -47,10 +50,85 @@ library LibModifier {
 
     LibRegistry.copyPrototype(components, IndexModifierComponentID, index, entityID);
 
-    IdPetComponent(getAddressById(components, IdPetComponentID)).set(entityID, petID);
-    writeStatus(components, entityID, ModStatus.INACTIVE);
-
+    IdPetComponent(
+      getAddressById(components, IdPetComponentID)
+    ).set(entityID, petID);
+    writeStatus(components, entityID, ModStatus.ACTIVE);
+    
     return entityID;
+  }
+
+  function remove(
+    IUint256Component components,
+    uint256 entityID
+  ) internal {
+    LibPrototype.remove(components, entityID);
+    IdPetComponent(
+      getAddressById(components, IdPetComponentID)
+    ).remove(entityID);
+  }
+
+  function setActive(
+    IUint256Component components, 
+    uint256 entityID
+  ) internal {
+    writeStatus(components, entityID, ModStatus.ACTIVE);
+  }
+  
+  function setInactive(
+    IUint256Component components, 
+    uint256 entityID
+  ) internal {
+    writeStatus(components, entityID, ModStatus.INACTIVE);
+  }
+
+  //////////////////
+  // CALCULATION
+
+  // calculates hashrate and storage from array
+  // returns (hashrate, array)
+  // ap: this design choice makes it impractical to do regular querying
+  //     better for fe retrieval but need dreaded array operations 
+  function calArray(
+    IUint256Component components,
+    uint256 baseValue,
+    uint256[] memory arr
+  ) internal view returns (uint256 hashrate, uint256 storageSize) {
+    // assumes all components in array is activated
+    uint256 store;
+    uint256 add;
+    uint256 mul = 100;
+    uint256 umul = 100;
+
+    for (uint256 i; i < arr.length; i++) {
+      if (arr[i] == 0) continue;
+      
+      uint256 val = getValue(components, arr[i]);
+      string memory modType = getType(components, arr[i]);
+
+      if (Strings.equal(modType, "ADD")) {
+        add = add + val;
+      } else if (Strings.equal(modType, "MUL")) {
+        // value is a %
+        mul = (mul * (100 + val)) / 100;
+      } else if (Strings.equal(modType, "UMUL")) {
+        // value is a %
+        umul = (umul * (100 + val)) / 100;
+      } else if (Strings.equal(modType, "STORAGE")) {
+        store = store + val;
+      } else {
+        require(false, "unspecified mod type");
+      }
+    }
+
+    // if baseValue is 0, can assume this is calculating for base value
+    if (baseValue > 0) {
+      hashrate = ((((baseValue * mul) / 100) + add) * umul) / 100;
+    } else {
+      hashrate = (add * mul * umul) / 10000;
+    }
+
+    storageSize = store;
   }
 
   ///////////////
@@ -65,19 +143,21 @@ library LibModifier {
   ) internal returns (uint256) {
     uint256 entityID = world.getUniqueEntityId();
 
-    uint256[] memory componentIDs = new uint256[](5);
+    uint256[] memory componentIDs = new uint256[](6);
     componentIDs[0] = ModifierValueComponentID;
     componentIDs[1] = ModifierTypeComponentID;
     componentIDs[2] = ModifierStatusComponentID;
     componentIDs[3] = NameCompID;
-    componentIDs[4] = PrototypeComponentID;
+    componentIDs[4] = IndexModifierComponentID;
+    componentIDs[5] = PrototypeComponentID;
 
-    bytes[] memory values = new bytes[](5);
+    bytes[] memory values = new bytes[](6);
     values[0] = abi.encode(modValue);
     values[1] = abi.encode(modType);
     values[2] = abi.encode(statusToUint256(ModStatus.NULL));
     values[3] = abi.encode(name);
-    values[4] = new bytes(0);
+    values[4] = abi.encode(index);
+    values[5] = new bytes(0);
 
     LibRegistry.addPrototype(
       components,
@@ -89,6 +169,29 @@ library LibModifier {
     );
 
     return entityID;
+  }
+
+  /////////////////
+  // COMPONENT RETRIEVAL
+  function getType(
+    IUint256Component components, 
+    uint256 id
+  ) internal view returns (string memory) {
+    return ModifierTypeComponent(getAddressById(components, ModifierTypeComponentID)).getValue(id);
+  }
+
+  function getValue(
+    IUint256Component components, 
+    uint256 id
+  ) internal view returns (uint256) {
+    return ModifierValueComponent(getAddressById(components, ModifierValueComponentID)).getValue(id);
+  }
+  
+  function getIndex(
+    IUint256Component components, 
+    uint256 id
+  ) internal view returns (uint256) {
+    return IndexModifierComponent(getAddressById(components, IndexModifierComponentID)).getValue(id);
   }
 
   ///////////////
