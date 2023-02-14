@@ -5,14 +5,14 @@ import { dataStore } from '../store/createStore';
 import styled, { keyframes } from 'styled-components';
 import './font.css';
 
-export function registerInventoryButton() {
+export function registerChatButton() {
   registerUIComponent(
-    'InventoryButton',
+    'ChatButton',
     {
       colStart: 88,
       colEnd: 100,
-      rowStart: 88,
-      rowEnd: 100,
+      rowStart: 66,
+      rowEnd: 85,
     },
     (layers) => of(layers),
     () => {
@@ -20,16 +20,16 @@ export function registerInventoryButton() {
         objectData: { description },
       } = dataStore();
 
-      const showInventory = () => {
-        const modalId = window.document.getElementById('inventory_modal');
+      const showChat = () => {
+        const modalId = window.document.getElementById('chat_modal');
         if (modalId) modalId.style.display = 'block';
       };
 
       return (
-        <ModalWrapper id="inventory_button">
+        <ModalWrapper id="chat_button">
           <ModalContent>
-            <Button style={{ pointerEvents: 'auto' }} onClick={showInventory}>
-              Inventory
+            <Button style={{ pointerEvents: 'auto' }} onClick={showChat}>
+              Chat
             </Button>
           </ModalContent>
         </ModalWrapper>

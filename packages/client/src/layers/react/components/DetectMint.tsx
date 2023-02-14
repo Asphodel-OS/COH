@@ -66,7 +66,7 @@ export function registerDetectMint() {
           style={{ display: isDivVisible ? 'block' : 'none' }}
         >
           <ModalContent>
-            <Description>You didin't mint</Description>
+            <Description>You haven't minted.</Description>
             <Button style={{ pointerEvents: 'auto' }} onClick={handleMinting}>
               Mint Character
             </Button>
