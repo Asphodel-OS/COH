@@ -1,9 +1,11 @@
 import React from 'react';
-import { of } from 'rxjs';
+import { map, merge } from 'rxjs';
+import styled, { keyframes } from 'styled-components';
+import { EntityID, EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } from "@latticexyz/recs";
+
+import './font.css';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
-import styled, { keyframes } from 'styled-components';
-import './font.css';
 
 export function registerPetList() {
   registerUIComponent(
@@ -14,8 +16,78 @@ export function registerPetList() {
       rowStart: 5,
       rowEnd: 35,
     },
-    (layers) => of(layers),
-    () => {
+
+    // Requirement (Data Manangement)
+    (layers) => {
+      const {
+        network: {
+          world,
+          api: { player },
+          network,
+          components: {
+            IsOperator,
+            IsPet,
+            MediaURI,
+            OperatorID,
+            OwnerID,
+            PetIndex,
+            PlayerAddress,
+            State
+          },
+          actions,
+        },
+      } = layers;
+
+      // gets a Pet object from an index
+      // TODO(ja): support names, equips, stats and production details
+      const getPet = (index: EntityIndex) => {
+        const id = world.entities[index];
+        return {
+          id,
+          index: getComponentValue(PetIndex, index)?.value as number,
+          operator: { id: getComponentValue(OperatorID, index)?.value as EntityID },
+          owner: { id: getComponentValue(OwnerID, index)?.value as EntityID },
+          uri: getComponentValue(MediaURI, index)?.value as string,
+        }
+      }
+
+      return merge(OperatorID.update$, OwnerID.update$).pipe(
+        map(() => {
+          // get the operator entity of the controlling wallet
+          const operatorIndex = Array.from(runQuery([
+            Has(IsOperator),
+            HasValue(PlayerAddress, { value: network.connectedAddress.get() })
+          ]))[0];
+          const operatorID = world.entities[operatorIndex];
+
+          // get all indices of pets linked to this account and create object array
+          let pets: any = [];
+          const petResults = Array.from(runQuery([
+            Has(IsPet),
+            HasValue(OperatorID, { value: operatorID }),
+          ]));
+          for (let i = 0; i < petResults.length; i++) {
+            pets.push(getPet(petResults[i]));
+          }
+
+          return {
+            world,
+            actions,
+            api: player,
+            data: {
+              operator: {
+                id: operatorID,
+                index: operatorIndex,
+              },
+              pets,
+            } as any,
+          };
+        })
+      );
+    },
+
+    // Render
+    ({ world, actions, api, data }) => {
       const hideModal = () => {
         const modalId = window.document.getElementById('petlist_modal');
         if (modalId) modalId.style.display = 'none';
@@ -32,27 +104,27 @@ export function registerPetList() {
               Your Kami
             </TypeHeading>
             <KamiBox>
-              <KamiImage src="https://i.imgur.com/JkEsu5f.gif"/>
+              <KamiImage src="https://i.imgur.com/JkEsu5f.gif" />
               <KamiFacts>
-              <Description> "I am in agony" </Description>
+                <Description> "I am in agony" </Description>
               </KamiFacts>
             </KamiBox>
             <KamiBox>
-              <KamiImage src="https://i.imgur.com/Ut0wOld.gif"/>
+              <KamiImage src="https://i.imgur.com/Ut0wOld.gif" />
               <KamiFacts>
-              <Description> "Uwu" </Description>
+                <Description> "Uwu" </Description>
               </KamiFacts>
             </KamiBox>
             <KamiBox>
-              <KamiImage src="https://i.imgur.com/kXZN3Te.gif"/>
+              <KamiImage src="https://i.imgur.com/kXZN3Te.gif" />
               <KamiFacts>
-              <Description> "Mine tokens now" </Description>
+                <Description> "Mine tokens now" </Description>
               </KamiFacts>
             </KamiBox>
-            <div style={{textAlign: "right"}}>
-            <Button style={{ pointerEvents: 'auto', width: "30%"}} onClick={hideModal}>
-              Close
-            </Button>
+            <div style={{ textAlign: "right" }}>
+              <Button style={{ pointerEvents: 'auto', width: "30%" }} onClick={hideModal}>
+                Close
+              </Button>
             </div>
           </ModalContent>
         </ModalWrapper>
