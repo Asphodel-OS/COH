@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { System } from "solecs/System.sol";
 import { getAddressById } from "solecs/utils.sol";
+import { LibString } from "solady/utils/LibString.sol";
 
 import { LibPet } from "libraries/LibPet.sol";
 import { LibPetTraits } from "libraries/LibPetTraits.sol";
@@ -43,8 +44,25 @@ contract PetMetadataSystem is System {
    *  METADATA ASSEMBLER
   **********************/
 
+        //     "{",
+        // //\"external_url\": \"https://asphodel.xyz\",",
+        // 
+        // "\"image\": \"", baseURI, imageId.toString(),  ".svg\",",
+        // "\"name\": "\"NAME\","
+        // "\"description\": "\"Kamigotchi\",", 
+        // //"\"attributes\": [",
+        // //"{\"trait_type\": \"Vigor\", \"value\": \"", vigor.toString(), "\",}",
+        // //"{\"trait_type\": \"Mind\", \"value\": \"", mind.toString(), "\"},",
+        // //"{\"trait_type\": \"Guile\", \"value\": \"", guile.toString(), "\"}",
+        // //"]",
+        // "}" 
+
   function tokenURI(uint256 tokenID) public view returns (string memory) {
     uint256 petID = LibPet.indexToID(components, tokenID);
     return LibPet.getMediaURI(components, petID);
+  }
+
+  function _getBaseTraits(uint256 entityID) public view returns (string memory) {
+    string memory fin
   }
 }

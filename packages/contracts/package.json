@@ -57,6 +57,7 @@
     "wait-on": "^6.0.1"
   },
   "dependencies": {
-    "@solidstate/contracts": "^0.0.52"
+    "@solidstate/contracts": "^0.0.52",
+    "solady": "Vectorized/solady"
   }
 }
