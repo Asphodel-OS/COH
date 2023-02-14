@@ -2,8 +2,6 @@ import React from 'react';
 import { map, merge } from 'rxjs';
 import styled, { keyframes } from 'styled-components';
 import { EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } from "@latticexyz/recs";
-
-import './font.css';
 import { registerUIComponent } from '../engine/store';
 import './font.css';
 

@@ -20,10 +20,15 @@ export function registerInventoryButton() {
         objectData: { description },
       } = dataStore();
 
+      const showInventory = () => {
+        const modalId = window.document.getElementById('inventory_modal');
+        if (modalId) modalId.style.display = 'block';
+      };
+
       return (
         <ModalWrapper id="inventory_button">
           <ModalContent>
-            <Button style={{ pointerEvents: 'auto'}}>
+            <Button style={{ pointerEvents: 'auto' }} onClick={showInventory}>
               Inventory
             </Button>
           </ModalContent>
@@ -64,7 +69,7 @@ const Button = styled.button`
   border-radius: 5px;
   font-family: Pixel;
 
-  &:active{
-        background-color: #c2c2c2;
-    }
+  &:active {
+    background-color: #c2c2c2;
+  }
 `;
