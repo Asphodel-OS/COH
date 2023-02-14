@@ -162,6 +162,15 @@
       ]
     },
     {
+      "name": "RoomCreateSystem",
+      "writeAccess": [
+        "IsRoomComponent",
+        "ExitsComponent",
+        "LocationComponent",
+        "NameComponent"
+      ]
+    },
+    {
       "name": "TradeAddToSystem",
       "writeAccess": [
         "IsInventoryComponent",

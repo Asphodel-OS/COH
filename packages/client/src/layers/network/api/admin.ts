@@ -40,7 +40,7 @@ export function createAdminAPI(systems: any) {
 
   // @dev creates a room with name, location and exits. cannot overwrite room at location
   function createRoom(name: string, location: number, exits: number[]) {
-    // return systems["system.RoomCreate"].executeTyped(name, location, exits);
+    return systems["system.RoomCreate"].executeTyped(name, location, exits);
   }
 
   // @dev allows a character to sell an item through a merchant listing entity
