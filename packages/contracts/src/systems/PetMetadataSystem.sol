@@ -59,10 +59,38 @@ contract PetMetadataSystem is System {
 
   function tokenURI(uint256 tokenID) public view returns (string memory) {
     uint256 petID = LibPet.indexToID(components, tokenID);
-    return LibPet.getMediaURI(components, petID);
+    // return LibPet.getMediaURI(components, petID);
+    return _getBaseTraits(petID);
   }
 
   function _getBaseTraits(uint256 entityID) public view returns (string memory) {
-    string memory fin
+    string memory result = "";
+
+    // getting values of base traits. values are hardcoded to array position
+    string[] memory names = new string[](6);
+    string[] memory values = LibPetTraits.getNames(
+      components, LibPetTraits.getPermArray(components, entityID)
+    );
+
+    for (uint256 i; i < names.length; i++) {
+      // string memory entry = LibString.concat(
+      //   '{\"trait_type\": \" ',
+      //   names[i]
+      // );
+      // entry = LibString.concat(
+      //   '
+      // )
+      string memory entry = string(abi.encodePacked(
+        '{"trait_type": "', 
+        names[i], 
+        '", "value": ",',
+        values[i], 
+        '}'
+      ));
+
+      result = string(abi.encodePacked(result, entry));
+    }
+
+    return result;
   }
 }

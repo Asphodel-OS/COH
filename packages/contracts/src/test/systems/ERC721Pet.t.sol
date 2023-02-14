@@ -59,4 +59,12 @@ contract ERC721PetTest is SetupTemplate {
     _assertOwnership(1, alice);
     _assertOperator(petOneEntityID, bob);
   }
+
+  function testMetadataPrint() public {
+    _mintPets(1);
+
+    console.log(
+      _ERC721PetSystem.tokenURI(1)
+    );
+  }
 }

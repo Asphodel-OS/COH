@@ -277,10 +277,13 @@ library LibPetTraits {
 
   ///////////////////
   // GETTERS
+
+  // gets array of permanent traits
   function getPermArray(
     IUintComp components,
     uint256 petID
   ) internal view returns (uint256[] memory) {
+    // traits are arranged in fixed order
     return PetTraitsPermanentComponent(
       getAddressById(components, PetTraitsPermanentCompID)
     ).getValue(petID);  

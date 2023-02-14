@@ -4,10 +4,13 @@ pragma solidity ^0.8.0;
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { System } from "solecs/System.sol";
 import { ERC721 } from "solmate/tokens/ERC721.sol";
+import { getAddressById } from "solecs/utils.sol";
 
 import { LibOperator } from "libraries/LibOperator.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibPetTraits } from "libraries/LibPetTraits.sol";
+
+import { PetMetadataSystem, ID as PetMetadataSystemID } from "systems/PetMetadataSystem.sol";
 
 uint256 constant ID = uint256(keccak256("system.ERC721.pet"));
 string constant NFT_NAME = "Kamigotchi";
@@ -60,8 +63,9 @@ contract ERC721PetSystem is System, ERC721 {
   }
 
   function tokenURI(uint256 tokenID) public view override returns (string memory) {
-    uint256 petID = LibPet.indexToID(components, tokenID);
-    return LibPet.getMediaURI(components, petID);
+    return PetMetadataSystem(
+      getAddressById(world.systems(), PetMetadataSystemID)
+    ).tokenURI(tokenID);
   }
 
   /*********************
