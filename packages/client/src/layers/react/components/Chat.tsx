@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { map, merge } from 'rxjs';
-import { EntityID, EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } from "@latticexyz/recs";
+import { EntityIndex, Has, HasValue,  getComponentValue, runQuery } from "@latticexyz/recs";
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
 import styled, { keyframes } from 'styled-components';
