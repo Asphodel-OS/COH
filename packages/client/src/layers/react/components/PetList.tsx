@@ -102,6 +102,9 @@ export function registerPetList() {
       return (
         <ModalWrapper id="petlist_modal">
           <ModalContent>
+          <Description>
+            Bytes: 12
+          </Description>
             <ConsumableGrid>
               <CellOne>
                 <CellGrid>
@@ -139,13 +142,27 @@ export function registerPetList() {
             <KamiBox>
               <KamiImage src="https://i.imgur.com/JkEsu5f.gif" />
               <KamiFacts>
-                <Description> "I am in agony" </Description>
               </KamiFacts>
             </KamiBox>
             <KamiBox>
               <KamiImage src="https://i.imgur.com/Ut0wOld.gif" />
               <KamiFacts>
-                <Description> "Uwu" </Description>
+                <KamiName>
+                  <Description>
+                    Kami 513
+                  </Description>
+                </KamiName>
+                <KamiDetails>
+                  <Description>
+                    Hunger: 5%
+                    <br/>
+                    <br/>
+                    Gather Rate: 112 /day
+                    <br/>
+                    <br/>
+                    Start Gathering
+                  </Description>
+                </KamiDetails>
               </KamiFacts>
             </KamiBox>
             <div style={{ textAlign: "right" }}>
@@ -229,13 +246,24 @@ const KamiFacts = styled.div`
   margin: 0px;
   padding: 0px;
   grid-column: 2 / span 1000;
+  display: grid;
 `;
 
+const KamiName = styled.div`
+  grid-row: 1;
+  border-style: solid;
+  border-width: 0px 0px 2px 0px;
+  border-color: black;
+`;
+
+const KamiDetails = styled.div`
+  grid-row: 2 / 5;
+`;
 const Description = styled.p`
   font-size: 16px;
   color: #333;
   text-align: left;
-  padding: 20px;
+  padding: 2px;
   font-family: Pixel;
 `;
 
