@@ -20,7 +20,7 @@ export function room003() {
         .setScale(1.75)
         .setRotation(1.5714);
 
-      scene.interactiveObjects.push(changeRoom(downArrow, 3));
+      scene.interactiveObjects.push(changeRoom(downArrow, 1));
     },
   };
 }
