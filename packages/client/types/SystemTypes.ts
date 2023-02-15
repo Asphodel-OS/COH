@@ -6,6 +6,8 @@ import { ListingBuySystem } from "./ethers-contracts/ListingBuySystem";
 import { ListingSellSystem } from "./ethers-contracts/ListingSellSystem";
 import { ListingSetSystem } from "./ethers-contracts/ListingSetSystem";
 import { MerchantCreateSystem } from "./ethers-contracts/MerchantCreateSystem";
+import { NameOperatorSystem } from "./ethers-contracts/NameOperatorSystem";
+import { NamePetSystem } from "./ethers-contracts/NamePetSystem";
 import { NodeCreateSystem } from "./ethers-contracts/NodeCreateSystem";
 import { OperatorMoveSystem } from "./ethers-contracts/OperatorMoveSystem";
 import { OperatorSetSystem } from "./ethers-contracts/OperatorSetSystem";
@@ -30,6 +32,8 @@ export type SystemTypes = {
   "system.ListingSell": ListingSellSystem;
   "system.ListingSet": ListingSetSystem;
   "system.MerchantCreate": MerchantCreateSystem;
+  "system.NameOperator": NameOperatorSystem;
+  "system.NamePet": NamePetSystem;
   "system.NodeCreate": NodeCreateSystem;
   "system.OperatorMove": OperatorMoveSystem;
   "system.OperatorSet": OperatorSetSystem;

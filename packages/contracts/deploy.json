@@ -229,6 +229,18 @@
         "IdRequesterComponent",
         "StateComponent"
       ]
+    },
+    {
+      "name": "NamePetSystem",
+      "writeAccess": [
+        "NameComponent"
+      ]
+    },
+    {
+      "name": "NameOperatorSystem",
+      "writeAccess": [
+        "NameComponent"
+      ]
     }
   ],
   "libraries": [

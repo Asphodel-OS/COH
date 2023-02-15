@@ -6,6 +6,8 @@ import ListingBuySystem from "../abi/ListingBuySystem.json";
 import ListingSellSystem from "../abi/ListingSellSystem.json";
 import ListingSetSystem from "../abi/ListingSetSystem.json";
 import MerchantCreateSystem from "../abi/MerchantCreateSystem.json";
+import NameOperatorSystem from "../abi/NameOperatorSystem.json";
+import NamePetSystem from "../abi/NamePetSystem.json";
 import NodeCreateSystem from "../abi/NodeCreateSystem.json";
 import OperatorMoveSystem from "../abi/OperatorMoveSystem.json";
 import OperatorSetSystem from "../abi/OperatorSetSystem.json";
@@ -30,6 +32,8 @@ export const SystemAbis = {
   "system.ListingSell": ListingSellSystem.abi,
   "system.ListingSet": ListingSetSystem.abi,
   "system.MerchantCreate": MerchantCreateSystem.abi,
+  "system.NameOperator": NameOperatorSystem.abi,
+  "system.NamePet": NamePetSystem.abi,
   "system.NodeCreate": NodeCreateSystem.abi,
   "system.OperatorMove": OperatorMoveSystem.abi,
   "system.OperatorSet": OperatorSetSystem.abi,

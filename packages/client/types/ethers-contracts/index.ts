@@ -54,6 +54,8 @@ export type { ModifierStatusComponent } from "./ModifierStatusComponent";
 export type { ModifierTypeComponent } from "./ModifierTypeComponent";
 export type { ModifierValueComponent } from "./ModifierValueComponent";
 export type { NameComponent } from "./NameComponent";
+export type { NameOperatorSystem } from "./NameOperatorSystem";
+export type { NamePetSystem } from "./NamePetSystem";
 export type { NodeCreateSystem } from "./NodeCreateSystem";
 export type { OperatorMoveSystem } from "./OperatorMoveSystem";
 export type { OperatorSetSystem } from "./OperatorSetSystem";
@@ -135,6 +137,8 @@ export { ModifierStatusComponent__factory } from "./factories/ModifierStatusComp
 export { ModifierTypeComponent__factory } from "./factories/ModifierTypeComponent__factory";
 export { ModifierValueComponent__factory } from "./factories/ModifierValueComponent__factory";
 export { NameComponent__factory } from "./factories/NameComponent__factory";
+export { NameOperatorSystem__factory } from "./factories/NameOperatorSystem__factory";
+export { NamePetSystem__factory } from "./factories/NamePetSystem__factory";
 export { NodeCreateSystem__factory } from "./factories/NodeCreateSystem__factory";
 export { OperatorMoveSystem__factory } from "./factories/OperatorMoveSystem__factory";
 export { OperatorSetSystem__factory } from "./factories/OperatorSetSystem__factory";

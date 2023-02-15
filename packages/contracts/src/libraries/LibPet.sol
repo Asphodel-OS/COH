@@ -96,6 +96,10 @@ library LibPet {
     return IdOwnerComponent(getAddressById(components, IdOwnerCompID)).getValue(id);
   }
 
+  function isPet(IUintComp components, uint256 id) internal view returns (bool) {
+    return IsPetComponent(getAddressById(components, IsPetCompID)).has(id);
+  }
+
   /////////////////
   // SETTERS
 

@@ -10,6 +10,13 @@ export function createPlayerAPI(systems: any) {
     return systems["system.ERC721.pet"].mint(address);
   }
 
+  // @dev
+  // @param entityID   pet entity
+  // @param name       name
+  function namePet(petID: BigNumberish, name: string) {
+    return systems["system.NamePet"].executeTyped(petID, name);
+  }
+
   /*********************
    *     OPERATOR
    *********************/
@@ -25,6 +32,13 @@ export function createPlayerAPI(systems: any) {
   function setOperator(operator: BigNumberish, name: string) {
     return systems["system.OperatorSet"].executeTyped(operator, name);
   }
+
+  // @dev   renames operator, ignoring previous name
+  // @param entityID   pet entity
+  // @param name       name
+  function nameOperator(petID: BigNumberish, name: string) {
+    return systems["system.NamePet"].executeTyped(petID, name);
+  }  
 
   /*********************
    *     Listings
@@ -111,7 +125,8 @@ export function createPlayerAPI(systems: any) {
 
   return {
     ERC721: {
-      mint: mintPet
+      mint: mintPet,
+      name: namePet
     },
     listing: {
       buy: buyFromListing,
@@ -120,6 +135,7 @@ export function createPlayerAPI(systems: any) {
     operator: {
       move: moveOperator,
       set: setOperator,
+      name: nameOperator
     },
     production: {
       collect: collectProduction,
