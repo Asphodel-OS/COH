@@ -4,7 +4,7 @@ import { room001, room002, room003 } from '../rooms/';
 import { PhaserScene, Room } from '../types';
 
 import room1Music from '../../../public/sound/music/corridor.mp3';
-import room2Music from '../../../public/sound/music/landfill.mp3';
+import room2Music from '../../../public/sound/music/landfill2.mp3';
 import room3Music from '../../../public/sound/music/shopkeep_song.mp3';
 
 export function defineMainScene() {
@@ -25,7 +25,7 @@ export function defineMainScene() {
       },
       create: (scene: PhaserScene) => {
         scene.sound.pauseOnBlur = false;
-        
+
         scene.rooms![1].create(scene);
       },
     }),
