@@ -12,6 +12,7 @@ import { IsOperatorComponent, ID as IsOperatorCompID } from "components/IsOperat
 import { AddressPlayerComponent, ID as AddrPlayerCompID } from "components/AddressPlayerComponent.sol";
 import { BlockLastComponent, ID as BlockLastCompID } from "components/BlockLastComponent.sol";
 import { LocationComponent, ID as LocCompID } from "components/LocationComponent.sol";
+import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { LibRoom } from "libraries/LibRoom.sol";
 
 library LibOperator {
@@ -33,6 +34,18 @@ library LibOperator {
     return id;
   }
 
+  // Move the Operator to a room
+  function move(
+    IComponents components,
+    uint256 id,
+    uint256 to
+  ) internal {
+    LocationComponent(getAddressById(components, LocCompID)).set(id, to);
+  }
+
+  /////////////////
+  // SETTERS
+
   function setAddress(
     IComponents components,
     uint256 id,
@@ -42,13 +55,13 @@ library LibOperator {
     return id;
   }
 
-  // Move the Address to a room
-  function move(
+  function setName(
     IComponents components,
     uint256 id,
-    uint256 to
-  ) internal {
-    LocationComponent(getAddressById(components, LocCompID)).set(id, to);
+    string memory name
+  ) internal returns (uint256) {
+    NameComponent(getAddressById(components, NameCompID)).set(id, name);
+    return id;
   }
 
   /////////////////

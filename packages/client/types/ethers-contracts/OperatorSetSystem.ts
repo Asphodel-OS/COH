@@ -29,7 +29,7 @@ import type {
 export interface OperatorSetSystemInterface extends utils.Interface {
   functions: {
     "execute(bytes)": FunctionFragment;
-    "executeTyped(address)": FunctionFragment;
+    "executeTyped(address,string)": FunctionFragment;
     "owner()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -48,7 +48,7 @@ export interface OperatorSetSystemInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "executeTyped",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -120,6 +120,7 @@ export interface OperatorSetSystem extends BaseContract {
 
     executeTyped(
       operator: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -138,6 +139,7 @@ export interface OperatorSetSystem extends BaseContract {
 
   executeTyped(
     operator: PromiseOrValue<string>,
+    name: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -156,6 +158,7 @@ export interface OperatorSetSystem extends BaseContract {
 
     executeTyped(
       operator: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -186,6 +189,7 @@ export interface OperatorSetSystem extends BaseContract {
 
     executeTyped(
       operator: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -205,6 +209,7 @@ export interface OperatorSetSystem extends BaseContract {
 
     executeTyped(
       operator: PromiseOrValue<string>,
+      name: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

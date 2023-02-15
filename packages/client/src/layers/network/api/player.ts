@@ -21,8 +21,9 @@ export function createPlayerAPI(systems: any) {
 
   // @dev sets the operator of an Owner wallet. should be set by Owner wallet
   // @param operator  address of the operator wallet
-  function setOperator(operator: BigNumberish) {
-    return systems["system.OperatorSet"].executeTyped(operator);
+  // @param name      name of the account
+  function setOperator(operator: BigNumberish, name: string) {
+    return systems["system.OperatorSet"].executeTyped(operator, name);
   }
 
   /*********************

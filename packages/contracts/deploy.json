@@ -114,7 +114,8 @@
         "IsOperatorComponent",
         "AddressPlayerComponent",
         "IdOwnerComponent",
-        "LocationComponent"
+        "LocationComponent",
+        "NameComponent"
       ]
     },
     {
