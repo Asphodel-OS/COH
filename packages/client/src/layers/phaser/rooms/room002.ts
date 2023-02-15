@@ -21,10 +21,10 @@ export function room002() {
       const rightArrow = scene.add.image(1025, 360, 'arrow').setScale(1.75)
 
 
-      triggerObjectModal(
+      scene.interactiveObjects.push(triggerObjectModal(
         vend,
-        'This couch is the perfect addition to your protected area room. With its comfortable design, this couch offers a cozy and secure place to relax.'
-      );
+        'Quench your thirst with a refreshing soda, or indulge your sweet tooth with a chocolate bar. With just a few coins, our vending machine has got you covered. Grab a snack and keep the hunger at bay!'
+      ));
 
     },
   };

@@ -33,10 +33,10 @@ export function room001() {
 
       const downArrow = scene.add.image(725, 560, 'arrow').setScale(1.75).setRotation(1.5714)
 
-      triggerObjectModal(
+      scene.interactiveObjects.push(triggerObjectModal(
         couch,
         'This is a couch used for testing the item description component.'
-      );
+      ));
 
     },
   };
