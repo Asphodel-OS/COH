@@ -85,7 +85,6 @@ contract PetMetadataSystem is System {
       '"description": ', '"a lil network spirit :3",\n',
       '"attributes": [\n',
       _getBaseTraits(petID),
-      _getSlotTraits(petID),
       '],\n',
       '"image": "', LibPet.getMediaURI(components, petID), '"\n',
       '}'
@@ -105,31 +104,6 @@ contract PetMetadataSystem is System {
     names[5] = "Background";
     string[] memory values = LibPetTraits.getNames(
       components, LibPetTraits.getPermArray(components, entityID)
-    );
-
-    for (uint256 i; i < names.length; i++) {
-      string memory entry = string(abi.encodePacked(
-        '{"trait_type": "', 
-        names[i], 
-        '", "value": "',
-        values[i], 
-        '"},\n'
-      ));
-
-      result = string(abi.encodePacked(result, entry));
-    }
-
-    return result;
-  }
-
-  function _getSlotTraits(uint256 entityID) public view returns (string memory) {
-    string memory result = "";
-    
-    string[] memory names = new string[](2);
-    names[0] = "Slot A";
-    names[1] = "Slot B";
-    string[] memory values = LibPetTraits.getNames(
-      components, LibPetTraits.getEquipArray(components, entityID)
     );
 
     for (uint256 i; i < names.length; i++) {
