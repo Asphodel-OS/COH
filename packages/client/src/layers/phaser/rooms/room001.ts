@@ -6,6 +6,7 @@ import { triggerInventoryModal } from '../utils/triggerInventoryModal';
 import { triggerPetListModal } from '../utils/triggerPetListModal';
 import { resizePicture } from '../utils/resizePicture';
 import { getCouchCoordinates } from '../utils/coordinates';
+import { changeRoom } from '../utils/changeRoom';
 
 const scale = resizePicture();
 
@@ -13,7 +14,7 @@ export function room001() {
   return {
     preload: (scene: PhaserScene) => {
       scene.load.image('room001', room001mage);
-      scene.load.image("arrow", arrow);
+      scene.load.image('arrow', arrow);
     },
     create: (scene: PhaserScene) => {
       scene.add
@@ -29,15 +30,26 @@ export function room001() {
         coordinates.height
       );
 
-      const upArrow = scene.add.image(725, 360, 'arrow').setScale(1.75).setRotation(4.71239)
+      const upArrow = scene.add
+        .image(725, 360, 'arrow')
+        .setScale(1.75)
+        .setRotation(4.71239);
 
-      const downArrow = scene.add.image(725, 560, 'arrow').setScale(1.75).setRotation(1.5714)
+      const downArrow = scene.add
+        .image(725, 560, 'arrow')
+        .setScale(1.75)
+        .setRotation(1.5714);
 
-      scene.interactiveObjects.push(triggerObjectModal(
-        couch,
-        'This is a couch used for testing the item description component.'
-      ));
+      scene.interactiveObjects.push(changeRoom(upArrow, 3));
 
+      scene.interactiveObjects.push(changeRoom(downArrow, 2));
+
+      scene.interactiveObjects.push(
+        triggerObjectModal(
+          couch,
+          'This is a couch used for testing the item description component.'
+        )
+      );
     },
   };
 }

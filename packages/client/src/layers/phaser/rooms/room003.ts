@@ -1,6 +1,7 @@
 import { PhaserScene } from '../types';
 import { resizePicture } from '../utils/resizePicture';
 import room003image from '../../../public/assets/room3.png';
+import { changeRoom } from '../utils/changeRoom';
 
 const scale = resizePicture();
 
@@ -14,8 +15,12 @@ export function room003() {
         .image(window.innerWidth / 2, window.innerHeight / 2, 'room003')
         .setScale(scale * 8.3);
 
-        const downArrow = scene.add.image(725, 560, 'arrow').setScale(1.75).setRotation(1.5714)
+      const downArrow = scene.add
+        .image(725, 560, 'arrow')
+        .setScale(1.75)
+        .setRotation(1.5714);
 
+      scene.interactiveObjects.push(changeRoom(downArrow, 3));
     },
   };
 }
