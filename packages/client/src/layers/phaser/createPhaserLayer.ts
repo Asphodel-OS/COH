@@ -2,6 +2,7 @@ import { namespaceWorld } from '@latticexyz/recs';
 import CreatePhaserEngine from './engine/PhaserEngine';
 import { phaserConfig } from '../../config';
 import { createRoomSystem } from './systems/createRoomSystem';
+import { createMusicSystem } from './systems/createMusicSystem';
 
 /**
  * The Phaser layer is responsible for rendering game objects to the screen.
@@ -33,6 +34,7 @@ export async function createPhaserLayer(network: any) {
 
   // --- SYSTEMS --------------------------------------------------------------------
   createRoomSystem(network, context);
+  createMusicSystem(network, context);
 
   return context;
 }

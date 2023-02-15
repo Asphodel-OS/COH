@@ -11,6 +11,7 @@
     "start": "yarn cache:clear && yarn parcel src/index.html --port 3000"
   },
   "devDependencies": {
+    "@parcel/transformer-raw": "^2.8.3",
     "@types/react": "^17.0.43",
     "@types/react-dom": "^18.0.4",
     "@types/styled-components": "^5.1.24",
