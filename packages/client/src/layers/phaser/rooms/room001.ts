@@ -1,5 +1,6 @@
 import { PhaserScene } from '../types';
 import room001mage from '../../../public/assets/room1.png';
+import arrow from '../../../public/assets/arrow.png';
 import { triggerObjectModal } from '../utils/triggerObjectModal';
 import { triggerInventoryModal } from '../utils/triggerInventoryModal';
 import { triggerPetListModal } from '../utils/triggerPetListModal';
@@ -12,6 +13,7 @@ export function room001() {
   return {
     preload: (scene: PhaserScene) => {
       scene.load.image('room001', room001mage);
+      scene.load.image("arrow", arrow);
     },
     create: (scene: PhaserScene) => {
       scene.add
@@ -27,23 +29,14 @@ export function room001() {
         coordinates.height
       );
 
-      const inventory = scene.add.rectangle(850, 400, 200, 180);
+      const upArrow = scene.add.image(725, 360, 'arrow').setScale(1.75).setRotation(4.71239)
 
-      const petlist = scene.add.rectangle(350, 400, 200, 180);
+      const downArrow = scene.add.image(725, 560, 'arrow').setScale(1.75).setRotation(1.5714)
 
       triggerObjectModal(
         couch,
         'This is a couch used for testing the item description component.'
       );
-
-      triggerInventoryModal(
-        inventory
-      );
-
-      triggerPetListModal(
-        petlist
-      );
-
 
     },
   };

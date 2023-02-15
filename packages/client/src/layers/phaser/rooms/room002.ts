@@ -16,6 +16,7 @@ export function room002() {
         .setScale(scale * 8.3);
 
       const vend = scene.add.rectangle(500, 820, 200, 180);
+      const downArrow = scene.add.image(725, 560, 'arrow').setScale(1.75).setRotation(1.5714)
 
       triggerObjectModal(
         vend,

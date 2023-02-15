@@ -13,6 +13,9 @@ export function room003() {
       scene.add
         .image(window.innerWidth / 2, window.innerHeight / 2, 'room003')
         .setScale(scale * 8.3);
+
+        const downArrow = scene.add.image(725, 560, 'arrow').setScale(1.75).setRotation(1.5714)
+
     },
   };
 }
