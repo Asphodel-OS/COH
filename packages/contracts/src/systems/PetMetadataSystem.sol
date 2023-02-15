@@ -6,6 +6,7 @@ import { System } from "solecs/System.sol";
 import { getAddressById } from "solecs/utils.sol";
 import { LibString } from "solady/utils/LibString.sol";
 
+import { LibBattery } from "libraries/LibBattery.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibPetTraits } from "libraries/LibPetTraits.sol";
 import { LibMetadata } from "libraries/LibMetadata.sol";
@@ -85,10 +86,21 @@ contract PetMetadataSystem is System {
       '"description": ', '"a lil network spirit :3",\n',
       '"attributes": [\n',
       _getBaseTraits(petID),
+      _getBattery(petID),
       '],\n',
       '"image": "', LibPet.getMediaURI(components, petID), '"\n',
       '}'
     ));
+  }
+
+  function _getBattery(uint256 entityID) public view returns (string memory) {
+    return string(abi.encodePacked(
+        '{"trait_type": "', 
+        "Battery Capacity", 
+        '", "value": "',
+        LibString.toString(LibBattery.getCapacity(components, entityID)),
+        '"},\n'
+      ));
   }
 
   function _getBaseTraits(uint256 entityID) public view returns (string memory) {

@@ -2,6 +2,7 @@
 export const systemToId = {
   EquipModifierPetSystem: "system.Pet.EquipModifierSystem",
   ERC721PetSystem: "system.ERC721.pet",
+  InitSystem: "system.Init",
   ListingBuySystem: "system.ListingBuy",
   ListingSellSystem: "system.ListingSell",
   ListingSetSystem: "system.ListingSet",
@@ -9,6 +10,7 @@ export const systemToId = {
   NodeCreateSystem: "system.NodeCreate",
   OperatorMoveSystem: "system.OperatorMove",
   OperatorSetSystem: "system.OperatorSet",
+  PetFoodSystem: "system.Pet.Food",
   PetMetadataSystem: "system.ERC721.metadata",
   PetSetOperatorSystem: "system.PetSetOperator",
   ProductionCollectSystem: "system.ProductionCollect",
@@ -25,6 +27,7 @@ export const systemToId = {
 export const idToSystem = {
   "system.Pet.EquipModifierSystem": "EquipModifierPetSystem",
   "system.ERC721.pet": "ERC721PetSystem",
+  "system.Init": "InitSystem",
   "system.ListingBuy": "ListingBuySystem",
   "system.ListingSell": "ListingSellSystem",
   "system.ListingSet": "ListingSetSystem",
@@ -32,6 +35,7 @@ export const idToSystem = {
   "system.NodeCreate": "NodeCreateSystem",
   "system.OperatorMove": "OperatorMoveSystem",
   "system.OperatorSet": "OperatorSetSystem",
+  "system.Pet.Food": "PetFoodSystem",
   "system.ERC721.metadata": "PetMetadataSystem",
   "system.PetSetOperator": "PetSetOperatorSystem",
   "system.ProductionCollect": "ProductionCollectSystem",
