@@ -8,6 +8,7 @@ import { MerchantCreateSystem } from "./ethers-contracts/MerchantCreateSystem";
 import { NodeCreateSystem } from "./ethers-contracts/NodeCreateSystem";
 import { OperatorMoveSystem } from "./ethers-contracts/OperatorMoveSystem";
 import { OperatorSetSystem } from "./ethers-contracts/OperatorSetSystem";
+import { PetMetadataSystem } from "./ethers-contracts/PetMetadataSystem";
 import { PetSetOperatorSystem } from "./ethers-contracts/PetSetOperatorSystem";
 import { ProductionCollectSystem } from "./ethers-contracts/ProductionCollectSystem";
 import { ProductionStartSystem } from "./ethers-contracts/ProductionStartSystem";
@@ -29,6 +30,7 @@ export type SystemTypes = {
   "system.NodeCreate": NodeCreateSystem;
   "system.OperatorMove": OperatorMoveSystem;
   "system.OperatorSet": OperatorSetSystem;
+  "system.ERC721.metadata": PetMetadataSystem;
   "system.PetSetOperator": PetSetOperatorSystem;
   "system.ProductionCollect": ProductionCollectSystem;
   "system.ProductionStart": ProductionStartSystem;

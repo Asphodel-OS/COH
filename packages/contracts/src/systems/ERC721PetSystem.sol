@@ -4,14 +4,19 @@ pragma solidity ^0.8.0;
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { System } from "solecs/System.sol";
 import { ERC721 } from "solmate/tokens/ERC721.sol";
+import { getAddressById } from "solecs/utils.sol";
 
 import { LibOperator } from "libraries/LibOperator.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibPetTraits } from "libraries/LibPetTraits.sol";
 
+import { PetMetadataSystem, ID as PetMetadataSystemID } from "systems/PetMetadataSystem.sol";
+
 uint256 constant ID = uint256(keccak256("system.ERC721.pet"));
 string constant NFT_NAME = "Kamigotchi";
 string constant NFT_SYMBOL = "KAMI";
+// unrevealed URI is set as the placeholder. actual random implementation unimplemented for demo, no proper vrf on localhost
+string constant UNREVEALED_URI = "https://kamigotchi.nyc3.cdn.digitaloceanspaces.com/placeholder.gif";
 
 contract ERC721PetSystem is System, ERC721 {
   /*******************************
@@ -41,9 +46,6 @@ contract ERC721PetSystem is System, ERC721 {
     // require(tx.origin == msg.sender, "no contracts");
     ++totalSupply; // arrays start at 1 here :3
 
-    // TODO: PLACEHOLDER, replace later
-    string memory uri = "https://kamigotchi.nyc3.cdn.digitaloceanspaces.com/placeholder.png";
-
     // Get the operator for this owner(to). Create one if it doesn't exist.
     uint256 operatorID = LibOperator.getByOwner(components, to);
     if (operatorID == 0) {
@@ -51,7 +53,7 @@ contract ERC721PetSystem is System, ERC721 {
     }
 
     // TODO: set stats based on the generated traits of the pet.
-    uint256 petID = LibPet.create(world, components, to, operatorID, totalSupply, uri);
+    uint256 petID = LibPet.create(world, components, to, operatorID, totalSupply, UNREVEALED_URI);
     LibPetTraits.placeholderTraits(components, world, petID);
     // LibPet.setStats(components, petID);
 
@@ -60,8 +62,9 @@ contract ERC721PetSystem is System, ERC721 {
   }
 
   function tokenURI(uint256 tokenID) public view override returns (string memory) {
-    uint256 petID = LibPet.indexToID(components, tokenID);
-    return LibPet.getMediaURI(components, petID);
+    return PetMetadataSystem(
+      getAddressById(world.systems(), PetMetadataSystemID)
+    ).tokenURI(tokenID);
   }
 
   /*********************

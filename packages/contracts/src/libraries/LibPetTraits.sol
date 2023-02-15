@@ -276,6 +276,50 @@ library LibPetTraits {
   }
 
   ///////////////////
+  // GETTERS
+
+  // gets array of permanent traits
+  function getPermArray(
+    IUintComp components,
+    uint256 petID
+  ) internal view returns (uint256[] memory) {
+    // traits are arranged in fixed order
+    return PetTraitsPermanentComponent(
+      getAddressById(components, PetTraitsPermanentCompID)
+    ).getValue(petID);  
+  }
+
+  function getEquipArray(
+    IUintComp components,
+    uint256 petID
+  ) internal view returns (uint256[] memory) {
+    return PetTraitsEquippedComponent(
+      getAddressById(components, PetTraitsEquippedCompID)
+    ).getValue(petID);  
+  }
+
+  function getName(
+    IUintComp components,
+    uint256 id
+  ) internal view returns (string memory) {
+    return NameComponent(
+      getAddressById(components, NameCompID)
+    ).getValue(id);
+  }
+
+  // get names of attached modifiers from array. Assume all have names
+  function getNames(
+    IUintComp components,
+    uint256[] memory arr
+  ) internal view returns (string[] memory) {
+    string[] memory result = new string[](arr.length);
+    for (uint256 i; i < arr.length; i++) {
+      result[i] = getName(components, arr[i]);
+    } 
+    return result;
+  }
+
+  ///////////////////
   // HARDCODE PLACEHOLDER, leaving here for now
   // hardcoded placeholder, fake registry 
   function placeholderRegistry(

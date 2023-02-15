@@ -8,6 +8,7 @@ import MerchantCreateSystem from "../abi/MerchantCreateSystem.json";
 import NodeCreateSystem from "../abi/NodeCreateSystem.json";
 import OperatorMoveSystem from "../abi/OperatorMoveSystem.json";
 import OperatorSetSystem from "../abi/OperatorSetSystem.json";
+import PetMetadataSystem from "../abi/PetMetadataSystem.json";
 import PetSetOperatorSystem from "../abi/PetSetOperatorSystem.json";
 import ProductionCollectSystem from "../abi/ProductionCollectSystem.json";
 import ProductionStartSystem from "../abi/ProductionStartSystem.json";
@@ -29,6 +30,7 @@ export const SystemAbis = {
   "system.NodeCreate": NodeCreateSystem.abi,
   "system.OperatorMove": OperatorMoveSystem.abi,
   "system.OperatorSet": OperatorSetSystem.abi,
+  "system.ERC721.metadata": PetMetadataSystem.abi,
   "system.PetSetOperator": PetSetOperatorSystem.abi,
   "system.ProductionCollect": ProductionCollectSystem.abi,
   "system.ProductionStart": ProductionStartSystem.abi,

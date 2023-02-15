@@ -151,6 +151,10 @@
       ]
     },
     {
+      "name": "PetMetadataSystem",
+      "writeAccess": []
+    },
+    {
       "name": "TradeAcceptSystem",
       "writeAccess": [
         "IsRegisterComponent",
