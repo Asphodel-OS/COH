@@ -1,6 +1,9 @@
 {
   "components": [
     "BalanceComponent",
+    "BatteryCapacityComponent",
+    "BatteryChargeComponent",
+    "BatteryLastChargeComponent",
     "BlockLastComponent",
     "CoinComponent",
     "ExitsComponent",
@@ -19,6 +22,7 @@
     "IndexModifierComponent",
     "IndexPetComponent",
     "IsInventoryComponent",
+    "IsFoodComponent",
     "IsListingComponent",
     "IsMerchantComponent",
     "IsModifierComponent",
@@ -50,6 +54,12 @@
     "TimeStartComponent"
   ],
   "systems": [
+    {
+      "name": "InitSystem",
+      "writeAccess": [
+        "*"
+      ]
+    },
     {
       "name": "ERC721PetSystem",
       "writeAccess": [
@@ -156,6 +166,14 @@
       "writeAccess": []
     },
     {
+      "name": "PetFoodSystem",
+      "writeAccess": [
+        "BatteryChargeComponent",
+        "BatteryLastChargeComponent",
+        "BalanceComponent"
+      ]
+    },
+    {
       "name": "TradeAcceptSystem",
       "writeAccess": [
         "IsRegisterComponent",
@@ -214,6 +232,7 @@
     }
   ],
   "libraries": [
+    "LibBattery",
     "LibCoin",
     "LibInventory",
     "LibListing",

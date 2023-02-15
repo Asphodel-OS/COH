@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import "std-contracts/test/MudTest.t.sol";
 
 // Libraries
+import "libraries/LibBattery.sol";
 import "libraries/LibCoin.sol";
 import "libraries/LibInventory.sol";
 import "libraries/LibListing.sol";
@@ -22,6 +23,9 @@ import "libraries/LibTrade.sol";
 
 // Components
 import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
+import { BatteryCapacityComponent, ID as BatteryCapacityComponentID } from "components/BatteryCapacityComponent.sol";
+import { BatteryChargeComponent, ID as BatteryChargeComponentID } from "components/BatteryChargeComponent.sol";
+import { BatteryLastChargeComponent, ID as BatteryLastChargeComponentID } from "components/BatteryLastChargeComponent.sol";
 import { BlockLastComponent, ID as BlockLastComponentID } from "components/BlockLastComponent.sol";
 import { CoinComponent, ID as CoinComponentID } from "components/CoinComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
@@ -40,6 +44,7 @@ import { IndexItemComponent, ID as IndexItemComponentID } from "components/Index
 import { IndexModifierComponent, ID as IndexModifierComponentID } from "components/IndexModifierComponent.sol";
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
 import { IsInventoryComponent, ID as IsInventoryComponentID } from "components/IsInventoryComponent.sol";
+import { IsFoodComponent, ID as IsFoodComponentID } from "components/IsFoodComponent.sol";
 import { IsListingComponent, ID as IsListingComponentID } from "components/IsListingComponent.sol";
 import { IsMerchantComponent, ID as IsMerchantComponentID } from "components/IsMerchantComponent.sol";
 import { IsModifierComponent, ID as IsModifierComponentID } from "components/IsModifierComponent.sol";
@@ -71,6 +76,7 @@ import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "compon
 import { TimeStartComponent, ID as TimeStartComponentID } from "components/TimeStartComponent.sol";
 
 // Systems
+import { InitSystem, ID as InitSystemID } from "systems/InitSystem.sol";
 import { ERC721PetSystem, ID as ERC721PetSystemID } from "systems/ERC721PetSystem.sol";
 import { ListingBuySystem, ID as ListingBuySystemID } from "systems/ListingBuySystem.sol";
 import { ListingSellSystem, ID as ListingSellSystemID } from "systems/ListingSellSystem.sol";
@@ -84,6 +90,7 @@ import { ProductionCollectSystem, ID as ProductionCollectSystemID } from "system
 import { ProductionStartSystem, ID as ProductionStartSystemID } from "systems/ProductionStartSystem.sol";
 import { ProductionStopSystem, ID as ProductionStopSystemID } from "systems/ProductionStopSystem.sol";
 import { PetMetadataSystem, ID as PetMetadataSystemID } from "systems/PetMetadataSystem.sol";
+import { PetFoodSystem, ID as PetFoodSystemID } from "systems/PetFoodSystem.sol";
 import { TradeAcceptSystem, ID as TradeAcceptSystemID } from "systems/TradeAcceptSystem.sol";
 import { RoomCreateSystem, ID as RoomCreateSystemID } from "systems/RoomCreateSystem.sol";
 import { TradeAddToSystem, ID as TradeAddToSystemID } from "systems/TradeAddToSystem.sol";
@@ -94,6 +101,9 @@ import { TradeInitiateSystem, ID as TradeInitiateSystemID } from "systems/TradeI
 abstract contract TestSetupImports is MudTest {
 // Components vars
 BalanceComponent _BalanceComponent;
+BatteryCapacityComponent _BatteryCapacityComponent;
+BatteryChargeComponent _BatteryChargeComponent;
+BatteryLastChargeComponent _BatteryLastChargeComponent;
 BlockLastComponent _BlockLastComponent;
 CoinComponent _CoinComponent;
 ExitsComponent _ExitsComponent;
@@ -112,6 +122,7 @@ IndexItemComponent _IndexItemComponent;
 IndexModifierComponent _IndexModifierComponent;
 IndexPetComponent _IndexPetComponent;
 IsInventoryComponent _IsInventoryComponent;
+IsFoodComponent _IsFoodComponent;
 IsListingComponent _IsListingComponent;
 IsMerchantComponent _IsMerchantComponent;
 IsModifierComponent _IsModifierComponent;
@@ -143,6 +154,7 @@ TimeLastActionComponent _TimeLastActionComponent;
 TimeStartComponent _TimeStartComponent;
 
 // System vars
+InitSystem _InitSystem;
 ERC721PetSystem _ERC721PetSystem;
 ListingBuySystem _ListingBuySystem;
 ListingSellSystem _ListingSellSystem;
@@ -156,6 +168,7 @@ ProductionCollectSystem _ProductionCollectSystem;
 ProductionStartSystem _ProductionStartSystem;
 ProductionStopSystem _ProductionStopSystem;
 PetMetadataSystem _PetMetadataSystem;
+PetFoodSystem _PetFoodSystem;
 TradeAcceptSystem _TradeAcceptSystem;
 RoomCreateSystem _RoomCreateSystem;
 TradeAddToSystem _TradeAddToSystem;
@@ -167,6 +180,9 @@ function setUp() public virtual override {
 super.setUp();
 
 _BalanceComponent = BalanceComponent(component(BalanceComponentID));
+_BatteryCapacityComponent = BatteryCapacityComponent(component(BatteryCapacityComponentID));
+_BatteryChargeComponent = BatteryChargeComponent(component(BatteryChargeComponentID));
+_BatteryLastChargeComponent = BatteryLastChargeComponent(component(BatteryLastChargeComponentID));
 _BlockLastComponent = BlockLastComponent(component(BlockLastComponentID));
 _CoinComponent = CoinComponent(component(CoinComponentID));
 _ExitsComponent = ExitsComponent(component(ExitsComponentID));
@@ -185,6 +201,7 @@ _IndexItemComponent = IndexItemComponent(component(IndexItemComponentID));
 _IndexModifierComponent = IndexModifierComponent(component(IndexModifierComponentID));
 _IndexPetComponent = IndexPetComponent(component(IndexPetComponentID));
 _IsInventoryComponent = IsInventoryComponent(component(IsInventoryComponentID));
+_IsFoodComponent = IsFoodComponent(component(IsFoodComponentID));
 _IsListingComponent = IsListingComponent(component(IsListingComponentID));
 _IsMerchantComponent = IsMerchantComponent(component(IsMerchantComponentID));
 _IsModifierComponent = IsModifierComponent(component(IsModifierComponentID));
@@ -215,6 +232,7 @@ _StorageSizeComponent = StorageSizeComponent(component(StorageSizeComponentID));
 _TimeLastActionComponent = TimeLastActionComponent(component(TimeLastActionComponentID));
 _TimeStartComponent = TimeStartComponent(component(TimeStartComponentID));
 
+_InitSystem = InitSystem(system(InitSystemID));
 _ERC721PetSystem = ERC721PetSystem(system(ERC721PetSystemID));
 _ListingBuySystem = ListingBuySystem(system(ListingBuySystemID));
 _ListingSellSystem = ListingSellSystem(system(ListingSellSystemID));
@@ -228,6 +246,7 @@ _ProductionCollectSystem = ProductionCollectSystem(system(ProductionCollectSyste
 _ProductionStartSystem = ProductionStartSystem(system(ProductionStartSystemID));
 _ProductionStopSystem = ProductionStopSystem(system(ProductionStopSystemID));
 _PetMetadataSystem = PetMetadataSystem(system(PetMetadataSystemID));
+_PetFoodSystem = PetFoodSystem(system(PetFoodSystemID));
 _TradeAcceptSystem = TradeAcceptSystem(system(TradeAcceptSystemID));
 _RoomCreateSystem = RoomCreateSystem(system(RoomCreateSystemID));
 _TradeAddToSystem = TradeAddToSystem(system(TradeAddToSystemID));

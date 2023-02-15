@@ -4,11 +4,12 @@ pragma solidity ^0.8.0;
 import { IComponent } from "solecs/interfaces/IComponent.sol";
 import { IUint256Component as IUintComp } from "solecs/interfaces/IUint256Component.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
-import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
-import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById, entityToAddress, addressToEntity } from "solecs/utils.sol";
 import { LibString } from "solady/utils/LibString.sol";
 
+import { BatteryCapacityComponent, ID as BatteryCapacityCompID } from "components/BatteryCapacityComponent.sol";
+import { BatteryChargeComponent, ID as BatteryChargeCompID } from "components/BatteryChargeComponent.sol";
+import { BatteryLastChargeComponent, ID as BatteryLastChargeCompID } from "components/BatteryLastChargeComponent.sol";
 import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComponent.sol";
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
@@ -18,6 +19,8 @@ import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComp
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { StorageSizeComponent, ID as StorSizeCompID } from "components/StorageSizeComponent.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
+
+uint256 constant BATT_CHARGE = 150;
 
 library LibPet {
   /////////////////
@@ -40,6 +43,9 @@ library LibPet {
     IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
     IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
     MediaURIComponent(getAddressById(components, MediaURICompID)).set(id, uri);
+    BatteryCapacityComponent(getAddressById(components, BatteryCapacityCompID)).set(id, BATT_CHARGE);
+    BatteryChargeComponent(getAddressById(components, BatteryChargeCompID)).set(id, BATT_CHARGE);
+    BatteryLastChargeComponent(getAddressById(components, BatteryLastChargeCompID)).set(id, block.timestamp);
     NameComponent(getAddressById(components, NameCompID)).set(
       id, LibString.concat("kamigotchi ", LibString.toString(index))
     );

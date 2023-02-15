@@ -19,6 +19,9 @@ export function createAdminAPI(systems: any) {
 
     createPlayerAPI(systems).ERC721.mint('0x7681A73aed06bfb648a5818B978fb018019F6900');
 
+    // init general, only food for now
+    systems["system.Init"].executeTyped();
+
     // TODO: can only set listings after know merchant IDs, how to address this?
   }
 
