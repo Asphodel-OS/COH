@@ -34,6 +34,7 @@
     "ethers": "^5.7.2",
     "mobx": "^6.7.0",
     "mobx-react-lite": "^3.4.0",
+    "mqtt": "^4.3.7",
     "nice-grpc": "^2.0.1",
     "nice-grpc-web": "^2.0.1",
     "parcel": "^2.8.0",

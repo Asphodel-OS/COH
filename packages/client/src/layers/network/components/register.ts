@@ -66,7 +66,7 @@ export function createComponents(world: any) {
     TimeStart: defineNumberComponent(world, { id: "TimeStart", metadata: { contractId: "component.TimeStart" } }),
 
 
-    // speecial
+    // speeecial
     LoadingState: defineLoadingStateComponent(world),
     MediaURI: defineStringComponent(world, { id: "MediaURI", metadata: { contractId: "component.MediaURI" } }),
     Name: defineStringComponent(world, { id: "Name", metadata: { contractId: "component.Name" } }),

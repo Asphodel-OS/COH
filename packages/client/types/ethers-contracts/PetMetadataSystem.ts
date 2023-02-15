@@ -30,6 +30,7 @@ import type {
 export interface PetMetadataSystemInterface extends utils.Interface {
   functions: {
     "_getBaseTraits(uint256)": FunctionFragment;
+    "_getBattery(uint256)": FunctionFragment;
     "_setMaxElements(uint256[])": FunctionFragment;
     "_setRevealed(uint256,string)": FunctionFragment;
     "execute(bytes)": FunctionFragment;
@@ -42,6 +43,7 @@ export interface PetMetadataSystemInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "_getBaseTraits"
+      | "_getBattery"
       | "_setMaxElements"
       | "_setRevealed"
       | "execute"
@@ -53,6 +55,10 @@ export interface PetMetadataSystemInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "_getBaseTraits",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_getBattery",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
@@ -83,6 +89,10 @@ export interface PetMetadataSystemInterface extends utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "_getBaseTraits",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_getBattery",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -156,6 +166,11 @@ export interface PetMetadataSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    _getBattery(
+      entityID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     _setMaxElements(
       max: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -195,6 +210,11 @@ export interface PetMetadataSystem extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  _getBattery(
+    entityID: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   _setMaxElements(
     max: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -230,6 +250,11 @@ export interface PetMetadataSystem extends BaseContract {
 
   callStatic: {
     _getBaseTraits(
+      entityID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    _getBattery(
       entityID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
@@ -285,6 +310,11 @@ export interface PetMetadataSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    _getBattery(
+      entityID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     _setMaxElements(
       max: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -321,6 +351,11 @@ export interface PetMetadataSystem extends BaseContract {
 
   populateTransaction: {
     _getBaseTraits(
+      entityID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    _getBattery(
       entityID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
