@@ -11,7 +11,7 @@ export function registerChatButton() {
     {
       colStart: 87,
       colEnd: 99,
-      rowStart: 65,
+      rowStart: 76,
       rowEnd: 84,
     },
     (layers) => of(layers),

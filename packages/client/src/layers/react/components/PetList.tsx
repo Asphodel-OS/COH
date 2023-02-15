@@ -2,10 +2,13 @@ import React from 'react';
 import { map, merge } from 'rxjs';
 import styled, { keyframes } from 'styled-components';
 import { EntityID, EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } from "@latticexyz/recs";
-
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
 import './font.css';
+import pompom from '../../../public/img/pompom.png'
+import gakki from '../../../public/img/gakki.png'
+import ribbon from '../../../public/img/ribbon.png'
+import gum from '../../../public/img/gum.png'
 
 export function registerPetList() {
   registerUIComponent(
@@ -99,9 +102,40 @@ export function registerPetList() {
       return (
         <ModalWrapper id="petlist_modal">
           <ModalContent>
-            <TypeHeading>
-              Your Kami
-            </TypeHeading>
+            <ConsumableGrid>
+              <CellOne>
+                <CellGrid>
+                  <Icon src={pompom} />
+                    <ItemNumber>
+                      0
+                    </ItemNumber>
+                </CellGrid>
+              </CellOne>
+              <CellTwo>
+                <CellGrid>
+                  <Icon src={gakki} />
+                  <ItemNumber>
+                    0
+                  </ItemNumber>
+                </CellGrid>
+              </CellTwo>
+              <CellThree>
+                <CellGrid>
+                  <Icon src={ribbon} />
+                  <ItemNumber>
+                    0
+                  </ItemNumber>
+                </CellGrid>
+              </CellThree>
+              <CellFour>
+                <CellGrid>
+                  <Icon src={gum} />
+                  <ItemNumber>
+                    0
+                  </ItemNumber>
+                </CellGrid>
+              </CellFour>
+            </ConsumableGrid>
             <KamiBox>
               <KamiImage src="https://i.imgur.com/JkEsu5f.gif" />
               <KamiFacts>
@@ -221,4 +255,61 @@ const KamiImage = styled.img`
   margin: 0px;
   padding: 0px;
   grid-column: 1 / span 1;
+`;
+
+const ConsumableGrid = styled.div`
+  display: grid;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+`;
+
+const CellGrid = styled.div`
+  display: grid;
+  border-style: solid;
+  border-width: 0px;
+  border-color: black;
+`;
+
+
+const CellOne = styled.div`
+  grid-column: 1;
+  border-style: solid;
+  border-width: 0px 2px 0px 0px;
+  border-color: black;
+`;
+
+const CellTwo = styled.div`
+  grid-column: 2;
+  border-style: solid;
+  border-width: 0px 2px 0px 0px;
+  border-color: black;
+`;
+
+const CellThree = styled.div`
+  grid-column: 3;
+  border-style: solid;
+  border-width: 0px 2px 0px 0px;
+  border-color: black;
+`;
+
+const CellFour = styled.div`
+  grid-column: 4;
+`;
+
+const Icon = styled.img`
+  grid-column: 1;
+  height: 40px;
+  padding: 5px;
+  border-style: solid;
+  border-width: 0px 2px 0px 0px;
+  border-color: black;
+`;
+
+const ItemNumber = styled.p`
+  font-size: 24px;
+  color: #333;
+  font-family: Pixel;
+  grid-column: 2;
+  padding: 5px
 `;

@@ -11,8 +11,8 @@ export function registerMyKamiButton() {
     {
       colStart: 87,
       colEnd: 99,
-      rowStart: 76,
-      rowEnd: 84,
+      rowStart: 87,
+      rowEnd: 99,
     },
     (layers) => of(layers),
     () => {
