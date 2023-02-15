@@ -13,18 +13,19 @@ contract OperatorSetSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public returns (bytes memory) {
-    address newOperator = abi.decode(arguments, (address));
+    (address newOperator, string memory name) = abi.decode(arguments, (address, string));
     uint256 operatorID = LibOperator.getByOwner(components, msg.sender);
 
     if (operatorID == 0) {
       operatorID = LibOperator.create(world, components, newOperator, msg.sender);
     }
 
+    LibOperator.setName(components, operatorID, name);
     LibOperator.setAddress(components, operatorID, msg.sender);
     return abi.encode(operatorID);
   }
 
-  function executeTyped(address operator) public returns (bytes memory) {
-    return execute(abi.encode(operator));
+  function executeTyped(address operator, string memory name) public returns (bytes memory) {
+    return execute(abi.encode(operator, name));
   }
 }
