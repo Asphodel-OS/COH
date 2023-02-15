@@ -29,6 +29,16 @@ export function createRoomSystem(network: NetworkLayer, phaser: PhaserLayer) {
     if (characterEntityNumber == update.entity) {
       const currentRoom = getCurrentRoom(Location, update.entity);
 
+      myMain.interactiveObjects.forEach((object: any) => {
+        try {
+          object.removeInteractive();
+          object.removeFromDisplayList();
+        } catch (e) {
+          // Ignore objects that have already had their interactivity removed
+        }
+      });
+      myMain.interactiveObjects = [];
+
       myMain.rooms![currentRoom].create(myMain);
     }
   });

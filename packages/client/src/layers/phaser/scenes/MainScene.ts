@@ -14,6 +14,8 @@ export function defineMainScene() {
       preload: (scene: PhaserScene) => {
         scene.rooms = [room001(), room001(), room002(), room003()];
 
+        scene.interactiveObjects = [];
+
         scene.load.audio('m_1', room1Music);
         scene.load.audio('m_2', room2Music);
         scene.load.audio('m_3', room3Music);
