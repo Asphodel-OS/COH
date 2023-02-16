@@ -22,7 +22,6 @@ import "libraries/LibRoom.sol";
 import "libraries/LibTrade.sol";
 
 // Components
-import { AddressPlayerComponent, ID as AddressPlayerComponentID } from "components/AddressPlayerComponent.sol";
 import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
 import { BatteryCapacityComponent, ID as BatteryCapacityComponentID } from "components/BatteryCapacityComponent.sol";
 import { BatteryChargeComponent, ID as BatteryChargeComponentID } from "components/BatteryChargeComponent.sol";
@@ -64,6 +63,8 @@ import { ModifierStatusComponent, ID as ModifierStatusComponentID } from "compon
 import { ModifierTypeComponent, ID as ModifierTypeComponentID } from "components/ModifierTypeComponent.sol";
 import { ModifierValueComponent, ID as ModifierValueComponentID } from "components/ModifierValueComponent.sol";
 import { NameComponent, ID as NameComponentID } from "components/NameComponent.sol";
+import { NumCoresComponent, ID as NumCoresComponentID } from "components/NumCoresComponent.sol";
+import { AddressPlayerComponent, ID as AddressPlayerComponentID } from "components/AddressPlayerComponent.sol";
 import { PriceBuyComponent, ID as PriceBuyComponentID } from "components/PriceBuyComponent.sol";
 import { PriceSellComponent, ID as PriceSellComponentID } from "components/PriceSellComponent.sol";
 import { PrototypeComponent, ID as PrototypeComponentID } from "components/PrototypeComponent.sol";
@@ -75,14 +76,14 @@ import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "compon
 import { TimeStartComponent, ID as TimeStartComponentID } from "components/TimeStartComponent.sol";
 
 // Systems
-import { _InitSystem, ID as _InitSystemID } from "systems/_InitSystem.sol";
-import { _ListingSetSystem, ID as _ListingSetSystemID } from "systems/_ListingSetSystem.sol";
-import { _MerchantCreateSystem, ID as _MerchantCreateSystemID } from "systems/_MerchantCreateSystem.sol";
-import { _NodeCreateSystem, ID as _NodeCreateSystemID } from "systems/_NodeCreateSystem.sol";
-import { _RoomCreateSystem, ID as _RoomCreateSystemID } from "systems/_RoomCreateSystem.sol";
+import { InitSystem, ID as InitSystemID } from "systems/InitSystem.sol";
 import { ERC721PetSystem, ID as ERC721PetSystemID } from "systems/ERC721PetSystem.sol";
 import { ListingBuySystem, ID as ListingBuySystemID } from "systems/ListingBuySystem.sol";
 import { ListingSellSystem, ID as ListingSellSystemID } from "systems/ListingSellSystem.sol";
+import { ListingSetSystem, ID as ListingSetSystemID } from "systems/ListingSetSystem.sol";
+import { _ListingSetSystem, ID as _ListingSetSystemID } from "systems/_ListingSetSystem.sol";
+import { MerchantCreateSystem, ID as MerchantCreateSystemID } from "systems/MerchantCreateSystem.sol";
+import { NodeCreateSystem, ID as NodeCreateSystemID } from "systems/NodeCreateSystem.sol";
 import { OperatorMoveSystem, ID as OperatorMoveSystemID } from "systems/OperatorMoveSystem.sol";
 import { OperatorSetSystem, ID as OperatorSetSystemID } from "systems/OperatorSetSystem.sol";
 import { PetSetOperatorSystem, ID as PetSetOperatorSystemID } from "systems/PetSetOperatorSystem.sol";
@@ -92,6 +93,7 @@ import { ProductionStopSystem, ID as ProductionStopSystemID } from "systems/Prod
 import { PetMetadataSystem, ID as PetMetadataSystemID } from "systems/PetMetadataSystem.sol";
 import { PetFoodSystem, ID as PetFoodSystemID } from "systems/PetFoodSystem.sol";
 import { TradeAcceptSystem, ID as TradeAcceptSystemID } from "systems/TradeAcceptSystem.sol";
+import { RoomCreateSystem, ID as RoomCreateSystemID } from "systems/RoomCreateSystem.sol";
 import { TradeAddToSystem, ID as TradeAddToSystemID } from "systems/TradeAddToSystem.sol";
 import { TradeCancelSystem, ID as TradeCancelSystemID } from "systems/TradeCancelSystem.sol";
 import { TradeConfirmSystem, ID as TradeConfirmSystemID } from "systems/TradeConfirmSystem.sol";
@@ -101,7 +103,6 @@ import { OperatorNameSystem, ID as OperatorNameSystemID } from "systems/Operator
 
 abstract contract TestSetupImports is MudTest {
 // Components vars
-AddressPlayerComponent _AddressPlayerComponent;
 BalanceComponent _BalanceComponent;
 BatteryCapacityComponent _BatteryCapacityComponent;
 BatteryChargeComponent _BatteryChargeComponent;
@@ -143,6 +144,8 @@ ModifierStatusComponent _ModifierStatusComponent;
 ModifierTypeComponent _ModifierTypeComponent;
 ModifierValueComponent _ModifierValueComponent;
 NameComponent _NameComponent;
+NumCoresComponent _NumCoresComponent;
+AddressPlayerComponent _AddressPlayerComponent;
 PriceBuyComponent _PriceBuyComponent;
 PriceSellComponent _PriceSellComponent;
 PrototypeComponent _PrototypeComponent;
@@ -154,14 +157,14 @@ TimeLastActionComponent _TimeLastActionComponent;
 TimeStartComponent _TimeStartComponent;
 
 // System vars
-_InitSystem __InitSystem;
-_ListingSetSystem __ListingSetSystem;
-_MerchantCreateSystem __MerchantCreateSystem;
-_NodeCreateSystem __NodeCreateSystem;
-_RoomCreateSystem __RoomCreateSystem;
+InitSystem _InitSystem;
 ERC721PetSystem _ERC721PetSystem;
 ListingBuySystem _ListingBuySystem;
 ListingSellSystem _ListingSellSystem;
+ListingSetSystem _ListingSetSystem;
+_ListingSetSystem __ListingSetSystem;
+MerchantCreateSystem _MerchantCreateSystem;
+NodeCreateSystem _NodeCreateSystem;
 OperatorMoveSystem _OperatorMoveSystem;
 OperatorSetSystem _OperatorSetSystem;
 PetSetOperatorSystem _PetSetOperatorSystem;
@@ -171,6 +174,7 @@ ProductionStopSystem _ProductionStopSystem;
 PetMetadataSystem _PetMetadataSystem;
 PetFoodSystem _PetFoodSystem;
 TradeAcceptSystem _TradeAcceptSystem;
+RoomCreateSystem _RoomCreateSystem;
 TradeAddToSystem _TradeAddToSystem;
 TradeCancelSystem _TradeCancelSystem;
 TradeConfirmSystem _TradeConfirmSystem;
@@ -181,7 +185,6 @@ OperatorNameSystem _OperatorNameSystem;
 function setUp() public virtual override {
 super.setUp();
 
-_AddressPlayerComponent = AddressPlayerComponent(component(AddressPlayerComponentID));
 _BalanceComponent = BalanceComponent(component(BalanceComponentID));
 _BatteryCapacityComponent = BatteryCapacityComponent(component(BatteryCapacityComponentID));
 _BatteryChargeComponent = BatteryChargeComponent(component(BatteryChargeComponentID));
@@ -223,6 +226,8 @@ _ModifierStatusComponent = ModifierStatusComponent(component(ModifierStatusCompo
 _ModifierTypeComponent = ModifierTypeComponent(component(ModifierTypeComponentID));
 _ModifierValueComponent = ModifierValueComponent(component(ModifierValueComponentID));
 _NameComponent = NameComponent(component(NameComponentID));
+_NumCoresComponent = NumCoresComponent(component(NumCoresComponentID));
+_AddressPlayerComponent = AddressPlayerComponent(component(AddressPlayerComponentID));
 _PriceBuyComponent = PriceBuyComponent(component(PriceBuyComponentID));
 _PriceSellComponent = PriceSellComponent(component(PriceSellComponentID));
 _PrototypeComponent = PrototypeComponent(component(PrototypeComponentID));
@@ -233,14 +238,14 @@ _StorageSizeComponent = StorageSizeComponent(component(StorageSizeComponentID));
 _TimeLastActionComponent = TimeLastActionComponent(component(TimeLastActionComponentID));
 _TimeStartComponent = TimeStartComponent(component(TimeStartComponentID));
 
-__InitSystem = _InitSystem(system(_InitSystemID));
-__ListingSetSystem = _ListingSetSystem(system(_ListingSetSystemID));
-__MerchantCreateSystem = _MerchantCreateSystem(system(_MerchantCreateSystemID));
-__NodeCreateSystem = _NodeCreateSystem(system(_NodeCreateSystemID));
-__RoomCreateSystem = _RoomCreateSystem(system(_RoomCreateSystemID));
+_InitSystem = InitSystem(system(InitSystemID));
 _ERC721PetSystem = ERC721PetSystem(system(ERC721PetSystemID));
 _ListingBuySystem = ListingBuySystem(system(ListingBuySystemID));
 _ListingSellSystem = ListingSellSystem(system(ListingSellSystemID));
+_ListingSetSystem = ListingSetSystem(system(ListingSetSystemID));
+__ListingSetSystem = _ListingSetSystem(system(_ListingSetSystemID));
+_MerchantCreateSystem = MerchantCreateSystem(system(MerchantCreateSystemID));
+_NodeCreateSystem = NodeCreateSystem(system(NodeCreateSystemID));
 _OperatorMoveSystem = OperatorMoveSystem(system(OperatorMoveSystemID));
 _OperatorSetSystem = OperatorSetSystem(system(OperatorSetSystemID));
 _PetSetOperatorSystem = PetSetOperatorSystem(system(PetSetOperatorSystemID));
@@ -250,6 +255,7 @@ _ProductionStopSystem = ProductionStopSystem(system(ProductionStopSystemID));
 _PetMetadataSystem = PetMetadataSystem(system(PetMetadataSystemID));
 _PetFoodSystem = PetFoodSystem(system(PetFoodSystemID));
 _TradeAcceptSystem = TradeAcceptSystem(system(TradeAcceptSystemID));
+_RoomCreateSystem = RoomCreateSystem(system(RoomCreateSystemID));
 _TradeAddToSystem = TradeAddToSystem(system(TradeAddToSystemID));
 _TradeCancelSystem = TradeCancelSystem(system(TradeCancelSystemID));
 _TradeConfirmSystem = TradeConfirmSystem(system(TradeConfirmSystemID));
