@@ -190,7 +190,7 @@ export function registerMerchantWindow() {
             <Button
               style={{ pointerEvents: "auto" }}
               onClick={() => sell(listing, 1)}
-            >buy</Button>
+            >sell</Button>
           </li>
         ));
 
