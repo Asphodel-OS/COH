@@ -5,7 +5,8 @@ import { PhaserScene, Room } from '../types';
 
 import room1Music from '../../../public/sound/music/corridor.mp3';
 import room2Music from '../../../public/sound/music/landfill2.mp3';
-import room3Music from '../../../public/sound/music/shopkeep_song.mp3';
+import room3Music from '../../../public/sound/music/corridor.mp3';
+import room4Music from '../../../public/sound/music/shopkeep_song.mp3';
 
 export function defineMainScene() {
   return {
@@ -19,6 +20,7 @@ export function defineMainScene() {
         scene.load.audio('m_1', room1Music);
         scene.load.audio('m_2', room2Music);
         scene.load.audio('m_3', room3Music);
+        scene.load.audio('m_4', room4Music);
 
         scene.rooms?.forEach((room: Room) => {
           if (room == undefined) return;

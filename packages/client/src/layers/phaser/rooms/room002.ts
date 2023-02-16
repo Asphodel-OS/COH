@@ -17,15 +17,6 @@ export function room002() {
         .setScale(scale * 8.3);
 
       const vend = scene.add.rectangle(500, 820, 200, 180);
-      const downArrow = scene.add
-        .image(725, 560, 'arrow')
-        .setScale(1.75)
-        .setRotation(1.5714);
-
-      const rightArrow = scene.add.image(1025, 360, 'arrow').setScale(1.75);
-
-      scene.interactiveObjects.push(changeRoom(downArrow, 1));
-      // scene.interactiveObjects.push(changeRoom(rightArrow, 4));
 
       scene.interactiveObjects.push(
         triggerObjectModal(

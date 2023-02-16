@@ -20,23 +20,6 @@ export function room001() {
       scene.add
         .image(window.innerWidth / 2, window.innerHeight / 2, 'room001')
         .setScale(scale * 8.3);
-
-      const coordinates = getCouchCoordinates(scale);
-
-      const upArrow = scene.add
-        .image(725, 360, 'arrow')
-        .setScale(1.75)
-        .setRotation(4.71239);
-
-      const downArrow = scene.add
-        .image(725, 560, 'arrow')
-        .setScale(1.75)
-        .setRotation(1.5714);
-
-      scene.interactiveObjects.push(changeRoom(upArrow, 3));
-
-      scene.interactiveObjects.push(changeRoom(downArrow, 2));
-
     },
   };
 }
