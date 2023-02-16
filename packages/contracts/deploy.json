@@ -86,16 +86,6 @@
       ]
     },
     {
-      "name": "ListingSetSystem",
-      "writeAccess": [
-        "IsListingComponent",
-        "IdMerchantComponent",
-        "IndexItemComponent",
-        "PriceBuyComponent",
-        "PriceSellComponent"
-      ]
-    },
-    {
       "name": "_ListingSetSystem",
       "writeAccess": [
         "IsListingComponent",
