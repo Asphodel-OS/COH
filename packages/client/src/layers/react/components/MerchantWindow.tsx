@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { map, merge } from "rxjs";
 import { BigNumber } from "ethers";
-import { EntityIndex, Has, HasValue, getComponentValue, runQuery, } from "@latticexyz/recs";
+import { EntityID, EntityIndex, Has, HasValue, getComponentValue, runQuery, } from "@latticexyz/recs";
 
 import { registerUIComponent } from "../engine/store";
 
@@ -121,6 +121,22 @@ export function registerMerchantWindow() {
     // Render
     ({ world, actions, api, data }) => {
       // hide this component if merchant.index == 0
+
+      // starts the production, given character and deposit ids are available
+      const buy = (listing: any, amt: number) => {
+        const actionID = `Buying ${amt} of ${listing.itemType} at ${Date.now()}` as EntityID; // itemType should be replaced with the item's name
+        actions.add({
+          id: actionID,
+          components: {},
+          // on: data.operator.index, // what's the appropriate value here?
+          requirement: () => true,
+          updates: () => [],
+          execute: async () => {
+            return api.listing.buy(listing.id, amt);
+          },
+        });
+      };
+
 
       // Actions to support within trade window:
       // BuyFromListing
