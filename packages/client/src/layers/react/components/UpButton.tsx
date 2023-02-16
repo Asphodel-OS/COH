@@ -18,15 +18,29 @@ export function registerUpButton() {
     (layers) => of(layers),
     () => {
       const {
-        objectData: { description },
-      } = dataStore();
+        network: {
+          network,
+          api: { player: { operator: { move } } },
+          world,
+          actions,
+        },
+      } = window.layers!;
 
       const showMyKami = () => {
         const clickFX = new Audio(clickSound)
         clickFX.play()
-        const modalId = window.document.getElementById('petlist_modal');
-        if (modalId.style.display === 'block') modalId.style.display = 'none';
-        else modalId.style.display = 'block';
+
+        const actionID = `Moving at ${Date.now()}` as EntityID;
+
+        actions.add({
+          id: actionID,
+          components: {},
+          requirement: () => true,
+          updates: () => [],
+          execute: async () => {
+            return move(1);
+          },
+        });
       };
 
       return (

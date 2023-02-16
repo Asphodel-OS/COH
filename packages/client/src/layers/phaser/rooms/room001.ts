@@ -23,13 +23,6 @@ export function room001() {
 
       const coordinates = getCouchCoordinates(scale);
 
-      const couch = scene.add.rectangle(
-        coordinates.x,
-        coordinates.y,
-        coordinates.width,
-        coordinates.height
-      );
-
       const upArrow = scene.add
         .image(725, 360, 'arrow')
         .setScale(1.75)
@@ -44,12 +37,6 @@ export function room001() {
 
       scene.interactiveObjects.push(changeRoom(downArrow, 2));
 
-      scene.interactiveObjects.push(
-        triggerObjectModal(
-          couch,
-          'This is a couch used for testing the item description component.'
-        )
-      );
     },
   };
 }
