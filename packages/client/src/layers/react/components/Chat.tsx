@@ -83,7 +83,6 @@ export function registerChat() {
         const update_mqtt = () => {
           relay.on("message", function (topic: any, rawMessage: any) {
             const message = rawMessage.toString();
-            console.log(message);
             setMessages((messages) => [...messages, { seenAt: Date.now(), message }]);
           });
           botElement?.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
@@ -149,7 +148,6 @@ export function registerChat() {
               </ChatBox>
               <ChatInput style={{ pointerEvents: 'auto'}}
                 type="text"
-                // onClick={() => disableEnableKeyBinds(false)}
                 onKeyDown={(e) => catchKeys(e)}
                 value={chatInput}
                 onChange={(e) => handleChange(e)}
