@@ -4,22 +4,32 @@ export interface DataObject {
   description: string;
 }
 
+export interface RoomExits {
+  up: number;
+  down: number;
+}
+
 export interface StoreState {
   objectData: DataObject;
+  roomExits: RoomExits;
 }
 
 interface StoreActions {
   setObjectData: (data: DataObject) => void;
+  setRoomExits: (data: RoomExits) => void;
 }
 
 export const dataStore = create<StoreState & StoreActions>((set) => {
   const initialState: StoreState = {
     objectData: { description: '' },
+    roomExits: { up: 0, down: 0 },
   };
 
   return {
     ...initialState,
     setObjectData: (data: DataObject) =>
       set((state: StoreState) => ({ ...state, objectData: data })),
+    setRoomExits: (data: RoomExits) =>
+      set((state: StoreState) => ({ ...state, roomExits: data })),
   };
 });
