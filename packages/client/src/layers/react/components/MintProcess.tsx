@@ -92,11 +92,12 @@ const MintProcess = styled.div`
   color: black;
   font-family: Pixel;
   padding: 20px;
+  font-size: 18px;
 `;
 
 const MintSuccess = styled.div`
   display: 'block';
-  font-size: 1.5em;
+  font-size: 18px;
   color: green;
   font-family: Pixel;
   padding: 20px;

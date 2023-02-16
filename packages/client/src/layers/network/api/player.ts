@@ -29,8 +29,8 @@ export function createPlayerAPI(systems: any) {
   // @dev   renames operator, ignoring previous name
   // @param entityID   pet entity
   // @param name       name
-  function nameOperator(petID: BigNumberish, name: string) {
-    return systems["system.OperatorName"].executeTyped(petID, name);
+  function nameOperator(operator: BigNumberish, name: string) {
+    return systems["system.OperatorName"].executeTyped(operator, name);
   }
 
   // @dev sets the operator of an Owner wallet. should be set by Owner wallet

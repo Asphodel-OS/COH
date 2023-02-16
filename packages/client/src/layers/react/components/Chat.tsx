@@ -48,13 +48,14 @@ export function registerChat() {
         return getComponentValue(Name, index)?.value as string;
       }
 
-      return merge(OperatorID.update$).pipe(
+      return merge(IsOperator.update$).pipe(
         map(() => {
           const operatorIndex = Array.from(runQuery([
             Has(IsOperator),
             HasValue(PlayerAddress, { value: network.connectedAddress.get() })
           ]))[0];
-          const chatName = getName(operatorIndex);
+          // const chatName = getName(operatorIndex);
+          const chatName = "You"; // operator name interaction bug, but chat working
           return {
             chatName: chatName
           }
@@ -93,7 +94,7 @@ export function registerChat() {
           postMessage("<[".concat( chatName, "] went offline>"));
           sub.unsubscribe(mqttTopic, function (err: any) {});
         };
-      }, []);
+      }, [chatName]);
 
       const postMessage = useCallback(
         async (input: string) => {
@@ -103,7 +104,7 @@ export function registerChat() {
           setChatInput("");
           botElement?.scrollIntoView({behavior: "smooth", block: "start", inline: "start"})
         },
-        []
+        [chatName]
       );
 
       const catchKeys = (event: React.KeyboardEvent<HTMLInputElement>) => {
