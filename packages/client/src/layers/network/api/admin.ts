@@ -3,19 +3,22 @@ import { createPlayerAPI } from "./player";
 
 export function createAdminAPI(systems: any) {
   function init() {
-    createRoom("room0", 0, [1]);
-    createRoom("room1", 1, [2, 3]);
-    createRoom("room2", 2, [1]);
-    createRoom("room3", 3, [1]);
+    createRoom("deadzone", 0, [1]); // in case we need this
+    createRoom("Quiet Forest", 1, [2]);
+    createRoom("Vending Machine", 2, [1, 3]);
+    createRoom("Corridor", 3, [2, 4]);
+    createRoom("Kami Shop", 4, [3]);
 
-    createNode("room2 node", 2);
-    createNode("room3 node", 3);
+    createNode("Eerie Willow", 1);
+    createNode("Trash Compactor", 2);
+    createNode("Pristine Couch", 3);
+    createNode("Cash Register", 4);
 
-    createMerchant("ugajin", 3);
-    setListing(3, 1, 10, 5);
-    setListing(3, 2, 30, 15);
-    setListing(3, 3, 50, 25);
-    setListing(3, 4, 100, 50);
+    createMerchant("ugajin", 4);
+    setListing(4, 1, 10, 5); // merchant, item index, buy price, sell price
+    setListing(4, 2, 30, 15);
+    setListing(4, 3, 50, 25);
+    setListing(4, 4, 100, 50);
 
     // required to init erc721 registy system, very temporary
     systems["system.ERC721.pet"].init();
