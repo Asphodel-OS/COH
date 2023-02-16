@@ -6,10 +6,10 @@ import { IWorld } from "solecs/interfaces/IWorld.sol";
 
 import { LibMerchant } from "libraries/LibMerchant.sol";
 
-uint256 constant ID = uint256(keccak256("system.MerchantCreate"));
+uint256 constant ID = uint256(keccak256("system._MerchantCreate"));
 
-// MerchantCreateSystem creates or updates a merchant listing from the provided parameters
-contract MerchantCreateSystem is System {
+// _MerchantCreateSystem creates or updates a merchant listing from the provided parameters
+contract _MerchantCreateSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public onlyOwner returns (bytes memory) {

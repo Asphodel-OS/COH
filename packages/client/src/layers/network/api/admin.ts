@@ -28,31 +28,28 @@ export function createAdminAPI(systems: any) {
     // TODO: can only set listings after know merchant IDs, how to address this?
   }
 
-  // @dev creates a merchant with the name at the specified room
+  // @dev creates a merchant with the name at the specified location
   // @param location  room ID
   // @param name      name of the merchant
   // @return uint     (promise) entity ID of the merchant
   function createMerchant(name: string, location: number) {
-    return systems["system.MerchantCreate"].executeTyped(name, location);
+    return systems["system._MerchantCreate"].executeTyped(name, location);
   }
 
   // @dev creates an emission node at the specified location
   // @param name      name of the deposit (exposed in mining modal)
   // @param location  index of the room location
   // @return uint     entity ID of the deposit
-  function createNode(
-    name: string,
-    location: number,
-  ) {
-    return systems["system.NodeCreate"].executeTyped(name, location);
+  function createNode(name: string, location: number) {
+    return systems["system._NodeCreate"].executeTyped(name, location);
   }
 
   // @dev creates a room with name, location and exits. cannot overwrite room at location
   function createRoom(name: string, location: number, exits: number[]) {
-    return systems["system.RoomCreate"].executeTyped(name, location, exits);
+    return systems["system._RoomCreate"].executeTyped(name, location, exits);
   }
 
-  // @dev allows a character to sell an item through a merchant listing entity
+  // @dev sets the prices for the merchant at the specified location
   // @param location    location of the merchant
   // @param itemIndex   index of item to list
   // @param buyPrice    sell price of item listing (pass in 0 to leave blank)

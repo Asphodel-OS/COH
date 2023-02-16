@@ -48,8 +48,12 @@ abstract contract SetupTemplate is TestSetupImports {
   /***********************
    *   room create
    ************************/
-   function _roomCreate(string memory name, uint256 location, uint256[] memory exits) internal {
+  function _roomCreate(
+    string memory name,
+    uint256 location,
+    uint256[] memory exits
+  ) internal {
     vm.prank(deployer);
-    _RoomCreateSystem.executeTyped(name, location, exits);
-   }
+    __RoomCreateSystem.executeTyped(name, location, exits);
+  }
 }

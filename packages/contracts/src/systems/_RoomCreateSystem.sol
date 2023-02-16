@@ -7,10 +7,10 @@ import { getAddressById } from "solecs/utils.sol";
 
 import { LibRoom } from "libraries/LibRoom.sol";
 
-uint256 constant ID = uint256(keccak256("system.RoomCreate"));
+uint256 constant ID = uint256(keccak256("system._RoomCreate"));
 
-// RoomCreateSystem creates a mining node as specified and returns the entity id
-contract RoomCreateSystem is System {
+// _RoomCreateSystem creates a mining node as specified and returns the entity id
+contract _RoomCreateSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public onlyOwner returns (bytes memory) {
@@ -24,11 +24,11 @@ contract RoomCreateSystem is System {
     return abi.encode(LibRoom.create(world, components, name, location, exits));
   }
 
-  function executeTyped(string memory name, uint256 location, uint256[] memory exits)
-    public
-    onlyOwner
-    returns (bytes memory)
-  {
+  function executeTyped(
+    string memory name,
+    uint256 location,
+    uint256[] memory exits
+  ) public onlyOwner returns (bytes memory) {
     return execute(abi.encode(name, location, exits));
   }
 }
