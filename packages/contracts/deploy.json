@@ -231,13 +231,13 @@
       ]
     },
     {
-      "name": "NamePetSystem",
+      "name": "PetNameSystem",
       "writeAccess": [
         "NameComponent"
       ]
     },
     {
-      "name": "NameOperatorSystem",
+      "name": "OperatorNameSystem",
       "writeAccess": [
         "NameComponent"
       ]

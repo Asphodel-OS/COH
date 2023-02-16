@@ -14,7 +14,7 @@ export function createPlayerAPI(systems: any) {
   // @param entityID   pet entity
   // @param name       name
   function namePet(petID: BigNumberish, name: string) {
-    return systems["system.NamePet"].executeTyped(petID, name);
+    return systems["system.PetName"].executeTyped(petID, name);
   }
 
   /*********************
@@ -26,19 +26,19 @@ export function createPlayerAPI(systems: any) {
     return systems["system.OperatorMove"].executeTyped(location);
   }
 
+  // @dev   renames operator, ignoring previous name
+  // @param entityID   pet entity
+  // @param name       name
+  function nameOperator(petID: BigNumberish, name: string) {
+    return systems["system.OperatorName"].executeTyped(petID, name);
+  }
+
   // @dev sets the operator of an Owner wallet. should be set by Owner wallet
   // @param operator  address of the operator wallet
   // @param name      name of the account
   function setOperator(operator: BigNumberish, name: string) {
     return systems["system.OperatorSet"].executeTyped(operator, name);
   }
-
-  // @dev   renames operator, ignoring previous name
-  // @param entityID   pet entity
-  // @param name       name
-  function nameOperator(petID: BigNumberish, name: string) {
-    return systems["system.NamePet"].executeTyped(petID, name);
-  }  
 
   /*********************
    *     Listings
@@ -134,8 +134,8 @@ export function createPlayerAPI(systems: any) {
     },
     operator: {
       move: moveOperator,
+      name: nameOperator,
       set: setOperator,
-      name: nameOperator
     },
     production: {
       collect: collectProduction,
