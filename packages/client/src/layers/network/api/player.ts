@@ -43,7 +43,6 @@ export function createPlayerAPI(systems: any) {
   /*********************
    *     Listings
    *********************/
-  // TODO: update these once listing logic is changed to utilize operator
 
   // @dev allows a character to buy an item through a merchant listing entity
   // @param listingID    entity ID of listing

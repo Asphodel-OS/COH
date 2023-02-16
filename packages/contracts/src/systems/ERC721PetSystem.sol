@@ -31,8 +31,9 @@ contract ERC721PetSystem is System, ERC721 {
 
   // temporary init function to prevent circular dependency
   bool inited;
+
   function init() public {
-    if(!inited) {
+    if (!inited) {
       LibPetTraits.placeholderRegistry(components, world);
       inited = true;
     }
@@ -52,19 +53,17 @@ contract ERC721PetSystem is System, ERC721 {
       operatorID = LibOperator.create(world, components, to, to);
     }
 
-    // TODO: set stats based on the generated traits of the pet.
     uint256 petID = LibPet.create(world, components, to, operatorID, totalSupply, UNREVEALED_URI);
     LibPetTraits.placeholderTraits(components, world, petID);
-    // LibPet.setStats(components, petID);
+    LibPet.setStats(components, petID);
 
     _mint(to, totalSupply); // should we run this at the beginning or end?
     return petID;
   }
 
   function tokenURI(uint256 tokenID) public view override returns (string memory) {
-    return PetMetadataSystem(
-      getAddressById(world.systems(), PetMetadataSystemID)
-    ).tokenURI(tokenID);
+    return
+      PetMetadataSystem(getAddressById(world.systems(), PetMetadataSystemID)).tokenURI(tokenID);
   }
 
   /*********************

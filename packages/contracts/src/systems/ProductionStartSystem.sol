@@ -24,9 +24,9 @@ contract ProductionStartSystem is System {
 
     require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
     require(Utils.sameRoom(components, operatorID, nodeID), "Node: must be in room");
-    require(LibPet.getActiveProduction(components, petID) == 0, "Pet: active production exists");
+    require(!LibPet.isProducing(components, petID), "Pet: already harvesting");
 
-    uint256 id = LibProduction.getForPet(components, petID);
+    uint256 id = LibPet.getProduction(components, petID);
     if (id == 0) {
       id = LibProduction.create(world, components, nodeID, petID);
     } else {

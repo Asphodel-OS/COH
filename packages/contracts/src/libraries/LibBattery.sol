@@ -11,9 +11,9 @@ import { LibString } from "solady/utils/LibString.sol";
 
 import { LibRegistry } from "libraries/LibRegistry.sol";
 
-import { BatteryCapacityComponent, ID as BatteryCapacityCompID } from "components/BatteryCapacityComponent.sol";
-import { BatteryChargeComponent, ID as BatteryChargeCompID } from "components/BatteryChargeComponent.sol";
-import { BatteryLastChargeComponent, ID as BatteryLastChargeCompID } from "components/BatteryLastChargeComponent.sol";
+import { CapacityComponent, ID as CapacityCompID } from "components/CapacityComponent.sol";
+import { ChargeComponent, ID as ChargeCompID } from "components/ChargeComponent.sol";
+import { TimeLastActionComponent, ID as TimeLastActionCompID } from "components/TimeLastActionComponent.sol";
 import { BalanceComponent, ID as BalanceCompID } from "components/BalanceComponent.sol";
 import { IsFoodComponent, ID as IsFoodCompID } from "components/IsFoodComponent.sol";
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
@@ -21,7 +21,7 @@ import { ID as IndexItemCompID } from "components/IndexItemComponent.sol";
 
 // at 150 points, 25h irl. shorten for demo
 // uint256 constant epoch = 10 minutes;
-uint256 constant epoch = 1 seconds; // 2.5 min cycle for demo 
+uint256 constant epoch = 1 seconds; // 2.5 min cycle for demo
 
 // library for all things battery related! interwoven with LibPet
 library LibBattery {
@@ -54,7 +54,11 @@ library LibBattery {
   }
 
   // eat food, update charge
-  function chargeBat(IUintComp components, uint256 petID, uint256 toAdd) internal {
+  function chargeBat(
+    IUintComp components,
+    uint256 petID,
+    uint256 toAdd
+  ) internal {
     uint256 capacity = getCapacity(components, petID);
     uint256 cur = cal(components, petID);
 
@@ -80,67 +84,57 @@ library LibBattery {
   ) internal {
     uint256 entityID = world.getUniqueEntityId();
 
-    IsFoodComponent(
-      getAddressById(components, IsFoodCompID)
-    ).set(entityID);
-    BalanceComponent(
-      getAddressById(components, BalanceCompID)
-    ).set(entityID, value);
-    NameComponent(
-      getAddressById(components, NameCompID)
-    ).set(entityID, name);
+    IsFoodComponent(getAddressById(components, IsFoodCompID)).set(entityID);
+    BalanceComponent(getAddressById(components, BalanceCompID)).set(entityID, value);
+    NameComponent(getAddressById(components, NameCompID)).set(entityID, name);
 
     LibRegistry.add(components, IndexItemCompID, index, entityID);
   }
 
-  function getFoodValue(
-    IUintComp components,
-    uint256 index
-  ) internal view returns (uint256) {
+  function getFoodValue(IUintComp components, uint256 index) internal view returns (uint256) {
     // no additional check for isFood, but does not affect
     uint256 entityID = LibRegistry.get(components, IndexItemCompID, index);
-    return BalanceComponent(
-      getAddressById(components, BalanceCompID)
-    ).getValue(entityID);
+    return BalanceComponent(getAddressById(components, BalanceCompID)).getValue(entityID);
   }
 
   ///////////////////
   // GETTERS
   function getCapacity(IUintComp components, uint256 petID) internal view returns (uint256) {
-    return BatteryCapacityComponent(
-      getAddressById(components, BatteryCapacityCompID)
-    ).getValue(petID);
+    return CapacityComponent(getAddressById(components, CapacityCompID)).getValue(petID);
   }
-  
+
   function getCharge(IUintComp components, uint256 petID) internal view returns (uint256) {
-    return BatteryChargeComponent(
-      getAddressById(components, BatteryChargeCompID)
-    ).getValue(petID);
+    return ChargeComponent(getAddressById(components, ChargeCompID)).getValue(petID);
   }
-  
+
   function getLastCharge(IUintComp components, uint256 petID) internal view returns (uint256) {
-    return BatteryLastChargeComponent(
-      getAddressById(components, BatteryLastChargeCompID)
-    ).getValue(petID);
+    return
+      TimeLastActionComponent(getAddressById(components, TimeLastActionCompID)).getValue(petID);
   }
 
   ///////////////////
   // SETTERS
-  function setCapacity(IUintComp components, uint256 petID, uint256 value) internal {
-    BatteryCapacityComponent(
-      getAddressById(components, BatteryCapacityCompID)
-    ).set(petID, value);
-  } 
-  
-  function setCharge(IUintComp components, uint256 petID, uint256 value) internal {
-    BatteryChargeComponent(
-      getAddressById(components, BatteryChargeCompID)
-    ).set(petID, value);
-  } 
-  
-  function setLastCharge(IUintComp components, uint256 petID, uint256 value) internal {
-    BatteryLastChargeComponent(
-      getAddressById(components, BatteryLastChargeCompID)
-    ).set(petID, value);
-  } 
+  function setCapacity(
+    IUintComp components,
+    uint256 petID,
+    uint256 value
+  ) internal {
+    CapacityComponent(getAddressById(components, CapacityCompID)).set(petID, value);
+  }
+
+  function setCharge(
+    IUintComp components,
+    uint256 petID,
+    uint256 value
+  ) internal {
+    ChargeComponent(getAddressById(components, ChargeCompID)).set(petID, value);
+  }
+
+  function setLastCharge(
+    IUintComp components,
+    uint256 petID,
+    uint256 value
+  ) internal {
+    TimeLastActionComponent(getAddressById(components, TimeLastActionCompID)).set(petID, value);
+  }
 }

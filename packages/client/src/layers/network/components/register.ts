@@ -52,7 +52,7 @@ export function createComponents(world: any) {
     BlockLast: defineNumberComponent(world, { id: "BlockLast", metadata: { contractId: "component.BlockLast" } }),
     Coin: defineNumberComponent(world, { id: "Coin", metadata: { contractId: "component.Coin" } }),
     Exits: defineNumberArrayComponent(world, "Exits", "component.Exits"),
-    HashRate: defineNumberComponent(world, { id: "HashRate", metadata: { contractId: "component.HashRate" } }),
+    Bandwidth: defineNumberComponent(world, { id: "Bandwidth", metadata: { contractId: "component.Bandwidth" } }),
     Location: defineNumberComponent(world, { id: "Location", metadata: { contractId: "component.Location" } }),
     ModifierStatus: defineStringComponent(world, { id: "ModifierStatus", metadata: { contractId: "component.ModifierStatus" } }),
     ModifierType: defineStringComponent(world, { id: "ModifierType", metadata: { contractId: "component.ModifierType" } }),
@@ -61,7 +61,7 @@ export function createComponents(world: any) {
     PriceBuy: defineNumberComponent(world, { id: "PriceBuy", metadata: { contractId: "component.PriceBuy" } }),
     PriceSell: defineNumberComponent(world, { id: "PriceSell", metadata: { contractId: "component.PriceBuy" } }),
     State: defineStringComponent(world, { id: "State", metadata: { contractId: "component.State" } }),
-    StorageSize: defineNumberComponent(world, { id: "StorageSize", metadata: { contractId: "component.StorageSize" } }),
+    Storage: defineNumberComponent(world, { id: "Storage", metadata: { contractId: "component.Storage" } }),
     TimeLastAction: defineNumberComponent(world, { id: "TimeLastAction", metadata: { contractId: "component.TimeLastAction" } }),
     TimeStart: defineNumberComponent(world, { id: "TimeStart", metadata: { contractId: "component.TimeStart" } }),
 

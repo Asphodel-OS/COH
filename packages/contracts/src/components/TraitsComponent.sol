@@ -2,8 +2,8 @@
 pragma solidity ^0.8.0;
 import "std-contracts/components/Uint256ArrayBareComponent.sol";
 
-uint256 constant ID = uint256(keccak256("component.PetTraits.Permanent"));
+uint256 constant ID = uint256(keccak256("component.Traits"));
 
-contract PetTraitsPermanentComponent is Uint256ArrayBareComponent {
+contract TraitsComponent is Uint256ArrayBareComponent {
   constructor(address world) Uint256ArrayBareComponent(world, ID) {}
 }

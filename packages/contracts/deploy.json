@@ -1,13 +1,13 @@
 {
   "components": [
     "BalanceComponent",
-    "BatteryCapacityComponent",
-    "BatteryChargeComponent",
-    "BatteryLastChargeComponent",
+    "CapacityComponent",
+    "ChargeComponent",
+    "TimeLastActionComponent",
     "BlockLastComponent",
     "CoinComponent",
     "ExitsComponent",
-    "HashRateComponent",
+    "BandwidthComponent",
     "IdDelegateeComponent",
     "IdDelegatorComponent",
     "IdHolderComponent",
@@ -47,9 +47,9 @@
     "PriceSellComponent",
     "PrototypeComponent",
     "PetTraitsEquippedComponent",
-    "PetTraitsPermanentComponent",
+    "TraitsComponent",
     "StateComponent",
-    "StorageSizeComponent",
+    "StorageComponent",
     "TimeLastActionComponent",
     "TimeStartComponent"
   ],
@@ -168,8 +168,8 @@
     {
       "name": "PetFoodSystem",
       "writeAccess": [
-        "BatteryChargeComponent",
-        "BatteryLastChargeComponent",
+        "ChargeComponent",
+        "TimeLastActionComponent",
         "BalanceComponent"
       ]
     },

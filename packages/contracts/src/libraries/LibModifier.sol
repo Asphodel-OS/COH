@@ -50,50 +50,37 @@ library LibModifier {
 
     LibRegistry.copyPrototype(components, IndexModifierComponentID, index, entityID);
 
-    IdPetComponent(
-      getAddressById(components, IdPetComponentID)
-    ).set(entityID, petID);
+    IdPetComponent(getAddressById(components, IdPetComponentID)).set(entityID, petID);
     writeStatus(components, entityID, ModStatus.ACTIVE);
-    
+
     return entityID;
   }
 
-  function remove(
-    IUint256Component components,
-    uint256 entityID
-  ) internal {
+  function remove(IUint256Component components, uint256 entityID) internal {
     LibPrototype.remove(components, entityID);
-    IdPetComponent(
-      getAddressById(components, IdPetComponentID)
-    ).remove(entityID);
+    IdPetComponent(getAddressById(components, IdPetComponentID)).remove(entityID);
   }
 
-  function setActive(
-    IUint256Component components, 
-    uint256 entityID
-  ) internal {
+  function setActive(IUint256Component components, uint256 entityID) internal {
     writeStatus(components, entityID, ModStatus.ACTIVE);
   }
-  
-  function setInactive(
-    IUint256Component components, 
-    uint256 entityID
-  ) internal {
+
+  function setInactive(IUint256Component components, uint256 entityID) internal {
     writeStatus(components, entityID, ModStatus.INACTIVE);
   }
 
   //////////////////
   // CALCULATION
 
-  // calculates hashrate and storage from array
-  // returns (hashrate, array)
+  // calculates bandwidth and storage from array
+  // returns (bandwidth, storageSize)
   // ap: this design choice makes it impractical to do regular querying
-  //     better for fe retrieval but need dreaded array operations 
-  function calArray(
+  //     better for fe retrieval but need dreaded array operations
+  function calcArray(
     IUint256Component components,
     uint256 baseValue,
     uint256[] memory arr
-  ) internal view returns (uint256 hashrate, uint256 storageSize) {
+  ) internal view returns (uint256 bandwidth, uint256 storageSize) {
     // assumes all components in array is activated
     uint256 store;
     uint256 add;
@@ -102,7 +89,7 @@ library LibModifier {
 
     for (uint256 i; i < arr.length; i++) {
       if (arr[i] == 0) continue;
-      
+
       uint256 val = getValue(components, arr[i]);
       string memory modType = getType(components, arr[i]);
 
@@ -123,9 +110,9 @@ library LibModifier {
 
     // if baseValue is 0, can assume this is calculating for base value
     if (baseValue > 0) {
-      hashrate = ((((baseValue * mul) / 100) + add) * umul) / 100;
+      bandwidth = ((((baseValue * mul) / 100) + add) * umul) / 100;
     } else {
-      hashrate = (add * mul * umul) / 10000;
+      bandwidth = (add * mul * umul) / 10000;
     }
 
     storageSize = store;
@@ -173,25 +160,18 @@ library LibModifier {
 
   /////////////////
   // COMPONENT RETRIEVAL
-  function getType(
-    IUint256Component components, 
-    uint256 id
-  ) internal view returns (string memory) {
+  function getType(IUint256Component components, uint256 id) internal view returns (string memory) {
     return ModifierTypeComponent(getAddressById(components, ModifierTypeComponentID)).getValue(id);
   }
 
-  function getValue(
-    IUint256Component components, 
-    uint256 id
-  ) internal view returns (uint256) {
-    return ModifierValueComponent(getAddressById(components, ModifierValueComponentID)).getValue(id);
+  function getValue(IUint256Component components, uint256 id) internal view returns (uint256) {
+    return
+      ModifierValueComponent(getAddressById(components, ModifierValueComponentID)).getValue(id);
   }
-  
-  function getIndex(
-    IUint256Component components, 
-    uint256 id
-  ) internal view returns (uint256) {
-    return IndexModifierComponent(getAddressById(components, IndexModifierComponentID)).getValue(id);
+
+  function getIndex(IUint256Component components, uint256 id) internal view returns (uint256) {
+    return
+      IndexModifierComponent(getAddressById(components, IndexModifierComponentID)).getValue(id);
   }
 
   ///////////////
