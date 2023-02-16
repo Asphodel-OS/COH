@@ -20,7 +20,7 @@
     "lint": "yarn prettier && yarn solhint",
     "----- INTERNAL -----": "---------------------------",
     "abi:gen": "rimraf ../client/abi && mkdir ../client/abi && bash exports.sh && rimraf ../client/abi/*.metadata.json",
-    "abi:clean": "for i in ../client/abi/*; do jq 'del(.bytecode) | del(.deployedBytecode) | del(.ast)' \"$i\" > \"$i\".tmp && mv \"$i\".tmp \"$i\"; done",
+    "abi:clean": "for i in ../client/abi/*; do jq 'del(.bytecode) | del(.deployedBytecode) | del(.ast) | del(.rawMetadata) | del(.Metadata)' \"$i\" > \"$i\".tmp && mv \"$i\".tmp \"$i\"; done",
     "abi:types": "rimraf ../client/types && mkdir ../client/types && yarn abi:types:gen && yarn abi:types:mappings && rimraf ../client/types/ethers-contracts/factories",
     "abi:types:gen": "yarn typechain --target=ethers-v5 --out-dir ../client/types/ethers-contracts ../client/abi/*.json ",
     "abi:types:mappings": "mud system-types --outputDir ../client/types/ && cp ../client/types/SystemAbis.mts ../client/types/SystemAbis.mjs",
