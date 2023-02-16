@@ -204,7 +204,7 @@ const ModalContent = styled.div`
   flex-direction: column;
   background-color: white;
   border-radius: 10px;
-  padding: 5px;
+  padding: 8px;
   width: 99%;
   border-style: solid;
   border-width: 2px;
@@ -277,7 +277,7 @@ const KamiBox = styled.div`
   text-decoration: none;
   display: grid;
   font-size: 18px;
-  margin: 3px 2px;
+  margin: 4px 2px;
   border-radius: 5px;
   font-family: Pixel;
 `;
@@ -349,7 +349,7 @@ const ConsumableGrid = styled.div`
   border-width: 2px;
   border-color: black;
   border-radius: 5px;
-  margin: 2px;
+  margin: 5px 2px 5px 2px;
 `;
 
 const TopGrid = styled.div`

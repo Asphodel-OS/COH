@@ -226,7 +226,7 @@ const ModalContent = styled.div`
   display: grid;
   background-color: white;
   border-radius: 10px;
-  padding: 5px;
+  padding: 8px;
   width: 99%;
   border-style: solid;
   border-width: 2px;
