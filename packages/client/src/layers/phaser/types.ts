@@ -30,4 +30,5 @@ export interface PhaserScene extends Phaser.Scene {
   rooms?: Room[];
   gmusic?: any;
   interactiveObjects?: any;
+  inputKeys?: any;
 }
