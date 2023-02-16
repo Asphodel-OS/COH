@@ -4,7 +4,6 @@ import { map } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import styled, { keyframes } from 'styled-components';
 import { HasValue, runQuery } from '@latticexyz/recs';
-import mintSound from '../../../public/sound/sound_effects/tami_mint_vending_sound.mp3'
 
 export function registerDetectMint() {
   registerUIComponent(
@@ -49,9 +48,7 @@ export function registerDetectMint() {
       const handleMinting = useCallback(
         async (name) => {
           try {
-            const mintFX = new Audio(mintSound)
-            mintFX.play()
-            
+
             await player.operator.set(connectedAddress.get()!, name);
 
             document.getElementById('detectMint')!.style.display = 'none';

@@ -10,7 +10,7 @@ export function registerMintProcess() {
       colStart: 40,
       colEnd: 60,
       rowStart: 40,
-      rowEnd: 60,
+      rowEnd: 70,
     },
     (layers) => of(layers),
 
@@ -38,7 +38,7 @@ export function registerMintProcess() {
                 }}
               >
                 <div style={{ textAlign: 'center' }}>
-                  <MintSuccess>Successfully Minted!</MintSuccess>
+                  <MintSuccess>Welcome to Kamigotchi World!</MintSuccess>
                   <Button style={{ pointerEvents: 'auto' }} onClick={hideMint}>
                     Okay
                   </Button>
