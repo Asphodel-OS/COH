@@ -9,6 +9,7 @@ import pompom from '../../../public/img/pompom.png'
 import gakki from '../../../public/img/gakki.png'
 import ribbon from '../../../public/img/ribbon.png'
 import gum from '../../../public/img/gum.png'
+import clickSound from '../../../public/sound/sound_effects/mouseclick.wav'
 
 export function registerPetList() {
   registerUIComponent(
@@ -91,6 +92,8 @@ export function registerPetList() {
     // Render
     ({ world, actions, api, data }) => {
       const hideModal = () => {
+        const clickFX = new Audio(clickSound)
+        clickFX.play()
         const modalId = window.document.getElementById('petlist_modal');
         if (modalId) modalId.style.display = 'none';
       };
@@ -213,16 +216,16 @@ const Button = styled.button`
   border-width: 2px;
   border-color: black;
   color: black;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
+  padding: 15px;
   display: inline-block;
-  font-size: 18px;
-  margin: 4px 2px;
+  font-size: 14px;
   cursor: pointer;
   border-radius: 5px;
-  justify-content: center;
   font-family: Pixel;
+
+  &:active {
+    background-color: #c2c2c2;
+  }
 `;
 
 const KamiBox = styled.div`
@@ -259,6 +262,7 @@ const KamiName = styled.div`
 const KamiDetails = styled.div`
   grid-row: 2 / 5;
 `;
+
 const Description = styled.p`
   font-size: 16px;
   color: #333;

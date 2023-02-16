@@ -4,6 +4,7 @@ import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
 import styled, { keyframes } from 'styled-components';
 import './font.css';
+import clickSound from '../../../public/sound/sound_effects/mouseclick.wav'
 
 export function registerChatButton() {
   registerUIComponent(
@@ -21,8 +22,11 @@ export function registerChatButton() {
       } = dataStore();
 
       const showChat = () => {
+        const clickFX = new Audio(clickSound)
+        clickFX.play()
         const modalId = window.document.getElementById('chat_modal');
-        if (modalId) modalId.style.display = 'block';
+        if (modalId.style.display === 'block') modalId.style.display = 'none';
+        else modalId.style.display = 'block';
       };
 
       return (
