@@ -113,7 +113,7 @@ export function registerPetList() {
                 <CellGrid>
                   <Icon src={pompom} />
                     <ItemNumber>
-                      0
+                      16
                     </ItemNumber>
                 </CellGrid>
               </CellOne>
@@ -121,7 +121,7 @@ export function registerPetList() {
                 <CellGrid>
                   <Icon src={gakki} />
                   <ItemNumber>
-                    0
+                    892
                   </ItemNumber>
                 </CellGrid>
               </CellTwo>
@@ -129,7 +129,7 @@ export function registerPetList() {
                 <CellGrid>
                   <Icon src={ribbon} />
                   <ItemNumber>
-                    0
+                    314
                   </ItemNumber>
                 </CellGrid>
               </CellThree>
@@ -137,7 +137,7 @@ export function registerPetList() {
                 <CellGrid>
                   <Icon src={gum} />
                   <ItemNumber>
-                    0
+                    012
                   </ItemNumber>
                 </CellGrid>
               </CellFour>
@@ -159,12 +159,15 @@ export function registerPetList() {
                   <Description>
                     Hunger: 5%
                     <br/>
-                    <br/>
                     Gather Rate: 112 /day
                     <br/>
-                    <br/>
-                    Start Gathering
                   </Description>
+                  <ThinButton>
+                    Gather
+                  </ThinButton>
+                  <ThinButton>
+                    Collect
+                  </ThinButton>
                 </KamiDetails>
               </KamiFacts>
             </KamiBox>
@@ -228,6 +231,24 @@ const Button = styled.button`
   }
 `;
 
+const ThinButton = styled.button`
+  background-color: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  color: black;
+  padding: 5px;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: Pixel;
+  margin: 3px;
+  &:active {
+    background-color: #c2c2c2;
+  }
+`;
+
 const KamiBox = styled.div`
   background-color: #ffffff;
   border-style: solid;
@@ -264,7 +285,7 @@ const KamiDetails = styled.div`
 `;
 
 const Description = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   color: #333;
   text-align: left;
   padding: 2px;
@@ -294,6 +315,8 @@ const ConsumableGrid = styled.div`
   border-style: solid;
   border-width: 2px;
   border-color: black;
+  border-radius: 5px;
+  margin: 2px;
 `;
 
 const CellGrid = styled.div`
@@ -332,16 +355,16 @@ const CellFour = styled.div`
 const Icon = styled.img`
   grid-column: 1;
   height: 40px;
-  padding: 5px;
+  padding: 3px;
   border-style: solid;
   border-width: 0px 2px 0px 0px;
   border-color: black;
 `;
 
 const ItemNumber = styled.p`
-  font-size: 24px;
+  font-size: 14px;
   color: #333;
   font-family: Pixel;
   grid-column: 2;
-  padding: 5px
+  align-self: center;
 `;
