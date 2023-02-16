@@ -3,7 +3,7 @@ export const getCouchCoordinates = (scale: number) => {
     case 0.85:
       return { x: 580, y: 280, width: 230, height: 400 };
     case 0.82:
-      return { x: 490, y: 640, width: 150, height: 150 };
+      return { x: 610, y: 240, width: 150, height: 350 };
     case 0.75:
       return { x: 420, y: 610, width: 150, height: 150 };
     case 0.5:
