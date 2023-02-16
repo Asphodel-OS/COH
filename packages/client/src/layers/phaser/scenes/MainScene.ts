@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { defineScene } from '@latticexyz/phaserx';
-import { room001, room002, room003 } from '../rooms/';
+import { room001, room002, room003, room004 } from '../rooms/';
 import { PhaserScene, Room } from '../types';
 
 import room1Music from '../../../public/sound/music/corridor.mp3';
@@ -12,7 +12,7 @@ export function defineMainScene() {
     ['Main']: defineScene({
       key: 'Main',
       preload: (scene: PhaserScene) => {
-        scene.rooms = [room001(), room001(), room002(), room003()];
+        scene.rooms = [room001(), room001(), room002(), room003(), room004()];
 
         scene.interactiveObjects = [];
 
@@ -28,7 +28,7 @@ export function defineMainScene() {
       create: (scene: PhaserScene) => {
         scene.sound.pauseOnBlur = false;
 
-        scene.rooms![1].create(scene);
+        scene.rooms![4].create(scene);
       },
     }),
   };

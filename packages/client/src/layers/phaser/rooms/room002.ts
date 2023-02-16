@@ -25,6 +25,7 @@ export function room002() {
       const rightArrow = scene.add.image(1025, 360, 'arrow').setScale(1.75);
 
       scene.interactiveObjects.push(changeRoom(downArrow, 1));
+      // scene.interactiveObjects.push(changeRoom(rightArrow, 4));
 
       scene.interactiveObjects.push(
         triggerObjectModal(
