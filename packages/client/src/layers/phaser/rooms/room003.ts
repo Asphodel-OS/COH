@@ -39,22 +39,6 @@ export function room003() {
         )
       );
 
-      scene.interactiveObjects?.push(
-        scene.add
-          .rectangle(
-            coordinates.x,
-            coordinates.y,
-            coordinates.width,
-            coordinates.height
-          )
-          .setInteractive()
-          // .setDepth(1)
-          .on("pointerdown", () => {
-            const windowId = window.document.getElementById("merchant");
-            if (windowId) windowId.style.display = "block";
-          })
-      );
-
       scene.interactiveObjects.push(changeRoom(downArrow, 1));
     },
   };

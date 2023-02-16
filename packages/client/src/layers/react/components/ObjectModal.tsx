@@ -22,12 +22,9 @@ export function registerObjectModal() {
       };
 
 
-
         const showShop = () => {
-          const objectId = document.getElementById('merchant');
-          if (objectId) {
-            objectId.style.display = 'block';
-          }
+          const windowId = window.document.getElementById("merchant");
+          if (windowId) windowId.style.display = "block";
         }
 
 
