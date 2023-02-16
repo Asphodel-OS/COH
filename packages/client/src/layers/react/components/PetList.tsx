@@ -200,8 +200,7 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalContent = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
   background-color: white;
   border-radius: 10px;
   padding: 8px;
@@ -210,6 +209,7 @@ const ModalContent = styled.div`
   border-width: 2px;
   border-color: black;
 `;
+
 
 const Button = styled.button`
   background-color: #ffffff;

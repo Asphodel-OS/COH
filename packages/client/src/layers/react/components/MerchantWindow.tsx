@@ -30,9 +30,9 @@ export function registerMerchantWindow() {
 
     // Grid Config
     {
-      colStart: 20,
-      colEnd: 60,
-      rowStart: 20,
+      colStart: 33,
+      colEnd: 65,
+      rowStart: 5,
       rowEnd: 60,
     },
 
@@ -202,10 +202,12 @@ export function registerMerchantWindow() {
       };
 
       return (
-        <div id="merchant">
-          <button style={{ pointerEvents: "auto" }} onClick={hideModal}>X</button>
-          <ul>{listings(data.listings)}</ul>
-        </div>
+        <ModalWrapper id="merchant">
+          <ModalContent>
+            <TopButton style={{ pointerEvents: "auto" }} onClick={hideModal}>X</TopButton>
+            <ul>{listings(data.listings)}</ul>
+          </ModalContent>
+        </ModalWrapper>
       );
     }
   );
@@ -228,4 +230,51 @@ const Button = styled.button`
   border-radius: 5px;
   justify-content: center;
   font-family: Pixel;
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const ModalWrapper = styled.div`
+  display: none;
+  justify-content: center;
+  align-items: center;
+  animation: ${fadeIn} 0.5s ease-in-out;
+`;
+
+const ModalContent = styled.div`
+  display: grid;
+  background-color: white;
+  border-radius: 10px;
+  padding: 8px;
+  width: 99%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+`;
+
+const TopButton = styled.button`
+  background-color: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  color: black;
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 5px;
+  font-family: Pixel;
+  grid-column: 5;
+  width: 30px;
+  &:active {
+    background-color: #c2c2c2;
+  }
+  justify-self: right;
 `;
