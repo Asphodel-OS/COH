@@ -5,7 +5,6 @@ import ERC721PetSystem from "../abi/ERC721PetSystem.json";
 import InitSystem from "../abi/InitSystem.json";
 import ListingBuySystem from "../abi/ListingBuySystem.json";
 import ListingSellSystem from "../abi/ListingSellSystem.json";
-import ListingSetSystem from "../abi/ListingSetSystem.json";
 import MerchantCreateSystem from "../abi/MerchantCreateSystem.json";
 import NodeCreateSystem from "../abi/NodeCreateSystem.json";
 import OperatorMoveSystem from "../abi/OperatorMoveSystem.json";
@@ -32,7 +31,6 @@ export const SystemAbis = {
   "system.Init": InitSystem.abi,
   "system.ListingBuy": ListingBuySystem.abi,
   "system.ListingSell": ListingSellSystem.abi,
-  "system.ListingSet": ListingSetSystem.abi,
   "system.MerchantCreate": MerchantCreateSystem.abi,
   "system.NodeCreate": NodeCreateSystem.abi,
   "system.OperatorMove": OperatorMoveSystem.abi,

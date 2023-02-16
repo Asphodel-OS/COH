@@ -5,7 +5,6 @@ import { ERC721PetSystem } from "./ethers-contracts/ERC721PetSystem";
 import { InitSystem } from "./ethers-contracts/InitSystem";
 import { ListingBuySystem } from "./ethers-contracts/ListingBuySystem";
 import { ListingSellSystem } from "./ethers-contracts/ListingSellSystem";
-import { ListingSetSystem } from "./ethers-contracts/ListingSetSystem";
 import { MerchantCreateSystem } from "./ethers-contracts/MerchantCreateSystem";
 import { NodeCreateSystem } from "./ethers-contracts/NodeCreateSystem";
 import { OperatorMoveSystem } from "./ethers-contracts/OperatorMoveSystem";
@@ -32,7 +31,6 @@ export type SystemTypes = {
   "system.Init": InitSystem;
   "system.ListingBuy": ListingBuySystem;
   "system.ListingSell": ListingSellSystem;
-  "system.ListingSet": ListingSetSystem;
   "system.MerchantCreate": MerchantCreateSystem;
   "system.NodeCreate": NodeCreateSystem;
   "system.OperatorMove": OperatorMoveSystem;

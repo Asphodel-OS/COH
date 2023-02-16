@@ -12,10 +12,10 @@ export function createAdminAPI(systems: any) {
     createNode("room3 node", 3);
 
     createMerchant("ugajin", 3);
-    _setListing(3, 1, 10, 5);
-    _setListing(3, 2, 30, 15);
-    _setListing(3, 3, 50, 25);
-    _setListing(3, 4, 100, 50);
+    setListing(3, 1, 10, 5);
+    setListing(3, 2, 30, 15);
+    setListing(3, 3, 50, 25);
+    setListing(3, 4, 100, 50);
 
     // required to init erc721 registy system, very temporary
     systems["system.ERC721.pet"].init();
@@ -53,27 +53,12 @@ export function createAdminAPI(systems: any) {
   }
 
   // @dev allows a character to sell an item through a merchant listing entity
-  // @param merchantID  entity ID of merchant
-  // @param itemIndex   index of item to list
-  // @param buyPrice    sell price of item listing (pass in 0 to leave blank)
-  // @param sellPrice   buy price of item listing (pass in 0 to leave blank)
-  // @return uint       (promise) entity ID of the listing
-  function setListing(
-    merchantID: BigNumberish,
-    itemIndex: number,
-    buyPrice: number,
-    sellPrice: number
-  ) {
-    return systems["system.ListingSet"].executeTyped(merchantID, itemIndex, buyPrice, sellPrice);
-  }
-
-  // @dev allows a character to sell an item through a merchant listing entity
   // @param location    location of the merchant
   // @param itemIndex   index of item to list
   // @param buyPrice    sell price of item listing (pass in 0 to leave blank)
   // @param sellPrice   buy price of item listing (pass in 0 to leave blank)
   // @return uint       (promise) entity ID of the listing
-  function _setListing(
+  function setListing(
     location: number,
     itemIndex: number,
     buyPrice: number,
@@ -88,6 +73,5 @@ export function createAdminAPI(systems: any) {
     createNode,
     createRoom,
     setListing,
-    _setListing,
   };
 }
