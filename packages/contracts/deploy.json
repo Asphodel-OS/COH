@@ -96,6 +96,16 @@
       ]
     },
     {
+      "name": "_ListingSetSystem",
+      "writeAccess": [
+        "IsListingComponent",
+        "IdMerchantComponent",
+        "IndexItemComponent",
+        "PriceBuyComponent",
+        "PriceSellComponent"
+      ]
+    },
+    {
       "name": "MerchantCreateSystem",
       "writeAccess": [
         "IsMerchantComponent",
