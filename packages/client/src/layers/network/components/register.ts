@@ -12,11 +12,8 @@ import {
 // define functions for registration
 export function createComponents(world: any) {
   return {
-    // TODO: deprecate these once character has been made obsolete
-    IsCharacter: defineBoolComponent(world, { id: "IsCharacter", metadata: { contractId: "component.Is.Character" } }),
-    CharacterID: defineStringComponent(world, { id: "CharacterID", metadata: { contractId: "component.Id.Character" } }),
-
     // Archetypes
+    IsFood: defineBoolComponent(world, { id: "IsFood", metadata: { contractId: "component.Is.Food" } }),
     IsInventory: defineBoolComponent(world, { id: "IsInventory", metadata: { contractId: "component.Is.Inventory" } }),
     IsListing: defineBoolComponent(world, { id: "IsListing", metadata: { contractId: "component.Is.Listing" } }),
     IsMerchant: defineBoolComponent(world, { id: "IsMerchant", metadata: { contractId: "component.Is.Merchant" } }),
@@ -48,22 +45,24 @@ export function createComponents(world: any) {
     PetIndex: defineNumberComponent(world, { id: "PetIndex", metadata: { contractId: "component.Index.Pet" } }),
 
     // Values
+    Bandwidth: defineNumberComponent(world, { id: "Bandwidth", metadata: { contractId: "component.Bandwidth" } }),
     Balance: defineNumberComponent(world, { id: "Balance", metadata: { contractId: "component.Balance" } }),
     BlockLast: defineNumberComponent(world, { id: "BlockLast", metadata: { contractId: "component.BlockLast" } }),
+    Capacity: defineNumberComponent(world, { id: "Capacity", metadata: { contractId: "component.Capacity" } }),
+    Charge: defineNumberComponent(world, { id: "Charge", metadata: { contractId: "component.Charge" } }),
     Coin: defineNumberComponent(world, { id: "Coin", metadata: { contractId: "component.Coin" } }),
     Exits: defineNumberArrayComponent(world, "Exits", "component.Exits"),
-    Bandwidth: defineNumberComponent(world, { id: "Bandwidth", metadata: { contractId: "component.Bandwidth" } }),
     Location: defineNumberComponent(world, { id: "Location", metadata: { contractId: "component.Location" } }),
-    ModifierStatus: defineStringComponent(world, { id: "ModifierStatus", metadata: { contractId: "component.ModifierStatus" } }),
-    ModifierType: defineStringComponent(world, { id: "ModifierType", metadata: { contractId: "component.ModifierType" } }),
-    ModifierValue: defineStringComponent(world, { id: "ModifierValue", metadata: { contractId: "component.ModifierValue" } }),
     NumCores: defineNumberComponent(world, { id: "NumCores", metadata: { contractId: "component.NumCores" } }),
     PriceBuy: defineNumberComponent(world, { id: "PriceBuy", metadata: { contractId: "component.PriceBuy" } }),
-    PriceSell: defineNumberComponent(world, { id: "PriceSell", metadata: { contractId: "component.PriceBuy" } }),
+    PriceSell: defineNumberComponent(world, { id: "PriceSell", metadata: { contractId: "component.PriceSell" } }),
     State: defineStringComponent(world, { id: "State", metadata: { contractId: "component.State" } }),
+    Status: defineStringComponent(world, { id: "Status", metadata: { contractId: "component.Status" } }),
     Storage: defineNumberComponent(world, { id: "Storage", metadata: { contractId: "component.Storage" } }),
-    TimeLastAction: defineNumberComponent(world, { id: "TimeLastAction", metadata: { contractId: "component.TimeLastAction" } }),
-    TimeStart: defineNumberComponent(world, { id: "TimeStart", metadata: { contractId: "component.TimeStart" } }),
+    TimeLastAction: defineNumberComponent(world, { id: "TimeLastAction", metadata: { contractId: "component.time.LastAction" } }),
+    TimeStart: defineNumberComponent(world, { id: "TimeStart", metadata: { contractId: "component.time.Start" } }),
+    Type: defineStringComponent(world, { id: "Type", metadata: { contractId: "component.Type" } }),
+    Value: defineStringComponent(world, { id: "Value", metadata: { contractId: "component.Value" } }),
 
 
     // speeecial

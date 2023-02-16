@@ -3,7 +3,6 @@
     "BalanceComponent",
     "CapacityComponent",
     "ChargeComponent",
-    "TimeLastActionComponent",
     "BlockLastComponent",
     "CoinComponent",
     "ExitsComponent",
@@ -37,9 +36,6 @@
     "IsTradeComponent",
     "LocationComponent",
     "MediaURIComponent",
-    "ModifierStatusComponent",
-    "ModifierTypeComponent",
-    "ModifierValueComponent",
     "NameComponent",
     "NumCoresComponent",
     "AddressPlayerComponent",
@@ -49,9 +45,12 @@
     "PetTraitsEquippedComponent",
     "TraitsComponent",
     "StateComponent",
+    "StatusComponent",
     "StorageComponent",
     "TimeLastActionComponent",
-    "TimeStartComponent"
+    "TimeStartComponent",
+    "TypeComponent",
+    "ValueComponent"
   ],
   "systems": [
     {

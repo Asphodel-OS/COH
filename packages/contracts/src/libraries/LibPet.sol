@@ -109,6 +109,8 @@ library LibPet {
       0,
       TraitsComponent(getAddressById(components, TraitsCompID)).getValue(id)
     );
+    // uint256 bandwidth;
+    // uint256 storageSize;
     BandwidthComponent(getAddressById(components, BandwidthCompID)).set(id, bandwidth);
     StorageComponent(getAddressById(components, StorSizeCompID)).set(id, storageSize);
 

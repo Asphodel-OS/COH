@@ -2,9 +2,9 @@
 pragma solidity ^0.8.0;
 import "std-contracts/components/Uint256Component.sol";
 
-uint256 constant ID = uint256(keccak256("component.ModifierValue"));
+uint256 constant ID = uint256(keccak256("component.Value"));
 
 // actual value is represented in a Enum in LibModifier
-contract ModifierValueComponent is Uint256Component {
+contract ValueComponent is Uint256Component {
   constructor(address world) Uint256Component(world, ID) {}
 }

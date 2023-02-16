@@ -53,9 +53,10 @@ contract ERC721PetSystem is System, ERC721 {
       operatorID = LibOperator.create(world, components, to, to);
     }
 
+    // TODO: uncomment LibPet.setStats() once we figure out contract size
     uint256 petID = LibPet.create(world, components, to, operatorID, totalSupply, UNREVEALED_URI);
     LibPetTraits.placeholderTraits(components, world, petID);
-    LibPet.setStats(components, petID);
+    // LibPet.setStats(components, petID);
 
     _mint(to, totalSupply); // should we run this at the beginning or end?
     return petID;
