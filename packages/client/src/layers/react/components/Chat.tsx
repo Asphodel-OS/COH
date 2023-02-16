@@ -180,7 +180,7 @@ const ChatWrapper = styled.div`
   cursor: pointer;
   border-radius: 5px;
   font-family: Pixel;
-  margin: 10px 0px 10px 0px;
+  margin: 0px;
 `
 
 const ChatBox = styled.div`
@@ -217,7 +217,6 @@ const ChatInput = styled.input`
 
 const ModalWrapper = styled.div`
   display: none;
-  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   animation: ${fadeIn} 0.5s ease-in-out;
@@ -227,7 +226,6 @@ const ModalContent = styled.div`
   display: grid;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   padding: 5px;
   width: 99%;
   border-style: solid;
