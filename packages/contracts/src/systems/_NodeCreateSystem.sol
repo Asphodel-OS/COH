@@ -7,10 +7,10 @@ import { getAddressById } from "solecs/utils.sol";
 
 import { LibNode } from "libraries/LibNode.sol";
 
-uint256 constant ID = uint256(keccak256("system.NodeCreate"));
+uint256 constant ID = uint256(keccak256("system._NodeCreate"));
 
-// NodeCreateSystem creates a mining node as specified and returns the entity id
-contract NodeCreateSystem is System {
+// _NodeCreateSystem creates a mining node as specified and returns the entity id
+contract _NodeCreateSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public onlyOwner returns (bytes memory) {

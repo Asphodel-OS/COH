@@ -8,13 +8,11 @@ import { LibOperator } from "libraries/LibOperator.sol";
 import { LibBattery } from "libraries/LibBattery.sol";
 import { Utils } from "utils/Utils.sol";
 
-uint256 constant ID = uint256(keccak256("system.Init"));
+uint256 constant ID = uint256(keccak256("system._Init"));
 
-// admin only system to init everything
-contract InitSystem is System {
-  constructor(IWorld _world, address _components)
-    System(_world, _components)
-  {}
+// admin only system to _init everything
+contract _InitSystem is System {
+  constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public onlyOwner returns (bytes memory) {
     arguments = "";
@@ -33,5 +31,4 @@ contract InitSystem is System {
     LibBattery.addFoodRegistry(components, world, 10002, 100, "food 2");
     LibBattery.addFoodRegistry(components, world, 10003, 200, "food 3");
   }
-
 }

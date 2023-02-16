@@ -55,9 +55,44 @@
   ],
   "systems": [
     {
-      "name": "InitSystem",
+      "name": "_InitSystem",
       "writeAccess": [
         "*"
+      ]
+    },
+    {
+      "name": "_ListingSetSystem",
+      "writeAccess": [
+        "IsListingComponent",
+        "IdMerchantComponent",
+        "IndexItemComponent",
+        "PriceBuyComponent",
+        "PriceSellComponent"
+      ]
+    },
+    {
+      "name": "_MerchantCreateSystem",
+      "writeAccess": [
+        "IsMerchantComponent",
+        "LocationComponent",
+        "NameComponent"
+      ]
+    },
+    {
+      "name": "_NodeCreateSystem",
+      "writeAccess": [
+        "IsNodeComponent",
+        "LocationComponent",
+        "NameComponent"
+      ]
+    },
+    {
+      "name": "_RoomCreateSystem",
+      "writeAccess": [
+        "IsRoomComponent",
+        "ExitsComponent",
+        "LocationComponent",
+        "NameComponent"
       ]
     },
     {
@@ -83,32 +118,6 @@
         "BalanceComponent",
         "BlockLastComponent",
         "CoinComponent"
-      ]
-    },
-    {
-      "name": "_ListingSetSystem",
-      "writeAccess": [
-        "IsListingComponent",
-        "IdMerchantComponent",
-        "IndexItemComponent",
-        "PriceBuyComponent",
-        "PriceSellComponent"
-      ]
-    },
-    {
-      "name": "MerchantCreateSystem",
-      "writeAccess": [
-        "IsMerchantComponent",
-        "LocationComponent",
-        "NameComponent"
-      ]
-    },
-    {
-      "name": "NodeCreateSystem",
-      "writeAccess": [
-        "IsNodeComponent",
-        "LocationComponent",
-        "NameComponent"
       ]
     },
     {
@@ -182,15 +191,6 @@
         "IdDelegatorComponent",
         "IdDelegateeComponent",
         "StateComponent"
-      ]
-    },
-    {
-      "name": "RoomCreateSystem",
-      "writeAccess": [
-        "IsRoomComponent",
-        "ExitsComponent",
-        "LocationComponent",
-        "NameComponent"
       ]
     },
     {

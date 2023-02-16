@@ -9,11 +9,10 @@ contract FoodTest is SetupTemplate {
   function setUp() public override {
     super.setUp();
     vm.prank(deployer);
-    _InitSystem.executeTyped();
+    __InitSystem.executeTyped();
 
     vm.warp(START);
     _mintPets(1);
-
   }
 
   function testCharge() public {
@@ -23,15 +22,9 @@ contract FoodTest is SetupTemplate {
     );
 
     vm.warp(START + 10 seconds);
-    assertEq(
-      140,
-      LibBattery.cal(components, petOneEntityID)
-    );
-    
+    assertEq(140, LibBattery.cal(components, petOneEntityID));
+
     vm.warp(START + 150 seconds);
-    assertEq(
-      0, 
-      LibBattery.cal(components, petOneEntityID)
-    );
+    assertEq(0, LibBattery.cal(components, petOneEntityID));
   }
 }

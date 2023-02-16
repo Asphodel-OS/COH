@@ -4,6 +4,7 @@
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -26,10 +27,10 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface InitSystemInterface extends utils.Interface {
+export interface _MerchantCreateSystemInterface extends utils.Interface {
   functions: {
     "execute(bytes)": FunctionFragment;
-    "executeTyped()": FunctionFragment;
+    "executeTyped(string,uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -48,7 +49,7 @@ export interface InitSystemInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "executeTyped",
-    values?: undefined
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -86,12 +87,12 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface InitSystem extends BaseContract {
+export interface _MerchantCreateSystem extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: InitSystemInterface;
+  interface: _MerchantCreateSystemInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -119,6 +120,8 @@ export interface InitSystem extends BaseContract {
     ): Promise<ContractTransaction>;
 
     executeTyped(
+      name: PromiseOrValue<string>,
+      location: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -136,6 +139,8 @@ export interface InitSystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   executeTyped(
+    name: PromiseOrValue<string>,
+    location: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -152,7 +157,11 @@ export interface InitSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    executeTyped(overrides?: CallOverrides): Promise<string>;
+    executeTyped(
+      name: PromiseOrValue<string>,
+      location: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -180,6 +189,8 @@ export interface InitSystem extends BaseContract {
     ): Promise<BigNumber>;
 
     executeTyped(
+      name: PromiseOrValue<string>,
+      location: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -198,6 +209,8 @@ export interface InitSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
+      name: PromiseOrValue<string>,
+      location: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
