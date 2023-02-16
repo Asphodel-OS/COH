@@ -6,13 +6,13 @@ import ListingBuySystem from "../abi/ListingBuySystem.json";
 import ListingSellSystem from "../abi/ListingSellSystem.json";
 import ListingSetSystem from "../abi/ListingSetSystem.json";
 import MerchantCreateSystem from "../abi/MerchantCreateSystem.json";
-import NameOperatorSystem from "../abi/NameOperatorSystem.json";
-import NamePetSystem from "../abi/NamePetSystem.json";
 import NodeCreateSystem from "../abi/NodeCreateSystem.json";
 import OperatorMoveSystem from "../abi/OperatorMoveSystem.json";
+import OperatorNameSystem from "../abi/OperatorNameSystem.json";
 import OperatorSetSystem from "../abi/OperatorSetSystem.json";
 import PetFoodSystem from "../abi/PetFoodSystem.json";
 import PetMetadataSystem from "../abi/PetMetadataSystem.json";
+import PetNameSystem from "../abi/PetNameSystem.json";
 import PetSetOperatorSystem from "../abi/PetSetOperatorSystem.json";
 import ProductionCollectSystem from "../abi/ProductionCollectSystem.json";
 import ProductionStartSystem from "../abi/ProductionStartSystem.json";
@@ -32,13 +32,13 @@ export const SystemAbis = {
   "system.ListingSell": ListingSellSystem.abi,
   "system.ListingSet": ListingSetSystem.abi,
   "system.MerchantCreate": MerchantCreateSystem.abi,
-  "system.NameOperator": NameOperatorSystem.abi,
-  "system.NamePet": NamePetSystem.abi,
   "system.NodeCreate": NodeCreateSystem.abi,
   "system.OperatorMove": OperatorMoveSystem.abi,
+  "system.OperatorName": OperatorNameSystem.abi,
   "system.OperatorSet": OperatorSetSystem.abi,
   "system.Pet.Food": PetFoodSystem.abi,
   "system.ERC721.metadata": PetMetadataSystem.abi,
+  "system.PetName": PetNameSystem.abi,
   "system.PetSetOperator": PetSetOperatorSystem.abi,
   "system.ProductionCollect": ProductionCollectSystem.abi,
   "system.ProductionStart": ProductionStartSystem.abi,

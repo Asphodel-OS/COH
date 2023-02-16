@@ -27,7 +27,7 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface NamePetSystemInterface extends utils.Interface {
+export interface PetNameSystemInterface extends utils.Interface {
   functions: {
     "execute(bytes)": FunctionFragment;
     "executeTyped(uint256,string)": FunctionFragment;
@@ -87,12 +87,12 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface NamePetSystem extends BaseContract {
+export interface PetNameSystem extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: NamePetSystemInterface;
+  interface: PetNameSystemInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -120,7 +120,7 @@ export interface NamePetSystem extends BaseContract {
     ): Promise<ContractTransaction>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
+      id: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -139,7 +139,7 @@ export interface NamePetSystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   executeTyped(
-    entityID: PromiseOrValue<BigNumberish>,
+    id: PromiseOrValue<BigNumberish>,
     name: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -158,7 +158,7 @@ export interface NamePetSystem extends BaseContract {
     ): Promise<string>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
+      id: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
@@ -189,7 +189,7 @@ export interface NamePetSystem extends BaseContract {
     ): Promise<BigNumber>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
+      id: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -209,7 +209,7 @@ export interface NamePetSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
+      id: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

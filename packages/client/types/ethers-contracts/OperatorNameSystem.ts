@@ -26,7 +26,7 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface NameOperatorSystemInterface extends utils.Interface {
+export interface OperatorNameSystemInterface extends utils.Interface {
   functions: {
     "execute(bytes)": FunctionFragment;
     "executeTyped(string)": FunctionFragment;
@@ -86,12 +86,12 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface NameOperatorSystem extends BaseContract {
+export interface OperatorNameSystem extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: NameOperatorSystemInterface;
+  interface: OperatorNameSystemInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
