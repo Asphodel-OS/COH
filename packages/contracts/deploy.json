@@ -41,7 +41,6 @@
     "ModifierTypeComponent",
     "ModifierValueComponent",
     "NameComponent",
-    "NumCoresComponent",
     "AddressPlayerComponent",
     "PriceBuyComponent",
     "PriceSellComponent",
