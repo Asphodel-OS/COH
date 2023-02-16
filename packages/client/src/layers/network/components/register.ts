@@ -12,10 +12,6 @@ import {
 // define functions for registration
 export function createComponents(world: any) {
   return {
-    // TODO: deprecate these once character has been made obsolete
-    IsCharacter: defineBoolComponent(world, { id: "IsCharacter", metadata: { contractId: "component.Is.Character" } }),
-    CharacterID: defineStringComponent(world, { id: "CharacterID", metadata: { contractId: "component.Id.Character" } }),
-
     // Archetypes
     IsInventory: defineBoolComponent(world, { id: "IsInventory", metadata: { contractId: "component.Is.Inventory" } }),
     IsListing: defineBoolComponent(world, { id: "IsListing", metadata: { contractId: "component.Is.Listing" } }),
@@ -57,9 +53,8 @@ export function createComponents(world: any) {
     ModifierStatus: defineStringComponent(world, { id: "ModifierStatus", metadata: { contractId: "component.ModifierStatus" } }),
     ModifierType: defineStringComponent(world, { id: "ModifierType", metadata: { contractId: "component.ModifierType" } }),
     ModifierValue: defineStringComponent(world, { id: "ModifierValue", metadata: { contractId: "component.ModifierValue" } }),
-    NumCores: defineNumberComponent(world, { id: "NumCores", metadata: { contractId: "component.NumCores" } }),
     PriceBuy: defineNumberComponent(world, { id: "PriceBuy", metadata: { contractId: "component.PriceBuy" } }),
-    PriceSell: defineNumberComponent(world, { id: "PriceSell", metadata: { contractId: "component.PriceBuy" } }),
+    PriceSell: defineNumberComponent(world, { id: "PriceSell", metadata: { contractId: "component.PriceSell" } }),
     State: defineStringComponent(world, { id: "State", metadata: { contractId: "component.State" } }),
     StorageSize: defineNumberComponent(world, { id: "StorageSize", metadata: { contractId: "component.StorageSize" } }),
     TimeLastAction: defineNumberComponent(world, { id: "TimeLastAction", metadata: { contractId: "component.TimeLastAction" } }),

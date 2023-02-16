@@ -1,5 +1,6 @@
 {
   "components": [
+    "AddressPlayerComponent",
     "BalanceComponent",
     "BatteryCapacityComponent",
     "BatteryChargeComponent",
@@ -41,8 +42,6 @@
     "ModifierTypeComponent",
     "ModifierValueComponent",
     "NameComponent",
-    "NumCoresComponent",
-    "AddressPlayerComponent",
     "PriceBuyComponent",
     "PriceSellComponent",
     "PrototypeComponent",
