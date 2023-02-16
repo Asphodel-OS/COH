@@ -1,5 +1,5 @@
 import { dataStore } from '../../react/store/createStore';
-import dialogueSound from '../../../public/sound/sound_effects/speech1.wav'
+import dialogueSound from '../../../public/sound/sound_effects/speech3.mp3'
 
 export const triggerObjectModal = (
   object: Phaser.GameObjects.GameObject,

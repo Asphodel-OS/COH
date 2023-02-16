@@ -17,10 +17,10 @@ const ItemImages = new Map([
 ]);
 
 const ItemNames = new Map([
-  [1, "pompom"],
-  [2, "gakki"],
-  [3, "ribbon"],
-  [4, "gum"],
+  [1, "Pompom"],
+  [2, "Gakki"],
+  [3, "Ribbon"],
+  [4, "Gum"],
 ]);
 
 // merchant window with listings. assumes at most 1 merchant per room
@@ -179,18 +179,13 @@ export function registerMerchantWindow() {
       const listings = (slots: any) =>
         slots.map((listing: any) => (
           <li style={{ color: "black", fontSize: "16px" }} key={listing.itemType}>
-            <img src={ItemImages.get(listing.itemType)} />
-            <b>Name</b> {ItemNames.get(listing.itemType)}
-            <b>Buy Price</b> {listing.buyPrice}
+            <img src={ItemImages.get(parseInt(listing.itemType, 16))} />
+            <b>{ItemNames.get(parseInt(listing.itemType, 16))} </b>
+            <b>Price </b> {parseInt(listing.buyPrice, 16)}
             <Button
               style={{ pointerEvents: "auto" }}
               onClick={() => buy(listing, 1)}
             >buy</Button>
-            <b>Sell Price</b> {listing.sellPrice}
-            <Button
-              style={{ pointerEvents: "auto" }}
-              onClick={() => sell(listing, 1)}
-            >sell</Button>
           </li>
         ));
 
@@ -220,11 +215,11 @@ const Button = styled.button`
   border-width: 2px;
   border-color: black;
   color: black;
-  padding: 15px 32px;
+  padding: 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 18px;
+  font-size: 12px;
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 5px;
