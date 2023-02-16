@@ -23,13 +23,13 @@ import "libraries/LibTrade.sol";
 
 // Components
 import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
-import { BatteryCapacityComponent, ID as BatteryCapacityComponentID } from "components/BatteryCapacityComponent.sol";
-import { BatteryChargeComponent, ID as BatteryChargeComponentID } from "components/BatteryChargeComponent.sol";
-import { BatteryLastChargeComponent, ID as BatteryLastChargeComponentID } from "components/BatteryLastChargeComponent.sol";
+import { CapacityComponent, ID as CapacityComponentID } from "components/CapacityComponent.sol";
+import { ChargeComponent, ID as ChargeComponentID } from "components/ChargeComponent.sol";
+import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
 import { BlockLastComponent, ID as BlockLastComponentID } from "components/BlockLastComponent.sol";
 import { CoinComponent, ID as CoinComponentID } from "components/CoinComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
-import { HashRateComponent, ID as HashRateComponentID } from "components/HashRateComponent.sol";
+import { BandwidthComponent, ID as BandwidthComponentID } from "components/BandwidthComponent.sol";
 import { IdDelegateeComponent, ID as IdDelegateeComponentID } from "components/IdDelegateeComponent.sol";
 import { IdDelegatorComponent, ID as IdDelegatorComponentID } from "components/IdDelegatorComponent.sol";
 import { IdHolderComponent, ID as IdHolderComponentID } from "components/IdHolderComponent.sol";
@@ -69,9 +69,9 @@ import { PriceBuyComponent, ID as PriceBuyComponentID } from "components/PriceBu
 import { PriceSellComponent, ID as PriceSellComponentID } from "components/PriceSellComponent.sol";
 import { PrototypeComponent, ID as PrototypeComponentID } from "components/PrototypeComponent.sol";
 import { PetTraitsEquippedComponent, ID as PetTraitsEquippedComponentID } from "components/PetTraitsEquippedComponent.sol";
-import { PetTraitsPermanentComponent, ID as PetTraitsPermanentComponentID } from "components/PetTraitsPermanentComponent.sol";
+import { TraitsComponent, ID as TraitsComponentID } from "components/TraitsComponent.sol";
 import { StateComponent, ID as StateComponentID } from "components/StateComponent.sol";
-import { StorageSizeComponent, ID as StorageSizeComponentID } from "components/StorageSizeComponent.sol";
+import { StorageComponent, ID as StorageComponentID } from "components/StorageComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
 import { TimeStartComponent, ID as TimeStartComponentID } from "components/TimeStartComponent.sol";
 
@@ -103,13 +103,13 @@ import { OperatorNameSystem, ID as OperatorNameSystemID } from "systems/Operator
 abstract contract TestSetupImports is MudTest {
 // Components vars
 BalanceComponent _BalanceComponent;
-BatteryCapacityComponent _BatteryCapacityComponent;
-BatteryChargeComponent _BatteryChargeComponent;
-BatteryLastChargeComponent _BatteryLastChargeComponent;
+CapacityComponent _CapacityComponent;
+ChargeComponent _ChargeComponent;
+TimeLastActionComponent _TimeLastActionComponent;
 BlockLastComponent _BlockLastComponent;
 CoinComponent _CoinComponent;
 ExitsComponent _ExitsComponent;
-HashRateComponent _HashRateComponent;
+BandwidthComponent _BandwidthComponent;
 IdDelegateeComponent _IdDelegateeComponent;
 IdDelegatorComponent _IdDelegatorComponent;
 IdHolderComponent _IdHolderComponent;
@@ -149,9 +149,9 @@ PriceBuyComponent _PriceBuyComponent;
 PriceSellComponent _PriceSellComponent;
 PrototypeComponent _PrototypeComponent;
 PetTraitsEquippedComponent _PetTraitsEquippedComponent;
-PetTraitsPermanentComponent _PetTraitsPermanentComponent;
+TraitsComponent _TraitsComponent;
 StateComponent _StateComponent;
-StorageSizeComponent _StorageSizeComponent;
+StorageComponent _StorageComponent;
 TimeLastActionComponent _TimeLastActionComponent;
 TimeStartComponent _TimeStartComponent;
 
@@ -184,13 +184,13 @@ function setUp() public virtual override {
 super.setUp();
 
 _BalanceComponent = BalanceComponent(component(BalanceComponentID));
-_BatteryCapacityComponent = BatteryCapacityComponent(component(BatteryCapacityComponentID));
-_BatteryChargeComponent = BatteryChargeComponent(component(BatteryChargeComponentID));
-_BatteryLastChargeComponent = BatteryLastChargeComponent(component(BatteryLastChargeComponentID));
+_CapacityComponent = CapacityComponent(component(CapacityComponentID));
+_ChargeComponent = ChargeComponent(component(ChargeComponentID));
+_TimeLastActionComponent = TimeLastActionComponent(component(TimeLastActionComponentID));
 _BlockLastComponent = BlockLastComponent(component(BlockLastComponentID));
 _CoinComponent = CoinComponent(component(CoinComponentID));
 _ExitsComponent = ExitsComponent(component(ExitsComponentID));
-_HashRateComponent = HashRateComponent(component(HashRateComponentID));
+_BandwidthComponent = BandwidthComponent(component(BandwidthComponentID));
 _IdDelegateeComponent = IdDelegateeComponent(component(IdDelegateeComponentID));
 _IdDelegatorComponent = IdDelegatorComponent(component(IdDelegatorComponentID));
 _IdHolderComponent = IdHolderComponent(component(IdHolderComponentID));
@@ -230,9 +230,9 @@ _PriceBuyComponent = PriceBuyComponent(component(PriceBuyComponentID));
 _PriceSellComponent = PriceSellComponent(component(PriceSellComponentID));
 _PrototypeComponent = PrototypeComponent(component(PrototypeComponentID));
 _PetTraitsEquippedComponent = PetTraitsEquippedComponent(component(PetTraitsEquippedComponentID));
-_PetTraitsPermanentComponent = PetTraitsPermanentComponent(component(PetTraitsPermanentComponentID));
+_TraitsComponent = TraitsComponent(component(TraitsComponentID));
 _StateComponent = StateComponent(component(StateComponentID));
-_StorageSizeComponent = StorageSizeComponent(component(StorageSizeComponentID));
+_StorageComponent = StorageComponent(component(StorageComponentID));
 _TimeLastActionComponent = TimeLastActionComponent(component(TimeLastActionComponentID));
 _TimeStartComponent = TimeStartComponent(component(TimeStartComponentID));
 
