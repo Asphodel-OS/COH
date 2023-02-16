@@ -4,12 +4,9 @@ export const changeRoom = (object: Phaser.GameObjects.Image, to: number) => {
   const {
     network: {
       network,
-      api: {
-        player: { character },
-      },
+      api: { player: { operator: { move } } },
       world,
       actions,
-      components: { EOAOwnedBy },
     },
   } = window.layers!;
 
@@ -23,7 +20,7 @@ export const changeRoom = (object: Phaser.GameObjects.Image, to: number) => {
       requirement: () => true,
       updates: () => [],
       execute: async () => {
-        return window.layers!.network.api.player.operator.move(to);
+        return move(to);
       },
     });
   })

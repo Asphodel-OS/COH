@@ -1,9 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { map, merge } from "rxjs";
-import { BigNumber } from "ethers";
+import styled, { keyframes } from 'styled-components';
 import { EntityID, EntityIndex, Has, HasValue, getComponentValue, runQuery, } from "@latticexyz/recs";
 
 import { registerUIComponent } from "../engine/store";
+import pompom from '../../../public/img/pompom.png'
+import gakki from '../../../public/img/gakki.png'
+import ribbon from '../../../public/img/ribbon.png'
+import gum from '../../../public/img/gum.png'
+
+const ItemImages = new Map([
+  [1, pompom],
+  [2, gakki],
+  [3, ribbon],
+  [4, gum],
+]);
+
+const ItemNames = new Map([
+  [1, "pompom"],
+  [2, "gakki"],
+  [3, "ribbon"],
+  [4, "gum"],
+]);
 
 // merchant window with listings. assumes at most 1 merchant per room
 export function registerMerchantWindow() {
@@ -101,7 +119,6 @@ export function registerMerchantWindow() {
 
 
           return {
-            world,
             actions,
             api: player,
             data: {
@@ -119,10 +136,13 @@ export function registerMerchantWindow() {
     },
 
     // Render
-    ({ world, actions, api, data }) => {
+    ({ actions, api, data }) => {
       // hide this component if merchant.index == 0
 
-      // starts the production, given character and deposit ids are available
+      ///////////////////
+      // ACTIONS
+
+      // buy from a listing
       const buy = (listing: any, amt: number) => {
         const actionID = `Buying ${amt} of ${listing.itemType} at ${Date.now()}` as EntityID; // itemType should be replaced with the item's name
         actions.add({
@@ -137,11 +157,75 @@ export function registerMerchantWindow() {
         });
       };
 
+      // sell to a listing
+      const sell = (listing: any, amt: number) => {
+        const actionID = `Selling ${amt} of ${listing.itemType} at ${Date.now()}` as EntityID; // itemType should be replaced with the item's name
+        actions.add({
+          id: actionID,
+          components: {},
+          // on: data.operator.index, // what's the appropriate value here?
+          requirement: () => true,
+          updates: () => [],
+          execute: async () => {
+            return api.listing.sell(listing.id, amt);
+          },
+        });
+      };
 
-      // Actions to support within trade window:
-      // BuyFromListing
-      // SellToListing
-      return (<div></div>);
+      ///////////////////
+      // DISPLAY
+
+      // [listing: {id, index, itemType, buyPrice, sellPrice}]
+      const listings = (slots: any) =>
+        slots.map((listing: any) => (
+          <li style={{ color: "black", fontSize: "16px" }} key={listing.itemType}>
+            <img src={ItemImages.get(listing.itemType)} />
+            <b>Name</b> {ItemNames.get(listing.itemType)}
+            <b>Buy Price</b> {listing.buyPrice}
+            <Button
+              style={{ pointerEvents: "auto" }}
+              onClick={() => buy(listing, 1)}
+            >buy</Button>
+            <b>Sell Price</b> {listing.sellPrice}
+            <Button
+              style={{ pointerEvents: "auto" }}
+              onClick={() => sell(listing, 1)}
+            >buy</Button>
+          </li>
+        ));
+
+      const hideModal = () => {
+        const elementId = window.document.getElementById("merchant");
+        if (elementId) {
+          elementId.style.display = "none";
+        }
+      };
+
+      return (
+        <div id="merchant">
+          <button style={{ pointerEvents: "auto" }} onClick={hideModal}>close</button>
+          <ul>{listings(data.listings)}</ul>
+        </div>
+      );
     }
   );
 }
+
+
+const Button = styled.button`
+  background-color: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  justify-content: center;
+  font-family: Pixel;
+`;
