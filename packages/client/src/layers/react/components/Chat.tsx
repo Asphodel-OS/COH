@@ -139,9 +139,9 @@ export function registerChat() {
       return (
         <ModalWrapper id="chat_modal">
           <ModalContent>
-            <TypeHeading>
-              Chat
-            </TypeHeading>
+            <TopButton onClick={hideModal}>
+              X
+            </TopButton>
             <ChatWrapper>
               <ChatBox style={{ pointerEvents: 'auto'}}>
                 { messageLines }
@@ -155,11 +155,6 @@ export function registerChat() {
                 onChange={(e) => handleChange(e)}
               />
             </ChatWrapper>
-            <div style={{textAlign: "right"}}>
-            <Button style={{ pointerEvents: 'auto'}} onClick={hideModal}>
-              Close
-            </Button>
-            </div>
           </ModalContent>
         </ModalWrapper>
       );
@@ -178,21 +173,14 @@ const fadeIn = keyframes`
 
 const ChatWrapper = styled.div`
   background-color: #ffffff;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
   color: black;
-  padding: 15px 12px;
-
+  padding: 5px 12px;
   text-align: left;
-  text-decoration: none;
-  display: inline-block;
   font-size: 12px;
   cursor: pointer;
   border-radius: 5px;
-  justify-content: space-between;
-  align-items: bottom;
   font-family: Pixel;
+  margin: 10px 0px 10px 0px;
 `
 
 const ChatBox = styled.div`
@@ -236,12 +224,11 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalContent = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  padding: 20px;
+  padding: 5px;
   width: 99%;
   border-style: solid;
   border-width: 2px;
@@ -266,29 +253,6 @@ const Button = styled.button`
   }
 `;
 
-const KamiBox = styled.div`
-  background-color: #ffffff;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  color: black;
-  text-decoration: none;
-  display: grid;
-  font-size: 18px;
-  margin: 3px 2px;
-  border-radius: 5px;
-  font-family: Pixel;
-`;
-
-const KamiFacts = styled.div`
-  background-color: #ffffff;
-  color: black;
-  font-size: 18px;
-  margin: 0px;
-  padding: 0px;
-  grid-column: 2 / span 1000;
-`;
-
 const Description = styled.p`
   font-size: 16px;
   color: #333;
@@ -300,17 +264,32 @@ const Description = styled.p`
 const TypeHeading = styled.p`
   font-size: 20px;
   color: #333;
-  text-align: left;
-  padding: 20px;
   font-family: Pixel;
+  grid-column: 1;
+  justify-self: left;
+  align-self: middle;
 `;
 
-const KamiImage = styled.img`
+const TopButton = styled.button`
+  background-color: #ffffff;
   border-style: solid;
-  border-width: 0px 2px 0px 0px;
+  border-width: 2px;
   border-color: black;
-  height: 90px;
-  margin: 0px;
-  padding: 0px;
-  grid-column: 1 / span 1;
+  color: black;
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 5px;
+  font-family: Pixel;
+  width: 30px;
+  &:active {
+    background-color: #c2c2c2;
+  }
+  justify-self: right;
+`;
+
+const TopGrid = styled.div`
+  display: grid;
+  margin: 2px;
 `;

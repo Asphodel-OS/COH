@@ -206,7 +206,7 @@ const ModalContent = styled.div`
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  padding: 20px;
+  padding: 5px;
   width: 99%;
   border-style: solid;
   border-width: 2px;
@@ -244,7 +244,7 @@ const TopButton = styled.button`
   border-radius: 5px;
   font-family: Pixel;
   grid-column: 5;
-  width: 50%;
+  width: 30px;
   &:active {
     background-color: #c2c2c2;
   }
