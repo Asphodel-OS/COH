@@ -21,6 +21,16 @@ export function registerObjectModal() {
         if (modalId) modalId.style.display = 'none';
       };
 
+
+
+        const showShop = () => {
+          const objectId = document.getElementById('merchant');
+          if (objectId) {
+            objectId.style.display = 'block';
+          }
+        }
+
+
       const {
         objectData: { description },
       } = dataStore();
@@ -35,7 +45,7 @@ export function registerObjectModal() {
           </AlignRight>
             <Description>{description}</Description>
             <div style={{textAlign: "right"}}>
-            <Button style={{ pointerEvents: 'auto'}}>
+            <Button style={{ pointerEvents: 'auto'}} onClick={showShop}>
               Shop
             </Button>
             </div>

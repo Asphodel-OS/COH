@@ -30,10 +30,10 @@ export function registerMerchantWindow() {
 
     // Grid Config
     {
-      colStart: 0,
-      colEnd: 0,
-      rowStart: 0,
-      rowEnd: 0,
+      colStart: 20,
+      colEnd: 60,
+      rowStart: 20,
+      rowEnd: 60,
     },
 
     // Requirement (Data Manangement)
@@ -203,7 +203,7 @@ export function registerMerchantWindow() {
 
       return (
         <div id="merchant">
-          <button style={{ pointerEvents: "auto" }} onClick={hideModal}>close</button>
+          <button style={{ pointerEvents: "auto" }} onClick={hideModal}>X</button>
           <ul>{listings(data.listings)}</ul>
         </div>
       );
