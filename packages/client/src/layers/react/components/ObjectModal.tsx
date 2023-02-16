@@ -28,10 +28,15 @@ export function registerObjectModal() {
       return (
         <ModalWrapper id="object_modal">
           <ModalContent>
+          <AlignRight>
+          <TopButton style={{ pointerEvents: 'auto'}} onClick={hideModal}>
+            X
+          </TopButton>
+          </AlignRight>
             <Description>{description}</Description>
             <div style={{textAlign: "right"}}>
-            <Button style={{ pointerEvents: 'auto'}} onClick={hideModal}>
-              Close
+            <Button style={{ pointerEvents: 'auto'}}>
+              Shop
             </Button>
             </div>
           </ModalContent>
@@ -57,6 +62,11 @@ const ModalWrapper = styled.div`
   align-items: center;
   animation: ${fadeIn} 0.5s ease-in-out;
 `;
+
+const AlignRight = styled.div`
+  text-align: right;
+`;
+
 
 const ModalContent = styled.div`
   display: flex;
@@ -95,4 +105,22 @@ const Description = styled.p`
   text-align: center;
   padding: 20px;
   font-family: Pixel;
+`;
+
+const TopButton = styled.button`
+  background-color: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  color: black;
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 5px;
+  font-family: Pixel;
+  width: 30px;
+  &:active {
+    background-color: #c2c2c2;
+  }
 `;

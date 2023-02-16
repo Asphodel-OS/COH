@@ -43,32 +43,24 @@ export function createPlayerAPI(systems: any) {
   /*********************
    *     Listings
    *********************/
-  // TODO: update these once listing logic is changed to utilize operator
 
   // @dev allows a character to buy an item through a merchant listing entity
   // @param listingID    entity ID of listing
   // @param amt          amount to buy
-  function buyFromListing(
-    listingID: BigNumberish,
-    amt: number
-  ) {
+  function buyFromListing(listingID: BigNumberish, amt: number) {
     return systems["system.ListingBuy"].executeTyped(listingID, amt);
   }
 
   // @dev allows a character to sell an item through a merchant listing entity
   // @param listingID    entity ID of listing
   // @param amt          amount to sell
-  function sellToListing(
-    listingID: BigNumberish,
-    amt: number
-  ) {
+  function sellToListing(listingID: BigNumberish, amt: number) {
     return systems["system.ListingSell"].executeTyped(listingID, amt);
   }
 
   /*********************
    *    PRODUCTIONS 
    *********************/
-  // TODO: update these once production logic is changed to utilize operator
 
   // @dev retrieves the amount due from a passive deposit production and resets the starting point
   function collectProduction(depositID: BigNumberish) {

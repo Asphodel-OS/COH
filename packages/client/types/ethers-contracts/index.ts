@@ -83,7 +83,6 @@ export type { TradeInitiateSystem } from "./TradeInitiateSystem";
 export type { Uint256ArrayBareComponent } from "./Uint256ArrayBareComponent";
 export type { Uint256ArrayComponent } from "./Uint256ArrayComponent";
 export type { Uint256BareComponent } from "./Uint256BareComponent";
-export type { Uint256Component } from "./Uint256Component";
 export * as factories from "./factories";
 export { AddressComponent__factory } from "./factories/AddressComponent__factory";
 export { AddressPlayerComponent__factory } from "./factories/AddressPlayerComponent__factory";
@@ -168,3 +167,4 @@ export { Uint256ArrayBareComponent__factory } from "./factories/Uint256ArrayBare
 export { Uint256ArrayComponent__factory } from "./factories/Uint256ArrayComponent__factory";
 export { Uint256BareComponent__factory } from "./factories/Uint256BareComponent__factory";
 export { Uint256Component__factory } from "./factories/Uint256Component__factory";
+export { _ListingSetSystem__factory } from "./factories/_ListingSetSystem__factory";
