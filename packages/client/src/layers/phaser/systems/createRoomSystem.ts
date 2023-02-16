@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { defineSystem, Has, HasValue, runQuery } from '@latticexyz/recs';
+import { roomExits } from '../../../constants';
 import { NetworkLayer } from '../../network/types';
+import { dataStore } from '../../react/store/createStore';
 import { PhaserLayer, PhaserScene } from '../types';
 import { getCurrentRoom } from '../utils';
 
@@ -28,6 +30,9 @@ export function createRoomSystem(network: NetworkLayer, phaser: PhaserLayer) {
 
     if (characterEntityNumber == update.entity) {
       const currentRoom = getCurrentRoom(Location, update.entity);
+
+      dataStore.setState({ roomExits: roomExits[currentRoom]  });
+      console.log(roomExits[currentRoom],currentRoom);
 
       myMain.interactiveObjects.forEach((object: any) => {
         try {

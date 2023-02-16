@@ -1,7 +1,8 @@
 import { PhaserScene } from '../types';
 import { resizePicture } from '../utils/resizePicture';
 import room004image from '../../../public/assets/room4.png';
-import { changeRoom } from '../utils/changeRoom';
+import { getCouchCoordinates } from '../utils/coordinates';
+import { triggerObjectModal } from '../utils/triggerObjectModal';
 
 const scale = resizePicture();
 

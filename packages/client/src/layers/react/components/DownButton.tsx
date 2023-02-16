@@ -1,10 +1,10 @@
 import React from 'react';
 import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
-import { dataStore } from '../store/createStore';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import './font.css';
-import clickSound from '../../../public/sound/sound_effects/mouseclick.wav'
+import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
+import { dataStore } from '../store/createStore';
 
 export function registerDownButton() {
   registerUIComponent(
@@ -16,23 +16,46 @@ export function registerDownButton() {
       rowEnd: 99,
     },
     (layers) => of(layers),
-    () => {
+    (layers) => {
       const {
-        objectData: { description },
+        network: {
+          api: {
+            player: {
+              operator: { move },
+            },
+          },
+          actions,
+        },
+      } = layers;
+
+      const {
+        roomExits: { down },
       } = dataStore();
 
-      const showMyKami = () => {
-        const clickFX = new Audio(clickSound)
-        clickFX.play()
-        const modalId = window.document.getElementById('petlist_modal');
-        if (modalId.style.display === 'block') modalId.style.display = 'none';
-        else modalId.style.display = 'block';
+      const moveDownside = () => {
+        const clickFX = new Audio(clickSound);
+        clickFX.play();
+
+        const actionID = `Moving at ${Date.now()}` as EntityID;
+
+        actions.add({
+          id: actionID,
+          components: {},
+          requirement: () => true,
+          updates: () => [],
+          execute: async () => {
+            return move(down);
+          },
+        });
       };
 
       return (
-        <ModalWrapper id="down_button">
+        <ModalWrapper
+          id="down_button"
+          style={{ display: down === 0 ? 'none' : 'block' }}
+        >
           <ModalContent>
-            <Button style={{ pointerEvents: 'auto' }} onClick={showMyKami}>
+            <Button style={{ pointerEvents: 'auto' }} onClick={moveDownside}>
               ↓
             </Button>
           </ModalContent>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
-import { dataStore } from '../store/createStore';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import './font.css';
-import clickSound from '../../../public/sound/sound_effects/mouseclick.wav'
+import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
+import { dataStore } from '../store/createStore';
 
 export function registerUpButton() {
   registerUIComponent(
@@ -16,19 +16,25 @@ export function registerUpButton() {
       rowEnd: 88,
     },
     (layers) => of(layers),
-    () => {
+    (layers) => {
       const {
         network: {
-          network,
-          api: { player: { operator: { move } } },
-          world,
+          api: {
+            player: {
+              operator: { move },
+            },
+          },
           actions,
         },
-      } = window.layers!;
+      } = layers;
 
-      const showMyKami = () => {
-        const clickFX = new Audio(clickSound)
-        clickFX.play()
+      const {
+        roomExits: { up },
+      } = dataStore();
+
+      const moveUpside = () => {
+        const clickFX = new Audio(clickSound);
+        clickFX.play();
 
         const actionID = `Moving at ${Date.now()}` as EntityID;
 
@@ -38,15 +44,18 @@ export function registerUpButton() {
           requirement: () => true,
           updates: () => [],
           execute: async () => {
-            return move(1);
+            return move(up);
           },
         });
       };
 
       return (
-        <ModalWrapper id="up_button">
+        <ModalWrapper
+          id="up_button"
+          style={{ display: up === 0 ? 'none' : 'block' }}
+        >
           <ModalContent>
-            <Button style={{ pointerEvents: 'auto' }} onClick={showMyKami}>
+            <Button style={{ pointerEvents: 'auto' }} onClick={moveUpside}>
               ↑
             </Button>
           </ModalContent>
