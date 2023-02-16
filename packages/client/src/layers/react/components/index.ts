@@ -11,6 +11,8 @@ import { registerTradeWindow } from './TradeWindow';
 import { registerDetectMint } from './DetectMint';
 import { registerMintProcess } from './MintProcess';
 import { registerChat } from './Chat';
+import { registerUpButton } from './UpButton';
+import { registerDownButton } from './DownButton';
 
 export function registerUIComponents() {
   registerLoadingState();
@@ -26,4 +28,6 @@ export function registerUIComponents() {
   registerMintProcess();
   registerChat();
   registerActionQueue();
+  registerUpButton();
+  registerDownButton();
 }
