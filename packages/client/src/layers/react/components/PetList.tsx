@@ -105,9 +105,14 @@ export function registerPetList() {
       return (
         <ModalWrapper id="petlist_modal">
           <ModalContent>
-          <Description>
-            Bytes: 12
-          </Description>
+            <TopGrid>
+            <TopDescription>
+              Bytes: 12
+            </TopDescription>
+              <TopButton onClick={hideModal}>
+                X
+              </TopButton>
+            </TopGrid>
             <ConsumableGrid>
               <CellOne>
                 <CellGrid>
@@ -171,11 +176,6 @@ export function registerPetList() {
                 </KamiDetails>
               </KamiFacts>
             </KamiBox>
-            <div style={{ textAlign: "right" }}>
-              <Button style={{ pointerEvents: 'auto' }} onClick={hideModal}>
-                Close
-              </Button>
-            </div>
           </ModalContent>
         </ModalWrapper>
       );
@@ -219,7 +219,7 @@ const Button = styled.button`
   border-width: 2px;
   border-color: black;
   color: black;
-  padding: 15px;
+  padding: 5px;
   display: inline-block;
   font-size: 14px;
   cursor: pointer;
@@ -229,6 +229,26 @@ const Button = styled.button`
   &:active {
     background-color: #c2c2c2;
   }
+`;
+
+const TopButton = styled.button`
+  background-color: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  color: black;
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 5px;
+  font-family: Pixel;
+  grid-column: 5;
+  width: 50%;
+  &:active {
+    background-color: #c2c2c2;
+  }
+  justify-self: right;
 `;
 
 const ThinButton = styled.button`
@@ -241,6 +261,7 @@ const ThinButton = styled.button`
   display: inline-block;
   font-size: 14px;
   cursor: pointer;
+  pointer-events: auto;
   border-radius: 5px;
   font-family: Pixel;
   margin: 3px;
@@ -292,6 +313,20 @@ const Description = styled.p`
   font-family: Pixel;
 `;
 
+const TopDescription = styled.p`
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+  font-family: Pixel;
+  grid-column: 1;
+  align-self: center;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 5px;
+  padding: 5px;
+`;
+
 const TypeHeading = styled.p`
   font-size: 20px;
   color: #333;
@@ -319,13 +354,17 @@ const ConsumableGrid = styled.div`
   margin: 2px;
 `;
 
+const TopGrid = styled.div`
+  display: grid;
+  margin: 2px;
+`;
+
 const CellGrid = styled.div`
   display: grid;
   border-style: solid;
   border-width: 0px;
   border-color: black;
 `;
-
 
 const CellOne = styled.div`
   grid-column: 1;
