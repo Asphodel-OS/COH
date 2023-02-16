@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { map } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import styled, { keyframes } from 'styled-components';
@@ -18,11 +18,11 @@ export function registerDetectMint() {
     (layers) => {
       const {
         network: {
-          components: { PetIndex },
+          components: { PlayerAddress },
         },
       } = layers;
 
-      return PetIndex.update$.pipe(
+      return PlayerAddress.update$.pipe(
         map(() => {
           return {
             layers,
@@ -41,28 +41,43 @@ export function registerDetectMint() {
       } = layers;
 
       const [isDivVisible, setIsDivVisible] = useState(false);
-      const hasPlayerMinted = Array.from(
+      const [name, setName] = useState("");
+      const hasOperator = Array.from(
         runQuery([HasValue(PlayerAddress, { value: connectedAddress.get() })])
       )[0];
 
-      const handleMinting = async () => {
-        try {
-          const mintFX = new Audio(mintSound)
-          mintFX.play()
-          
-          await player.ERC721.mint(connectedAddress.get()!);
+      const handleMinting = useCallback(
+        async (name) => {
+          try {
+            const mintFX = new Audio(mintSound)
+            mintFX.play()
+            
+            await player.operator.set(connectedAddress.get()!, name);
 
-          document.getElementById('detectMint')!.style.display = 'none';
-          document.getElementById('mint_process')!.style.display = 'block';
-        } catch (e) {
-          //
+            document.getElementById('detectMint')!.style.display = 'none';
+            document.getElementById('mint_process')!.style.display = 'block';
+          } catch (e) {
+            //
+          }
+        }, []
+      );
+
+      const catchKeys = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.keyCode === 13) {
+          handleMinting(name);
+        }
+        if (event.keyCode === 27) {
         }
       };
 
+      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setName(event.target.value);
+      };
+
       useEffect(() => {
-        if (hasPlayerMinted != undefined) return setIsDivVisible(false);
+        if (hasOperator != undefined) return setIsDivVisible(false);
         return setIsDivVisible(true);
-      }, [setIsDivVisible, hasPlayerMinted]);
+      }, [setIsDivVisible, hasOperator]);
 
       return (
         <ModalWrapper
@@ -70,10 +85,16 @@ export function registerDetectMint() {
           style={{ display: isDivVisible ? 'block' : 'none' }}
         >
           <ModalContent>
-            <Description>You haven't minted.</Description>
-            <Button style={{ pointerEvents: 'auto' }} onClick={handleMinting}>
-              Mint Character
-            </Button>
+            <Description style={{gridRow : 1}}>
+              Name Operator
+            </Description>
+            <Input style={{ gridRow: 2, pointerEvents: 'auto'}}
+              type="text"
+              onKeyDown={(e) => catchKeys(e)}
+              placeholder="username"
+              value={name}
+              onChange={(e) => handleChange(e)}>
+            </Input>
           </ModalContent>
         </ModalWrapper>
       );
@@ -90,6 +111,26 @@ const fadeIn = keyframes`
   }
 `;
 
+const Input = styled.input`
+  width: 100%;
+
+  background-color: #ffffff;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  color: black;
+  padding: 15px 12px;
+
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  justify-content: center;
+  font-family: Pixel;
+`
+
 const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
@@ -98,8 +139,8 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalContent = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  justify-content: center;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -129,7 +170,7 @@ const Button = styled.button`
 `;
 
 const Description = styled.p`
-  font-size: 22px;
+  font-size: 18px;
   color: #333;
   text-align: center;
   padding: 20px;
