@@ -54,7 +54,8 @@ export function registerChat() {
             Has(IsOperator),
             HasValue(PlayerAddress, { value: network.connectedAddress.get() })
           ]))[0];
-          const chatName = getName(operatorIndex);
+          // const chatName = getName(operatorIndex);
+          const chatName = "You"; // operator name interaction bug, but chat working
           return {
             chatName: chatName
           }
