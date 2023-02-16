@@ -7,6 +7,7 @@ import {
 import {
   defineLoadingStateComponent,
   defineNumberArrayComponent,
+  defineStringArrayComponent,
 } from "./definitions";
 
 // define functions for registration
@@ -41,7 +42,7 @@ export function createComponents(world: any) {
     // Indices
     ItemIndex: defineNumberComponent(world, { id: "ItemIndex", metadata: { contractId: "component.Index.Item" } }),
     ModifierIndex: defineNumberComponent(world, { id: "ModifierIndex", metadata: { contractId: "component.Index.Modifier" } }),
-    PetIndex: defineNumberComponent(world, { id: "PetIndex", metadata: { contractId: "component.Index.Pet" } }),
+    PetIndex: defineStringComponent(world, { id: "PetIndex", metadata: { contractId: "component.Index.Pet" } }),
 
     // Values
     Balance: defineNumberComponent(world, { id: "Balance", metadata: { contractId: "component.Balance" } }),
@@ -60,6 +61,9 @@ export function createComponents(world: any) {
     TimeLastAction: defineNumberComponent(world, { id: "TimeLastAction", metadata: { contractId: "component.TimeLastAction" } }),
     TimeStart: defineNumberComponent(world, { id: "TimeStart", metadata: { contractId: "component.TimeStart" } }),
 
+    // Pet metadata
+    PetTraits: defineStringArrayComponent(world, "PetTraits", "component.PetTraits.Permanent"),
+    PetEquipped: defineStringArrayComponent(world, "PetEquipped", "component.PetTraits.Equipped"),
 
     // speeecial
     LoadingState: defineLoadingStateComponent(world),
