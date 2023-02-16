@@ -15,6 +15,7 @@ export function createAdminAPI(systems: any) {
     _setListing(3, 1, 10, 5);
     _setListing(3, 2, 30, 15);
     _setListing(3, 3, 50, 25);
+    _setListing(3, 4, 100, 50);
 
     // required to init erc721 registy system, very temporary
     systems["system.ERC721.pet"].init();
@@ -78,7 +79,7 @@ export function createAdminAPI(systems: any) {
     buyPrice: number,
     sellPrice: number
   ) {
-    return systems["system.ListingSet"].executeTyped(location, itemIndex, buyPrice, sellPrice);
+    return systems["system._ListingSet"].executeTyped(location, itemIndex, buyPrice, sellPrice);
   }
 
   return {
