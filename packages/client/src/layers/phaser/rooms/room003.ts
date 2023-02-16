@@ -22,22 +22,38 @@ export function room003() {
         .setScale(1.75)
         .setRotation(1.5714);
 
-        const coordinates = getCouchCoordinates(scale);
+      const coordinates = getCouchCoordinates(scale);
 
-        const girl = scene.add.rectangle(
-          coordinates.x,
-          coordinates.y,
-          coordinates.width,
-          coordinates.height
-        );
+      const girl = scene.add.rectangle(
+        coordinates.x,
+        coordinates.y,
+        coordinates.width,
+        coordinates.height
+      );
 
 
-              scene.interactiveObjects.push(
-                triggerObjectModal(
-                  girl,
-                  'Please put the button that opens the shop menu in this modal.'
-                )
-              );
+      scene.interactiveObjects.push(
+        triggerObjectModal(
+          girl,
+          'Please put the button that opens the shop menu in this modal.'
+        )
+      );
+
+      scene.interactiveObjects?.push(
+        scene.add
+          .rectangle(
+            coordinates.x,
+            coordinates.y,
+            coordinates.width,
+            coordinates.height
+          )
+          .setInteractive()
+          // .setDepth(1)
+          .on("pointerdown", () => {
+            const windowId = window.document.getElementById("merchant");
+            if (windowId) windowId.style.display = "block";
+          })
+      );
 
       scene.interactiveObjects.push(changeRoom(downArrow, 1));
     },
