@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import { LibString } from "solady/utils/LibString.sol";
 import { IComponent } from "solecs/interfaces/IComponent.sol";
 import { IUint256Component as IUintComp } from "solecs/interfaces/IUint256Component.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById, getComponentById, entityToAddress, addressToEntity } from "solecs/utils.sol";
-import { LibString } from "solady/utils/LibString.sol";
 
 import { BatteryCapacityComponent, ID as BatteryCapacityCompID } from "components/BatteryCapacityComponent.sol";
 import { BatteryChargeComponent, ID as BatteryChargeCompID } from "components/BatteryChargeComponent.sol";
@@ -43,12 +43,17 @@ library LibPet {
     IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
     IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
     MediaURIComponent(getAddressById(components, MediaURICompID)).set(id, uri);
-    BatteryCapacityComponent(getAddressById(components, BatteryCapacityCompID)).set(id, BATT_CHARGE);
-    BatteryChargeComponent(getAddressById(components, BatteryChargeCompID)).set(id, BATT_CHARGE);
-    BatteryLastChargeComponent(getAddressById(components, BatteryLastChargeCompID)).set(id, block.timestamp);
-    NameComponent(getAddressById(components, NameCompID)).set(
-      id, LibString.concat("kamigotchi ", LibString.toString(index))
+    BatteryCapacityComponent(getAddressById(components, BatteryCapacityCompID)).set(
+      id,
+      BATT_CHARGE
     );
+    BatteryChargeComponent(getAddressById(components, BatteryChargeCompID)).set(id, BATT_CHARGE);
+    BatteryLastChargeComponent(getAddressById(components, BatteryLastChargeCompID)).set(
+      id,
+      block.timestamp
+    );
+    string memory name = LibString.concat("kamigotchi ", LibString.toString(index));
+    NameComponent(getAddressById(components, NameCompID)).set(id, name);
     return id;
   }
 
@@ -72,6 +77,13 @@ library LibPet {
   // TODO: include equipment
   function getTotalHashRate(IUintComp components, uint256 id) internal view returns (uint256) {
     return HashRateComponent(getAddressById(components, HashRateCompID)).getValue(id);
+  }
+
+  /////////////////
+  // CHECKS
+
+  function isPet(IUintComp components, uint256 id) internal view returns (bool) {
+    return IsPetComponent(getAddressById(components, IsPetCompID)).has(id);
   }
 
   /////////////////
@@ -113,6 +125,14 @@ library LibPet {
     uint256 ownerID
   ) internal {
     IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, ownerID);
+  }
+
+  function setName(
+    IUintComp components,
+    uint256 id,
+    string memory name
+  ) internal {
+    NameComponent(getAddressById(components, NameCompID)).set(id, name);
   }
 
   /////////////////

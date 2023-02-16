@@ -97,6 +97,8 @@ import { TradeAddToSystem, ID as TradeAddToSystemID } from "systems/TradeAddToSy
 import { TradeCancelSystem, ID as TradeCancelSystemID } from "systems/TradeCancelSystem.sol";
 import { TradeConfirmSystem, ID as TradeConfirmSystemID } from "systems/TradeConfirmSystem.sol";
 import { TradeInitiateSystem, ID as TradeInitiateSystemID } from "systems/TradeInitiateSystem.sol";
+import { PetNameSystem, ID as PetNameSystemID } from "systems/PetNameSystem.sol";
+import { OperatorNameSystem, ID as OperatorNameSystemID } from "systems/OperatorNameSystem.sol";
 
 abstract contract TestSetupImports is MudTest {
 // Components vars
@@ -175,6 +177,8 @@ TradeAddToSystem _TradeAddToSystem;
 TradeCancelSystem _TradeCancelSystem;
 TradeConfirmSystem _TradeConfirmSystem;
 TradeInitiateSystem _TradeInitiateSystem;
+PetNameSystem _PetNameSystem;
+OperatorNameSystem _OperatorNameSystem;
 
 function setUp() public virtual override {
 super.setUp();
@@ -253,5 +257,7 @@ _TradeAddToSystem = TradeAddToSystem(system(TradeAddToSystemID));
 _TradeCancelSystem = TradeCancelSystem(system(TradeCancelSystemID));
 _TradeConfirmSystem = TradeConfirmSystem(system(TradeConfirmSystemID));
 _TradeInitiateSystem = TradeInitiateSystem(system(TradeInitiateSystemID));
+_PetNameSystem = PetNameSystem(system(PetNameSystemID));
+_OperatorNameSystem = OperatorNameSystem(system(OperatorNameSystemID));
 }
 }

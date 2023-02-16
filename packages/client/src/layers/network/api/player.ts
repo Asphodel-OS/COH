@@ -10,6 +10,13 @@ export function createPlayerAPI(systems: any) {
     return systems["system.ERC721.pet"].mint(address);
   }
 
+  // @dev
+  // @param entityID   pet entity
+  // @param name       name
+  function namePet(petID: BigNumberish, name: string) {
+    return systems["system.PetName"].executeTyped(petID, name);
+  }
+
   /*********************
    *     OPERATOR
    *********************/
@@ -17,6 +24,13 @@ export function createPlayerAPI(systems: any) {
   // @param location  destination room location
   function moveOperator(location: number) {
     return systems["system.OperatorMove"].executeTyped(location);
+  }
+
+  // @dev   renames operator, ignoring previous name
+  // @param entityID   pet entity
+  // @param name       name
+  function nameOperator(petID: BigNumberish, name: string) {
+    return systems["system.OperatorName"].executeTyped(petID, name);
   }
 
   // @dev sets the operator of an Owner wallet. should be set by Owner wallet
@@ -111,7 +125,8 @@ export function createPlayerAPI(systems: any) {
 
   return {
     ERC721: {
-      mint: mintPet
+      mint: mintPet,
+      name: namePet
     },
     listing: {
       buy: buyFromListing,
@@ -119,6 +134,7 @@ export function createPlayerAPI(systems: any) {
     },
     operator: {
       move: moveOperator,
+      name: nameOperator,
       set: setOperator,
     },
     production: {
