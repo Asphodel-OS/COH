@@ -112,7 +112,7 @@
         "BalanceComponent",
         "BlockLastComponent",
         "CoinComponent",
-        "IdOperatorComponent",
+        "IdHolderComponent",
         "IndexItemComponent",
         "IsInventoryComponent"
       ]
