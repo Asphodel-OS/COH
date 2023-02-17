@@ -10,6 +10,8 @@ import { LibOperator } from "libraries/LibOperator.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibPetTraits } from "libraries/LibPetTraits.sol";
 
+import { BalanceComponent, ID as BalanceCompID } from "components/BalanceComponent.sol";
+
 import { PetMetadataSystem, ID as PetMetadataSystemID } from "systems/PetMetadataSystem.sol";
 
 uint256 constant ID = uint256(keccak256("system.ERC721.pet"));
@@ -36,6 +38,7 @@ contract ERC721PetSystem is System, ERC721 {
       LibPetTraits.placeholderRegistry(components, world);
       inited = true;
     }
+    BalanceComponent(getAddressById(components, BalanceCompID)).set(ID, 0);
   }
 
   /*********************
@@ -44,7 +47,9 @@ contract ERC721PetSystem is System, ERC721 {
 
   function mint(address to) public returns (uint256) {
     // require(tx.origin == msg.sender, "no contracts");
+    // leaving totalSupply in for now, but not used
     ++totalSupply; // arrays start at 1 here :3
+    uint256 nextMint = nextMintID();
 
     // Get the operator for this owner(to). Create one if it doesn't exist.
     uint256 operatorID = LibOperator.getByOwner(components, to);
@@ -53,11 +58,11 @@ contract ERC721PetSystem is System, ERC721 {
     }
 
     // TODO: set stats based on the generated traits of the pet.
-    uint256 petID = LibPet.create(world, components, to, operatorID, totalSupply, UNREVEALED_URI);
+    uint256 petID = LibPet.create(world, components, to, operatorID, nextMint, UNREVEALED_URI);
     LibPetTraits.placeholderTraits(components, world, petID);
     // LibPet.setStats(components, petID);
 
-    _mint(to, totalSupply); // should we run this at the beginning or end?
+    _mint(to, nextMint); // should we run this at the beginning or end?
     return petID;
   }
 
@@ -72,6 +77,21 @@ contract ERC721PetSystem is System, ERC721 {
    **********************/
   function tokenIDToEntityID(uint256 petIndex) public view returns (uint256) {
     return LibPet.indexToID(components, petIndex);
+  }
+
+  // uses BalanceComponent to track minted tokens. Uses systemID as entityID
+  function nextMintID() internal returns (uint256) {
+    BalanceComponent bComp = BalanceComponent(getAddressById(components, BalanceCompID));
+    
+    if (!bComp.has(ID)) {
+      // no mint, make one! start from 1
+      bComp.set(ID, 1);
+      return 1;
+    } 
+
+    uint256 cur = bComp.getValue(ID);
+    bComp.set(ID, cur + 1);
+    return cur + 1;
   }
 
   // NOTE: the id here is actually the ERC721 id, aka the pet index in our world

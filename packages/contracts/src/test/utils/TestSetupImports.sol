@@ -22,7 +22,6 @@ import "libraries/LibRoom.sol";
 import "libraries/LibTrade.sol";
 
 // Components
-import { AddressPlayerComponent, ID as AddressPlayerComponentID } from "components/AddressPlayerComponent.sol";
 import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
 import { BatteryCapacityComponent, ID as BatteryCapacityComponentID } from "components/BatteryCapacityComponent.sol";
 import { BatteryChargeComponent, ID as BatteryChargeComponentID } from "components/BatteryChargeComponent.sol";
@@ -64,6 +63,8 @@ import { ModifierStatusComponent, ID as ModifierStatusComponentID } from "compon
 import { ModifierTypeComponent, ID as ModifierTypeComponentID } from "components/ModifierTypeComponent.sol";
 import { ModifierValueComponent, ID as ModifierValueComponentID } from "components/ModifierValueComponent.sol";
 import { NameComponent, ID as NameComponentID } from "components/NameComponent.sol";
+import { NumCoresComponent, ID as NumCoresComponentID } from "components/NumCoresComponent.sol";
+import { AddressPlayerComponent, ID as AddressPlayerComponentID } from "components/AddressPlayerComponent.sol";
 import { PriceBuyComponent, ID as PriceBuyComponentID } from "components/PriceBuyComponent.sol";
 import { PriceSellComponent, ID as PriceSellComponentID } from "components/PriceSellComponent.sol";
 import { PrototypeComponent, ID as PrototypeComponentID } from "components/PrototypeComponent.sol";
@@ -101,7 +102,6 @@ import { OperatorNameSystem, ID as OperatorNameSystemID } from "systems/Operator
 
 abstract contract TestSetupImports is MudTest {
 // Components vars
-AddressPlayerComponent _AddressPlayerComponent;
 BalanceComponent _BalanceComponent;
 BatteryCapacityComponent _BatteryCapacityComponent;
 BatteryChargeComponent _BatteryChargeComponent;
@@ -143,6 +143,8 @@ ModifierStatusComponent _ModifierStatusComponent;
 ModifierTypeComponent _ModifierTypeComponent;
 ModifierValueComponent _ModifierValueComponent;
 NameComponent _NameComponent;
+NumCoresComponent _NumCoresComponent;
+AddressPlayerComponent _AddressPlayerComponent;
 PriceBuyComponent _PriceBuyComponent;
 PriceSellComponent _PriceSellComponent;
 PrototypeComponent _PrototypeComponent;
@@ -181,7 +183,6 @@ OperatorNameSystem _OperatorNameSystem;
 function setUp() public virtual override {
 super.setUp();
 
-_AddressPlayerComponent = AddressPlayerComponent(component(AddressPlayerComponentID));
 _BalanceComponent = BalanceComponent(component(BalanceComponentID));
 _BatteryCapacityComponent = BatteryCapacityComponent(component(BatteryCapacityComponentID));
 _BatteryChargeComponent = BatteryChargeComponent(component(BatteryChargeComponentID));
@@ -223,6 +224,8 @@ _ModifierStatusComponent = ModifierStatusComponent(component(ModifierStatusCompo
 _ModifierTypeComponent = ModifierTypeComponent(component(ModifierTypeComponentID));
 _ModifierValueComponent = ModifierValueComponent(component(ModifierValueComponentID));
 _NameComponent = NameComponent(component(NameComponentID));
+_NumCoresComponent = NumCoresComponent(component(NumCoresComponentID));
+_AddressPlayerComponent = AddressPlayerComponent(component(AddressPlayerComponentID));
 _PriceBuyComponent = PriceBuyComponent(component(PriceBuyComponentID));
 _PriceSellComponent = PriceSellComponent(component(PriceSellComponentID));
 _PrototypeComponent = PrototypeComponent(component(PrototypeComponentID));

@@ -10,6 +10,8 @@ import { registerRequestQueue } from './RequestQueue';
 import { registerTradeWindow } from './TradeWindow';
 import { registerDetectMint } from './DetectMint';
 import { registerMintProcess } from './MintProcess';
+import { registerPetMint } from './PetMint';
+import { registerPetDetails } from './PetDetails';
 import { registerChat } from './Chat';
 import { registerUpButton } from './UpButton';
 import { registerDownButton } from './DownButton';
@@ -27,6 +29,8 @@ export function registerUIComponents() {
   registerObjectModal();
   registerMintProcess();
   registerChat();
+  registerPetMint();
+  registerPetDetails();
   registerActionQueue();
   registerUpButton();
   registerDownButton();

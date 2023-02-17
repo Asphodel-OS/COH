@@ -2,6 +2,8 @@ import { PhaserScene } from '../types';
 import room002image from '../../../public/assets/room2.png';
 import { resizePicture } from '../utils/resizePicture';
 import { triggerObjectModal } from '../utils/triggerObjectModal';
+import { triggerPetMintModal } from '../utils/triggerPetMintModal';
+import { changeRoom } from '../utils/changeRoom';
 
 const scale = resizePicture();
 
@@ -17,10 +19,15 @@ export function room002() {
 
       const vend = scene.add.rectangle(500, 820, 200, 180);
 
+
       scene.interactiveObjects.push(
-        triggerObjectModal(
+        // triggerObjectModal(
+        //   vend,
+        //   'Quench your thirst with a refreshing soda, or indulge your sweet tooth with a chocolate bar. With just a few coins, our vending machine has got you covered. Grab a snack and keep the hunger at bay!'
+        // )
+        triggerPetMintModal(
           vend,
-          'Quench your thirst with a refreshing soda, or indulge your sweet tooth with a chocolate bar. With just a few coins, our vending machine has got you covered. Grab a snack and keep the hunger at bay!'
+          "Mint Pet"
         )
       );
     },
