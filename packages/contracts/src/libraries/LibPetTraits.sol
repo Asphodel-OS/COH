@@ -20,7 +20,7 @@ import { LibInventory } from "libraries/LibInventory.sol";
 
 // import { console } from "forge-std/console.sol";
 
-uint256 constant PERM_LENGTH = 6;
+uint256 constant PERM_LENGTH = 5;
 uint256 constant EQUIP_LENGTH = 6;
 uint256 constant SLOT_A = 0;
 uint256 constant SLOT_B = 1;
@@ -419,6 +419,49 @@ library LibPetTraits {
       "ADD", // modType
       "Background" // name
     );
+
+
+    // // test 
+    // LibModifier.createIndex(
+    //   components,
+    //   world,
+    //   200001, // index
+    //   11, // modValue
+    //   "ADD", // modType
+    //   "Pickaxe" // name
+    // );
+    // LibModifier.createIndex(
+    //   components,
+    //   world,
+    //   20008, // index
+    //   11, // modValue
+    //   "ADD", // modType
+    //   "Pickaxe" // name
+    // );
+    // LibModifier.createIndex(
+    //   components,
+    //   world,
+    //   2004, // index
+    //   11, // modValue
+    //   "ADD", // modType
+    //   "Pickaxe" // name
+    // );
+    // LibModifier.createIndex(
+    //   components,
+    //   world,
+    //   201, // index
+    //   11, // modValue
+    //   "ADD", // modType
+    //   "Pickaxe" // name
+    // );
+    // LibModifier.createIndex(
+    //   components,
+    //   world,
+    //   29, // index
+    //   11, // modValue
+    //   "ADD", // modType
+    //   "Pickaxe" // name
+    // );
   }
 
   function placeholderTraits(
@@ -427,7 +470,7 @@ library LibPetTraits {
     uint256 entityID
   ) internal {
     // perm
-    uint256[] memory arrPerm = new uint256[](6);
+    uint256[] memory arrPerm = new uint256[](PERM_LENGTH);
     for (uint256 i; i < arrPerm.length; i++) {
       arrPerm[i] = LibModifier.addToPet(components, world, entityID, i + 1);
     }

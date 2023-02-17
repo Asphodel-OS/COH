@@ -68,6 +68,7 @@ export function createComponents(world: any) {
     // Pet metadata
     PetTraits: defineStringArrayComponent(world, "PetTraits", "component.PetTraits.Permanent"),
     PetEquipped: defineStringArrayComponent(world, "PetEquipped", "component.PetTraits.Equipped"),
+    _DynamicTraits: defineStringArrayComponent(world, "_DynamicTraits", "component.PetTraits._Dynamic"),
 
     // speeecial
     LoadingState: defineLoadingStateComponent(world),

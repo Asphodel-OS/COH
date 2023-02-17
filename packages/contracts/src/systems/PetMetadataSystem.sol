@@ -15,6 +15,7 @@ import { UNREVEALED_URI, ID as PetSystemID } from "systems/ERC721PetSystem.sol";
 
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
 import { PetTraitsPermanentComponent, ID as PetTraitsPermanentCompID } from "components/PetTraitsPermanentComponent.sol";
+import { _DynamicTraitsComponent, ID as _DynamicTraitsCompID } from "components/_DynamicTraitsComponent.sol";
 
 uint256 constant ID = uint256(keccak256("system.ERC721.metadata"));
 
@@ -36,7 +37,8 @@ contract PetMetadataSystem is System {
     _;
   }
 
-  // sets metadata with a random seed. unimplemented for now
+  // sets metadata with a random seed. likely not working because of secondary gas call limits
+  // will be properly split with a commit/reveal scheme 
   function execute(bytes memory arguments) public onlyPetSystem returns (bytes memory) {
     // reveals individual metadata
     require(_revealed, "collection not yet revealed");
@@ -56,8 +58,10 @@ contract PetMetadataSystem is System {
       entityID,
       LibString.concat(_baseURI, LibString.concat(LibString.toString(packed), ".gif"))
     );
+    _DynamicTraitsComponent(getAddressById(components, _DynamicTraitsCompID))
+      .set(entityID, LibMetadata._packedToArray(packed, _numElements));
 
-    LibPetTraits.setPermTraits(components, world, entityID, LibMetadata._packedToArrayScaled(packed, _numElements));
+    // LibPetTraits.setPermTraits(components, world, entityID, LibMetadata._packedToArrayScaled(packed, _numElements));
 
     return "";
   }
@@ -65,6 +69,7 @@ contract PetMetadataSystem is System {
   function executeTyped(uint256 entityID) public onlyPetSystem returns (bytes memory) {
     return execute(abi.encode(entityID));
   }
+
 
   /*********************
    *  METADATA ASSEMBLER

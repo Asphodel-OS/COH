@@ -31,6 +31,11 @@ export function createAdminAPI(systems: any) {
     // TODO: can only set listings after know merchant IDs, how to address this?
   }
 
+  // @dev adds a modifier registry
+  function addModReg(index: number, value: number, type: string, name: string) {
+    return systems["system._AddModifier"].executeTyped(index, value, type, name);
+  }
+
   // @dev creates a merchant with the name at the specified location
   // @param location  room ID
   // @param name      name of the merchant

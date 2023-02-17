@@ -72,6 +72,7 @@ import { StateComponent, ID as StateComponentID } from "components/StateComponen
 import { StorageSizeComponent, ID as StorageSizeComponentID } from "components/StorageSizeComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
 import { TimeStartComponent, ID as TimeStartComponentID } from "components/TimeStartComponent.sol";
+import { _DynamicTraitsComponent, ID as _DynamicTraitsComponentID } from "components/_DynamicTraitsComponent.sol";
 
 // Systems
 import { _InitSystem, ID as _InitSystemID } from "systems/_InitSystem.sol";
@@ -151,6 +152,7 @@ StateComponent _StateComponent;
 StorageSizeComponent _StorageSizeComponent;
 TimeLastActionComponent _TimeLastActionComponent;
 TimeStartComponent _TimeStartComponent;
+_DynamicTraitsComponent __DynamicTraitsComponent;
 
 // System vars
 _InitSystem __InitSystem;
@@ -231,6 +233,7 @@ _StateComponent = StateComponent(component(StateComponentID));
 _StorageSizeComponent = StorageSizeComponent(component(StorageSizeComponentID));
 _TimeLastActionComponent = TimeLastActionComponent(component(TimeLastActionComponentID));
 _TimeStartComponent = TimeStartComponent(component(TimeStartComponentID));
+__DynamicTraitsComponent = _DynamicTraitsComponent(component(_DynamicTraitsComponentID));
 
 __InitSystem = _InitSystem(system(_InitSystemID));
 __AddModifierSystem = _AddModifierSystem(system(_AddModifierSystemID));
