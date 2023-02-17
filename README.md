@@ -1,4 +1,4 @@
-###### KAMIGOTCHI.
+# KAMIGOTCHI.
 
 *may they spare your soul*
 
