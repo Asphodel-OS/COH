@@ -17,7 +17,7 @@ export function registerPetList() {
     {
       colStart: 3,
       colEnd: 33,
-      rowStart: 5,
+      rowStart: 2,
       rowEnd: 35,
     },
 

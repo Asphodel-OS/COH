@@ -18,9 +18,9 @@ export function registerChat() {
     'Chat',
     {
       colStart: 65,
-      colEnd: 99,
+      colEnd: 100,
       rowStart: 2,
-      rowEnd: 32,
+      rowEnd: 40,
     },
 
     (layers) => {

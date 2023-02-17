@@ -16,9 +16,9 @@ export function registerPetMint() {
   registerUIComponent(
     'PetMint',
     {
-      colStart: 36,
-      colEnd: 64,
-      rowStart: 30,
+      colStart: 33,
+      colEnd: 65,
+      rowStart: 37,
       rowEnd: 70,
     },
     (layers) => {
@@ -48,7 +48,7 @@ export function registerPetMint() {
     ({ layers, nextToken }) => {
       const {
         network: {
-          components: { 
+          components: {
             OwnerID,
             IsPet,
             Balance
@@ -61,7 +61,7 @@ export function registerPetMint() {
       } = layers;
 
       const mintTx = (address: string) => {
-        const actionID = `Minting Pet at ${Date.now()}` as EntityID; // Date.now to have the actions ordered in the component browser
+        const actionID = `Minting Kami` as EntityID;
         actions.add({
           id: actionID,
           components: {},
@@ -80,7 +80,7 @@ export function registerPetMint() {
         try {
           const mintFX = new Audio(mintSound)
           mintFX.play()
-          
+
           const actionID = mintTx(connectedAddress.get()!);
           await waitForActionCompletion(
             actions.Action,
@@ -110,10 +110,10 @@ export function registerPetMint() {
         <ModalWrapper id="petmint_modal">
           <ModalContent>
             <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%'}}>
-              <TopButton 
+              <TopButton
                 onClick={hideModal}>
                 X
-              </TopButton> 
+              </TopButton>
             </div>
             <CenterBox>
               <KamiImage
@@ -123,8 +123,8 @@ export function registerPetMint() {
                 Kamigotchi?
               </Description>
             </CenterBox>
-              <Button 
-              style={{ gridRowEnd: 5, justifySelf: "center", pointerEvents: 'auto' }} 
+              <Button
+              style={{ gridRowEnd: 5, justifySelf: "center", pointerEvents: 'auto' }}
               onClick={handleMinting}>
                 Mint
               </Button>
@@ -147,7 +147,6 @@ const fadeIn = keyframes`
 
 const ModalWrapper = styled.div`
   display: none;
-  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   animation: ${fadeIn} 0.5s ease-in-out;

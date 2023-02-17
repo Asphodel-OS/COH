@@ -11,7 +11,7 @@ import { BigNumber, BigNumberish } from "ethers";
 
 type TraitDetails = {
   Name: string,
-  Type: string, 
+  Type: string,
   Value: string
 }
 
@@ -29,15 +29,15 @@ export function registerPetDetails() {
   registerUIComponent(
     'PetDetails',
     {
-      colStart: 28,
+      colStart: 31,
       colEnd: 72,
-      rowStart: 20,
+      rowStart: 30,
       rowEnd: 80,
     },
     (layers) => {
       const {
         network: {
-          components: { 
+          components: {
             IsPet,
             PetTraits,
             Balance,
@@ -57,7 +57,7 @@ export function registerPetDetails() {
     ({ layers }) => {
       const {
         network: {
-          components: { 
+          components: {
             Bandwidth,
             Capacity,
             IsPet,
@@ -103,7 +103,7 @@ export function registerPetDetails() {
       const getArrayDetails = ( comp: any, index: EntityIndex ) => {
         const rawArr = getComponentValue(comp, index)?.value as string[];
         let result: Array<TraitDetails> = [];
-        
+
         for (let i = 0; i < rawArr.length; i++) {
           const ind = world.entityToIndex.get(rawArr[i] as EntityID) as EntityIndex;
           const n = getComponentValue(Name, ind)?.value as string;
@@ -124,7 +124,7 @@ export function registerPetDetails() {
 
       /////////////////
       // Display values
-      
+
       const [dets, setDets] = useState<Details>();
 
       useEffect(() => {
@@ -194,7 +194,6 @@ const fadeIn = keyframes`
 
 const ModalWrapper = styled.div`
   display: none;
-  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   animation: ${fadeIn} 0.3s ease-in-out;
@@ -224,10 +223,10 @@ const KamiBox = styled.div`
   padding: 0px 0px;
   border-radius: 5px;
   font-family: Pixel;
-  
+
   display: grid;
   justify-items: center;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   grid-row-gap: 8px;
   grid-column-gap: 24px;
@@ -249,7 +248,7 @@ const KamiList = styled.li`
   font-family: Pixel;
   margin: 0px;
 
-  justify-self: start; 
+  justify-self: start;
 `;
 
 const KamiText = styled.p`

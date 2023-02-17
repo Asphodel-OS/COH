@@ -12,8 +12,8 @@ export function registerDownButton() {
     {
       colStart: 83,
       colEnd: 88,
-      rowStart: 87,
-      rowEnd: 99,
+      rowStart: 90,
+      rowEnd: 97,
     },
     (layers) => of(layers),
     (layers) => {

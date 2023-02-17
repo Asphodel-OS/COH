@@ -20,7 +20,7 @@ export const getCouchCoordinates = (scale: number) => {
 export const getVendMachineCoordinates = (scale: number) => {
   switch (scale) {
     case 0.85:
-      return { x: 720, y: 580, width: 200, height: 260 };
+      return { x: 500, y: 540, width: 200, height: 260 };
     case 0.82:
       return { x: 530, y: 500, width: 180, height: 220 };
     case 0.75:

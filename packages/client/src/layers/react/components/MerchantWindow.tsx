@@ -32,7 +32,7 @@ export function registerMerchantWindow() {
     {
       colStart: 33,
       colEnd: 65,
-      rowStart: 5,
+      rowStart: 2,
       rowEnd: 60,
     },
 

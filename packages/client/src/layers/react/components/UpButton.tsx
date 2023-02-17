@@ -12,8 +12,8 @@ export function registerUpButton() {
     {
       colStart: 83,
       colEnd: 88,
-      rowStart: 76,
-      rowEnd: 88,
+      rowStart: 82,
+      rowEnd: 87,
     },
     (layers) => of(layers),
     (layers) => {
