@@ -75,12 +75,17 @@ library LibPet {
   // set a pet's stats from its traits
   // TODO: actually set stats from traits. hardcoded currently
   function setStats(IUintComp components, uint256 id) internal {
-    BandwidthComponent(getAddressById(components, BandwidthCompID)).set(id, BASE_BANDWIDTH);
-    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, BASE_STORAGE);
+    BandwidthComponent(getAddressById(components, BandwidthCompID)).set(id, smolRandom(BASE_BANDWIDTH));
+    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, smolRandom(BASE_STORAGE));
 
     uint256 totalCapacity = BASE_CAPACITY;
-    CapacityComponent(getAddressById(components, CapacityCompID)).set(id, totalCapacity);
-    ChargeComponent(getAddressById(components, ChargeCompID)).set(id, totalCapacity);
+    CapacityComponent(getAddressById(components, CapacityCompID)).set(id, smolRandom(totalCapacity));
+    ChargeComponent(getAddressById(components, ChargeCompID)).set(id, smolRandom(totalCapacity));
+  }
+
+  // temporary function to stimulate a little randomness
+  function smolRandom(uint256 base, uint256 seed) internal pure returns (uint256) {
+    return (base / 2) + (uint256(keccak256(seed)) % base);
   }
 
   function setCharge(
