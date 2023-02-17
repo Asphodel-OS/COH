@@ -29,10 +29,11 @@ from this window you should..
 _built with love, powered by \[redacted\]_
 **Actually Built With**
 - [MUD](https://mud.dev/)
-- [MUD-CSR Integration](https://github.com/Asphodel-OS/mud-csr) an integration between `MUD` and `CSR` (implemented during this hackathon)
 - Phaser
 - React
 - and a million other npm dependencies
 
 **Key Innovations**
-[to fill]
+- [MUD-CSR Integration](https://github.com/Asphodel-OS/mud-csr) an integration between `MUD` and `CSR` (implemented during this hackathon)
+- and much
+- much more
