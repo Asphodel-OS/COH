@@ -7,20 +7,25 @@ import { IUint256Component as IUintComp } from "solecs/interfaces/IUint256Compon
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById, getComponentById, entityToAddress, addressToEntity } from "solecs/utils.sol";
 
-import { CapacityComponent, ID as CapacityCompID } from "components/CapacityComponent.sol";
-import { ChargeComponent, ID as ChargeCompID } from "components/ChargeComponent.sol";
-import { TimeLastActionComponent, ID as TimeLastActionCompID } from "components/TimeLastActionComponent.sol";
 import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComponent.sol";
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
 import { IsPetComponent, ID as IsPetCompID } from "components/IsPetComponent.sol";
 import { HashRateComponent, ID as HashRateCompID } from "components/HashRateComponent.sol";
+import { CapacityComponent, ID as CapacityCompID } from "components/CapacityComponent.sol";
+import { ChargeComponent, ID as ChargeCompID } from "components/ChargeComponent.sol";
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { StorageSizeComponent, ID as StorSizeCompID } from "components/StorageSizeComponent.sol";
+import { TimeLastActionComponent, ID as TimeLastCompID } from "components/TimeLastActionComponent.sol";
+import { PetTraitsPermanentComponent, ID as TraitsCompID } from "components/PetTraitsPermanentComponent.sol";
+import { LibModifier } from "libraries/LibModifier.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 
-uint256 constant BATT_CHARGE = 150;
+uint256 constant BASE_CAPACITY = 150;
+uint256 constant BASE_BANDWIDTH = 150;
+uint256 constant BASE_STORAGE = 500;
+uint256 constant CHARGE_EPOCH = 600; // 10min
 
 library LibPet {
   /////////////////
@@ -43,37 +48,71 @@ library LibPet {
     IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
     IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
     MediaURIComponent(getAddressById(components, MediaURICompID)).set(id, uri);
-    CapacityComponent(getAddressById(components, CapacityCompID)).set(id, BATT_CHARGE);
-    ChargeComponent(getAddressById(components, ChargeCompID)).set(id, BATT_CHARGE);
-    TimeLastActionComponent(getAddressById(components, TimeLastActionCompID)).set(
-      id,
-      block.timestamp
-    );
+    TimeLastActionComponent(getAddressById(components, TimeLastCompID)).set(id, block.timestamp);
+
     string memory name = LibString.concat("kamigotchi ", LibString.toString(index));
     NameComponent(getAddressById(components, NameCompID)).set(id, name);
+
     return id;
   }
 
-  // set a pet's stats from its attributes
-  // TODO: update this to actually calculate the values
-  function setStats(IUintComp components, uint256 id) internal {
-    HashRateComponent(getAddressById(components, HashRateCompID)).set(id, 11);
-    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, 11);
+  // update the battery charge of a pet based on its timestamp and charge at last action.
+  // NOTE: if the returned charge is 0 we should make sure the pet dies
+  // NOTE: should be called at the top of a System and folllowed up with a require(!isDead)
+  function updateCharge(IUintComp components, uint256 id) internal returns (uint256 newCharge) {
+    uint256 lastTs = getLastTs(components, id);
+    uint256 duration = block.timestamp - lastTs;
+    uint256 drain = (duration + CHARGE_EPOCH - 1) / CHARGE_EPOCH; // round up to get
+    uint256 prevCharge = getCharge(components, id);
+
+    newCharge = (prevCharge > drain) ? prevCharge - drain : 0;
+    setCharge(components, id, newCharge);
   }
 
   /////////////////
-  // CALCULATIONS
+  // SETTERS
 
-  // calculate and return the total storage size of a pet (including equipment)
-  // TODO: include equipment
-  function getTotalStorage(IUintComp components, uint256 id) internal view returns (uint256) {
-    return StorageSizeComponent(getAddressById(components, StorSizeCompID)).getValue(id);
+  // set a pet's stats from its traits
+  // TODO: actually set stats from traits. hardcoded currently
+  function setStats(IUintComp components, uint256 id) internal {
+    HashRateComponent(getAddressById(components, HashRateCompID)).set(id, BASE_BANDWIDTH);
+    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, BASE_STORAGE);
+
+    uint256 totalCapacity = BASE_CAPACITY;
+    CapacityComponent(getAddressById(components, CapacityCompID)).set(id, totalCapacity);
+    ChargeComponent(getAddressById(components, ChargeCompID)).set(id, totalCapacity);
   }
 
-  // calculate and return the total hash rate of a pet (including equipment)
-  // TODO: include equipment
-  function getTotalHashRate(IUintComp components, uint256 id) internal view returns (uint256) {
-    return HashRateComponent(getAddressById(components, HashRateCompID)).getValue(id);
+  function setCharge(
+    IUintComp components,
+    uint256 id,
+    uint256 charge
+  ) internal {
+    ChargeComponent(getAddressById(components, ChargeCompID)).set(id, charge);
+  }
+
+  function setName(
+    IUintComp components,
+    uint256 id,
+    string memory name
+  ) internal {
+    NameComponent(getAddressById(components, NameCompID)).set(id, name);
+  }
+
+  function setOperator(
+    IUintComp components,
+    uint256 id,
+    uint256 operatorID
+  ) internal {
+    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
+  }
+
+  function setOwner(
+    IUintComp components,
+    uint256 id,
+    uint256 ownerID
+  ) internal {
+    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, ownerID);
   }
 
   /////////////////
@@ -83,10 +122,51 @@ library LibPet {
     return IsPetComponent(getAddressById(components, IsPetCompID)).has(id);
   }
 
+  function isDead(IUintComp components, uint256 id) internal view returns (bool) {
+    return getCharge(components, id) == 0;
+  }
+
+  // Check whether a pet has an ongoing production.
+  function isProducing(IUintComp components, uint256 id) internal view returns (bool result) {
+    uint256[] memory results = LibProduction._getAllX(components, 0, id, "ACTIVE");
+    if (results.length > 0) {
+      result = true;
+    }
+  }
+
+  /////////////////
+  // CALCULATIONS
+
+  // calculate and return the total storage size of a pet (including equipment)
+  // TODO: include equipment stats
+  function getTotalStorage(IUintComp components, uint256 id) internal view returns (uint256) {
+    return StorageSizeComponent(getAddressById(components, StorSizeCompID)).getValue(id);
+  }
+
+  // calculate and return the total bandwidth of a pet (including equipment)
+  // TODO: include equipment stats
+  // TODO: update this to bandwidth, soon:tm:
+  function getTotalHashRate(IUintComp components, uint256 id) internal view returns (uint256) {
+    return HashRateComponent(getAddressById(components, HashRateCompID)).getValue(id);
+  }
+
+  // calculate and return the total battery capacity of a pet (including equipment)
+  // TODO: include equipment stats
+  function getTotalCapacity(IUintComp components, uint256 id) internal view returns (uint256) {
+    return HashRateComponent(getAddressById(components, HashRateCompID)).getValue(id);
+  }
+
   /////////////////
   // COMPONENT RETRIEVAL
 
-  // get the name of this pet
+  function getCharge(IUintComp components, uint256 id) internal view returns (uint256) {
+    return ChargeComponent(getAddressById(components, ChargeCompID)).getValue(id);
+  }
+
+  function getLastTs(IUintComp components, uint256 id) internal view returns (uint256) {
+    return TimeLastActionComponent(getAddressById(components, TimeLastCompID)).getValue(id);
+  }
+
   function getName(IUintComp components, uint256 id) internal view returns (string memory) {
     return NameComponent(getAddressById(components, NameCompID)).getValue(id);
   }
@@ -106,33 +186,6 @@ library LibPet {
   }
 
   /////////////////
-  // SETTERS
-
-  function setOperator(
-    IUintComp components,
-    uint256 id,
-    uint256 operatorID
-  ) internal {
-    IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
-  }
-
-  function setOwner(
-    IUintComp components,
-    uint256 id,
-    uint256 ownerID
-  ) internal {
-    IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, ownerID);
-  }
-
-  function setName(
-    IUintComp components,
-    uint256 id,
-    string memory name
-  ) internal {
-    NameComponent(getAddressById(components, NameCompID)).set(id, name);
-  }
-
-  /////////////////
   // QUERIES
 
   // get the entity ID of a pet from its index (tokenID)
@@ -145,25 +198,8 @@ library LibPet {
   }
 
   // Get the production of a pet. Return 0 if there are none.
-  function getNodeProduction(
-    IUintComp components,
-    uint256 id,
-    uint256 nodeID
-  ) internal view returns (uint256 result) {
-    uint256[] memory results = LibProduction._getAllX(components, nodeID, id, "");
-    if (results.length > 0) {
-      result = results[0];
-    }
-  }
-
-  // Get the production of a pet. Return 0 if there are none.
-  // We can assume pets can only commit to one active production.
-  function getActiveProduction(IUintComp components, uint256 id)
-    internal
-    view
-    returns (uint256 result)
-  {
-    uint256[] memory results = LibProduction._getAllX(components, 0, id, "ACTIVE");
+  function getProduction(IUintComp components, uint256 id) internal view returns (uint256 result) {
+    uint256[] memory results = LibProduction._getAllX(components, 0, id, "");
     if (results.length > 0) {
       result = results[0];
     }

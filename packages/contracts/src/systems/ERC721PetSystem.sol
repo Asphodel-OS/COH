@@ -61,23 +61,25 @@ contract ERC721PetSystem is System, ERC721 {
     // TODO: set stats based on the generated traits of the pet.
     uint256 petID = LibPet.create(world, components, to, operatorID, nextMint, UNREVEALED_URI);
     LibPetTraits.placeholderTraits(components, world, petID);
-    // LibPet.setStats(components, petID);
+    LibPet.setStats(components, petID);
 
     _mint(to, nextMint); // should we run this at the beginning or end?
     return petID;
   }
 
+  // removed for now for compiled contract space lol
   function tokenURI(uint256 tokenID) public view override returns (string memory) {
-    return
-      PetMetadataSystem(getAddressById(world.systems(), PetMetadataSystemID)).tokenURI(tokenID);
+    return "";
+    // PetMetadataSystem(getAddressById(world.systems(), PetMetadataSystemID)).tokenURI(tokenID);
   }
 
   /*********************
    *     MUD Hoppers
    **********************/
-  function tokenIDToEntityID(uint256 petIndex) public view returns (uint256) {
-    return LibPet.indexToID(components, petIndex);
-  }
+  // // commented out for space
+  // function tokenIDToEntityID(uint256 petIndex) public view returns (uint256) {
+  //   return LibPet.indexToID(components, petIndex);
+  // }
 
   // uses BalanceComponent to track minted tokens. Uses systemID as entityID
   function nextMintID() internal returns (uint256) {
