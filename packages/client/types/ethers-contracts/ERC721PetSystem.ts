@@ -34,7 +34,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     "execute(bytes)": FunctionFragment;
     "executeTyped(address)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
-    "init()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "mint(address)": FunctionFragment;
     "name()": FunctionFragment;
@@ -46,7 +45,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
-    "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -58,7 +56,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
       | "execute"
       | "executeTyped"
       | "getApproved"
-      | "init"
       | "isApprovedForAll"
       | "mint"
       | "name"
@@ -70,7 +67,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
       | "supportsInterface"
       | "symbol"
       | "tokenURI"
-      | "totalSupply"
       | "transferFrom"
       | "transferOwnership"
   ): FunctionFragment;
@@ -95,7 +91,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     functionFragment: "getApproved",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "init", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
@@ -141,10 +136,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "transferFrom",
     values: [
       PromiseOrValue<string>,
@@ -168,7 +159,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "init", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
@@ -195,10 +185,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "totalSupply",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
     data: BytesLike
@@ -322,10 +308,6 @@ export interface ERC721PetSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    init(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     isApprovedForAll(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
@@ -379,8 +361,6 @@ export interface ERC721PetSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     transferFrom(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -419,10 +399,6 @@ export interface ERC721PetSystem extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  init(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   isApprovedForAll(
     arg0: PromiseOrValue<string>,
@@ -477,8 +453,6 @@ export interface ERC721PetSystem extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
   transferFrom(
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
@@ -517,8 +491,6 @@ export interface ERC721PetSystem extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    init(overrides?: CallOverrides): Promise<void>;
 
     isApprovedForAll(
       arg0: PromiseOrValue<string>,
@@ -572,8 +544,6 @@ export interface ERC721PetSystem extends BaseContract {
       tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
       from: PromiseOrValue<string>,
@@ -659,10 +629,6 @@ export interface ERC721PetSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    init(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     isApprovedForAll(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
@@ -716,8 +682,6 @@ export interface ERC721PetSystem extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
     transferFrom(
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
@@ -756,10 +720,6 @@ export interface ERC721PetSystem extends BaseContract {
     getApproved(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    init(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
@@ -814,8 +774,6 @@ export interface ERC721PetSystem extends BaseContract {
       tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
-
-    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
       from: PromiseOrValue<string>,

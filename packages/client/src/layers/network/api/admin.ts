@@ -20,13 +20,13 @@ export function createAdminAPI(systems: any) {
     setListing(4, 3, 50, 25);
     setListing(4, 4, 100, 50);
 
-    // required to init erc721 registy system, very temporary
-    systems["system.ERC721.pet"].init();
+    // init general, mostly temp
+    systems["system._Init"].executeTyped();
+    systems["system.ERC721.metadata"]._setRevealed("123", "https://kamigotchi.nyc3.cdn.digitaloceanspaces.com/images%2F");
+    systems["system.ERC721.metadata"]._setMaxElements(['9', '1', '7', '8', '1']); 
 
     createPlayerAPI(systems).ERC721.mint('0x7681A73aed06bfb648a5818B978fb018019F6900');
 
-    // init general, only food for now
-    systems["system._Init"].executeTyped();
 
     // TODO: can only set listings after know merchant IDs, how to address this?
   }

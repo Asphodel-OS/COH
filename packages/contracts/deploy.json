@@ -1,5 +1,6 @@
 {
   "components": [
+    "AddressPlayerComponent",
     "BalanceComponent",
     "BandwidthComponent",
     "BlockLastComponent",
@@ -20,8 +21,8 @@
     "IndexItemComponent",
     "IndexModifierComponent",
     "IndexPetComponent",
-    "IsInventoryComponent",
     "IsFoodComponent",
+    "IsInventoryComponent",
     "IsListingComponent",
     "IsMerchantComponent",
     "IsModifierComponent",
@@ -40,12 +41,11 @@
     "ModifierTypeComponent",
     "ModifierValueComponent",
     "NameComponent",
-    "AddressPlayerComponent",
+    "PetTraitsEquippedComponent",
+    "PetTraitsPermanentComponent",
     "PriceBuyComponent",
     "PriceSellComponent",
     "PrototypeComponent",
-    "PetTraitsEquippedComponent",
-    "PetTraitsPermanentComponent",
     "StateComponent",
     "StorageSizeComponent",
     "TimeLastActionComponent",
@@ -170,7 +170,9 @@
     },
     {
       "name": "PetMetadataSystem",
-      "writeAccess": []
+      "writeAccess": [
+        "MediaURIComponent"
+      ]
     },
     {
       "name": "PetFoodSystem",

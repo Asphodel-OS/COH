@@ -215,13 +215,6 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "init",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "inputs": [
         {
           "internalType": "address",
@@ -430,19 +423,6 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "totalSupply",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [
         {
           "internalType": "address",
@@ -485,7 +465,6 @@
     "execute(bytes)": "09c5eabe",
     "executeTyped(address)": "240b27e6",
     "getApproved(uint256)": "081812fc",
-    "init()": "e1c7392a",
     "isApprovedForAll(address,address)": "e985e9c5",
     "mint(address)": "6a627842",
     "name()": "06fdde03",
@@ -497,7 +476,6 @@
     "supportsInterface(bytes4)": "01ffc9a7",
     "symbol()": "95d89b41",
     "tokenURI(uint256)": "c87b56dd",
-    "totalSupply()": "18160ddd",
     "transferFrom(address,address,uint256)": "23b872dd",
     "transferOwnership(address)": "f2fde38b"
   },
@@ -722,12 +700,6 @@
           ]
         },
         {
-          "inputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function",
-          "name": "init"
-        },
-        {
           "inputs": [
             {
               "internalType": "address",
@@ -933,19 +905,6 @@
           ]
         },
         {
-          "inputs": [],
-          "stateMutability": "view",
-          "type": "function",
-          "name": "totalSupply",
-          "outputs": [
-            {
-              "internalType": "uint256",
-              "name": "",
-              "type": "uint256"
-            }
-          ]
-        },
-        {
           "inputs": [
             {
               "internalType": "address",
@@ -1019,6 +978,7 @@
         ":forge-std/=../../node_modules/forge-std/src/",
         ":libraries/=src/libraries/",
         ":memmove/=../../node_modules/memmove/src/",
+        ":packages/=../../../mud/packages/",
         ":solady/=../../node_modules/solady/src/",
         ":solecs/=../../node_modules/@latticexyz/solecs/src/",
         ":solmate/=../../node_modules/@rari-capital/solmate/src/",
@@ -1761,18 +1721,18 @@
         "license": "MIT"
       },
       "src/systems/ERC721PetSystem.sol": {
-        "keccak256": "0x2d2980c237f7f8edf180bed65f385ca2b9fc21f3c730ca9afaef1cf141073260",
+        "keccak256": "0x535ebf651a57fd635d732993d88e82f8eb012fa0c1c0b40f74e55e154defcf50",
         "urls": [
-          "bzz-raw://56ec2319aa6119c43327c60f819855b2b362a258ea360b68746754f934e23b57",
-          "dweb:/ipfs/QmPjWQz9EdB7ies8xnucPGkMA5sS6ucQmZGBEM5TTeTgHc"
+          "bzz-raw://5b358510a134fd11d5e87901a5e4e027de588b254108b29a275be5126ece47c4",
+          "dweb:/ipfs/QmYQbLLuSozbdZjoPh7oGPEHaMyiqHe43SUEd6GU5JEEz5"
         ],
         "license": "Unlicense"
       },
       "src/systems/PetMetadataSystem.sol": {
-        "keccak256": "0xbc654de38dffb683af3f0444154c2e182fdb3427b5d3e89b1d731641fc5ec789",
+        "keccak256": "0x82c3eaf74ad1d6a337714a388a345c1c540efe3fcd4392a19f1d2fa49f2eaeb3",
         "urls": [
-          "bzz-raw://a791f662ec3b2b93af0815aba6b39ec5a3d2b2dce111b601180c751e211ba1cb",
-          "dweb:/ipfs/QmYHBT59C7Sx3pWSJLix98RyQV94qx2KjX5r2Bsu9nPHCf"
+          "bzz-raw://c6d83c6cbc0f30c45ab08a62ea205d560223ebc3236e1963785c1b4f10a7f0b2",
+          "dweb:/ipfs/QmTwRCqMy6kCVeRv3EEw6EuPR9DfZcr7TmvPihimZt9is1"
         ],
         "license": "Unlicense"
       },

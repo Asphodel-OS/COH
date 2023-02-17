@@ -17,7 +17,20 @@ abstract contract SetupTemplate is TestSetupImports {
     super.setUp();
 
     // temp: remove later
-    _ERC721PetSystem.init();
+    // _ERC721PetSystem.init();
+
+    vm.startPrank(deployer);
+    __InitSystem.executeTyped();
+    _PetMetadataSystem._setRevealed(123, "https://kamigotchi.nyc3.cdn.digitaloceanspaces.com/images%2F");
+    uint256[] memory maxElements = new uint256[](5);
+    maxElements[0] = 9;
+    maxElements[1] = 1;
+    maxElements[2] = 7;
+    maxElements[3] = 8;
+    maxElements[4] = 1;
+    _PetMetadataSystem._setMaxElements(maxElements);
+    vm.stopPrank();
+  
   }
 
   /***********************

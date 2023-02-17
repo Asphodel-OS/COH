@@ -8,7 +8,7 @@ import { registerChatButton } from './ChatButton';
 import { registerPetList } from './PetList';
 import { registerRequestQueue } from './RequestQueue';
 import { registerTradeWindow } from './TradeWindow';
-import { registerDetectMint } from './DetectMint';
+import { registerDetectOperatorName } from './DetectOperatorName';
 import { registerMintProcess } from './MintProcess';
 import { registerPetMint } from './PetMint';
 import { registerPetDetails } from './PetDetails';
@@ -18,7 +18,7 @@ import { registerDownButton } from './DownButton';
 
 export function registerUIComponents() {
   registerLoadingState();
-  registerDetectMint();
+  registerDetectOperatorName();
   registerPetList();
   registerMerchantWindow();
   registerMiningModal();
