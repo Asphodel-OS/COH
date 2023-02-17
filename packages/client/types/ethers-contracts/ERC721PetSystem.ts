@@ -45,7 +45,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
-    "tokenIDToEntityID(uint256)": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
@@ -70,7 +69,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
       | "setApprovalForAll"
       | "supportsInterface"
       | "symbol"
-      | "tokenIDToEntityID"
       | "tokenURI"
       | "totalSupply"
       | "transferFrom"
@@ -139,10 +137,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "tokenIDToEntityID",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "tokenURI",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -200,10 +194,6 @@ export interface ERC721PetSystemInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "tokenIDToEntityID",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
@@ -384,11 +374,6 @@ export interface ERC721PetSystem extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenIDToEntityID(
-      petIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -487,11 +472,6 @@ export interface ERC721PetSystem extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  tokenIDToEntityID(
-    petIndex: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
   tokenURI(
     tokenID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -587,11 +567,6 @@ export interface ERC721PetSystem extends BaseContract {
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
-
-    tokenIDToEntityID(
-      petIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
@@ -736,11 +711,6 @@ export interface ERC721PetSystem extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenIDToEntityID(
-      petIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -839,11 +809,6 @@ export interface ERC721PetSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    tokenIDToEntityID(
-      petIndex: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenID: PromiseOrValue<BigNumberish>,

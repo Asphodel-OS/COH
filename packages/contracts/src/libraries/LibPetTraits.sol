@@ -8,7 +8,7 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById, entityToAddress, addressToEntity } from "solecs/utils.sol";
 
-import { HashRateComponent, ID as HashRateCompID } from "components/HashRateComponent.sol";
+import { BandwidthComponent, ID as BandwidthCompID } from "components/BandwidthComponent.sol";
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { PetTraitsEquippedComponent, ID as PetTraitsEquippedCompID } from "components/PetTraitsEquippedComponent.sol";
@@ -42,9 +42,10 @@ library LibPetTraits {
       arr[i] = LibModifier.addToPet(components, world, entityID, registryIDs[i]);
     }
 
-    PetTraitsPermanentComponent(
-      getAddressById(components, PetTraitsPermanentCompID)
-    ).set(entityID, arr);
+    PetTraitsPermanentComponent(getAddressById(components, PetTraitsPermanentCompID)).set(
+      entityID,
+      arr
+    );
   }
 
   // force sets to [SLOT_A, SLOT_B, mod slots]
@@ -66,25 +67,26 @@ library LibPetTraits {
       arr[i] = LibModifier.addToPet(components, world, entityID, modSlots[i]);
     }
 
-    PetTraitsEquippedComponent(
-      getAddressById(components, PetTraitsEquippedCompID)
-    ).set(entityID, arr);  
+    PetTraitsEquippedComponent(getAddressById(components, PetTraitsEquippedCompID)).set(
+      entityID,
+      arr
+    );
   }
 
   ///////////////
   // CAL
 
-  function updateValues(
-    IUintComp components,
-    uint256 petID
-  ) internal returns (uint256 hashrate, uint256 storageSize) {
+  function updateValues(IUintComp components, uint256 petID)
+    internal
+    returns (uint256 hashrate, uint256 storageSize)
+  {
     uint256[] memory perms = PetTraitsPermanentComponent(
       getAddressById(components, PetTraitsPermanentCompID)
     ).getValue(petID);
 
     uint256 tempStore;
     (hashrate, tempStore) = LibModifier.calArray(components, 0, perms);
-    
+
     uint256[] memory equips = PetTraitsEquippedComponent(
       getAddressById(components, PetTraitsEquippedCompID)
     ).getValue(petID);
@@ -92,12 +94,8 @@ library LibPetTraits {
     (hashrate, storageSize) = LibModifier.calArray(components, hashrate, equips);
     storageSize = storageSize + tempStore;
 
-    HashRateComponent(
-      getAddressById(components, HashRateCompID)
-    ).set(petID, hashrate);
-    StorageSizeComponent(
-      getAddressById(components, StorageSizeCompID)
-    ).set(petID, storageSize);
+    BandwidthComponent(getAddressById(components, BandwidthCompID)).set(petID, hashrate);
+    StorageSizeComponent(getAddressById(components, StorageSizeCompID)).set(petID, storageSize);
   }
 
   ///////////////
@@ -112,16 +110,14 @@ library LibPetTraits {
       getAddressById(components, PetTraitsEquippedCompID)
     ).getValue(petID);
 
-    if(arr[SLOT_A] != 0) {
+    if (arr[SLOT_A] != 0) {
       removed = arr[SLOT_A];
       LibModifier.setInactive(components, arr[SLOT_A]);
     }
     arr[SLOT_A] = slot;
     LibModifier.setActive(components, slot);
-    
-    PetTraitsEquippedComponent(
-      getAddressById(components, PetTraitsEquippedCompID)
-    ).set(petID, arr);
+
+    PetTraitsEquippedComponent(getAddressById(components, PetTraitsEquippedCompID)).set(petID, arr);
   }
 
   function swapSlotB(
@@ -133,16 +129,14 @@ library LibPetTraits {
       getAddressById(components, PetTraitsEquippedCompID)
     ).getValue(petID);
 
-    if(arr[SLOT_B] != 0) {
+    if (arr[SLOT_B] != 0) {
       removed = arr[SLOT_B];
       LibModifier.setInactive(components, arr[SLOT_B]);
     }
     arr[SLOT_B] = slot;
     LibModifier.setActive(components, slot);
-    
-    PetTraitsEquippedComponent(
-      getAddressById(components, PetTraitsEquippedCompID)
-    ).set(petID, arr);
+
+    PetTraitsEquippedComponent(getAddressById(components, PetTraitsEquippedCompID)).set(petID, arr);
   }
 
   // swaps a mod slot. returns false if no swap
@@ -161,11 +155,12 @@ library LibPetTraits {
         LibModifier.setInactive(components, arr[i]);
         arr[i] = mod;
         LibModifier.setActive(components, mod);
-        
-        PetTraitsEquippedComponent(
-          getAddressById(components, PetTraitsEquippedCompID)
-        ).set(petID, arr);
-        
+
+        PetTraitsEquippedComponent(getAddressById(components, PetTraitsEquippedCompID)).set(
+          petID,
+          arr
+        );
+
         return true;
       }
     }
@@ -181,7 +176,7 @@ library LibPetTraits {
   ) internal returns (bool) {
     uint256[] memory arr = PetTraitsEquippedComponent(
       getAddressById(components, PetTraitsEquippedCompID)
-    ).getValue(petID); 
+    ).getValue(petID);
 
     require(arr.length < EQUIP_LENGTH, "max equip length");
 
@@ -196,9 +191,10 @@ library LibPetTraits {
 
     result[arr.length] = mod;
 
-    PetTraitsEquippedComponent(
-      getAddressById(components, PetTraitsEquippedCompID)
-    ).set(petID, result);
+    PetTraitsEquippedComponent(getAddressById(components, PetTraitsEquippedCompID)).set(
+      petID,
+      result
+    );
 
     return true;
   }
@@ -210,7 +206,7 @@ library LibPetTraits {
   ) internal returns (bool removed) {
     uint256[] memory arr = PetTraitsEquippedComponent(
       getAddressById(components, PetTraitsEquippedCompID)
-    ).getValue(petID); 
+    ).getValue(petID);
 
     require(arr.length > 2, "min equip length");
 
@@ -226,9 +222,10 @@ library LibPetTraits {
       }
     }
 
-    PetTraitsEquippedComponent(
-      getAddressById(components, PetTraitsEquippedCompID)
-    ).set(petID, result);
+    PetTraitsEquippedComponent(getAddressById(components, PetTraitsEquippedCompID)).set(
+      petID,
+      result
+    );
 
     return removed;
   }
@@ -265,7 +262,7 @@ library LibPetTraits {
   ) internal {
     // get mod index
     uint256 modIndex = LibModifier.getIndex(components, modID);
-    
+
     // delete entry
     LibModifier.remove(components, modID);
 
@@ -279,53 +276,50 @@ library LibPetTraits {
   // GETTERS
 
   // gets array of permanent traits
-  function getPermArray(
-    IUintComp components,
-    uint256 petID
-  ) internal view returns (uint256[] memory) {
+  function getPermArray(IUintComp components, uint256 petID)
+    internal
+    view
+    returns (uint256[] memory)
+  {
     // traits are arranged in fixed order
-    return PetTraitsPermanentComponent(
-      getAddressById(components, PetTraitsPermanentCompID)
-    ).getValue(petID);  
+    return
+      PetTraitsPermanentComponent(getAddressById(components, PetTraitsPermanentCompID)).getValue(
+        petID
+      );
   }
 
-  function getEquipArray(
-    IUintComp components,
-    uint256 petID
-  ) internal view returns (uint256[] memory) {
-    return PetTraitsEquippedComponent(
-      getAddressById(components, PetTraitsEquippedCompID)
-    ).getValue(petID);  
+  function getEquipArray(IUintComp components, uint256 petID)
+    internal
+    view
+    returns (uint256[] memory)
+  {
+    return
+      PetTraitsEquippedComponent(getAddressById(components, PetTraitsEquippedCompID)).getValue(
+        petID
+      );
   }
 
-  function getName(
-    IUintComp components,
-    uint256 id
-  ) internal view returns (string memory) {
-    return NameComponent(
-      getAddressById(components, NameCompID)
-    ).getValue(id);
+  function getName(IUintComp components, uint256 id) internal view returns (string memory) {
+    return NameComponent(getAddressById(components, NameCompID)).getValue(id);
   }
 
   // get names of attached modifiers from array. Assume all have names
-  function getNames(
-    IUintComp components,
-    uint256[] memory arr
-  ) internal view returns (string[] memory) {
+  function getNames(IUintComp components, uint256[] memory arr)
+    internal
+    view
+    returns (string[] memory)
+  {
     string[] memory result = new string[](arr.length);
     for (uint256 i; i < arr.length; i++) {
       result[i] = getName(components, arr[i]);
-    } 
+    }
     return result;
   }
 
   ///////////////////
   // HARDCODE PLACEHOLDER, leaving here for now
-  // hardcoded placeholder, fake registry 
-  function placeholderRegistry(
-    IUintComp components,
-    IWorld world
-  ) internal {
+  // hardcoded placeholder, fake registry
+  function placeholderRegistry(IUintComp components, IWorld world) internal {
     // set 100-106, equippable
     LibModifier.createIndex(
       components,
