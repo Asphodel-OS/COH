@@ -395,7 +395,7 @@ export function registerPetList() {
 
       return (
         <ModalWrapper id="petlist_modal" isOpen={visibleDivs.petList}>
-          <ModalContent style={{ overflowY: 'scroll' }}>
+          <ModalContent>
             <TopGrid>
               <TopDescription>
                 Bytes: {data.operator.bytes ? data.operator.bytes * 1 : '0'}
@@ -449,7 +449,6 @@ const ModalContent = styled.div`
   border-radius: 10px;
   padding: 8px;
   width: 99%;
-  height:500px;
   border-style: solid;
   border-width: 2px;
   border-color: black;
