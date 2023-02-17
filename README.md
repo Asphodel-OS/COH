@@ -27,8 +27,9 @@ from this window you should..
 - enter name and explore :yayayayayayay:
 
 ## Hype Screenshots
-insert dope playthrough images here
-
+![image](https://user-images.githubusercontent.com/102979407/219812768-d2e8fb41-1d7f-4c96-b9d0-2673c0244ee1.png)
+![image](https://user-images.githubusercontent.com/102979407/219812800-61c58784-9bdf-452a-a874-2a38c7649c3e.png)
+![image](https://user-images.githubusercontent.com/102979407/219812818-7fd8fda5-56c0-4ca0-9500-a371f1e3534a.png)
 
 ## Guts and Glory
 _built with love, powered by \[redacted\]_
