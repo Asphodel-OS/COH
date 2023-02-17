@@ -986,18 +986,18 @@
         "license": "MIT"
       },
       "src/libraries/LibPet.sol": {
-        "keccak256": "0x102d412ac4593b337dcc9b18ddca8d1e1c284b9a9341f9c945be87f628d039ac",
+        "keccak256": "0xf17b5b0c87cbc6c985d6d1c3b816c8996502f8fb2a52ac2e7d0bbfb5495705f7",
         "urls": [
-          "bzz-raw://f9559ba2830b316e6ef978ed79ff8e14e8f91791eb32e550a651c1d9d3c1ac3e",
-          "dweb:/ipfs/QmXEXEyzKGPCHhe2QFnYrzyTnjN1LZnkL4qTSvrcLy7AGP"
+          "bzz-raw://be0a583f22292bbe8465aaf6267114716c2bae61b1884d0610b656ca009be531",
+          "dweb:/ipfs/QmeC7e9LLnoM3VcWvNeGdk1GD24qM8SpXuSwBxVj3fCQhA"
         ],
         "license": "MIT"
       },
       "src/libraries/LibPetTraits.sol": {
-        "keccak256": "0x3dd6a79f73c9b3b5c0f896140c1fc4fd986402ad86576c789e18418d1730ccf8",
+        "keccak256": "0xa533fd059d3a5a36856c236590acda66b719205a77fa2c90f04f2309cbc7b643",
         "urls": [
-          "bzz-raw://259a9be6785784cb694435c207c8c779de1454ddda1ea182937f9df6a8dec742",
-          "dweb:/ipfs/QmapFvNRciM2CVnY6KCA7CPAD2rXeW4z1bBjrZczJWqKoN"
+          "bzz-raw://565f30f5ff711a23d1b3941b69094f3a74dab8c1210ffb53a2fbb0c7ba6f8bde",
+          "dweb:/ipfs/QmVvAaRq3wvePt6Zf3AgaUXCavCAFAdXgL9gyPmfghAyMY"
         ],
         "license": "MIT"
       },
