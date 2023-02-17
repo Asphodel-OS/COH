@@ -27,6 +27,7 @@ library LibInventory {
     IsInventoryComponent(getAddressById(components, IsInventoryCompID)).set(id);
     IdHolderComponent(getAddressById(components, IdHolderCompID)).set(id, holderID);
     IndexItemComponent(getAddressById(components, IndexItemCompID)).set(id, itemIndex);
+    BalanceComponent(getAddressById(components, BalanceCompID)).set(id, 0);
     return id;
   }
 
@@ -98,7 +99,7 @@ library LibInventory {
     IComponents components,
     uint256 holderID,
     uint256 itemIndex
-  ) internal view returns (uint256) {
+  ) internal view returns (uint256 result) {
     QueryFragment[] memory fragments = new QueryFragment[](3);
     fragments[0] = QueryFragment(
       QueryType.Has,
@@ -116,12 +117,10 @@ library LibInventory {
       abi.encode(itemIndex)
     );
 
-    uint256[] memory inventoryIDs = LibQuery.query(fragments);
-    if (inventoryIDs.length == 0) {
-      return 0;
+    uint256[] memory results = LibQuery.query(fragments);
+    if (results.length != 0) {
+      result = results[0];
     }
-
-    return inventoryIDs[0];
   }
 
   // gets all inventories associated with an entity

@@ -943,10 +943,10 @@
         "license": "MIT"
       },
       "src/libraries/LibInventory.sol": {
-        "keccak256": "0x6133e38e3973b90d75165563ac4116e89126ffa49a2943ef2c7000777b7d1886",
+        "keccak256": "0xe7eb6c0bca16f6f172231b244059ddfabd1d8db5179d9aaf7cf07b50dd97c02a",
         "urls": [
-          "bzz-raw://f1c8dde171bd5360042969415ef99a419767442b71f87458b22e92852e47b541",
-          "dweb:/ipfs/Qma91EFaT21VbuvTiNmKoext1v5eTMenftWGznReqSq9op"
+          "bzz-raw://cb4e6cbdc46075ee688ea147cba820d8d24423b1c96c72582e2d87865c368c62",
+          "dweb:/ipfs/QmWXUTF26kKmWncJTNCLZytSPZ6rZc1SrdSGYjng7KUomY"
         ],
         "license": "MIT"
       },

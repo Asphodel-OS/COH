@@ -17,8 +17,9 @@ contract ListingSellSystem is System {
   function execute(bytes memory arguments) public returns (bytes memory) {
     (uint256 listingID, uint256 amt) = abi.decode(arguments, (uint256, uint256));
     uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
+    uint256 merchantID = LibListing.getMerchant(components, listingID);
 
-    require(Utils.sameRoom(components, listingID, operatorID), "Merchant: must be in room");
+    require(Utils.sameRoom(components, merchantID, operatorID), "Merchant: must be in room");
 
     LibListing.sellTo(components, listingID, operatorID, amt);
     Utils.updateLastBlock(components, operatorID);
