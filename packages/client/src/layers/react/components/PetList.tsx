@@ -588,7 +588,7 @@ const KamiImage = styled.img`
   border-style: solid;
   border-width: 0px 2px 0px 0px;
   border-color: black;
-  height: 90px;
+  height: 110px;
   margin: 0px;
   padding: 0px;
   grid-column: 1 / span 1;
