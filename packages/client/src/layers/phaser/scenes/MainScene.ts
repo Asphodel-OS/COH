@@ -30,7 +30,7 @@ export function defineMainScene() {
       create: (scene: PhaserScene) => {
         scene.sound.pauseOnBlur = false;
 
-        scene.rooms![4].create(scene);
+        scene.rooms![1].create(scene);
       },
     }),
   };
