@@ -10,8 +10,8 @@ export function registerObjectModal() {
     'ObjectModal',
     {
       colStart: 3,
-      colEnd: 87,
-      rowStart: 65,
+      colEnd: 82,
+      rowStart: 68,
       rowEnd: 99,
     },
     (layers) => of(layers),
