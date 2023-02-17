@@ -303,14 +303,6 @@ export function registerPetList() {
       // on the world's global config
       const BATTERY_EPOCH = 1; // seconds
 
-<<<<<<< HEAD
-      // calculate hunger based on last charge and time passed since last charge
-      const calcHunger = (kami: any) => {
-        let duration = lastRefresh / 1000 - kami.lastChargeTime;
-        let newCharge = Math.max(kami.charge - duration / BATTERY_EPOCH, 0);
-        return Math.round(100 * (1 - newCharge / kami.capacity)); // as %, reversed
-      };
-=======
       // calculate energy (as % of total capacity) based on last charge and time passed since last charge
       const calcEnergy = (kami: any) => {
         let duration = (lastRefresh / 1000) - kami.lastChargeTime;
@@ -318,7 +310,6 @@ export function registerPetList() {
         return (100 * newCharge / kami.capacity).toFixed(1);
         // return Math.round(100 * (1 - newCharge / kami.capacity)); // hunger calculation
       }
->>>>>>> 7e92447 (refinements to pet details info)
 
       // calculate the expected output from a pet production based on starttime and
       const calcOutput = (kami: any) => {
@@ -442,20 +433,11 @@ export function registerPetList() {
               {/* {ConsumableCells(data.operator.inventories)} */}
             </ConsumableGrid>
 
-<<<<<<< HEAD
-            <KamiBox>
-              <KamiImage src="https://i.imgur.com/JkEsu5f.gif" />
-              <KamiFacts></KamiFacts>
-            </KamiBox>
-=======
-
-
             {/* <KamiBox>
               <KamiImage src="https://i.imgur.com/JkEsu5f.gif" />
               <KamiFacts>
               </KamiFacts>
             </KamiBox> */}
->>>>>>> f515d5f (show real pet images in petlist)
             {KamiCards(data.pets)}
           </ModalContent>
         </ModalWrapper>
