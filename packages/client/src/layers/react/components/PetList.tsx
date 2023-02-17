@@ -11,6 +11,21 @@ import ribbon from '../../../public/img/ribbon.png'
 import gum from '../../../public/img/gum.png'
 import clickSound from '../../../public/sound/sound_effects/mouseclick.wav'
 
+const ItemImages = new Map([
+  [1, pompom],
+  [2, gakki],
+  [3, ribbon],
+  [4, gum],
+]);
+
+const ItemNames = new Map([
+  [1, "Pompom"],
+  [2, "Gakki"],
+  [3, "Ribbon"],
+  [4, "Gum"],
+]);
+
+
 export function registerPetList() {
   registerUIComponent(
     'PetList',
@@ -73,6 +88,14 @@ export function registerPetList() {
           },
           balance: getComponentValue(Balance, index)?.value as number,
         }
+      }
+
+      // this is about to be the jankiest bit inventory retrieval we will see..
+      const getConsumables = (operatorIndex: EntityIndex) => {
+        // pompom
+        // gakki
+        // ribbon 
+        // gum
       }
 
       // gets a Production object from an index
@@ -283,6 +306,7 @@ export function registerPetList() {
         return output;
       }
 
+
       /////////////////
       // DISPLAY
 
@@ -318,6 +342,25 @@ export function registerPetList() {
                 </KamiDetails>
               </KamiFacts>
             </KamiBox>
+          )
+        })
+      }
+
+
+      // get the row of consumable items to display in the player inventory
+      // NOTE: does not render until player inventories are populated
+      const ConsumableCells = (inventories: any[]) => {
+        console.log(inventories);
+        return inventories.map((inv) => {
+          return (
+            <CellBordered>
+              <CellGrid>
+                <Icon src={ItemImages.get(inv.item.index * 1)} />
+                <ItemNumber>
+                  {inv.balance ? inv.balance * 1 : 0}
+                </ItemNumber>
+              </CellGrid>
+            </CellBordered>
           )
         })
       }
@@ -368,7 +411,9 @@ export function registerPetList() {
                   </ItemNumber>
                 </CellGrid>
               </CellFour>
+              {/* {ConsumableCells(data.operator.inventories)} */}
             </ConsumableGrid>
+
 
 
             <KamiBox>
