@@ -3,27 +3,35 @@ import React, { useEffect, useState } from 'react';
 import { map, merge } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import styled, { keyframes } from 'styled-components';
-import { EntityIndex, EntityID, HasValue, Has, runQuery, getComponentValue } from '@latticexyz/recs';
+import {
+  EntityIndex,
+  EntityID,
+  HasValue,
+  Has,
+  runQuery,
+  getComponentValue,
+} from '@latticexyz/recs';
 import { dataStore } from '../store/createStore';
-import mintSound from '../../../public/sound/sound_effects/tami_mint_vending_sound.mp3'
-import clickSound from '../../../public/sound/sound_effects/mouseclick.wav'
-import { BigNumber, BigNumberish } from "ethers";
+import mintSound from '../../../public/sound/sound_effects/tami_mint_vending_sound.mp3';
+import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
+import { BigNumber, BigNumberish } from 'ethers';
+import { ModalWrapper } from './styled/AnimModalWrapper';
 
 type TraitDetails = {
-  Name: string,
-  Type: string,
-  Value: string
-}
+  Name: string;
+  Type: string;
+  Value: string;
+};
 
 type Details = {
-  nftID: string,
-  petName: string,
-  uri: string,
-  bandwidth: string,
-  capacity: string,
-  storage: string,
-  traits: TraitDetails[],
-}
+  nftID: string;
+  petName: string;
+  uri: string;
+  bandwidth: string;
+  capacity: string;
+  storage: string;
+  traits: TraitDetails[];
+};
 
 export function registerPetDetails() {
   registerUIComponent(
@@ -37,11 +45,7 @@ export function registerPetDetails() {
     (layers) => {
       const {
         network: {
-          components: {
-            IsPet,
-            PetTraits,
-            Balance,
-           },
+          components: { IsPet, PetTraits, Balance },
         },
       } = layers;
 
@@ -70,57 +74,73 @@ export function registerPetDetails() {
             Name,
             State,
             StorageSize,
-           },
-           world
+          },
+          world,
         },
       } = layers;
 
       const {
+        visibleDivs,
+        setVisibleDivs,
         selectedPet: { description },
       } = dataStore();
 
       /////////////////
       // Get values
       const getPetIndex = (tokenID: string) => {
-        return Array.from(runQuery([
-          Has(IsPet),
-          HasValue(PetIndex, { value: BigNumber.from(tokenID).toHexString() })
-        ]))[0];
-      }
+        return Array.from(
+          runQuery([
+            Has(IsPet),
+            HasValue(PetIndex, {
+              value: BigNumber.from(tokenID).toHexString(),
+            }),
+          ])
+        )[0];
+      };
 
       const getDetails = (index: EntityIndex) => {
         return {
           nftID: getComponentValue(PetIndex, index)?.value as string,
           petName: getComponentValue(Name, index)?.value as string,
           uri: getComponentValue(MediaURI, index)?.value as string,
-          bandwidth: hexToString(getComponentValue(Bandwidth, index)?.value as number),
-          capacity: hexToString(getComponentValue(Capacity, index)?.value as number),
-          storage: hexToString(getComponentValue(StorageSize, index)?.value as number),
+          bandwidth: hexToString(
+            getComponentValue(Bandwidth, index)?.value as number
+          ),
+          capacity: hexToString(
+            getComponentValue(Capacity, index)?.value as number
+          ),
+          storage: hexToString(
+            getComponentValue(StorageSize, index)?.value as number
+          ),
           traits: getArrayDetails(PetTraits, index)?.value as TraitDetails[],
-        }
-      }
+        };
+      };
 
-      const getArrayDetails = ( comp: any, index: EntityIndex ) => {
+      const getArrayDetails = (comp: any, index: EntityIndex) => {
         const rawArr = getComponentValue(comp, index)?.value as string[];
         let result: Array<TraitDetails> = [];
 
         for (let i = 0; i < rawArr.length; i++) {
-          const ind = world.entityToIndex.get(rawArr[i] as EntityID) as EntityIndex;
+          const ind = world.entityToIndex.get(
+            rawArr[i] as EntityID
+          ) as EntityIndex;
           const n = getComponentValue(Name, ind)?.value as string;
           const t = getComponentValue(ModifierType, ind)?.value as string;
-          const v = hexToString(getComponentValue(ModifierValue, ind)?.value as string);
+          const v = hexToString(
+            getComponentValue(ModifierValue, ind)?.value as string
+          );
 
-          result.push({ Name: n, Type: t, Value: v});
+          result.push({ Name: n, Type: t, Value: v });
         }
 
         return {
-          value: result
-        }
-      }
+          value: result,
+        };
+      };
 
       const hexToString = (num: BigNumberish) => {
         return BigNumber.from(num).toString();
-      }
+      };
 
       /////////////////
       // Display values
@@ -128,53 +148,53 @@ export function registerPetDetails() {
       const [dets, setDets] = useState<Details>();
 
       useEffect(() => {
-        if (description && description != "0") {
-          console.log(description);
+        if (description && description != '0') {
+          // console.log(description);
           setDets(getDetails(getPetIndex(description)));
         }
       }, [description]);
 
-      useEffect(() => {
-        console.log(dets);
-      }, [dets]);
+      // useEffect(() => {
+      //   console.log(dets);
+      // }, [dets]);
 
       const traitLines = dets?.traits.map((trait) => (
         <KamiList key={trait.Name}>
           {`${trait.Name}`}
-          <KamiText>{`${trait.Type} | ${trait.Value}` }</KamiText>
+          <KamiText>{`${trait.Type} | ${trait.Value}`}</KamiText>
         </KamiList>
       ));
 
       const hideModal = () => {
-        const clickFX = new Audio(clickSound)
-        clickFX.play()
-        const modalId = window.document.getElementById('petdetails_modal');
-        if (modalId) modalId.style.display = 'none';
+        const clickFX = new Audio(clickSound);
+        clickFX.play();
+        setVisibleDivs({ ...visibleDivs, petDetails: !visibleDivs.petDetails });
       };
 
+      useEffect(() => {
+        if (visibleDivs.petDetails === true)
+          document.getElementById('petdetails_modal')!.style.display = 'block';
+      }, [visibleDivs.petDetails]);
 
       return (
-        <ModalWrapper id="petdetails_modal">
+        <ModalWrapper id="petdetails_modal" isOpen={visibleDivs.petDetails}>
           <ModalContent>
-            <TopButton onClick={hideModal}>
-              X
-            </TopButton>
+            <TopButton onClick={hideModal}>X</TopButton>
             <KamiBox>
               <KamiBox>
-              <KamiBox style={{ gridColumn: 1, gridRow: 1 }}>
-                <KamiName>{ dets?.petName } </KamiName>
-                <KamiImage src={ dets?.uri }/>
+                <KamiBox style={{ gridColumn: 1, gridRow: 1 }}>
+                  <KamiName>{dets?.petName} </KamiName>
+                  <KamiImage src={dets?.uri} />
+                </KamiBox>
+                <KamiBox
+                  style={{ gridColumn: 1, gridRow: 2, justifyItems: 'end' }}
+                >
+                  <KamiFacts>Bandwidth: {dets?.bandwidth} </KamiFacts>
+                  <KamiFacts>Storage: {dets?.storage} </KamiFacts>
+                  <KamiFacts>Capacity: {dets?.capacity} </KamiFacts>
+                </KamiBox>
               </KamiBox>
-              <KamiBox style={{ gridColumn: 1, gridRow: 2, justifyItems: "end" }}>
-                <KamiFacts>Bandwidth: { dets?.bandwidth } </KamiFacts>
-                <KamiFacts>Storage:   { dets?.storage } </KamiFacts>
-                <KamiFacts>Capacity:  { dets?.capacity } </KamiFacts>
-              </KamiBox>
-              </KamiBox>
-              <KamiBox style={{ gridColumnStart: 2 }}>
-                { traitLines }
-              </KamiBox>
-
+              <KamiBox style={{ gridColumnStart: 2 }}>{traitLines}</KamiBox>
             </KamiBox>
           </ModalContent>
         </ModalWrapper>
@@ -183,25 +203,8 @@ export function registerPetDetails() {
   );
 }
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const ModalWrapper = styled.div`
-  display: none;
-  justify-content: center;
-  align-items: center;
-  animation: ${fadeIn} 0.3s ease-in-out;
-`;
-
 const ModalContent = styled.div`
   display: grid;
-
   background-color: white;
   border-radius: 10px;
   padding: 20px 20px 40px 20px;
@@ -258,7 +261,7 @@ const KamiText = styled.p`
   font-family: Pixel;
   margin: 0px;
   padding: 5px 10px;
-`
+`;
 
 const KamiName = styled.div`
   grid-row: 2;

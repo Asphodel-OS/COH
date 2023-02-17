@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { map, merge } from 'rxjs';
-import styled, { keyframes } from 'styled-components';
-import { EntityID, EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } from "@latticexyz/recs";
+import styled from 'styled-components';
+import {
+  EntityID,
+  EntityIndex,
+  Has,
+  HasValue,
+  getComponentValue,
+  runQuery,
+} from '@latticexyz/recs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
 import './font.css';
-import pompom from '../../../public/img/pompom.png'
-import gakki from '../../../public/img/gakki.png'
-import ribbon from '../../../public/img/ribbon.png'
-import gum from '../../../public/img/gum.png'
-import clickSound from '../../../public/sound/sound_effects/mouseclick.wav'
+import pompom from '../../../public/img/pompom.png';
+import gakki from '../../../public/img/gakki.png';
+import ribbon from '../../../public/img/ribbon.png';
+import gum from '../../../public/img/gum.png';
+import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
+import { ModalWrapper } from './styled/AnimModalWrapper';
 
 const ItemImages = new Map([
   [1, pompom],
@@ -19,12 +27,11 @@ const ItemImages = new Map([
 ]);
 
 const ItemNames = new Map([
-  [1, "Pompom"],
-  [2, "Gakki"],
-  [3, "Ribbon"],
-  [4, "Gum"],
+  [1, 'Pompom'],
+  [2, 'Gakki'],
+  [3, 'Ribbon'],
+  [4, 'Gum'],
 ]);
-
 
 export function registerPetList() {
   registerUIComponent(
@@ -82,21 +89,21 @@ export function registerPetList() {
         return {
           id: world.entities[index],
           item: {
-            index: itemIndex // this is the solecs index rather than the cached index
+            index: itemIndex, // this is the solecs index rather than the cached index
             // name: getComponentValue(Name, itemIndex)?.value as string,
             // description: ???, // are we intending to save this onchain or on FE?
           },
           balance: getComponentValue(Balance, index)?.value as number,
-        }
-      }
+        };
+      };
 
       // this is about to be the jankiest bit inventory retrieval we will see..
       const getConsumables = (operatorIndex: EntityIndex) => {
         // pompom
         // gakki
-        // ribbon 
+        // ribbon
         // gum
-      }
+      };
 
       // gets a Production object from an index
       const getProduction = (index: EntityIndex) => {
@@ -105,8 +112,8 @@ export function registerPetList() {
           nodeId: getComponentValue(NodeID, index)?.value as string,
           state: getComponentValue(State, index)?.value as string,
           startTime: getComponentValue(StartTime, index)?.value as number,
-        }
-      }
+        };
+      };
 
       // gets a Pet object from an index
       // TODO(ja): support names, equips, stats and production details
@@ -115,12 +122,11 @@ export function registerPetList() {
 
         // get the pet's prodcution object if it exists
         let production;
-        const productionResults = Array.from(runQuery([
-          Has(IsProduction),
-          HasValue(PetID, { value: id }),
-        ]));
+        const productionResults = Array.from(
+          runQuery([Has(IsProduction), HasValue(PetID, { value: id })])
+        );
         if (productionResults.length > 0) {
-          production = getProduction(productionResults[0])
+          production = getProduction(productionResults[0]);
         }
 
         return {
@@ -131,27 +137,41 @@ export function registerPetList() {
           bandwidth: getComponentValue(Bandwidth, index)?.value as number,
           capacity: getComponentValue(Capacity, index)?.value as number,
           charge: getComponentValue(Charge, index)?.value as number,
-          lastChargeTime: getComponentValue(LastActionTime, index)?.value as number,
+          lastChargeTime: getComponentValue(LastActionTime, index)
+            ?.value as number,
           storage: getComponentValue(StorageSize, index)?.value as number,
           production,
-        }
-      }
+        };
+      };
 
-      return merge(OwnerID.update$, OperatorID.update$, Location.update$, Balance.update$, Coin.update$, State.update$, StartTime.update$).pipe(
+      return merge(
+        OwnerID.update$,
+        OperatorID.update$,
+        Location.update$,
+        Balance.update$,
+        Coin.update$,
+        State.update$,
+        StartTime.update$
+      ).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
-          const operatorEntityIndex = Array.from(runQuery([
-            Has(IsOperator),
-            HasValue(PlayerAddress, { value: network.connectedAddress.get() })
-          ]))[0];
+          const operatorEntityIndex = Array.from(
+            runQuery([
+              Has(IsOperator),
+              HasValue(PlayerAddress, {
+                value: network.connectedAddress.get(),
+              }),
+            ])
+          )[0];
           const operatorID = world.entities[operatorEntityIndex];
-          const bytes = getComponentValue(Coin, operatorEntityIndex)?.value as number;
+          const bytes = getComponentValue(Coin, operatorEntityIndex)
+            ?.value as number;
 
           // get the list of inventory indices for this account
           const inventoryResults = runQuery([
             Has(IsInventory),
             HasValue(HolderID, { value: operatorID }),
-            NotValue(Balance, { value: 0 }),
+            // NotValue(Balance, { value: 0 }),
           ]);
 
           // if we have inventories for the operator, generate a list of inventory objects
@@ -165,25 +185,23 @@ export function registerPetList() {
 
           // get all indices of pets linked to this account and create object array
           let pets: any = [];
-          const petResults = Array.from(runQuery([
-            Has(IsPet),
-            HasValue(OperatorID, { value: operatorID }),
-          ]));
+          const petResults = Array.from(
+            runQuery([Has(IsPet), HasValue(OperatorID, { value: operatorID })])
+          );
           for (let i = 0; i < petResults.length; i++) {
             pets.push(getPet(petResults[i]));
           }
 
           // get the node of the current room for starting productions
           let nodeID;
-          let location = getComponentValue(Location, operatorEntityIndex)?.value as number;
-          const nodeResults = Array.from(runQuery([
-            Has(IsNode),
-            HasValue(Location, { value: location }),
-          ]));
+          let location = getComponentValue(Location, operatorEntityIndex)
+            ?.value as number;
+          const nodeResults = Array.from(
+            runQuery([Has(IsNode), HasValue(Location, { value: location })])
+          );
           if (nodeResults.length > 0) {
             nodeID = world.entities[nodeResults[0]];
           }
-
 
           return {
             actions,
@@ -195,7 +213,7 @@ export function registerPetList() {
                 bytes,
               },
               pets,
-              node: { id: nodeID }
+              node: { id: nodeID },
             } as any,
           };
         })
@@ -204,19 +222,17 @@ export function registerPetList() {
 
     // Render
     ({ actions, api, data }) => {
+      const { visibleDivs, setVisibleDivs } = dataStore();
       console.log(data.pets);
 
       const [lastRefresh, setLastRefresh] = useState(Date.now());
-      const {
-        selectedPet: { description },
-      } = dataStore();
 
       /////////////////
       // TICKING
 
       function refreshClock() {
         setLastRefresh(Date.now());
-      };
+      }
 
       useEffect(() => {
         const timerId = setInterval(refreshClock, 1000);
@@ -224,7 +240,6 @@ export function registerPetList() {
           clearInterval(timerId);
         };
       }, []);
-
 
       /////////////////
       // INTERACTIONS
@@ -275,10 +290,10 @@ export function registerPetList() {
       };
 
       const hideModal = () => {
-        const clickFX = new Audio(clickSound)
-        clickFX.play()
-        const modalId = window.document.getElementById('petlist_modal');
-        if (modalId) modalId.style.display = 'none';
+        const clickFX = new Audio(clickSound);
+        clickFX.play();
+
+        setVisibleDivs({ ...visibleDivs, petList: !visibleDivs.petList });
       };
 
       /////////////////
@@ -286,26 +301,26 @@ export function registerPetList() {
 
       // NOTE(ja): the battery epoch is hardcoded right now but we should save this
       // on the world's global config
-      const BATTERY_EPOCH = 1;  // seconds
+      const BATTERY_EPOCH = 1; // seconds
 
       // calculate hunger based on last charge and time passed since last charge
       const calcHunger = (kami: any) => {
-        let duration = (lastRefresh / 1000) - kami.lastChargeTime;
+        let duration = lastRefresh / 1000 - kami.lastChargeTime;
         let newCharge = Math.max(kami.charge - duration / BATTERY_EPOCH, 0);
         return Math.round(100 * (1 - newCharge / kami.capacity)); // as %, reversed
-      }
+      };
 
       // calculate the expected output from a pet production based on starttime and
       const calcOutput = (kami: any) => {
-        let duration = 0, output = 0;
-        if (kami.production && kami.production.state === "ACTIVE") {
-          duration = (lastRefresh / 1000) - kami.production.startTime;
+        let duration = 0,
+          output = 0;
+        if (kami.production && kami.production.state === 'ACTIVE') {
+          duration = lastRefresh / 1000 - kami.production.startTime;
           output = Math.round(duration * kami.bandwidth);
           output = Math.min(output, kami.storage);
         }
         return output;
-      }
-
+      };
 
       /////////////////
       // DISPLAY
@@ -327,25 +342,35 @@ export function registerPetList() {
                     <br />
                     Bandwidth: {kami.bandwidth * 1} / hr
                     <br />
-                    Storage:  {calcOutput(kami)} / {kami.storage * 1}
+                    Storage: {calcOutput(kami)} / {kami.storage * 1}
                     <br />
                   </Description>
-                  {(kami.production && kami.production.state === "ACTIVE") ?
-                    <ThinButton onClick={() => stopProduction(kami.production.id)}>Stop</ThinButton>
-                    :
-                    <ThinButton onClick={() => startProduction(kami.id)}>Start</ThinButton>
-                  }
-                  {(kami.production && kami.production.state === "ACTIVE") ?
-                    <ThinButton onClick={() => reapProduction(kami.production.id)}>Collect</ThinButton>
-                    : <ThinButton>Select Node</ThinButton>
-                  }
+                  {kami.production && kami.production.state === 'ACTIVE' ? (
+                    <ThinButton
+                      onClick={() => stopProduction(kami.production.id)}
+                    >
+                      Stop
+                    </ThinButton>
+                  ) : (
+                    <ThinButton onClick={() => startProduction(kami.id)}>
+                      Start
+                    </ThinButton>
+                  )}
+                  {kami.production && kami.production.state === 'ACTIVE' ? (
+                    <ThinButton
+                      onClick={() => reapProduction(kami.production.id)}
+                    >
+                      Collect
+                    </ThinButton>
+                  ) : (
+                    <ThinButton>Select Node</ThinButton>
+                  )}
                 </KamiDetails>
               </KamiFacts>
             </KamiBox>
-          )
-        })
-      }
-
+          );
+        });
+      };
 
       // get the row of consumable items to display in the player inventory
       // NOTE: does not render until player inventories are populated
@@ -356,70 +381,59 @@ export function registerPetList() {
             <CellBordered>
               <CellGrid>
                 <Icon src={ItemImages.get(inv.item.index * 1)} />
-                <ItemNumber>
-                  {inv.balance ? inv.balance * 1 : 0}
-                </ItemNumber>
+                <ItemNumber>{inv.balance ? inv.balance * 1 : 0}</ItemNumber>
               </CellGrid>
             </CellBordered>
-          )
-        })
-      }
+          );
+        });
+      };
+
+      useEffect(() => {
+        if (visibleDivs.petList == true)
+          document.getElementById('petlist_modal')!.style.display = 'block';
+      }, [visibleDivs.petList]);
 
       return (
-        <ModalWrapper id="petlist_modal">
-          <ModalContent>
-
+        <ModalWrapper id="petlist_modal" isOpen={visibleDivs.petList}>
+          <ModalContent style={{ overflowY: 'scroll' }}>
             <TopGrid>
               <TopDescription>
-                Bytes: {data.operator.bytes ? data.operator.bytes * 1 : "0"}
+                Bytes: {data.operator.bytes ? data.operator.bytes * 1 : '0'}
               </TopDescription>
-              <TopButton onClick={hideModal}>
-                X
-              </TopButton>
+              <TopButton onClick={hideModal}>X</TopButton>
             </TopGrid>
 
             <ConsumableGrid>
               <CellOne>
                 <CellGrid>
                   <Icon src={pompom} />
-                  <ItemNumber>
-                    16
-                  </ItemNumber>
+                  <ItemNumber>16</ItemNumber>
                 </CellGrid>
               </CellOne>
               <CellTwo>
                 <CellGrid>
                   <Icon src={gakki} />
-                  <ItemNumber>
-                    892
-                  </ItemNumber>
+                  <ItemNumber>892</ItemNumber>
                 </CellGrid>
               </CellTwo>
               <CellThree>
                 <CellGrid>
                   <Icon src={ribbon} />
-                  <ItemNumber>
-                    314
-                  </ItemNumber>
+                  <ItemNumber>314</ItemNumber>
                 </CellGrid>
               </CellThree>
               <CellFour>
                 <CellGrid>
                   <Icon src={gum} />
-                  <ItemNumber>
-                    012
-                  </ItemNumber>
+                  <ItemNumber>012</ItemNumber>
                 </CellGrid>
               </CellFour>
               {/* {ConsumableCells(data.operator.inventories)} */}
             </ConsumableGrid>
 
-
-
             <KamiBox>
               <KamiImage src="https://i.imgur.com/JkEsu5f.gif" />
-              <KamiFacts>
-              </KamiFacts>
+              <KamiFacts></KamiFacts>
             </KamiBox>
             {KamiCards(data.pets)}
           </ModalContent>
@@ -429,33 +443,17 @@ export function registerPetList() {
   );
 }
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const ModalWrapper = styled.div`
-  display: none;
-  justify-content: center;
-  align-items: center;
-  animation: ${fadeIn} 0.5s ease-in-out;
-`;
-
 const ModalContent = styled.div`
   display: grid;
   background-color: white;
   border-radius: 10px;
   padding: 8px;
   width: 99%;
+  height:500px;
   border-style: solid;
   border-width: 2px;
   border-color: black;
 `;
-
 
 const Button = styled.button`
   background-color: #ffffff;

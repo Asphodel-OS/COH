@@ -4,13 +4,21 @@ import { map, merge } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
 import styled, { keyframes } from 'styled-components';
-import { HasValue, Has, runQuery, EntityID, EntityIndex, getComponentValue } from '@latticexyz/recs';
-import { waitForActionCompletion } from "@latticexyz/std-client";
-import mintSound from '../../../public/sound/sound_effects/tami_mint_vending_sound.mp3'
-import clickSound from '../../../public/sound/sound_effects/mouseclick.wav'
-import { BigNumber, utils } from "ethers";
+import {
+  HasValue,
+  Has,
+  runQuery,
+  EntityID,
+  EntityIndex,
+  getComponentValue,
+} from '@latticexyz/recs';
+import { waitForActionCompletion } from '@latticexyz/std-client';
+import mintSound from '../../../public/sound/sound_effects/tami_mint_vending_sound.mp3';
+import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
+import { BigNumber, utils } from 'ethers';
+import { ModalWrapper } from './styled/AnimModalWrapper';
 
-const SystemBalID = BigNumber.from(utils.id("system.ERC721.pet"))
+const SystemBalID = BigNumber.from(utils.id('system.ERC721.pet'));
 
 export function registerPetMint() {
   registerUIComponent(
@@ -30,9 +38,11 @@ export function registerPetMint() {
       } = layers;
 
       const getNextToken = () => {
-        const id = world.entityToIndex.get(SystemBalID.toHexString() as EntityID);
+        const id = world.entityToIndex.get(
+          SystemBalID.toHexString() as EntityID
+        );
         return getComponentValue(Balance, id as EntityIndex)?.value as number;
-      }
+      };
 
       return merge(IsPet.update$, Balance.update$).pipe(
         map(() => {
@@ -60,6 +70,9 @@ export function registerPetMint() {
         },
       } = layers;
 
+      const { visibleDivs, setVisibleDivs, setSelectedPet, selectedPet } =
+        dataStore();
+
       const mintTx = (address: string) => {
         const actionID = `Minting Kami` as EntityID;
         actions.add({
@@ -68,9 +81,7 @@ export function registerPetMint() {
           requirement: () => true,
           updates: () => [],
           execute: async () => {
-            return player.ERC721.mint(
-              address
-            );
+            return player.ERC721.mint(address);
           },
         });
         return actionID;
@@ -78,79 +89,71 @@ export function registerPetMint() {
 
       const handleMinting = async () => {
         try {
-          const mintFX = new Audio(mintSound)
-          mintFX.play()
+          const mintFX = new Audio(mintSound);
+          mintFX.play();
 
           const actionID = mintTx(connectedAddress.get()!);
           await waitForActionCompletion(
             actions.Action,
             world.entityToIndex.get(actionID) as EntityIndex
           );
+          const description = BigNumber.from(nextToken).add('1').toHexString();
 
-          document.getElementById('petmint_modal')!.style.display = 'none';
-          const nextId = document.getElementById('petdetails_modal');
-          if (nextId && nextToken) {
-            nextId.style.display = 'block';
-            const description = BigNumber.from(nextToken).add("1").toHexString();
-            dataStore.setState({ selectedPet: { description } });
-          }
+          setVisibleDivs({ ...visibleDivs, petMint: !visibleDivs.petMint });
+          dataStore.setState({ selectedPet: { description } });
+          setVisibleDivs({
+            ...visibleDivs,
+            petDetails: !visibleDivs.petDetails,
+          });
         } catch (e) {
           //
         }
       };
 
       const hideModal = () => {
-        const clickFX = new Audio(clickSound)
-        clickFX.play()
-        const modalId = window.document.getElementById('petmint_modal');
-        if (modalId) modalId.style.display = 'none';
+        const clickFX = new Audio(clickSound);
+        clickFX.play();
+
+        setVisibleDivs({ ...visibleDivs, petMint: !visibleDivs.petMint });
       };
 
+      useEffect(() => {
+        if (visibleDivs.petMint === true)
+          document.getElementById('petmint_modal')!.style.display = 'block';
+      }, [visibleDivs.petMint]);
+
       return (
-        <ModalWrapper id="petmint_modal">
+        <ModalWrapper id="petmint_modal" isOpen={visibleDivs.petMint}>
           <ModalContent>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%'}}>
-              <TopButton
-                onClick={hideModal}>
-                X
-              </TopButton>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                width: '100%',
+              }}
+            >
+              <TopButton onClick={hideModal}>X</TopButton>
             </div>
             <CenterBox>
-              <KamiImage
-                src="https://kamigotchi.nyc3.digitaloceanspaces.com/placeholder.gif"
-              />
-              <Description>
-                Kamigotchi?
-              </Description>
+              <KamiImage src="https://kamigotchi.nyc3.digitaloceanspaces.com/placeholder.gif" />
+              <Description>Kamigotchi?</Description>
             </CenterBox>
-              <Button
-              style={{ gridRowEnd: 5, justifySelf: "center", pointerEvents: 'auto' }}
-              onClick={handleMinting}>
-                Mint
-              </Button>
-
+            <Button
+              style={{
+                gridRowEnd: 5,
+                justifySelf: 'center',
+                pointerEvents: 'auto',
+              }}
+              onClick={handleMinting}
+            >
+              Mint
+            </Button>
           </ModalContent>
         </ModalWrapper>
       );
     }
   );
 }
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const ModalWrapper = styled.div`
-  display: none;
-  justify-content: center;
-  align-items: center;
-  animation: ${fadeIn} 0.5s ease-in-out;
-`;
 
 const ModalContent = styled.div`
   display: flex;

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
 import styled, { keyframes } from 'styled-components';
 import './font.css';
+import { ModalWrapper } from './styled/AnimModalWrapper';
 
 export function registerObjectModal() {
   registerUIComponent(
@@ -16,35 +17,44 @@ export function registerObjectModal() {
     },
     (layers) => of(layers),
     () => {
-      const hideModal = () => {
-        const modalId = window.document.getElementById('object_modal');
-        if (modalId) modalId.style.display = 'none';
-      };
-
-
-        const showShop = () => {
-          const windowId = window.document.getElementById("merchant");
-          if (windowId) windowId.style.display = "block";
-        }
-
-
       const {
+        visibleDivs,
+        setVisibleDivs,
         objectData: { description },
       } = dataStore();
 
+      const hideModal = () => {
+        setVisibleDivs({
+          ...visibleDivs,
+          objectModal: !visibleDivs.objectModal,
+        });
+      };
+
+      const showShop = () => {
+        setVisibleDivs({
+          ...visibleDivs,
+          merchant: !visibleDivs.merchant,
+        });
+      };
+
+      useEffect(() => {
+        if (visibleDivs.objectModal === true)
+          document.getElementById('object_modal')!.style.display = 'block';
+      }, [visibleDivs.objectModal]);
+
       return (
-        <ModalWrapper id="object_modal">
+        <ModalWrapper id="object_modal" isOpen={visibleDivs.objectModal}>
           <ModalContent>
-          <AlignRight>
-          <TopButton style={{ pointerEvents: 'auto'}} onClick={hideModal}>
-            X
-          </TopButton>
-          </AlignRight>
+            <AlignRight>
+              <TopButton style={{ pointerEvents: 'auto' }} onClick={hideModal}>
+                X
+              </TopButton>
+            </AlignRight>
             <Description>{description}</Description>
-            <div style={{textAlign: "right"}}>
-            <Button style={{ pointerEvents: 'auto'}} onClick={showShop}>
-              Shop
-            </Button>
+            <div style={{ textAlign: 'right' }}>
+              <Button style={{ pointerEvents: 'auto' }} onClick={showShop}>
+                Shop
+              </Button>
             </div>
           </ModalContent>
         </ModalWrapper>
@@ -53,26 +63,9 @@ export function registerObjectModal() {
   );
 }
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const ModalWrapper = styled.div`
-  display: none;
-  justify-content: center;
-  align-items: center;
-  animation: ${fadeIn} 0.5s ease-in-out;
-`;
-
 const AlignRight = styled.div`
   text-align: right;
 `;
-
 
 const ModalContent = styled.div`
   display: flex;

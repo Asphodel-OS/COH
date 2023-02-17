@@ -32,7 +32,6 @@ export function createRoomSystem(network: NetworkLayer, phaser: PhaserLayer) {
       const currentRoom = getCurrentRoom(Location, update.entity);
 
       dataStore.setState({ roomExits: roomExits[currentRoom]  });
-      console.log(roomExits[currentRoom],currentRoom);
 
       myMain.interactiveObjects.forEach((object: any) => {
         try {

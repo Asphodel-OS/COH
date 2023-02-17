@@ -2,9 +2,9 @@ import React from 'react';
 import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import './font.css';
-import clickSound from '../../../public/sound/sound_effects/mouseclick.wav'
+import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
 
 export function registerChatButton() {
   registerUIComponent(
@@ -17,16 +17,13 @@ export function registerChatButton() {
     },
     (layers) => of(layers),
     () => {
-      const {
-        objectData: { description },
-      } = dataStore();
+      const { visibleDivs, setVisibleDivs } = dataStore();
 
       const showChat = () => {
-        const clickFX = new Audio(clickSound)
-        clickFX.play()
-        const modalId = window.document.getElementById('chat_modal');
-        if (modalId.style.display === 'block') modalId.style.display = 'none';
-        else modalId.style.display = 'block';
+        const clickFX = new Audio(clickSound);
+        clickFX.play();
+
+        setVisibleDivs({ ...visibleDivs, chat: !visibleDivs.chat });
       };
 
       return (
