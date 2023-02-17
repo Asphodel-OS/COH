@@ -57,10 +57,7 @@ contract PetMetadataSystem is System {
       LibString.concat(_baseURI, LibString.concat(LibString.toString(packed), ".gif"))
     );
 
-    // PetTraitsPermanentComponent(getAddressById(components, PetTraitsPermanentCompID)).set(
-    //   entityID,
-    //   LibMetadata._packedToArray(packed, _numElements)
-    // );
+    LibPetTraits.setPermTraits(components, world, entityID, LibMetadata._packedToArrayScaled(packed, _numElements));
 
     return "";
   }

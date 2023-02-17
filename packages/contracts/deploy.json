@@ -59,6 +59,12 @@
       ]
     },
     {
+      "name": "_AddModifierSystem",
+      "writeAccess": [
+        "*"
+      ]
+    },
+    {
       "name": "_ListingSetSystem",
       "writeAccess": [
         "IsListingComponent",
