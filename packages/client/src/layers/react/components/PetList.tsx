@@ -342,7 +342,7 @@ export function registerPetList() {
         return kamis.map((kami) => {
           return (
             <KamiBox key={kami.id}>
-              <KamiImage src="https://i.imgur.com/Ut0wOld.gif" />
+              <KamiImage src={kami.uri} />
               <KamiFacts>
                 <KamiName>
                   <Description>{kami.name}</Description>
@@ -442,10 +442,20 @@ export function registerPetList() {
               {/* {ConsumableCells(data.operator.inventories)} */}
             </ConsumableGrid>
 
+<<<<<<< HEAD
             <KamiBox>
               <KamiImage src="https://i.imgur.com/JkEsu5f.gif" />
               <KamiFacts></KamiFacts>
             </KamiBox>
+=======
+
+
+            {/* <KamiBox>
+              <KamiImage src="https://i.imgur.com/JkEsu5f.gif" />
+              <KamiFacts>
+              </KamiFacts>
+            </KamiBox> */}
+>>>>>>> f515d5f (show real pet images in petlist)
             {KamiCards(data.pets)}
           </ModalContent>
         </ModalWrapper>
