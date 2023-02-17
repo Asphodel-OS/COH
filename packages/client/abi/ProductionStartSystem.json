@@ -742,14 +742,6 @@
         ],
         "license": "Unlicense"
       },
-      "src/components/IsNodeComponent.sol": {
-        "keccak256": "0x44c56df16d0645a0febd99b84ff8810d69b02fcd768be43be6ee18808e49add9",
-        "urls": [
-          "bzz-raw://af8a8dddcfb02244ef30206579d5bfb5162b7484bfb453b3e439264ccc935981",
-          "dweb:/ipfs/QmT62vNzyyiNKoHtq4cXmGz94fEpHXUxUKwEK1f3MoptxX"
-        ],
-        "license": "Unlicense"
-      },
       "src/components/IsOperatorComponent.sol": {
         "keccak256": "0xe70f2f58d90a0625ebc4a1e0bcf77c22965234390fe4526788d297b8c07d2cc1",
         "urls": [
@@ -910,14 +902,6 @@
         ],
         "license": "MIT"
       },
-      "src/libraries/LibNode.sol": {
-        "keccak256": "0x5c995ad40379a2cf51453635a607242a7e8f44420eda96fc5d45a5420bcc06ea",
-        "urls": [
-          "bzz-raw://3b522ed5092dbd1b6d70720547d6ce19e9cddc85d230a9702b2a052097a5e152",
-          "dweb:/ipfs/QmfUMDLNLU52qUoaitDqokfxAbkfhnNLnoBmSeKx7i1REj"
-        ],
-        "license": "Unlicense"
-      },
       "src/libraries/LibOperator.sol": {
         "keccak256": "0xbdf9600a9debb7f9c2e883c10c10e9a325ed0b5b38ec829d789c9621d1c99529",
         "urls": [
@@ -927,10 +911,10 @@
         "license": "MIT"
       },
       "src/libraries/LibPet.sol": {
-        "keccak256": "0x7c038b84d8208da7498ad8fa27960e69cba458285e78539d66a49d9b3141fae4",
+        "keccak256": "0x25d679921237ececf4751d55bf45219af0e1ebd3199e9235b7e88e1b623fb7da",
         "urls": [
-          "bzz-raw://6ee038aa574dee6d48375635c914e086c06c573f6d4c303aae86ba6912ec1fba",
-          "dweb:/ipfs/QmeYazqAXfLEiU5ANQVJ9phxBFh9myYV19KScMg7NmmjQK"
+          "bzz-raw://f52f271455ad8733584673df74878210839fd0c5f3b837705692f18575c0e8b9",
+          "dweb:/ipfs/QmXmhZtGPkdSCkKHWXrDAp1WWMW3S6fA9EACU1TiHcwWKS"
         ],
         "license": "MIT"
       },
@@ -967,10 +951,10 @@
         "license": "MIT"
       },
       "src/systems/ProductionStartSystem.sol": {
-        "keccak256": "0x59b5a33fc0c1e01ff0d4c84a7875ab7c1aab869c45725277aa8cf6af52140921",
+        "keccak256": "0xc30851a8b1012c86ebfa65ea13dc6f99bfb0d01a6abf5e34d4771a413883ab5e",
         "urls": [
-          "bzz-raw://4e41a2ff7fba3b9549070ca0d744f20f68085eee2abd6026d8ca528df0a055c1",
-          "dweb:/ipfs/QmdyeqCoj2tzn9pCsiw1zkbXft2wwEL1PeEckmWnHQhihC"
+          "bzz-raw://cd374c93b783f7464677ad5fcfbe45eba9a17428a2c5b1c77798b2ce5ec15176",
+          "dweb:/ipfs/QmQuCFeYqT7EbGh2TJjad1S3Ji4QktQh9gezUw5SLhfcVJ"
         ],
         "license": "Unlicense"
       },

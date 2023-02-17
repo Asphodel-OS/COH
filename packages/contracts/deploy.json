@@ -151,8 +151,10 @@
     {
       "name": "ProductionCollectSystem",
       "writeAccess": [
-        "CoinComponent",
         "BlockLastComponent",
+        "ChargeComponent",
+        "CoinComponent",
+        "TimeLastActionComponent",
         "TimeStartComponent"
       ]
     },
@@ -161,9 +163,11 @@
       "writeAccess": [
         "IsProductionComponent",
         "BlockLastComponent",
+        "ChargeComponent",
         "IdNodeComponent",
         "IdPetComponent",
         "StateComponent",
+        "TimeLastActionComponent",
         "TimeStartComponent"
       ]
     },
@@ -171,8 +175,10 @@
       "name": "ProductionStopSystem",
       "writeAccess": [
         "BlockLastComponent",
+        "ChargeComponent",
         "CoinComponent",
-        "StateComponent"
+        "StateComponent",
+        "TimeLastActionComponent"
       ]
     },
     {

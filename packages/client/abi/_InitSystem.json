@@ -259,7 +259,6 @@
         ":forge-std/=../../node_modules/forge-std/src/",
         ":libraries/=src/libraries/",
         ":memmove/=../../node_modules/memmove/src/",
-        ":packages/=../../../mud/packages/",
         ":solady/=../../node_modules/solady/src/",
         ":solecs/=../../node_modules/@latticexyz/solecs/src/",
         ":solmate/=../../node_modules/@rari-capital/solmate/src/",
@@ -986,10 +985,10 @@
         "license": "MIT"
       },
       "src/libraries/LibPet.sol": {
-        "keccak256": "0xf17b5b0c87cbc6c985d6d1c3b816c8996502f8fb2a52ac2e7d0bbfb5495705f7",
+        "keccak256": "0x25d679921237ececf4751d55bf45219af0e1ebd3199e9235b7e88e1b623fb7da",
         "urls": [
-          "bzz-raw://be0a583f22292bbe8465aaf6267114716c2bae61b1884d0610b656ca009be531",
-          "dweb:/ipfs/QmeC7e9LLnoM3VcWvNeGdk1GD24qM8SpXuSwBxVj3fCQhA"
+          "bzz-raw://f52f271455ad8733584673df74878210839fd0c5f3b837705692f18575c0e8b9",
+          "dweb:/ipfs/QmXmhZtGPkdSCkKHWXrDAp1WWMW3S6fA9EACU1TiHcwWKS"
         ],
         "license": "MIT"
       },
@@ -1002,10 +1001,10 @@
         "license": "MIT"
       },
       "src/libraries/LibProduction.sol": {
-        "keccak256": "0x889256aaa9035e7d1e023f66f7832206fefb88726f3da0d6289631d61a8cbc43",
+        "keccak256": "0x8e4aa65e852af470fbefc72975d4bc103b7b32a4a78c603ac061e96f0ecef267",
         "urls": [
-          "bzz-raw://39c6dba0d0178c007e2cca82444ce9c8d55beb3d098eb672518230f0f74e0a60",
-          "dweb:/ipfs/QmbaogdikNEdbU5DFgfnHA5f2atJxvVCqRL7dCWWbdN6Z9"
+          "bzz-raw://beba5c6e8145de2f7352e1cee3e0a43c7be88896253db1372275ca4429db9525",
+          "dweb:/ipfs/QmbXuk8smdHLwvmQaNkcAU1jaWXvfUWzQZFGVb77qpVgfy"
         ],
         "license": "Unlicense"
       },

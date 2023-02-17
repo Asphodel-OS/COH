@@ -606,7 +606,6 @@
         ":forge-std/=../../node_modules/forge-std/src/",
         ":libraries/=src/libraries/",
         ":memmove/=../../node_modules/memmove/src/",
-        ":packages/=../../../mud/packages/",
         ":solady/=../../node_modules/solady/src/",
         ":solecs/=../../node_modules/@latticexyz/solecs/src/",
         ":solmate/=../../node_modules/@rari-capital/solmate/src/",
@@ -623,7 +622,7 @@
         "bytecodeHash": "ipfs"
       },
       "compilationTarget": {
-        "/Users/chl/Documents/COH/node_modules/@latticexyz/solecs/src/interfaces/IUint256Component.sol": "IUint256Component"
+        "/Users/jblee/Code/github/Asphodel-OS/COH/node_modules/@latticexyz/solecs/src/interfaces/IUint256Component.sol": "IUint256Component"
       },
       "libraries": {}
     },
@@ -644,7 +643,7 @@
         ],
         "license": "MIT"
       },
-      "/Users/chl/Documents/COH/node_modules/@latticexyz/solecs/src/LibTypes.sol": {
+      "/Users/jblee/Code/github/Asphodel-OS/COH/node_modules/@latticexyz/solecs/src/LibTypes.sol": {
         "keccak256": "0xa3898035fd9fa865bcfc9861e3b5ecce36be3196fb27705e50a02fed9831f102",
         "urls": [
           "bzz-raw://273284a35a950f6d0bc4223d345cf46c59972a00510ddbc4ba695ede38714798",
@@ -652,7 +651,7 @@
         ],
         "license": "MIT"
       },
-      "/Users/chl/Documents/COH/node_modules/@latticexyz/solecs/src/interfaces/IComponent.sol": {
+      "/Users/jblee/Code/github/Asphodel-OS/COH/node_modules/@latticexyz/solecs/src/interfaces/IComponent.sol": {
         "keccak256": "0xc25ab58cac1449fcd501ddcc56dade0653a7946adcd9eee2931bc095eda2a6b4",
         "urls": [
           "bzz-raw://c9505da36322f3b3de4dc0aaf0aec911e76be6cbd091f4d142070a7316df4629",
@@ -660,7 +659,7 @@
         ],
         "license": "MIT"
       },
-      "/Users/chl/Documents/COH/node_modules/@latticexyz/solecs/src/interfaces/IERC173.sol": {
+      "/Users/jblee/Code/github/Asphodel-OS/COH/node_modules/@latticexyz/solecs/src/interfaces/IERC173.sol": {
         "keccak256": "0x2bd9a729a3bfcfc445bc557a914aee17fcaf1c0f74b909b6a91a5d3755a699e9",
         "urls": [
           "bzz-raw://203741d681a686fb75f0715332e554083733f349100dfe11252c17fbe9cd094e",
@@ -668,7 +667,7 @@
         ],
         "license": "MIT"
       },
-      "/Users/chl/Documents/COH/node_modules/@latticexyz/solecs/src/interfaces/IOwnableWritable.sol": {
+      "/Users/jblee/Code/github/Asphodel-OS/COH/node_modules/@latticexyz/solecs/src/interfaces/IOwnableWritable.sol": {
         "keccak256": "0x804db2685d65f5d4029431c47276b6ac43d3c329ea4ce75358928dbd4d11ee77",
         "urls": [
           "bzz-raw://a1d85dfe46f678ce4cf3a788092519251a24c2c015f9e858a81111b506b0ee78",
@@ -676,7 +675,7 @@
         ],
         "license": "MIT"
       },
-      "/Users/chl/Documents/COH/node_modules/@latticexyz/solecs/src/interfaces/IUint256Component.sol": {
+      "/Users/jblee/Code/github/Asphodel-OS/COH/node_modules/@latticexyz/solecs/src/interfaces/IUint256Component.sol": {
         "keccak256": "0x12e2eaa4c5663048343e43a1994c446baacb16a4aacbe314ed5202d878751be9",
         "urls": [
           "bzz-raw://2d78184a1b1868773f2d5a7cf54bb42bccc666dc75cea14eeed15b8573fd000f",

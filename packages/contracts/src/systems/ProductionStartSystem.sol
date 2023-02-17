@@ -5,7 +5,6 @@ import { System } from "solecs/System.sol";
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById } from "solecs/utils.sol";
 
-import { LibNode } from "libraries/LibNode.sol";
 import { LibOperator } from "libraries/LibOperator.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
@@ -21,8 +20,10 @@ contract ProductionStartSystem is System {
   function execute(bytes memory arguments) public returns (bytes memory) {
     (uint256 petID, uint256 nodeID) = abi.decode(arguments, (uint256, uint256));
     uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
+    uint256 charge = LibPet.updateCharge(components, petID);
 
     require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
+    require(charge != 0, "Pet: you have died (of spiritual Dysentery)");
     require(!LibPet.isProducing(components, petID), "Pet: active production exists");
 
     uint256 id = LibProduction.getForPet(components, petID);
