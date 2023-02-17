@@ -10,8 +10,8 @@ export function registerUpButton() {
   registerUIComponent(
     'UpButton',
     {
-      colStart: 82,
-      colEnd: 87,
+      colStart: 83,
+      colEnd: 88,
       rowStart: 76,
       rowEnd: 88,
     },
@@ -36,7 +36,7 @@ export function registerUpButton() {
         const clickFX = new Audio(clickSound);
         clickFX.play();
 
-        const actionID = `Moving at ${Date.now()}` as EntityID;
+        const actionID = `Moving...` as EntityID;
 
         actions.add({
           id: actionID,

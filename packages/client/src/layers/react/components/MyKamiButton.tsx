@@ -10,8 +10,8 @@ export function registerMyKamiButton() {
   registerUIComponent(
     'MyKamiButton',
     {
-      colStart: 87,
-      colEnd: 99,
+      colStart: 88,
+      colEnd: 100,
       rowStart: 87,
       rowEnd: 99,
     },

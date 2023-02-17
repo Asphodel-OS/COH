@@ -12,7 +12,7 @@ export const changeRoom = (object: Phaser.GameObjects.Image, to: number) => {
 
   return object.setInteractive().on("pointerdown", () => {
 
-    const actionID = `Moving at ${Date.now()}` as EntityID;
+    const actionID = `Moving` as EntityID;
 
     actions.add({
       id: actionID,

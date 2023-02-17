@@ -12,10 +12,10 @@ export function registerActionQueue() {
   registerUIComponent(
     'ActionQueue',
     {
-      rowStart: 40,
+      rowStart: 50,
       rowEnd: 70,
-      colStart: 87,
-      colEnd: 96,
+      colStart: 82,
+      colEnd: 98,
     },
     (layers) => {
       const {
@@ -34,7 +34,7 @@ export function registerActionQueue() {
       return (
         <ModalWrapper>
           <ModalContent>
-          <Description>Actions:</Description>
+          <Description>TX Queue:</Description>
           {[...getComponentEntities(Action)].map((e) => {
             const actionData = getComponentValueStrict(Action, e);
             const state = ActionStateString[actionData.state as ActionState];
@@ -53,10 +53,7 @@ export function registerActionQueue() {
 
 const ModalWrapper = styled.div`
   display: grid;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  align-items: left;
 `;
 
 const ModalContent = styled.div`

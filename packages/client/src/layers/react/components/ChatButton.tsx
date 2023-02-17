@@ -10,8 +10,8 @@ export function registerChatButton() {
   registerUIComponent(
     'ChatButton',
     {
-      colStart: 87,
-      colEnd: 99,
+      colStart: 88,
+      colEnd: 100,
       rowStart: 76,
       rowEnd: 84,
     },
