@@ -1,13 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { map, merge } from "rxjs";
+import React, { useState, useEffect } from 'react';
+import { map, merge } from 'rxjs';
 import styled, { keyframes } from 'styled-components';
-import { EntityID, EntityIndex, Has, HasValue, getComponentValue, runQuery, } from "@latticexyz/recs";
+import {
+  EntityID,
+  EntityIndex,
+  Has,
+  HasValue,
+  getComponentValue,
+  runQuery,
+} from '@latticexyz/recs';
 
-import { registerUIComponent } from "../engine/store";
-import pompom from '../../../public/img/pompom.png'
-import gakki from '../../../public/img/gakki.png'
-import ribbon from '../../../public/img/ribbon.png'
-import gum from '../../../public/img/gum.png'
+import { registerUIComponent } from '../engine/store';
+import pompom from '../../../public/img/pompom.png';
+import gakki from '../../../public/img/gakki.png';
+import ribbon from '../../../public/img/ribbon.png';
+import gum from '../../../public/img/gum.png';
+import { ModalWrapper } from './styled/AnimModalWrapper';
+import { dataStore } from '../store/createStore';
 
 const ItemImages = new Map([
   [1, pompom],
@@ -17,16 +26,16 @@ const ItemImages = new Map([
 ]);
 
 const ItemNames = new Map([
-  [1, "Pom-Pom Fruit Candy"],
-  [2, "Cookie Sticks"],
-  [3, "Ribbon Licorice"],
-  [4, "Maple-Flavor Ghost Gum"],
+  [1, 'Pom-Pom Fruit Candy'],
+  [2, 'Cookie Sticks'],
+  [3, 'Ribbon Licorice'],
+  [4, 'Maple-Flavor Ghost Gum'],
 ]);
 
 // merchant window with listings. assumes at most 1 merchant per room
 export function registerMerchantWindow() {
   registerUIComponent(
-    "MerchantWindow",
+    'MerchantWindow',
 
     // Grid Config
     {
@@ -69,8 +78,8 @@ export function registerMerchantWindow() {
           index,
           name: getComponentValue(Name, index)?.value as string,
           location: getComponentValue(Location, index)?.value as number,
-        }
-      }
+        };
+      };
 
       // get a Listing object by index
       const getListing = (index: EntityIndex) => {
@@ -80,20 +89,25 @@ export function registerMerchantWindow() {
           itemType: getComponentValue(ItemIndex, index)?.value as number,
           buyPrice: getComponentValue(PriceBuy, index)?.value as number,
           sellPrice: getComponentValue(PriceSell, index)?.value as number,
-        }
-      }
+        };
+      };
 
       return merge(OperatorID.update$, Location.update$).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
-          const operatorIndex = Array.from(runQuery([
-            Has(IsOperator),
-            HasValue(PlayerAddress, { value: network.connectedAddress.get() })
-          ]))[0];
+          const operatorIndex = Array.from(
+            runQuery([
+              Has(IsOperator),
+              HasValue(PlayerAddress, {
+                value: network.connectedAddress.get(),
+              }),
+            ])
+          )[0];
           const operatorID = world.entities[operatorIndex];
 
           // get player location and list of merchants in this room
-          const location = getComponentValue(Location, operatorIndex)?.value as number;
+          const location = getComponentValue(Location, operatorIndex)
+            ?.value as number;
           const merchantResults = runQuery([
             Has(IsMerchant),
             HasValue(Location, { value: location }),
@@ -105,10 +119,12 @@ export function registerMerchantWindow() {
           if (merchantResults.size != 0) {
             merchantIndex = Array.from(merchantResults)[0];
             merchant = getMerchant(merchantIndex);
-            const listingIndices = Array.from(runQuery([
-              Has(IsListing),
-              HasValue(MerchantID, { value: merchant.id }),
-            ]));
+            const listingIndices = Array.from(
+              runQuery([
+                Has(IsListing),
+                HasValue(MerchantID, { value: merchant.id }),
+              ])
+            );
 
             let listing;
             for (let i = 0; i < listingIndices.length; i++) {
@@ -116,7 +132,6 @@ export function registerMerchantWindow() {
               listings.push(listing);
             }
           }
-
 
           return {
             actions,
@@ -137,6 +152,7 @@ export function registerMerchantWindow() {
 
     // Render
     ({ actions, api, data }) => {
+      const { visibleDivs, setVisibleDivs } = dataStore();
       // hide this component if merchant.index == 0
 
       ///////////////////
@@ -144,7 +160,9 @@ export function registerMerchantWindow() {
 
       // buy from a listing
       const buy = (listing: any, amt: number) => {
-        const actionID = `Buying ${amt} of ${listing.itemType} at ${Date.now()}` as EntityID; // itemType should be replaced with the item's name
+        const actionID = `Buying ${amt} of ${
+          listing.itemType
+        } at ${Date.now()}` as EntityID; // itemType should be replaced with the item's name
         actions.add({
           id: actionID,
           components: {},
@@ -159,7 +177,9 @@ export function registerMerchantWindow() {
 
       // sell to a listing
       const sell = (listing: any, amt: number) => {
-        const actionID = `Selling ${amt} of ${listing.itemType} at ${Date.now()}` as EntityID; // itemType should be replaced with the item's name
+        const actionID = `Selling ${amt} of ${
+          listing.itemType
+        } at ${Date.now()}` as EntityID; // itemType should be replaced with the item's name
         actions.add({
           id: actionID,
           components: {},
@@ -180,26 +200,37 @@ export function registerMerchantWindow() {
         slots.map((listing: any) => (
           <ShopEntry key={listing.itemType}>
             <ItemImage src={ItemImages.get(parseInt(listing.itemType, 16))} />
-            <ItemName>{ItemNames.get(parseInt(listing.itemType, 16))} </ItemName>
+            <ItemName>
+              {ItemNames.get(parseInt(listing.itemType, 16))}{' '}
+            </ItemName>
             <ItemPrice>{parseInt(listing.buyPrice, 16)}</ItemPrice>
             <Button
-              style={{ pointerEvents: "auto" }}
+              style={{ pointerEvents: 'auto' }}
               onClick={() => buy(listing, 1)}
-            >Buy</Button>
+            >
+              Buy
+            </Button>
           </ShopEntry>
         ));
 
       const hideModal = () => {
-        const elementId = window.document.getElementById("merchant");
-        if (elementId) {
-          elementId.style.display = "none";
-        }
+        setVisibleDivs({
+          ...visibleDivs,
+          merchant: !visibleDivs.merchant,
+        });
       };
 
+      useEffect(() => {
+        if (visibleDivs.merchant === true)
+          document.getElementById('merchant')!.style.display = 'block';
+      }, [visibleDivs.merchant]);
+
       return (
-        <ModalWrapper id="merchant">
+        <ModalWrapper id="merchant" isOpen={visibleDivs.merchant}>
           <ModalContent>
-            <TopButton style={{ pointerEvents: "auto" }} onClick={hideModal}>X</TopButton>
+            <TopButton style={{ pointerEvents: 'auto' }} onClick={hideModal}>
+              X
+            </TopButton>
             <ShopList>{listings(data.listings)}</ShopList>
           </ModalContent>
         </ModalWrapper>
@@ -207,7 +238,6 @@ export function registerMerchantWindow() {
     }
   );
 }
-
 
 const Button = styled.button`
   background-color: #ffffff;
@@ -227,22 +257,6 @@ const Button = styled.button`
   grid-column: 4;
   width: 50px;
   align-self: center;
-`;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const ModalWrapper = styled.div`
-  display: none;
-  justify-content: center;
-  align-items: center;
-  animation: ${fadeIn} 0.5s ease-in-out;
 `;
 
 const ModalContent = styled.div`
@@ -283,7 +297,6 @@ const ItemName = styled.p`
   align-self: center;
   font-size: 15px;
 `;
-
 
 const ItemPrice = styled.p`
   font-family: Pixel;
