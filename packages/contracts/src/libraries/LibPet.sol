@@ -27,6 +27,9 @@ uint256 constant BASE_BANDWIDTH = 150;
 uint256 constant BASE_STORAGE = 500;
 uint256 constant CHARGE_EPOCH = 600; // 10min
 
+uint256 constant DEMO_EPOCH = 1;
+uint256 constant DEMO_BANDWIDTH = 15;
+
 library LibPet {
   /////////////////
   // INTERACTIONS
@@ -62,11 +65,13 @@ library LibPet {
   function updateCharge(IUintComp components, uint256 id) internal returns (uint256 newCharge) {
     uint256 lastTs = getLastTs(components, id);
     uint256 duration = block.timestamp - lastTs;
-    uint256 drain = (duration + CHARGE_EPOCH - 1) / CHARGE_EPOCH; // round up to get
+    // uint256 drain = (duration + CHARGE_EPOCH - 1) / CHARGE_EPOCH; // round up on drainage
+    uint256 drain = (duration + DEMO_EPOCH - 1) / DEMO_EPOCH; // round up on drainage
     uint256 prevCharge = getCharge(components, id);
 
     newCharge = (prevCharge > drain) ? prevCharge - drain : 0;
     setCharge(components, id, newCharge);
+    setLastTs(components, id, block.timestamp);
   }
 
   /////////////////
@@ -75,12 +80,19 @@ library LibPet {
   // set a pet's stats from its traits
   // TODO: actually set stats from traits. hardcoded currently
   function setStats(IUintComp components, uint256 id) internal {
-    BandwidthComponent(getAddressById(components, BandwidthCompID)).set(id, smolRandom(BASE_BANDWIDTH, id));
-    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, smolRandom(BASE_STORAGE, id));
+    BandwidthComponent(getAddressById(components, BandwidthCompID)).set(id, DEMO_BANDWIDTH);
+    // BandwidthComponent(getAddressById(components, BandwidthCompID)).set(id, BASE_BANDWIDTH);
+    StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, BASE_STORAGE);
 
     uint256 totalCapacity = BASE_CAPACITY;
-    CapacityComponent(getAddressById(components, CapacityCompID)).set(id, smolRandom(totalCapacity, id));
-    ChargeComponent(getAddressById(components, ChargeCompID)).set(id, smolRandom(totalCapacity, id));
+    CapacityComponent(getAddressById(components, CapacityCompID)).set(
+      id,
+      smolRandom(totalCapacity, id)
+    );
+    ChargeComponent(getAddressById(components, ChargeCompID)).set(
+      id,
+      smolRandom(totalCapacity, id)
+    );
   }
 
   // temporary function to stimulate a little randomness
@@ -94,6 +106,15 @@ library LibPet {
     uint256 charge
   ) internal {
     ChargeComponent(getAddressById(components, ChargeCompID)).set(id, charge);
+  }
+
+  // Update the TimeLastAction of a pet. used to expected battery drain on next action
+  function setLastTs(
+    IUintComp components,
+    uint256 id,
+    uint256 ts
+  ) internal {
+    TimeLastActionComponent(getAddressById(components, TimeLastCompID)).set(id, ts);
   }
 
   function setName(
