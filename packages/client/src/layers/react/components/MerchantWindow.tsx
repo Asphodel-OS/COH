@@ -178,15 +178,15 @@ export function registerMerchantWindow() {
       // [listing: {id, index, itemType, buyPrice, sellPrice}]
       const listings = (slots: any) =>
         slots.map((listing: any) => (
-          <li style={{ color: "black", fontSize: "16px" }} key={listing.itemType}>
-            <img src={ItemImages.get(parseInt(listing.itemType, 16))} />
-            <b>{ItemNames.get(parseInt(listing.itemType, 16))} </b>
-            <b>Price </b> {parseInt(listing.buyPrice, 16)}
+          <ShopEntry key={listing.itemType}>
+            <ItemImage src={ItemImages.get(parseInt(listing.itemType, 16))} />
+            <ItemName>{ItemNames.get(parseInt(listing.itemType, 16))} </ItemName>
+            <ItemPrice>{parseInt(listing.buyPrice, 16)}</ItemPrice>
             <Button
               style={{ pointerEvents: "auto" }}
               onClick={() => buy(listing, 1)}
-            >buy</Button>
-          </li>
+            >Buy</Button>
+          </ShopEntry>
         ));
 
       const hideModal = () => {
@@ -225,6 +225,7 @@ const Button = styled.button`
   border-radius: 5px;
   justify-content: center;
   font-family: Pixel;
+  grid-column: 4;
 `;
 
 const fadeIn = keyframes`
@@ -272,4 +273,30 @@ const TopButton = styled.button`
     background-color: #c2c2c2;
   }
   justify-self: right;
+`;
+
+const ItemName = styled.p`
+  font-family: Pixel;
+  grid-column: 2;
+  align-self: middle;
+`;
+
+
+const ItemPrice = styled.p`
+  font-family: Pixel;
+  grid-column: 3;
+  align-self: middle;
+`;
+
+const ShopEntry = styled.li`
+  font-family: Pixel;
+  color: black;
+  display: grid;
+`;
+
+const ItemImage = styled.img`
+  font-family: Pixel;
+  grid-column: 1;
+  align-self: middle;
+  width: 50px;
 `;
