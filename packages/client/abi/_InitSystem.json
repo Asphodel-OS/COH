@@ -259,7 +259,6 @@
         ":forge-std/=../../node_modules/forge-std/src/",
         ":libraries/=src/libraries/",
         ":memmove/=../../node_modules/memmove/src/",
-        ":packages/=../../../mud/packages/",
         ":solady/=../../node_modules/solady/src/",
         ":solecs/=../../node_modules/@latticexyz/solecs/src/",
         ":solmate/=../../node_modules/@rari-capital/solmate/src/",
@@ -1026,10 +1025,10 @@
         "license": "Unlicense"
       },
       "src/systems/PetMetadataSystem.sol": {
-        "keccak256": "0x82c3eaf74ad1d6a337714a388a345c1c540efe3fcd4392a19f1d2fa49f2eaeb3",
+        "keccak256": "0xd468e523945b27d4e61ab932f11df752ab01e913643fea29f71d4e0abb7c4d34",
         "urls": [
-          "bzz-raw://c6d83c6cbc0f30c45ab08a62ea205d560223ebc3236e1963785c1b4f10a7f0b2",
-          "dweb:/ipfs/QmTwRCqMy6kCVeRv3EEw6EuPR9DfZcr7TmvPihimZt9is1"
+          "bzz-raw://3f9762a6e831486a6fc6ec799a66675866993530302ca442ca05be7c73242e3f",
+          "dweb:/ipfs/QmWMLYVzfPBX2sXGPJYicQNTnfLsFUDGHofRBaX1DkpRU9"
         ],
         "license": "Unlicense"
       },
