@@ -855,6 +855,7 @@
         ":forge-std/=../../node_modules/forge-std/src/",
         ":libraries/=src/libraries/",
         ":memmove/=../../node_modules/memmove/src/",
+        ":packages/=../../../mud/packages/",
         ":solady/=../../node_modules/solady/src/",
         ":solecs/=../../node_modules/@latticexyz/solecs/src/",
         ":solmate/=../../node_modules/@rari-capital/solmate/src/",

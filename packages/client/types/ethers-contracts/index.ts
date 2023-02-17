@@ -78,6 +78,7 @@ export type { TradeInitiateSystem } from "./TradeInitiateSystem";
 export type { Uint256ArrayBareComponent } from "./Uint256ArrayBareComponent";
 export type { Uint256ArrayComponent } from "./Uint256ArrayComponent";
 export type { Uint256BareComponent } from "./Uint256BareComponent";
+export type { Uint256Component } from "./Uint256Component";
 export type { _InitSystem } from "./_InitSystem";
 export type { _ListingSetSystem } from "./_ListingSetSystem";
 export type { _MerchantCreateSystem } from "./_MerchantCreateSystem";
@@ -161,6 +162,7 @@ export { TradeInitiateSystem__factory } from "./factories/TradeInitiateSystem__f
 export { Uint256ArrayBareComponent__factory } from "./factories/Uint256ArrayBareComponent__factory";
 export { Uint256ArrayComponent__factory } from "./factories/Uint256ArrayComponent__factory";
 export { Uint256BareComponent__factory } from "./factories/Uint256BareComponent__factory";
+export { Uint256Component__factory } from "./factories/Uint256Component__factory";
 export { _InitSystem__factory } from "./factories/_InitSystem__factory";
 export { _ListingSetSystem__factory } from "./factories/_ListingSetSystem__factory";
 export { _MerchantCreateSystem__factory } from "./factories/_MerchantCreateSystem__factory";

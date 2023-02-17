@@ -122,6 +122,10 @@ export function registerPetDetails() {
         }
       }, [description]);
 
+      useEffect(() => {
+        console.log(dets);
+      }, [dets]);
+
       const hideModal = () => {
         const clickFX = new Audio(clickSound)
         clickFX.play()
