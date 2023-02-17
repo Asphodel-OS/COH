@@ -16,13 +16,15 @@ import mintSound from '../../../public/sound/sound_effects/tami_mint_vending_sou
 import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
 import { BigNumber, BigNumberish } from 'ethers';
 import { ModalWrapper } from './styled/AnimModalWrapper';
+import { hexToDecimal } from '../../phaser/utils';
+import { describeCharacther } from '../../../constants';
 
 type TraitDetails = {
-  Name: string,
-  Type: string,
-  Value: string
-  D: string,
-}
+  Name: string;
+  Type: string;
+  Value: string;
+  D: string;
+};
 
 type Details = {
   nftID: string;
@@ -75,9 +77,9 @@ export function registerPetDetails() {
             Name,
             State,
             StorageSize,
-            _DynamicTraits
-           },
-           world
+            _DynamicTraits,
+          },
+          world,
         },
       } = layers;
 
@@ -123,7 +125,8 @@ export function registerPetDetails() {
         let result: Array<TraitDetails> = [];
 
         // 'dynamic' metadata to showcase partially implmented dynamic nfts
-        const dArr = getComponentValue(_DynamicTraits, index)?.value as string[];
+        const dArr = getComponentValue(_DynamicTraits, index)
+          ?.value as string[];
 
         for (let i = 0; i < rawArr.length; i++) {
           const ind = world.entityToIndex.get(
@@ -131,7 +134,9 @@ export function registerPetDetails() {
           ) as EntityIndex;
           const n = getComponentValue(Name, ind)?.value as string;
           const t = getComponentValue(ModifierType, ind)?.value as string;
-          const v = hexToString(getComponentValue(ModifierValue, ind)?.value as string);
+          const v = hexToString(
+            getComponentValue(ModifierValue, ind)?.value as string
+          );
           const d = dArr[i];
 
           result.push({ Name: n, Type: t, Value: v, D: d });
@@ -153,21 +158,31 @@ export function registerPetDetails() {
 
       useEffect(() => {
         if (description && description != '0') {
-          // console.log(description);
           setDets(getDetails(getPetIndex(description)));
         }
       }, [description]);
 
-      // useEffect(() => {
-      //   console.log(dets);
-      // }, [dets]);
+      function findBodyPartByIndex(name: string, index: number) {
+        if (name == 'Color') return describeCharacther.colors[index - 1];
+        else if (name == 'Body') return describeCharacther.bodyType[index - 1];
+        else if (name == 'Hand') return describeCharacther.handType[index - 1];
+        else if (name == 'Eyes') return describeCharacther.face[index - 1];
+        else return;
+      }
 
-      const traitLines = dets?.traits.map((trait) => (
-        <KamiList key={trait.Name}>
-          {`${trait.Name} [id: ${trait.D}]`}
-          <KamiText>{`${trait.Type} | ${trait.Value}` }</KamiText>
-        </KamiList>
-      ));
+      const traitLines = dets?.traits.map((trait) => {
+        const traitNumber = hexToDecimal(trait.D);
+        const bodyPart = findBodyPartByIndex(trait.Name, traitNumber);
+
+        if (trait.Name == 'Mouth') return;
+        if (trait.Name == 'Eyes') trait.Name = 'Face';
+        return (
+          <KamiList key={trait.Name}>
+            {`${trait.Name} [${bodyPart}]`}
+            <KamiText style={{paddingTop: '20px'}}>{`${trait.Type} | {${traitNumber}}`}</KamiText>
+          </KamiList>
+        );
+      });
 
       const hideModal = () => {
         const clickFX = new Audio(clickSound);
