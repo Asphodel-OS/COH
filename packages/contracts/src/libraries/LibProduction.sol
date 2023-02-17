@@ -84,10 +84,10 @@ library LibProduction {
     }
 
     // TODO: update this to include other multipliers once we have theming of that
-    uint256 hashRate = LibPet.getTotalBandwidth(components, petID);
+    uint256 bandwidth = LibPet.getTotalBandwidth(components, petID);
     uint256 storageSize = LibPet.getTotalStorage(components, petID);
     uint256 duration = getDuration(components, id);
-    uint256 output = hashRate * duration;
+    uint256 output = bandwidth * duration;
     if (output > storageSize) output = storageSize;
     return output;
   }

@@ -153,7 +153,7 @@ library LibPet {
   // calculate and return the total battery capacity of a pet (including equipment)
   // TODO: include equipment stats
   function getTotalCapacity(IUintComp components, uint256 id) internal view returns (uint256) {
-    return BandwidthComponent(getAddressById(components, BandwidthCompID)).getValue(id);
+    return CapacityComponent(getAddressById(components, CapacityCompID)).getValue(id);
   }
 
   /////////////////

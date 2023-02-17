@@ -60,6 +60,8 @@ export function createComponents(world: any) {
     PriceSell: defineNumberComponent(world, { id: "PriceSell", metadata: { contractId: "component.PriceSell" } }),
     State: defineStringComponent(world, { id: "State", metadata: { contractId: "component.State" } }),
     StorageSize: defineNumberComponent(world, { id: "StorageSize", metadata: { contractId: "component.StorageSize" } }),
+
+    // Times
     LastActionTime: defineNumberComponent(world, { id: "LastActionTime", metadata: { contractId: "component.time.LastAction" } }),
     StartTime: defineNumberComponent(world, { id: "StartTime", metadata: { contractId: "component.time.Start" } }),
 

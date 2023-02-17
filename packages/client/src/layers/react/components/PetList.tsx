@@ -263,8 +263,6 @@ export function registerPetList() {
       // Generate the list of Kami cards
       // TODO: grab uri from SC side
       const KamiCards = (kamis: any[]) => {
-        console.log("calling kamicards");
-        console.log(data.pets);
         return kamis.map((kami) => {
           return (
             <KamiBox key={kami.name}>
