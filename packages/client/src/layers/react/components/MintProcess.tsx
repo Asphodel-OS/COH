@@ -28,7 +28,7 @@ export function registerMintProcess() {
         <ContainerWrapper>
           <MintContainer id="mint_process" style={{ display: 'none' }}>
             {!mintSuccess ? (
-              <MintProcess>Minting...</MintProcess>
+              <MintProcess>Loading...</MintProcess>
             ) : (
               <div
                 style={{
