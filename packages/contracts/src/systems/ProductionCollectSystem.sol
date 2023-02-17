@@ -22,10 +22,8 @@ contract ProductionCollectSystem is System {
     uint256 productionID = abi.decode(arguments, (uint256));
     uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
     uint256 petID = LibProduction.getPet(components, productionID);
-    uint256 nodeID = LibProduction.getNode(components, productionID);
 
     require(LibPet.getOperator(components, petID) == operatorID, "Pet: not urs");
-    require(Utils.sameRoom(components, operatorID, nodeID), "Node: must be in room");
     require(Utils.hasState(components, productionID, "ACTIVE"), "Production: must be active");
 
     uint256 amt = LibProduction.calc(components, productionID);

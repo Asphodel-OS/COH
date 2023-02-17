@@ -63,18 +63,18 @@ export function createPlayerAPI(systems: any) {
    *********************/
 
   // @dev retrieves the amount due from a passive deposit production and resets the starting point
-  function collectProduction(depositID: BigNumberish) {
-    return systems["system.ProductionCollect"].executeTyped(depositID);
+  function collectProduction(productionID: BigNumberish) {
+    return systems["system.ProductionCollect"].executeTyped(productionID);
   }
 
   // @dev starts a deposit production for a character. If none exists, it creates one.
-  function startProduction(depositID: BigNumberish) {
-    return systems["system.ProductionStart"].executeTyped(depositID);
+  function startProduction(petID: BigNumberish, nodeID: BigNumberish) {
+    return systems["system.ProductionStart"].executeTyped(petID, nodeID);
   }
 
   // @dev retrieves the amount due from a passive deposit production and stops it.
-  function stopProduction(depositID: BigNumberish) {
-    return systems["system.ProductionStop"].executeTyped(depositID);
+  function stopProduction(productionID: BigNumberish) {
+    return systems["system.ProductionStop"].executeTyped(productionID);
   }
 
 

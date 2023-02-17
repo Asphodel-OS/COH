@@ -37,7 +37,7 @@ export function registerMiningModal() {
             PetID,
             PlayerAddress,
             State,
-            TimeStart,
+            StartTime,
           },
           actions,
         },
@@ -80,11 +80,11 @@ export function registerMiningModal() {
           petID: getComponentValue(PetID, index)?.value as string,
           nodeID: getComponentValue(NodeID, index)?.value as string,
           state: getComponentValue(State, index)?.value as string,
-          timeStart: getComponentValue(TimeStart, index)?.value as number,
+          timeStart: getComponentValue(StartTime, index)?.value as number,
         }
       }
 
-      return merge(OperatorID.update$, Location.update$, TimeStart.update$, State.update$).pipe(
+      return merge(OperatorID.update$, Location.update$, StartTime.update$, State.update$).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
           const operatorIndex = Array.from(runQuery([

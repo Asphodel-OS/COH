@@ -52,7 +52,7 @@ export function registerPetMint() {
             OwnerID,
             IsPet,
             Balance
-           },
+          },
           api: { player },
           network: { connectedAddress },
           actions,

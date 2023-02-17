@@ -10,7 +10,11 @@ import { CoinComponent, ID as CoinComponentID } from "components/CoinComponent.s
 library LibCoin {
   // gets the coin balance of an entity
   function get(IUint256Component components, uint256 entityID) internal view returns (uint256) {
-    return CoinComponent(getAddressById(components, CoinComponentID)).getValue(entityID);
+    if (CoinComponent(getAddressById(components, CoinComponentID)).has(entityID)) {
+      return CoinComponent(getAddressById(components, CoinComponentID)).getValue(entityID);
+    } else {
+      return 0;
+    }
   }
 
   // transfers the specified coin amt from=>to entity

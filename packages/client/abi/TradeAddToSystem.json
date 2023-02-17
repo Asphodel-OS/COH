@@ -809,10 +809,10 @@
         "license": "Unlicense"
       },
       "src/libraries/LibCoin.sol": {
-        "keccak256": "0xb1229ccdf2d38110e5b0fdee98e7449498d264070c3176c26743f99292a4c373",
+        "keccak256": "0x8bb2439f48fcacc45e28ddc908253a8c60e022605d71c5200302aebc3e3a7b43",
         "urls": [
-          "bzz-raw://9a8a9260ea9adf8e3dc8b7bbc34996797d13058aa21b06db15f2acecd3cbffa0",
-          "dweb:/ipfs/QmRjBXp5tkRGzHAXXoZtXuVP2iJNGFrRXqZAffRh7W7pWs"
+          "bzz-raw://ce1e2c3e6fdd200245d13881dc4c4b39732a73ec99850ba5cee1106e340792a6",
+          "dweb:/ipfs/QmWC899Bx4UmGdXhWoXcjRkooWj1hZduMu2BQBxoAXAz2c"
         ],
         "license": "MIT"
       },
