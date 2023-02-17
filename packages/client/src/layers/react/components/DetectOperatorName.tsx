@@ -51,7 +51,7 @@ export function registerDetectOperatorName() {
           try {
             const mintFX = new Audio(mintSound)
             mintFX.play()
-            
+
             await player.operator.set(connectedAddress.get()!, name);
 
             document.getElementById('detectOperatorName')!.style.display = 'none';
@@ -85,10 +85,10 @@ export function registerDetectOperatorName() {
           style={{ display: isDivVisible ? 'block' : 'none' }}
         >
           <ModalContent>
-            <Description style={{gridRow : 1}}>
+            <Description style={{ gridRow: 1 }}>
               Name Operator
             </Description>
-            <Input style={{ gridRow: 2, pointerEvents: 'auto'}}
+            <Input style={{ gridRow: 2, pointerEvents: 'auto' }}
               type="text"
               onKeyDown={(e) => catchKeys(e)}
               placeholder="username"
