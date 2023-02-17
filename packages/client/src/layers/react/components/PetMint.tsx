@@ -112,7 +112,7 @@ export function registerPetMint() {
             <TopButton onClick={hideModal}>
               X
             </TopButton>
-            <Description>Mint a Kami</Description>
+            <Description>Buy a pet</Description>
             <Button style={{ pointerEvents: 'auto' }} onClick={handleMinting}>
               Mint Kamigotchi
             </Button>
@@ -157,16 +157,16 @@ const Button = styled.button`
   border-width: 2px;
   border-color: black;
   color: black;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
+  padding: 5px;
   display: inline-block;
-  font-size: 18px;
-  margin: 4px 2px;
+  font-size: 14px;
   cursor: pointer;
   border-radius: 5px;
-  justify-content: center;
   font-family: Pixel;
+
+  &:active {
+    background-color: #c2c2c2;
+  }
 `;
 
 const Description = styled.p`

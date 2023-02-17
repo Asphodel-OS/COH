@@ -6,7 +6,7 @@ import styled, { keyframes } from 'styled-components';
 import { HasValue, runQuery } from '@latticexyz/recs';
 import mintSound from '../../../public/sound/sound_effects/tami_mint_vending_sound.mp3'
 
-export function registerDetectMint() {
+export function registerDetectOperatorName() {
   registerUIComponent(
     'DetectMint',
     {
@@ -54,7 +54,7 @@ export function registerDetectMint() {
             
             await player.operator.set(connectedAddress.get()!, name);
 
-            document.getElementById('detectMint')!.style.display = 'none';
+            document.getElementById('detectOperatorName')!.style.display = 'none';
             document.getElementById('mint_process')!.style.display = 'block';
           } catch (e) {
             //
@@ -81,7 +81,7 @@ export function registerDetectMint() {
 
       return (
         <ModalWrapper
-          id="detectMint"
+          id="detectOperatorName"
           style={{ display: isDivVisible ? 'block' : 'none' }}
         >
           <ModalContent>
