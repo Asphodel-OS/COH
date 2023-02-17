@@ -114,7 +114,7 @@ export function registerPetList() {
         }
       }
 
-      return merge(OwnerID.update$, Location.update$, Balance.update$, Coin.update$, State.update$, StartTime.update$).pipe(
+      return merge(OwnerID.update$, OperatorID.update$, Location.update$, Balance.update$, Coin.update$, State.update$, StartTime.update$).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
           const operatorEntityIndex = Array.from(runQuery([
@@ -122,7 +122,7 @@ export function registerPetList() {
             HasValue(PlayerAddress, { value: network.connectedAddress.get() })
           ]))[0];
           const operatorID = world.entities[operatorEntityIndex];
-          const bytes = getComponentValue(Coin, operatorEntityIndex);
+          const bytes = getComponentValue(Coin, operatorEntityIndex)?.value as number;
 
           // get the list of inventory indices for this account
           const inventoryResults = runQuery([
@@ -265,7 +265,7 @@ export function registerPetList() {
       const KamiCards = (kamis: any[]) => {
         return kamis.map((kami) => {
           return (
-            <KamiBox key={kami.name}>
+            <KamiBox key={kami.id}>
               <KamiImage src="https://i.imgur.com/Ut0wOld.gif" />
               <KamiFacts>
                 <KamiName>
@@ -295,14 +295,14 @@ export function registerPetList() {
           )
         })
       }
-
+      console.log(data.operator);
       return (
         <ModalWrapper id="petlist_modal">
           <ModalContent>
 
             <TopGrid>
               <TopDescription>
-                Bytes: {data.operator.bytes ?? "0"}
+                Bytes: {data.operator.bytes ? data.operator.bytes * 1 : "0"}
               </TopDescription>
               <TopButton onClick={hideModal}>
                 X
