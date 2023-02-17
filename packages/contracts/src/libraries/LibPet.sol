@@ -85,7 +85,7 @@ library LibPet {
 
   // temporary function to stimulate a little randomness
   function smolRandom(uint256 base, uint256 seed) internal pure returns (uint256) {
-    return (base / 2) + (uint256(keccak256(seed)) % base);
+    return (base / 2) + (uint256(keccak256(abi.encode(seed, base))) % base);
   }
 
   function setCharge(
