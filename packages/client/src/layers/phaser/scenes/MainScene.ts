@@ -3,7 +3,7 @@ import { defineScene } from '@latticexyz/phaserx';
 import { room001, room002, room003, room004 } from '../rooms/';
 import { PhaserScene, Room } from '../types';
 
-import room1Music from '../../../public/sound/music/corridor.mp3';
+import room1Music from '../../../public/sound/music/atmospheric.mp3';
 import room2Music from '../../../public/sound/music/landfill2.mp3';
 import room3Music from '../../../public/sound/music/corridor.mp3';
 import room4Music from '../../../public/sound/music/shopkeep_song.mp3';
@@ -30,7 +30,7 @@ export function defineMainScene() {
       create: (scene: PhaserScene) => {
         scene.sound.pauseOnBlur = false;
 
-        scene.rooms![4].create(scene);
+        scene.rooms![1].create(scene);
       },
     }),
   };

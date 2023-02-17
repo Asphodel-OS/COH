@@ -22,6 +22,7 @@ import "libraries/LibRoom.sol";
 import "libraries/LibTrade.sol";
 
 // Components
+import { AddressPlayerComponent, ID as AddressPlayerComponentID } from "components/AddressPlayerComponent.sol";
 import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
 import { BandwidthComponent, ID as BandwidthComponentID } from "components/BandwidthComponent.sol";
 import { BlockLastComponent, ID as BlockLastComponentID } from "components/BlockLastComponent.sol";
@@ -42,8 +43,8 @@ import { IdRequesterComponent, ID as IdRequesterComponentID } from "components/I
 import { IndexItemComponent, ID as IndexItemComponentID } from "components/IndexItemComponent.sol";
 import { IndexModifierComponent, ID as IndexModifierComponentID } from "components/IndexModifierComponent.sol";
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
-import { IsInventoryComponent, ID as IsInventoryComponentID } from "components/IsInventoryComponent.sol";
 import { IsFoodComponent, ID as IsFoodComponentID } from "components/IsFoodComponent.sol";
+import { IsInventoryComponent, ID as IsInventoryComponentID } from "components/IsInventoryComponent.sol";
 import { IsListingComponent, ID as IsListingComponentID } from "components/IsListingComponent.sol";
 import { IsMerchantComponent, ID as IsMerchantComponentID } from "components/IsMerchantComponent.sol";
 import { IsModifierComponent, ID as IsModifierComponentID } from "components/IsModifierComponent.sol";
@@ -62,12 +63,11 @@ import { ModifierStatusComponent, ID as ModifierStatusComponentID } from "compon
 import { ModifierTypeComponent, ID as ModifierTypeComponentID } from "components/ModifierTypeComponent.sol";
 import { ModifierValueComponent, ID as ModifierValueComponentID } from "components/ModifierValueComponent.sol";
 import { NameComponent, ID as NameComponentID } from "components/NameComponent.sol";
-import { AddressPlayerComponent, ID as AddressPlayerComponentID } from "components/AddressPlayerComponent.sol";
+import { PetTraitsEquippedComponent, ID as PetTraitsEquippedComponentID } from "components/PetTraitsEquippedComponent.sol";
+import { PetTraitsPermanentComponent, ID as PetTraitsPermanentComponentID } from "components/PetTraitsPermanentComponent.sol";
 import { PriceBuyComponent, ID as PriceBuyComponentID } from "components/PriceBuyComponent.sol";
 import { PriceSellComponent, ID as PriceSellComponentID } from "components/PriceSellComponent.sol";
 import { PrototypeComponent, ID as PrototypeComponentID } from "components/PrototypeComponent.sol";
-import { PetTraitsEquippedComponent, ID as PetTraitsEquippedComponentID } from "components/PetTraitsEquippedComponent.sol";
-import { PetTraitsPermanentComponent, ID as PetTraitsPermanentComponentID } from "components/PetTraitsPermanentComponent.sol";
 import { StateComponent, ID as StateComponentID } from "components/StateComponent.sol";
 import { StorageSizeComponent, ID as StorageSizeComponentID } from "components/StorageSizeComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
@@ -100,6 +100,7 @@ import { OperatorNameSystem, ID as OperatorNameSystemID } from "systems/Operator
 
 abstract contract TestSetupImports is MudTest {
 // Components vars
+AddressPlayerComponent _AddressPlayerComponent;
 BalanceComponent _BalanceComponent;
 BandwidthComponent _BandwidthComponent;
 BlockLastComponent _BlockLastComponent;
@@ -120,8 +121,8 @@ IdRequesterComponent _IdRequesterComponent;
 IndexItemComponent _IndexItemComponent;
 IndexModifierComponent _IndexModifierComponent;
 IndexPetComponent _IndexPetComponent;
-IsInventoryComponent _IsInventoryComponent;
 IsFoodComponent _IsFoodComponent;
+IsInventoryComponent _IsInventoryComponent;
 IsListingComponent _IsListingComponent;
 IsMerchantComponent _IsMerchantComponent;
 IsModifierComponent _IsModifierComponent;
@@ -140,12 +141,11 @@ ModifierStatusComponent _ModifierStatusComponent;
 ModifierTypeComponent _ModifierTypeComponent;
 ModifierValueComponent _ModifierValueComponent;
 NameComponent _NameComponent;
-AddressPlayerComponent _AddressPlayerComponent;
+PetTraitsEquippedComponent _PetTraitsEquippedComponent;
+PetTraitsPermanentComponent _PetTraitsPermanentComponent;
 PriceBuyComponent _PriceBuyComponent;
 PriceSellComponent _PriceSellComponent;
 PrototypeComponent _PrototypeComponent;
-PetTraitsEquippedComponent _PetTraitsEquippedComponent;
-PetTraitsPermanentComponent _PetTraitsPermanentComponent;
 StateComponent _StateComponent;
 StorageSizeComponent _StorageSizeComponent;
 TimeLastActionComponent _TimeLastActionComponent;
@@ -179,6 +179,7 @@ OperatorNameSystem _OperatorNameSystem;
 function setUp() public virtual override {
 super.setUp();
 
+_AddressPlayerComponent = AddressPlayerComponent(component(AddressPlayerComponentID));
 _BalanceComponent = BalanceComponent(component(BalanceComponentID));
 _BandwidthComponent = BandwidthComponent(component(BandwidthComponentID));
 _BlockLastComponent = BlockLastComponent(component(BlockLastComponentID));
@@ -199,8 +200,8 @@ _IdRequesterComponent = IdRequesterComponent(component(IdRequesterComponentID));
 _IndexItemComponent = IndexItemComponent(component(IndexItemComponentID));
 _IndexModifierComponent = IndexModifierComponent(component(IndexModifierComponentID));
 _IndexPetComponent = IndexPetComponent(component(IndexPetComponentID));
-_IsInventoryComponent = IsInventoryComponent(component(IsInventoryComponentID));
 _IsFoodComponent = IsFoodComponent(component(IsFoodComponentID));
+_IsInventoryComponent = IsInventoryComponent(component(IsInventoryComponentID));
 _IsListingComponent = IsListingComponent(component(IsListingComponentID));
 _IsMerchantComponent = IsMerchantComponent(component(IsMerchantComponentID));
 _IsModifierComponent = IsModifierComponent(component(IsModifierComponentID));
@@ -219,12 +220,11 @@ _ModifierStatusComponent = ModifierStatusComponent(component(ModifierStatusCompo
 _ModifierTypeComponent = ModifierTypeComponent(component(ModifierTypeComponentID));
 _ModifierValueComponent = ModifierValueComponent(component(ModifierValueComponentID));
 _NameComponent = NameComponent(component(NameComponentID));
-_AddressPlayerComponent = AddressPlayerComponent(component(AddressPlayerComponentID));
+_PetTraitsEquippedComponent = PetTraitsEquippedComponent(component(PetTraitsEquippedComponentID));
+_PetTraitsPermanentComponent = PetTraitsPermanentComponent(component(PetTraitsPermanentComponentID));
 _PriceBuyComponent = PriceBuyComponent(component(PriceBuyComponentID));
 _PriceSellComponent = PriceSellComponent(component(PriceSellComponentID));
 _PrototypeComponent = PrototypeComponent(component(PrototypeComponentID));
-_PetTraitsEquippedComponent = PetTraitsEquippedComponent(component(PetTraitsEquippedComponentID));
-_PetTraitsPermanentComponent = PetTraitsPermanentComponent(component(PetTraitsPermanentComponentID));
 _StateComponent = StateComponent(component(StateComponentID));
 _StorageSizeComponent = StorageSizeComponent(component(StorageSizeComponentID));
 _TimeLastActionComponent = TimeLastActionComponent(component(TimeLastActionComponentID));

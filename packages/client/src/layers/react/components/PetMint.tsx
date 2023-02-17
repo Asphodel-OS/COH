@@ -16,10 +16,10 @@ export function registerPetMint() {
   registerUIComponent(
     'PetMint',
     {
-      colStart: 40,
-      colEnd: 60,
-      rowStart: 40,
-      rowEnd: 60,
+      colStart: 33,
+      colEnd: 65,
+      rowStart: 37,
+      rowEnd: 70,
     },
     (layers) => {
       const {
@@ -61,7 +61,7 @@ export function registerPetMint() {
       } = layers;
 
       const mintTx = (address: string) => {
-        const actionID = `Minting Pet at ${Date.now()}` as EntityID; // Date.now to have the actions ordered in the component browser
+        const actionID = `Minting Kami` as EntityID;
         actions.add({
           id: actionID,
           components: {},
@@ -109,13 +109,26 @@ export function registerPetMint() {
       return (
         <ModalWrapper id="petmint_modal">
           <ModalContent>
-            <TopButton onClick={hideModal}>
-              X
-            </TopButton>
-            <Description>Mint a Kami</Description>
-            <Button style={{ pointerEvents: 'auto' }} onClick={handleMinting}>
-              Mint Kamigotchi
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', width: '100%'}}>
+              <TopButton
+                onClick={hideModal}>
+                X
+              </TopButton>
+            </div>
+            <CenterBox>
+              <KamiImage
+                src="https://kamigotchi.nyc3.digitaloceanspaces.com/placeholder.gif"
+              />
+              <Description>
+                Kamigotchi?
+              </Description>
+            </CenterBox>
+              <Button
+              style={{ gridRowEnd: 5, justifySelf: "center", pointerEvents: 'auto' }}
+              onClick={handleMinting}>
+                Mint
+              </Button>
+
           </ModalContent>
         </ModalWrapper>
       );
@@ -134,14 +147,14 @@ const fadeIn = keyframes`
 
 const ModalWrapper = styled.div`
   display: none;
-  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   animation: ${fadeIn} 0.5s ease-in-out;
 `;
 
 const ModalContent = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   background-color: white;
   border-radius: 10px;
   padding: 8px;
@@ -149,6 +162,15 @@ const ModalContent = styled.div`
   border-style: solid;
   border-width: 2px;
   border-color: black;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CenterBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 `;
 
 const Button = styled.button`
@@ -173,7 +195,7 @@ const Description = styled.p`
   font-size: 22px;
   color: #333;
   text-align: center;
-  padding: 20px;
+  padding: 10px;
   font-family: Pixel;
 `;
 
@@ -189,9 +211,19 @@ const TopButton = styled.button`
   pointer-events: auto;
   border-radius: 5px;
   font-family: Pixel;
+  grid-column: 5;
   width: 30px;
   &:active {
     background-color: #c2c2c2;
   }
   justify-self: right;
+`;
+
+const KamiImage = styled.img`
+  border-style: solid;
+  border-width: 0px;
+  border-color: black;
+  height: 90px;
+  margin: 0px;
+  padding: 0px;
 `;

@@ -28,7 +28,7 @@ export function room004() {
         scene.interactiveObjects.push(
           triggerObjectModal(
             girl,
-            'Please put the button that opens the shop menu in this modal.'
+            'Buy something or get out.'
           )
         );
     },

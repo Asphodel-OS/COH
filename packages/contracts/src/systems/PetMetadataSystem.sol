@@ -32,7 +32,7 @@ contract PetMetadataSystem is System {
    **********************/
 
   modifier onlyPetSystem() {
-    require(msg.sender == getAddressById(components, PetSystemID), "not Pet System");
+    require(msg.sender == getAddressById(world.systems(), PetSystemID), "not Pet System");
     _;
   }
 
@@ -47,16 +47,20 @@ contract PetMetadataSystem is System {
     require(LibString.eq(mediaComp.getValue(entityID), UNREVEALED_URI), "alr revealed!");
 
     // generate packed result, set image
-    uint256 packed = LibMetadata._generateFromSeed(_seed, _maxElements, _numElements);
+    uint256 packed = LibMetadata._generateFromSeed(
+      uint256(keccak256(abi.encode(_seed, entityID))),
+      _maxElements,
+      _numElements
+    );
     mediaComp.set(
       entityID,
-      LibString.concat(_baseURI, LibString.concat(LibString.toString(packed), ".png"))
+      LibString.concat(_baseURI, LibString.concat(LibString.toString(packed), ".gif"))
     );
 
-    PetTraitsPermanentComponent(getAddressById(components, PetTraitsPermanentCompID)).set(
-      entityID,
-      LibMetadata._packedToArray(packed, _numElements)
-    );
+    // PetTraitsPermanentComponent(getAddressById(components, PetTraitsPermanentCompID)).set(
+    //   entityID,
+    //   LibMetadata._packedToArray(packed, _numElements)
+    // );
 
     return "";
   }

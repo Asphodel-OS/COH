@@ -47,9 +47,9 @@ export function createComponents(world: any) {
     // Values
     Balance: defineNumberComponent(world, { id: "Balance", metadata: { contractId: "component.Balance" } }),
     Bandwidth: defineNumberComponent(world, { id: "Bandwidth", metadata: { contractId: "component.Bandwidth" } }),
+    BlockLast: defineNumberComponent(world, { id: "BlockLast", metadata: { contractId: "component.BlockLast" } }),
     Capacity: defineNumberComponent(world, { id: "Capacity", metadata: { contractId: "component.Capacity" } }),
     Charge: defineNumberComponent(world, { id: "Charge", metadata: { contractId: "component.Charge" } }),
-    BlockLast: defineNumberComponent(world, { id: "BlockLast", metadata: { contractId: "component.BlockLast" } }),
     Coin: defineNumberComponent(world, { id: "Coin", metadata: { contractId: "component.Coin" } }),
     Exits: defineNumberArrayComponent(world, "Exits", "component.Exits"),
     Location: defineNumberComponent(world, { id: "Location", metadata: { contractId: "component.Location" } }),

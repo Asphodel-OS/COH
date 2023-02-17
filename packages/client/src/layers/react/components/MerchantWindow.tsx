@@ -17,10 +17,10 @@ const ItemImages = new Map([
 ]);
 
 const ItemNames = new Map([
-  [1, "Pompom"],
-  [2, "Gakki"],
-  [3, "Ribbon"],
-  [4, "Gum"],
+  [1, "Pom-Pom Fruit Candy"],
+  [2, "Cookie Sticks"],
+  [3, "Ribbon Licorice"],
+  [4, "Maple-Flavor Ghost Gum"],
 ]);
 
 // merchant window with listings. assumes at most 1 merchant per room
@@ -32,7 +32,7 @@ export function registerMerchantWindow() {
     {
       colStart: 33,
       colEnd: 65,
-      rowStart: 5,
+      rowStart: 2,
       rowEnd: 60,
     },
 
@@ -178,15 +178,15 @@ export function registerMerchantWindow() {
       // [listing: {id, index, itemType, buyPrice, sellPrice}]
       const listings = (slots: any) =>
         slots.map((listing: any) => (
-          <li style={{ color: "black", fontSize: "16px" }} key={listing.itemType}>
-            <img src={ItemImages.get(parseInt(listing.itemType, 16))} />
-            <b>{ItemNames.get(parseInt(listing.itemType, 16))} </b>
-            <b>Price </b> {parseInt(listing.buyPrice, 16)}
+          <ShopEntry key={listing.itemType}>
+            <ItemImage src={ItemImages.get(parseInt(listing.itemType, 16))} />
+            <ItemName>{ItemNames.get(parseInt(listing.itemType, 16))} </ItemName>
+            <ItemPrice>{parseInt(listing.buyPrice, 16)}</ItemPrice>
             <Button
               style={{ pointerEvents: "auto" }}
               onClick={() => buy(listing, 1)}
-            >buy</Button>
-          </li>
+            >Buy</Button>
+          </ShopEntry>
         ));
 
       const hideModal = () => {
@@ -200,7 +200,7 @@ export function registerMerchantWindow() {
         <ModalWrapper id="merchant">
           <ModalContent>
             <TopButton style={{ pointerEvents: "auto" }} onClick={hideModal}>X</TopButton>
-            <ul>{listings(data.listings)}</ul>
+            <ShopList>{listings(data.listings)}</ShopList>
           </ModalContent>
         </ModalWrapper>
       );
@@ -219,12 +219,14 @@ const Button = styled.button`
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 12px;
-  margin: 4px 2px;
+  font-size: 14px;
   cursor: pointer;
   border-radius: 5px;
   justify-content: center;
   font-family: Pixel;
+  grid-column: 4;
+  width: 50px;
+  align-self: center;
 `;
 
 const fadeIn = keyframes`
@@ -266,10 +268,60 @@ const TopButton = styled.button`
   pointer-events: auto;
   border-radius: 5px;
   font-family: Pixel;
-  grid-column: 5;
+  grid-column: 1;
+  grid-row: 1;
   width: 30px;
   &:active {
     background-color: #c2c2c2;
   }
   justify-self: right;
+`;
+
+const ItemName = styled.p`
+  font-family: Pixel;
+  grid-column: 2;
+  align-self: center;
+  font-size: 15px;
+`;
+
+
+const ItemPrice = styled.p`
+  font-family: Pixel;
+  grid-column: 3;
+  align-self: center;
+  font-size: 14px;
+`;
+
+const ShopEntry = styled.li`
+  font-family: Pixel;
+  color: black;
+  display: grid;
+  border-style: solid;
+  border-width: 0px 0px 2px 0px;
+  border-color: black;
+  padding: 0px;
+`;
+
+const ShopList = styled.ul`
+  font-family: Pixel;
+  color: black;
+  grid-row: 2;
+  border-style: solid;
+  border-width: 2px 2px 0px 2px;
+  border-color: black;
+  grid-column: 1;
+  margin: 2px 0px 0px 0px;
+  border-radius: 5px;
+`;
+
+const ItemImage = styled.img`
+  font-family: Pixel;
+  grid-column: 1;
+  align-self: center;
+  width: 50px;
+  border-style: solid;
+  border-width: 0px 2px 0px 0px;
+  border-color: black;
+  padding: 5px;
+  margin: 0px;
 `;

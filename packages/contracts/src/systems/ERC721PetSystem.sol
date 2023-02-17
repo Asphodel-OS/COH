@@ -24,23 +24,12 @@ contract ERC721PetSystem is System, ERC721 {
   /*******************************
    *         Mint Details
    ********************************/
-  uint256 public totalSupply;
+  // uint256 public totalSupply;
 
   constructor(IWorld _world, address _components)
     System(_world, _components)
     ERC721(NFT_NAME, NFT_SYMBOL)
   {}
-
-  // temporary init function to prevent circular dependency
-  bool inited;
-
-  function init() public {
-    if (!inited) {
-      LibPetTraits.placeholderRegistry(components, world);
-      inited = true;
-    }
-    BalanceComponent(getAddressById(components, BalanceCompID)).set(ID, 0);
-  }
 
   /*********************
    *  Public Functions
@@ -49,7 +38,7 @@ contract ERC721PetSystem is System, ERC721 {
   function mint(address to) public returns (uint256) {
     // require(tx.origin == msg.sender, "no contracts");
     // leaving totalSupply in for now, but not used
-    ++totalSupply; // arrays start at 1 here :3
+    // ++totalSupply; // arrays start at 1 here :3
     uint256 nextMint = nextMintID();
 
     // Get the operator for this owner(to). Create one if it doesn't exist.
@@ -63,14 +52,18 @@ contract ERC721PetSystem is System, ERC721 {
     LibPetTraits.placeholderTraits(components, world, petID);
     LibPet.setStats(components, petID);
 
-    _mint(to, nextMint); // should we run this at the beginning or end?
+    // TEMP: instant reveal
+    PetMetadataSystem(getAddressById(world.systems(), PetMetadataSystemID)).executeTyped(petID);
+
+
+    _mint(to, nextMint); 
     return petID;
   }
 
   // removed for now for compiled contract space lol
   function tokenURI(uint256 tokenID) public view override returns (string memory) {
     return "";
-    // PetMetadataSystem(getAddressById(world.systems(), PetMetadataSystemID)).tokenURI(tokenID);
+    PetMetadataSystem(getAddressById(world.systems(), PetMetadataSystemID)).tokenURI(tokenID);
   }
 
   /*********************
@@ -85,15 +78,15 @@ contract ERC721PetSystem is System, ERC721 {
   function nextMintID() internal returns (uint256) {
     BalanceComponent bComp = BalanceComponent(getAddressById(components, BalanceCompID));
 
-    if (!bComp.has(ID)) {
-      // no mint, make one! start from 1
-      bComp.set(ID, 1);
-      return 1;
-    }
+    // if (!bComp.has(ID)) {
+    //   // no mint, make one! start from 1
+    //   bComp.set(ID, 1);
+    //   return 1;
+    // }
 
-    uint256 cur = bComp.getValue(ID);
-    bComp.set(ID, cur + 1);
-    return cur + 1;
+    uint256 cur = bComp.getValue(ID) + 1;
+    bComp.set(ID, cur);
+    return cur;
   }
 
   // NOTE: the id here is actually the ERC721 id, aka the pet index in our world

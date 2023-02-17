@@ -10,10 +10,10 @@ export function registerDownButton() {
   registerUIComponent(
     'DownButton',
     {
-      colStart: 82,
-      colEnd: 87,
-      rowStart: 87,
-      rowEnd: 99,
+      colStart: 83,
+      colEnd: 88,
+      rowStart: 90,
+      rowEnd: 97,
     },
     (layers) => of(layers),
     (layers) => {
@@ -36,7 +36,7 @@ export function registerDownButton() {
         const clickFX = new Audio(clickSound);
         clickFX.play();
 
-        const actionID = `Moving at ${Date.now()}` as EntityID;
+        const actionID = `Moving...` as EntityID;
 
         actions.add({
           id: actionID,
