@@ -34,6 +34,6 @@ _built with love, powered by \[redacted\]_
 - and a million other npm dependencies
 
 **Key Innovations**
-- [MUD-CSR Integration](https://github.com/Asphodel-OS/mud-csr) an integration between `MUD` and `CSR` (implemented during this hackathon)
-- and much
-- much more
+- [MUD-CSR](https://github.com/Asphodel-OS/mud-csr) an integration between `MUD` and `CSR`
+- ECS-based economic primitives for Merchant listings, P2P trade and Staking
+- cute ass pixelated nft demon pets
