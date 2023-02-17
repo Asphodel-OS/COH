@@ -2,9 +2,9 @@
 pragma solidity ^0.8.0;
 import "std-contracts/components/Uint256BareComponent.sol";
 
-uint256 constant ID = uint256(keccak256("component.Battery.LasrCharge"));
+uint256 constant ID = uint256(keccak256("component.Charge"));
 
-// timestamp of last time battery been charged
-contract BatteryLastChargeComponent is Uint256BareComponent {
+// Battery Charge.  e.g. of a pet
+contract ChargeComponent is Uint256BareComponent {
   constructor(address world) Uint256BareComponent(world, ID) {}
 }

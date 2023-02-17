@@ -33,8 +33,9 @@ contract ERC721PetSystem is System, ERC721 {
 
   // temporary init function to prevent circular dependency
   bool inited;
+
   function init() public {
-    if(!inited) {
+    if (!inited) {
       LibPetTraits.placeholderRegistry(components, world);
       inited = true;
     }
@@ -67,9 +68,8 @@ contract ERC721PetSystem is System, ERC721 {
   }
 
   function tokenURI(uint256 tokenID) public view override returns (string memory) {
-    return PetMetadataSystem(
-      getAddressById(world.systems(), PetMetadataSystemID)
-    ).tokenURI(tokenID);
+    return
+      PetMetadataSystem(getAddressById(world.systems(), PetMetadataSystemID)).tokenURI(tokenID);
   }
 
   /*********************
@@ -82,12 +82,12 @@ contract ERC721PetSystem is System, ERC721 {
   // uses BalanceComponent to track minted tokens. Uses systemID as entityID
   function nextMintID() internal returns (uint256) {
     BalanceComponent bComp = BalanceComponent(getAddressById(components, BalanceCompID));
-    
+
     if (!bComp.has(ID)) {
       // no mint, make one! start from 1
       bComp.set(ID, 1);
       return 1;
-    } 
+    }
 
     uint256 cur = bComp.getValue(ID);
     bComp.set(ID, cur + 1);

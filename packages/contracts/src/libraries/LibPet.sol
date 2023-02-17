@@ -7,9 +7,9 @@ import { IUint256Component as IUintComp } from "solecs/interfaces/IUint256Compon
 import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { getAddressById, getComponentById, entityToAddress, addressToEntity } from "solecs/utils.sol";
 
-import { BatteryCapacityComponent, ID as BatteryCapacityCompID } from "components/BatteryCapacityComponent.sol";
-import { BatteryChargeComponent, ID as BatteryChargeCompID } from "components/BatteryChargeComponent.sol";
-import { BatteryLastChargeComponent, ID as BatteryLastChargeCompID } from "components/BatteryLastChargeComponent.sol";
+import { CapacityComponent, ID as CapacityCompID } from "components/CapacityComponent.sol";
+import { ChargeComponent, ID as ChargeCompID } from "components/ChargeComponent.sol";
+import { TimeLastActionComponent, ID as TimeLastActionCompID } from "components/TimeLastActionComponent.sol";
 import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComponent.sol";
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
@@ -43,12 +43,9 @@ library LibPet {
     IdOwnerComponent(getAddressById(components, IdOwnerCompID)).set(id, addressToEntity(owner));
     IdOperatorComponent(getAddressById(components, IdOpCompID)).set(id, operatorID);
     MediaURIComponent(getAddressById(components, MediaURICompID)).set(id, uri);
-    BatteryCapacityComponent(getAddressById(components, BatteryCapacityCompID)).set(
-      id,
-      BATT_CHARGE
-    );
-    BatteryChargeComponent(getAddressById(components, BatteryChargeCompID)).set(id, BATT_CHARGE);
-    BatteryLastChargeComponent(getAddressById(components, BatteryLastChargeCompID)).set(
+    CapacityComponent(getAddressById(components, CapacityCompID)).set(id, BATT_CHARGE);
+    ChargeComponent(getAddressById(components, ChargeCompID)).set(id, BATT_CHARGE);
+    TimeLastActionComponent(getAddressById(components, TimeLastActionCompID)).set(
       id,
       block.timestamp
     );
