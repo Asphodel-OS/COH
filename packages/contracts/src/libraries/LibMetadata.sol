@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "forge-std/console.sol";
+
 // NOTE: should this be here? its not related to other MUD libs at all
 library LibMetadata {
   uint256 constant SIZE = 8; //uint8, max elements = 256/8 = 32
@@ -75,7 +77,7 @@ library LibMetadata {
     return result;
   }
 
-  // temp SPECIFICALLY for the +10 index style. background not implemented
+  // temp SPECIFICALLY for the +20 index style. background not implemented
   function _packedToArrayScaled(
     uint256 packed,
     uint256 numElements 
@@ -84,10 +86,12 @@ library LibMetadata {
 
     for (uint256 i; i < numElements; i++) {
       // packed order is reversed
-      result[numElements-1-i] = packed & ((1 << SIZE) - 1) + (10 ** i);
+      result[numElements-1-i] = (packed & ((1 << SIZE) - 1)) + (10 ** i)*10*2;
 
       packed = packed >> SIZE;
     }
+
+    // console.log("scaledArray");
 
     return result;
   }

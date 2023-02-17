@@ -143,9 +143,9 @@
       "name": "getValue",
       "outputs": [
         {
-          "internalType": "uint256",
+          "internalType": "uint256[]",
           "name": "",
-          "type": "uint256"
+          "type": "uint256[]"
         }
       ],
       "stateMutability": "view",
@@ -243,9 +243,9 @@
           "type": "uint256"
         },
         {
-          "internalType": "uint256",
+          "internalType": "bytes",
           "name": "value",
-          "type": "uint256"
+          "type": "bytes"
         }
       ],
       "name": "set",
@@ -261,9 +261,9 @@
           "type": "uint256"
         },
         {
-          "internalType": "bytes",
+          "internalType": "uint256[]",
           "name": "value",
-          "type": "bytes"
+          "type": "uint256[]"
         }
       ],
       "name": "set",
@@ -344,7 +344,7 @@
     "registerWorld(address)": "9d2c76b4",
     "remove(uint256)": "4cc82215",
     "set(uint256,bytes)": "8b282947",
-    "set(uint256,uint256)": "1ab06ee5",
+    "set(uint256,uint256[])": "946aadc6",
     "transferOwnership(address)": "f2fde38b",
     "unauthorizeWriter(address)": "bf4fe57e",
     "world()": "30b67baa",
@@ -501,9 +501,9 @@
           "name": "getValue",
           "outputs": [
             {
-              "internalType": "uint256",
+              "internalType": "uint256[]",
               "name": "",
-              "type": "uint256"
+              "type": "uint256[]"
             }
           ]
         },
@@ -596,9 +596,9 @@
               "type": "uint256"
             },
             {
-              "internalType": "uint256",
+              "internalType": "bytes",
               "name": "value",
-              "type": "uint256"
+              "type": "bytes"
             }
           ],
           "stateMutability": "nonpayable",
@@ -613,9 +613,9 @@
               "type": "uint256"
             },
             {
-              "internalType": "bytes",
+              "internalType": "uint256[]",
               "name": "value",
-              "type": "bytes"
+              "type": "uint256[]"
             }
           ],
           "stateMutability": "nonpayable",
@@ -813,7 +813,7 @@
         "bytecodeHash": "ipfs"
       },
       "compilationTarget": {
-        "src/components/PriceSellComponent.sol": "PriceSellComponent"
+        "src/components/_DynamicTraitsComponent.sol": "_DynamicTraitsComponent"
       },
       "libraries": {}
     },
@@ -922,11 +922,11 @@
         ],
         "license": "MIT"
       },
-      "../../node_modules/@latticexyz/std-contracts/src/components/Uint256BareComponent.sol": {
-        "keccak256": "0x3c1174880052b94f112dab23e77afde149254c1ad3749d82c7fd81bf4d09483d",
+      "../../node_modules/@latticexyz/std-contracts/src/components/Uint256ArrayBareComponent.sol": {
+        "keccak256": "0x70f293801b10b20232f5dbbe1589cb7f85e1d80706f91ad66c70b72f154863bd",
         "urls": [
-          "bzz-raw://734c3d8d09e5788bdc3a6133abe3789600afe8d896d2909e9526841bc4992ec4",
-          "dweb:/ipfs/QmUgtiKgFit3StevWYBQe3k3woWm4uvwoWZmuSDvV1kRwJ"
+          "bzz-raw://3fbe88e05084899404e75a561929486118bbe917325bed260e19952a067ab68c",
+          "dweb:/ipfs/QmQHCWWq7hjJY3d9MBtJY46U9xgasxVvmWqubXCpU2AxSj"
         ],
         "license": "MIT"
       },
@@ -1018,16 +1018,16 @@
         ],
         "license": "MIT"
       },
-      "src/components/PriceSellComponent.sol": {
-        "keccak256": "0x03b6806683035237ffe8fcbb8a2f369ddcab9862dae6cbff434ef06bf8f152ec",
+      "src/components/_DynamicTraitsComponent.sol": {
+        "keccak256": "0xb53ae11c5b26669a93729a626bd2c8569a2da83c8dd26338e3ffa1ada6251ac0",
         "urls": [
-          "bzz-raw://397e815701254d885c6d3b8d29395ebbc7fa3189572ca03bc7afabedb9b54dc1",
-          "dweb:/ipfs/Qmb6dSutpRyK45ezFNxGkdPEMXofTqeG8BdnzQMPTBQ9va"
+          "bzz-raw://8a100f5740c6f4fc6e2004cfe7b8d1218ba9aaf39032156d09b0d647a40e0bc5",
+          "dweb:/ipfs/QmReH6krjHKoJ5RtBMtUahTnTswZHtVqwh6dkaExH3EgU8"
         ],
         "license": "Unlicense"
       }
     },
     "version": 1
   },
-  "id": 117
+  "id": 123
 }

@@ -18,10 +18,11 @@ import { BigNumber, BigNumberish } from 'ethers';
 import { ModalWrapper } from './styled/AnimModalWrapper';
 
 type TraitDetails = {
-  Name: string;
-  Type: string;
-  Value: string;
-};
+  Name: string,
+  Type: string,
+  Value: string
+  D: string,
+}
 
 type Details = {
   nftID: string;
@@ -74,8 +75,9 @@ export function registerPetDetails() {
             Name,
             State,
             StorageSize,
-          },
-          world,
+            _DynamicTraits
+           },
+           world
         },
       } = layers;
 
@@ -120,17 +122,19 @@ export function registerPetDetails() {
         const rawArr = getComponentValue(comp, index)?.value as string[];
         let result: Array<TraitDetails> = [];
 
+        // 'dynamic' metadata to showcase partially implmented dynamic nfts
+        const dArr = getComponentValue(_DynamicTraits, index)?.value as string[];
+
         for (let i = 0; i < rawArr.length; i++) {
           const ind = world.entityToIndex.get(
             rawArr[i] as EntityID
           ) as EntityIndex;
           const n = getComponentValue(Name, ind)?.value as string;
           const t = getComponentValue(ModifierType, ind)?.value as string;
-          const v = hexToString(
-            getComponentValue(ModifierValue, ind)?.value as string
-          );
+          const v = hexToString(getComponentValue(ModifierValue, ind)?.value as string);
+          const d = dArr[i];
 
-          result.push({ Name: n, Type: t, Value: v });
+          result.push({ Name: n, Type: t, Value: v, D: d });
         }
 
         return {
@@ -160,8 +164,8 @@ export function registerPetDetails() {
 
       const traitLines = dets?.traits.map((trait) => (
         <KamiList key={trait.Name}>
-          {`${trait.Name}`}
-          <KamiText>{`${trait.Type} | ${trait.Value}`}</KamiText>
+          {`${trait.Name} [id: ${trait.D}]`}
+          <KamiText>{`${trait.Type} | ${trait.Value}` }</KamiText>
         </KamiList>
       ));
 
