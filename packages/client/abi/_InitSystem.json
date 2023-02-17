@@ -259,6 +259,7 @@
         ":forge-std/=../../node_modules/forge-std/src/",
         ":libraries/=src/libraries/",
         ":memmove/=../../node_modules/memmove/src/",
+        ":packages/=../../../mud/packages/",
         ":solady/=../../node_modules/solady/src/",
         ":solecs/=../../node_modules/@latticexyz/solecs/src/",
         ":solmate/=../../node_modules/@rari-capital/solmate/src/",
@@ -945,10 +946,10 @@
         "license": "MIT"
       },
       "src/libraries/LibMetadata.sol": {
-        "keccak256": "0x2bd8cc6f49efe09b40e78d69a3b2cdad5e461dc196852ebd64b4f6265168bc52",
+        "keccak256": "0xf5e0babe482393fb705179375450c8c478b9cd4803a3a140ffe801ce1cdd2d78",
         "urls": [
-          "bzz-raw://23083ca62993c58dec7f256e0673fcf078f90761ddb8535e0f985d5b91e435b5",
-          "dweb:/ipfs/QmcS5yHzy22Qr16QyjELCujkoMKQtcJwtJjK5A25kDeqc9"
+          "bzz-raw://d47a6642675882b10a2ded5823319d1f94377e0a247ad4f8d282fdd3500b962d",
+          "dweb:/ipfs/QmRBUdofpXjCDCweaKitNb6LpSxFZMMpNLyAaZgaEXFPxB"
         ],
         "license": "MIT"
       },
@@ -969,10 +970,10 @@
         "license": "MIT"
       },
       "src/libraries/LibPet.sol": {
-        "keccak256": "0x6fbb77cb2bb4ede5bbcf2fb1c7f2cc8f27b62367e5a7ed0a40297d1cf640669c",
+        "keccak256": "0x102d412ac4593b337dcc9b18ddca8d1e1c284b9a9341f9c945be87f628d039ac",
         "urls": [
-          "bzz-raw://0d0166e90b76ba44506dc8739019d487b2e0e0b809c5c95f42e07fffb5c11d4a",
-          "dweb:/ipfs/QmSwcqmNudG4sBi4JGXpZcrvCEfPVJrLM3cf8RDnmcwCNf"
+          "bzz-raw://f9559ba2830b316e6ef978ed79ff8e14e8f91791eb32e550a651c1d9d3c1ac3e",
+          "dweb:/ipfs/QmXEXEyzKGPCHhe2QFnYrzyTnjN1LZnkL4qTSvrcLy7AGP"
         ],
         "license": "MIT"
       },
@@ -1025,10 +1026,10 @@
         "license": "Unlicense"
       },
       "src/systems/PetMetadataSystem.sol": {
-        "keccak256": "0xd468e523945b27d4e61ab932f11df752ab01e913643fea29f71d4e0abb7c4d34",
+        "keccak256": "0x60db5b7c172627e83e4263301f1a912c5c45502c1a5d4f0123b5ebc710e17146",
         "urls": [
-          "bzz-raw://3f9762a6e831486a6fc6ec799a66675866993530302ca442ca05be7c73242e3f",
-          "dweb:/ipfs/QmWMLYVzfPBX2sXGPJYicQNTnfLsFUDGHofRBaX1DkpRU9"
+          "bzz-raw://2bea0e820398fd2702145d37dc34f02b647a64ce7a56d4e855cf245317e95ed5",
+          "dweb:/ipfs/QmWL5YzoANHpeHocgdkBqPFUSKApQ9DoNMCDwqNCfxUbDQ"
         ],
         "license": "Unlicense"
       },
@@ -1059,5 +1060,5 @@
     },
     "version": 1
   },
-  "id": 158
+  "id": 159
 }
