@@ -71,7 +71,7 @@ export function registerPetDetails() {
       } = layers;
 
       const {
-        objectData: { description },
+        selectedPet: { description },
       } = dataStore();
 
       /////////////////
@@ -94,7 +94,6 @@ export function registerPetDetails() {
 
       const getArrayDetails = ( comp: any, index: EntityIndex ) => {
         const rawArr = getComponentValue(comp, index)?.value as string[];
-        console.log(rawArr);
         let result: Array<TraitDetails> = [];
         
         for (let i = 0; i < rawArr.length; i++) {

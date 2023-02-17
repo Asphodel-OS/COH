@@ -92,8 +92,7 @@ export function registerPetMint() {
           if (nextId && nextToken) {
             nextId.style.display = 'block';
             const description = BigNumber.from(nextToken).add("1").toHexString();
-            // console.log(description);
-            dataStore.setState({ objectData: { description } });
+            dataStore.setState({ selectedPet: { description } });
           }
         } catch (e) {
           //
