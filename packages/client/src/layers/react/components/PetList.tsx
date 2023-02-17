@@ -81,6 +81,39 @@ export function registerPetList() {
         },
       } = layers;
 
+      // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      // aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      const hardCodeInventory = () => {
+        return [
+          {
+            id: 1,
+            itemIndex: 1,
+            image: pompom,
+            balance: 0,
+          },
+          {
+            id: 2,
+            itemIndex: 2,
+            image: gakki,
+            balance: 0,
+          },
+          {
+            id: 3,
+            itemIndex: 3,
+            image: ribbon,
+            balance: 0,
+          },
+          {
+            id: 4,
+            itemIndex: 4,
+            image: gum,
+            balance: 0,
+          }
+        ];
+      }
+
+
       // get an Inventory object by index
       // TODO: get name and decription here once we have item registry support
       // NOTE: we need to do something about th FE/SC side overloading the term 'index'
@@ -168,19 +201,23 @@ export function registerPetList() {
             ?.value as number;
 
           // get the list of inventory indices for this account
-          const inventoryResults = runQuery([
+          const inventoryResults = Array.from(runQuery([
             Has(IsInventory),
             HasValue(HolderID, { value: operatorID }),
-            // NotValue(Balance, { value: 0 }),
-          ]);
+          ]));
+          let inventories: any = hardCodeInventory(); // the hardcoded slots we want for consumables
 
           // if we have inventories for the operator, generate a list of inventory objects
-          let inventories: any = [];
-          let inventory, inventoryIndex;
-          if (inventoryResults.size != 0) {
-            inventoryIndex = Array.from(inventoryResults)[0];
-            inventory = getInventory(inventoryIndex);
-            inventories.push(inventory);
+          let itemIndex;
+          for (let i = 0; i < inventoryResults.length; i++) {
+            // match indices to the existing consumables
+            itemIndex = getComponentValue(ItemIndex, inventoryResults[i])?.value as number;
+            for (let j = 0; j < inventories.length; j++) {
+              if (inventories[j].itemIndex == itemIndex) {
+                let balance = getComponentValue(Balance, inventoryResults[j])?.value as number;
+                inventories[j].balance = balance ? balance * 1 : 0;
+              }
+            }
           }
 
           // get all indices of pets linked to this account and create object array
@@ -377,13 +414,12 @@ export function registerPetList() {
       // get the row of consumable items to display in the player inventory
       // NOTE: does not render until player inventories are populated
       const ConsumableCells = (inventories: any[]) => {
-        console.log(inventories);
         return inventories.map((inv) => {
           return (
-            <CellBordered>
+            <CellBordered style={{ gridColumn: `${inv.id}` }}>
               <CellGrid>
-                <Icon src={ItemImages.get(inv.item.index * 1)} />
-                <ItemNumber>{inv.balance ? inv.balance * 1 : 0}</ItemNumber>
+                <Icon src={inv.image} />
+                <ItemNumber>{inv.balance ?? 0}</ItemNumber>
               </CellGrid>
             </CellBordered>
           );
@@ -404,43 +440,12 @@ export function registerPetList() {
               </TopDescription>
               <TopButton onClick={hideModal}>X</TopButton>
             </TopGrid>
-
             <ConsumableGrid>
-              <CellOne>
-                <CellGrid>
-                  <Icon src={pompom} />
-                  <ItemNumber>16</ItemNumber>
-                </CellGrid>
-              </CellOne>
-              <CellTwo>
-                <CellGrid>
-                  <Icon src={gakki} />
-                  <ItemNumber>892</ItemNumber>
-                </CellGrid>
-              </CellTwo>
-              <CellThree>
-                <CellGrid>
-                  <Icon src={ribbon} />
-                  <ItemNumber>314</ItemNumber>
-                </CellGrid>
-              </CellThree>
-              <CellFour>
-                <CellGrid>
-                  <Icon src={gum} />
-                  <ItemNumber>012</ItemNumber>
-                </CellGrid>
-              </CellFour>
-              {/* {ConsumableCells(data.operator.inventories)} */}
+              {ConsumableCells(data.operator.inventories)}
             </ConsumableGrid>
-
-            {/* <KamiBox>
-              <KamiImage src="https://i.imgur.com/JkEsu5f.gif" />
-              <KamiFacts>
-              </KamiFacts>
-            </KamiBox> */}
             {KamiCards(data.pets)}
-          </ModalContent>
-        </ModalWrapper>
+          </ModalContent >
+        </ModalWrapper >
       );
     }
   );
