@@ -1,12 +1,12 @@
 {
   "components": [
     "BalanceComponent",
+    "BandwidthComponent",
     "BlockLastComponent",
     "CapacityComponent",
     "ChargeComponent",
     "CoinComponent",
     "ExitsComponent",
-    "HashRateComponent",
     "IdDelegateeComponent",
     "IdDelegatorComponent",
     "IdHolderComponent",

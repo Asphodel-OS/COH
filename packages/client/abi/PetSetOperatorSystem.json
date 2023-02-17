@@ -630,6 +630,14 @@
         ],
         "license": "MIT"
       },
+      "src/components/BandwidthComponent.sol": {
+        "keccak256": "0x129e55d92f1836bd88a1045c8e14280e849a25c5391cbd7f03c1978488458aa9",
+        "urls": [
+          "bzz-raw://3aa1997f87680063d5987324d229fba552ecccc7d8881b96d56c6afde4ff3a4d",
+          "dweb:/ipfs/QmNof6MyPccUy3DBDGTwUcjvTPqijLbYVCAaegzybrn8mJ"
+        ],
+        "license": "Unlicense"
+      },
       "src/components/CapacityComponent.sol": {
         "keccak256": "0xb2371ca8807127031f3049299eeceb6923b6e21df36bfdae9babb5a96c048d32",
         "urls": [
@@ -643,14 +651,6 @@
         "urls": [
           "bzz-raw://e9d743c77a1143847f09dfb0c69ae27ce0066daba9b7bca604f0b565df68fddb",
           "dweb:/ipfs/QmP2d2ZQ2EE4zC5cEoG73a7ZdJQ8PuYRnuG7kGEcgeqSqE"
-        ],
-        "license": "Unlicense"
-      },
-      "src/components/HashRateComponent.sol": {
-        "keccak256": "0x8976a15376c7c8529a8e4e728ac3d0a19624459ce87b6b205f14956d5b549fab",
-        "urls": [
-          "bzz-raw://fe5186f6824a39ab25cc132aa015ac424770f3d5454efcc6573adaee18d20eed",
-          "dweb:/ipfs/QmPyfdBbbfyuJrDTcrnDBGJGhD1fS7UmxhtqGiUxbX6z9x"
         ],
         "license": "Unlicense"
       },
@@ -831,18 +831,18 @@
         "license": "MIT"
       },
       "src/libraries/LibPet.sol": {
-        "keccak256": "0x563ec73ab77e8883010495170a80d5878a17fb8f8e38ba9e7d252a3235d937ba",
+        "keccak256": "0x6fbb77cb2bb4ede5bbcf2fb1c7f2cc8f27b62367e5a7ed0a40297d1cf640669c",
         "urls": [
-          "bzz-raw://5ffcaf6f6805b9dd56ad04a09d52c6708e3a2e8d8256a2cd77732fd1f944f662",
-          "dweb:/ipfs/QmPiQbNHkbjt2PiC6xPpyL7DA9XDC9FjcfsyTS3n17VvzJ"
+          "bzz-raw://0d0166e90b76ba44506dc8739019d487b2e0e0b809c5c95f42e07fffb5c11d4a",
+          "dweb:/ipfs/QmSwcqmNudG4sBi4JGXpZcrvCEfPVJrLM3cf8RDnmcwCNf"
         ],
         "license": "MIT"
       },
       "src/libraries/LibProduction.sol": {
-        "keccak256": "0xd24cc520b24c3afce039597394864a45f86fb166c564a4f2088feb33728c0fd6",
+        "keccak256": "0x889256aaa9035e7d1e023f66f7832206fefb88726f3da0d6289631d61a8cbc43",
         "urls": [
-          "bzz-raw://33a8bcf16b342ba81f702f5459360d71b81d0777a5d04904acb887267310b967",
-          "dweb:/ipfs/QmZ3jFyH31GjGcP8mySHwoZ4mX5zxTiMK4M9TtmugDBkBc"
+          "bzz-raw://39c6dba0d0178c007e2cca82444ce9c8d55beb3d098eb672518230f0f74e0a60",
+          "dweb:/ipfs/QmbaogdikNEdbU5DFgfnHA5f2atJxvVCqRL7dCWWbdN6Z9"
         ],
         "license": "Unlicense"
       },

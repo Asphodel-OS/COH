@@ -11,7 +11,7 @@ import { IdOperatorComponent, ID as IdOpCompID } from "components/IdOperatorComp
 import { IdOwnerComponent, ID as IdOwnerCompID } from "components/IdOwnerComponent.sol";
 import { IndexPetComponent, ID as IndexPetComponentID } from "components/IndexPetComponent.sol";
 import { IsPetComponent, ID as IsPetCompID } from "components/IsPetComponent.sol";
-import { HashRateComponent, ID as HashRateCompID } from "components/HashRateComponent.sol";
+import { BandwidthComponent, ID as BandwidthCompID } from "components/BandwidthComponent.sol";
 import { CapacityComponent, ID as CapacityCompID } from "components/CapacityComponent.sol";
 import { ChargeComponent, ID as ChargeCompID } from "components/ChargeComponent.sol";
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
@@ -75,7 +75,7 @@ library LibPet {
   // set a pet's stats from its traits
   // TODO: actually set stats from traits. hardcoded currently
   function setStats(IUintComp components, uint256 id) internal {
-    HashRateComponent(getAddressById(components, HashRateCompID)).set(id, BASE_BANDWIDTH);
+    BandwidthComponent(getAddressById(components, BandwidthCompID)).set(id, BASE_BANDWIDTH);
     StorageSizeComponent(getAddressById(components, StorSizeCompID)).set(id, BASE_STORAGE);
 
     uint256 totalCapacity = BASE_CAPACITY;
@@ -146,14 +146,14 @@ library LibPet {
   // calculate and return the total bandwidth of a pet (including equipment)
   // TODO: include equipment stats
   // TODO: update this to bandwidth, soon:tm:
-  function getTotalHashRate(IUintComp components, uint256 id) internal view returns (uint256) {
-    return HashRateComponent(getAddressById(components, HashRateCompID)).getValue(id);
+  function getTotalBandwidth(IUintComp components, uint256 id) internal view returns (uint256) {
+    return BandwidthComponent(getAddressById(components, BandwidthCompID)).getValue(id);
   }
 
   // calculate and return the total battery capacity of a pet (including equipment)
   // TODO: include equipment stats
   function getTotalCapacity(IUintComp components, uint256 id) internal view returns (uint256) {
-    return HashRateComponent(getAddressById(components, HashRateCompID)).getValue(id);
+    return BandwidthComponent(getAddressById(components, BandwidthCompID)).getValue(id);
   }
 
   /////////////////

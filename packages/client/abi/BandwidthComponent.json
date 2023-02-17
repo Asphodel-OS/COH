@@ -812,7 +812,7 @@
         "bytecodeHash": "ipfs"
       },
       "compilationTarget": {
-        "src/components/HashRateComponent.sol": "HashRateComponent"
+        "src/components/BandwidthComponent.sol": "BandwidthComponent"
       },
       "libraries": {}
     },
@@ -1017,16 +1017,16 @@
         ],
         "license": "MIT"
       },
-      "src/components/HashRateComponent.sol": {
-        "keccak256": "0x8976a15376c7c8529a8e4e728ac3d0a19624459ce87b6b205f14956d5b549fab",
+      "src/components/BandwidthComponent.sol": {
+        "keccak256": "0x129e55d92f1836bd88a1045c8e14280e849a25c5391cbd7f03c1978488458aa9",
         "urls": [
-          "bzz-raw://fe5186f6824a39ab25cc132aa015ac424770f3d5454efcc6573adaee18d20eed",
-          "dweb:/ipfs/QmPyfdBbbfyuJrDTcrnDBGJGhD1fS7UmxhtqGiUxbX6z9x"
+          "bzz-raw://3aa1997f87680063d5987324d229fba552ecccc7d8881b96d56c6afde4ff3a4d",
+          "dweb:/ipfs/QmNof6MyPccUy3DBDGTwUcjvTPqijLbYVCAaegzybrn8mJ"
         ],
         "license": "Unlicense"
       }
     },
     "version": 1
   },
-  "id": 79
+  "id": 74
 }
