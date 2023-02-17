@@ -23,12 +23,12 @@ import "libraries/LibTrade.sol";
 
 // Components
 import { BalanceComponent, ID as BalanceComponentID } from "components/BalanceComponent.sol";
+import { BandwidthComponent, ID as BandwidthComponentID } from "components/BandwidthComponent.sol";
 import { BlockLastComponent, ID as BlockLastComponentID } from "components/BlockLastComponent.sol";
 import { CapacityComponent, ID as CapacityComponentID } from "components/CapacityComponent.sol";
 import { ChargeComponent, ID as ChargeComponentID } from "components/ChargeComponent.sol";
 import { CoinComponent, ID as CoinComponentID } from "components/CoinComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
-import { BandwidthComponent, ID as BandwidthComponentID } from "components/BandwidthComponent.sol";
 import { IdDelegateeComponent, ID as IdDelegateeComponentID } from "components/IdDelegateeComponent.sol";
 import { IdDelegatorComponent, ID as IdDelegatorComponentID } from "components/IdDelegatorComponent.sol";
 import { IdHolderComponent, ID as IdHolderComponentID } from "components/IdHolderComponent.sol";
@@ -101,12 +101,12 @@ import { OperatorNameSystem, ID as OperatorNameSystemID } from "systems/Operator
 abstract contract TestSetupImports is MudTest {
 // Components vars
 BalanceComponent _BalanceComponent;
+BandwidthComponent _BandwidthComponent;
 BlockLastComponent _BlockLastComponent;
 CapacityComponent _CapacityComponent;
 ChargeComponent _ChargeComponent;
 CoinComponent _CoinComponent;
 ExitsComponent _ExitsComponent;
-BandwidthComponent _BandwidthComponent;
 IdDelegateeComponent _IdDelegateeComponent;
 IdDelegatorComponent _IdDelegatorComponent;
 IdHolderComponent _IdHolderComponent;
@@ -180,12 +180,12 @@ function setUp() public virtual override {
 super.setUp();
 
 _BalanceComponent = BalanceComponent(component(BalanceComponentID));
+_BandwidthComponent = BandwidthComponent(component(BandwidthComponentID));
 _BlockLastComponent = BlockLastComponent(component(BlockLastComponentID));
 _CapacityComponent = CapacityComponent(component(CapacityComponentID));
 _ChargeComponent = ChargeComponent(component(ChargeComponentID));
 _CoinComponent = CoinComponent(component(CoinComponentID));
 _ExitsComponent = ExitsComponent(component(ExitsComponentID));
-_BandwidthComponent = BandwidthComponent(component(BandwidthComponentID));
 _IdDelegateeComponent = IdDelegateeComponent(component(IdDelegateeComponentID));
 _IdDelegatorComponent = IdDelegatorComponent(component(IdDelegatorComponentID));
 _IdHolderComponent = IdHolderComponent(component(IdHolderComponentID));

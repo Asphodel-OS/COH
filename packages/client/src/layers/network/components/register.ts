@@ -46,10 +46,12 @@ export function createComponents(world: any) {
 
     // Values
     Balance: defineNumberComponent(world, { id: "Balance", metadata: { contractId: "component.Balance" } }),
+    Bandwidth: defineNumberComponent(world, { id: "Bandwidth", metadata: { contractId: "component.Bandwidth" } }),
+    Capacity: defineNumberComponent(world, { id: "Capacity", metadata: { contractId: "component.Capacity" } }),
+    Charge: defineNumberComponent(world, { id: "Charge", metadata: { contractId: "component.Charge" } }),
     BlockLast: defineNumberComponent(world, { id: "BlockLast", metadata: { contractId: "component.BlockLast" } }),
     Coin: defineNumberComponent(world, { id: "Coin", metadata: { contractId: "component.Coin" } }),
     Exits: defineNumberArrayComponent(world, "Exits", "component.Exits"),
-    HashRate: defineNumberComponent(world, { id: "HashRate", metadata: { contractId: "component.HashRate" } }),
     Location: defineNumberComponent(world, { id: "Location", metadata: { contractId: "component.Location" } }),
     ModifierStatus: defineStringComponent(world, { id: "ModifierStatus", metadata: { contractId: "component.ModifierStatus" } }),
     ModifierType: defineStringComponent(world, { id: "ModifierType", metadata: { contractId: "component.ModifierType" } }),
@@ -58,8 +60,8 @@ export function createComponents(world: any) {
     PriceSell: defineNumberComponent(world, { id: "PriceSell", metadata: { contractId: "component.PriceSell" } }),
     State: defineStringComponent(world, { id: "State", metadata: { contractId: "component.State" } }),
     StorageSize: defineNumberComponent(world, { id: "StorageSize", metadata: { contractId: "component.StorageSize" } }),
-    TimeLastAction: defineNumberComponent(world, { id: "TimeLastAction", metadata: { contractId: "component.TimeLastAction" } }),
-    TimeStart: defineNumberComponent(world, { id: "TimeStart", metadata: { contractId: "component.TimeStart" } }),
+    LastActionTime: defineNumberComponent(world, { id: "LastActionTime", metadata: { contractId: "component.time.LastAction" } }),
+    StartTime: defineNumberComponent(world, { id: "StartTime", metadata: { contractId: "component.time.Start" } }),
 
     // Pet metadata
     PetTraits: defineStringArrayComponent(world, "PetTraits", "component.PetTraits.Permanent"),

@@ -40,6 +40,7 @@ export function registerInventory() {
       } = layers;
 
       // get a Inventory object by index
+      // TODO: get name and decription here once we have item registry support
       const getInventory = (index: EntityIndex) => {
         const itemIndex = getComponentValue(ItemIndex, index)?.value as number;
         return {
@@ -70,7 +71,7 @@ export function registerInventory() {
             NotValue(Balance, { value: 0 }),
           ]);
 
-          // if we have inventories for the operator, list below
+          // if we have inventories for the operator, generate a list of inventory objects
           let inventories: any = [];
           let inventory, inventoryIndex;
           if (inventoryResults.size != 0) {
@@ -109,7 +110,7 @@ export function registerInventory() {
             <TypeHeading>Equipment</TypeHeading>
             <div style={{ textAlign: 'right' }}>
               <Button
-                style={{ pointerEvents: 'auto'}}
+                style={{ pointerEvents: 'auto' }}
                 onClick={hideModal}
               >
                 Close

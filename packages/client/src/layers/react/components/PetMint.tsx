@@ -48,11 +48,11 @@ export function registerPetMint() {
     ({ layers, nextToken }) => {
       const {
         network: {
-          components: { 
+          components: {
             OwnerID,
             IsPet,
             Balance
-           },
+          },
           api: { player },
           network: { connectedAddress },
           actions,
@@ -80,7 +80,7 @@ export function registerPetMint() {
         try {
           const mintFX = new Audio(mintSound)
           mintFX.play()
-          
+
           const actionID = mintTx(connectedAddress.get()!);
           await waitForActionCompletion(
             actions.Action,
