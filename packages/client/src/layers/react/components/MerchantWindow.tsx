@@ -281,7 +281,7 @@ const ItemName = styled.p`
   font-family: Pixel;
   grid-column: 2;
   align-self: center;
-  font-size: 14px;
+  font-size: 15px;
 `;
 
 
@@ -307,20 +307,21 @@ const ShopList = styled.ul`
   color: black;
   grid-row: 2;
   border-style: solid;
-  border-width: 2px 2px 0px 0px;
+  border-width: 2px 2px 0px 2px;
   border-color: black;
   grid-column: 1;
   margin: 2px 0px 0px 0px;
+  border-radius: 5px;
 `;
 
 const ItemImage = styled.img`
   font-family: Pixel;
   grid-column: 1;
   align-self: center;
-  width: 60px;
+  width: 50px;
   border-style: solid;
-  border-width: 0px 2px;
+  border-width: 0px 2px 0px 0px;
   border-color: black;
-  padding: 10px;
+  padding: 5px;
   margin: 0px;
 `;
