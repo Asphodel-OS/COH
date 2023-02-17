@@ -11,7 +11,7 @@ export function registerObjectModal() {
     {
       colStart: 3,
       colEnd: 82,
-      rowStart: 68,
+      rowStart: 76,
       rowEnd: 99,
     },
     (layers) => of(layers),
@@ -64,7 +64,6 @@ const fadeIn = keyframes`
 
 const ModalWrapper = styled.div`
   display: none;
-  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   animation: ${fadeIn} 0.5s ease-in-out;
