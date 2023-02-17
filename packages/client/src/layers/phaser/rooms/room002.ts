@@ -17,8 +17,7 @@ export function room002() {
         .image(window.innerWidth / 2, window.innerHeight / 2, 'room002')
         .setScale(scale * 8.3);
 
-      const vend = scene.add.rectangle(500, 820, 200, 180);
-
+      const vend = scene.add.rectangle(500, 520, 200, 180);
 
       scene.interactiveObjects.push(
         // triggerObjectModal(
