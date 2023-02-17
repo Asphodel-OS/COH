@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   getComponentEntities,
   getComponentValueStrict,
@@ -33,7 +33,7 @@ export function registerActionQueue() {
     ({ Action }) => {
       return (
         <ModalWrapper>
-          <ModalContent>
+          <ModalContent style={{ pointerEvents: 'auto'}}>
           <Description>TX Queue:</Description>
           {[...getComponentEntities(Action)].map((e) => {
             const actionData = getComponentValueStrict(Action, e);
@@ -67,6 +67,9 @@ const ModalContent = styled.div`
   border-style: solid;
   border-width: 2px;
   border-color: black;
+
+  overflow: scroll;
+  max-height: 175px;
 `;
 
 const Description = styled.p`
