@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { map, merge } from 'rxjs';
 import styled, { keyframes } from 'styled-components';
 import { EntityID, EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } from "@latticexyz/recs";
@@ -81,7 +81,7 @@ export function registerPetList() {
           id: world.entities[index],
           nodeId: getComponentValue(NodeID, index)?.value as string,
           state: getComponentValue(State, index)?.value as string,
-          timeStart: getComponentValue(StartTime, index)?.value as number,
+          startTime: getComponentValue(StartTime, index)?.value as number,
         }
       }
 
@@ -181,23 +181,30 @@ export function registerPetList() {
 
     // Render
     ({ actions, api, data }) => {
-      const hideModal = () => {
-        const clickFX = new Audio(clickSound)
-        clickFX.play()
-        const modalId = window.document.getElementById('petlist_modal');
-        if (modalId) modalId.style.display = 'none';
-      };
+      console.log(data.pets);
 
-
+      const [lastRefresh, setLastRefresh] = useState(Date.now());
       const {
         selectedPet: { description },
       } = dataStore();
 
-      console.log(data.pets);
+      /////////////////
+      // TICKING
+
+      function refreshClock() {
+        setLastRefresh(Date.now());
+      };
+
+      useEffect(() => {
+        const timerId = setInterval(refreshClock, 1000);
+        return function cleanup() {
+          clearInterval(timerId);
+        };
+      }, []);
 
 
       /////////////////
-      // ACTIONS
+      // INTERACTIONS
 
       // starts a production for the given pet on the node in the room
       const startProduction = (petID: EntityID) => {
@@ -244,21 +251,40 @@ export function registerPetList() {
         });
       };
 
+      const hideModal = () => {
+        const clickFX = new Audio(clickSound)
+        clickFX.play()
+        const modalId = window.document.getElementById('petlist_modal');
+        if (modalId) modalId.style.display = 'none';
+      };
+
       /////////////////
       // DATA INTERPRETATION
 
-      // TODO: add ticking
+      // NOTE(ja): the battery epoch is hardcoded right now but we should save this
+      // on the world's global config
+      const BATTERY_EPOCH = 1;  // seconds
+
+      // calculate hunger based on last charge and time passed since last charge
       const calcHunger = (kami: any) => {
-        let capacity = kami.capacity;
-        let charge = kami.charge;
-        let lastChargeTime = kami.lastChargeTime;
-        let hunger = 100 * (1 - (charge - 10) / capacity); //
-        return hunger.toFixed(2);
+        let duration = (lastRefresh / 1000) - kami.lastChargeTime;
+        let newCharge = Math.max(kami.charge - duration / BATTERY_EPOCH, 0);
+        return Math.round(100 * (1 - newCharge / kami.capacity)); // as %, reversed
+      }
+
+      // calculate the expected output from a pet production based on starttime and
+      const calcOutput = (kami: any) => {
+        let duration = 0, output = 0;
+        if (kami.production && kami.production.state === "ACTIVE") {
+          duration = (lastRefresh / 1000) - kami.production.startTime;
+          output = Math.round(duration * kami.bandwidth);
+          output = Math.min(output, kami.storage);
+        }
+        return output;
       }
 
       /////////////////
       // DISPLAY
-
 
       // Generate the list of Kami cards
       // TODO: grab uri from SC side
@@ -277,7 +303,7 @@ export function registerPetList() {
                     <br />
                     Bandwidth: {kami.bandwidth * 1} / hr
                     <br />
-                    Storage:  112 / {kami.storage * 1}
+                    Storage:  {calcOutput(kami)} / {kami.storage * 1}
                     <br />
                   </Description>
                   {(kami.production && kami.production.state === "ACTIVE") ?
@@ -295,7 +321,7 @@ export function registerPetList() {
           )
         })
       }
-      console.log(data.operator);
+
       return (
         <ModalWrapper id="petlist_modal">
           <ModalContent>
