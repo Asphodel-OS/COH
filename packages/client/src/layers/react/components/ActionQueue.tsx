@@ -37,10 +37,11 @@ export function registerActionQueue() {
           <Description>TX Queue:</Description>
           {[...getComponentEntities(Action)].map((e) => {
             const actionData = getComponentValueStrict(Action, e);
-            const state = ActionStateString[actionData.state as ActionState];
+            let state = ActionStateString[actionData.state as ActionState];
+            if (state == "WaitingForTxEvents") state = "Pending";
             return (
               <Description key={`action${e}`}>
-                {Action.world.entities[e]}: {state}
+                {Action.world.entities[e]}: [{state}]
               </Description>
             );
           })}
