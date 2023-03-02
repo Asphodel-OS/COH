@@ -21,6 +21,7 @@ import { GenusComponent as GenusComp, ID as GenusCompID } from "components/Genus
  *    body  [base]
  *    hand  [base]
  *    face  [base]
+ *    background  [base]
  *    equipped (to add)
   */
 

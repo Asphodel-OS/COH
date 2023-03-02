@@ -4,22 +4,22 @@ pragma solidity ^0.8.0;
 import "std-contracts/test/MudTest.t.sol";
 
 // Libraries
-import "libraries/LibBattery.sol";
-import "libraries/LibCoin.sol";
-import "libraries/LibInventory.sol";
-import "libraries/LibListing.sol";
-import "libraries/LibMerchant.sol";
-import "libraries/LibModifier.sol";
-import "libraries/LibNode.sol";
-import "libraries/LibOperator.sol";
-import "libraries/LibPet.sol";
-import "libraries/LibProduction.sol";
-import "libraries/LibPrototype.sol";
-import "libraries/LibRegister.sol";
-import "libraries/LibRegistry.sol";
-import "libraries/LibModReg.sol";
-import "libraries/LibRoom.sol";
-import "libraries/LibTrade.sol";
+import { LibBattery } from "libraries/LibBattery.sol";
+import { LibCoin } from "libraries/LibCoin.sol";
+import { LibInventory } from "libraries/LibInventory.sol";
+import { LibListing } from "libraries/LibListing.sol";
+import { LibMerchant } from "libraries/LibMerchant.sol";
+import { LibModifier } from "libraries/LibModifier.sol";
+import { LibNode } from "libraries/LibNode.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
+import { LibPet } from "libraries/LibPet.sol";
+import { LibProduction } from "libraries/LibProduction.sol";
+import { LibPrototype } from "libraries/LibPrototype.sol";
+import { LibRegister } from "libraries/LibRegister.sol";
+import { LibRegistry } from "libraries/LibRegistry.sol";
+import { LibModReg } from "libraries/LibModReg.sol";
+import { LibRoom } from "libraries/LibRoom.sol";
+import { LibTrade } from "libraries/LibTrade.sol";
 
 // Components
 import { AddressPlayerComponent, ID as AddressPlayerComponentID } from "components/AddressPlayerComponent.sol";

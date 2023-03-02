@@ -8,6 +8,7 @@ import { LibString } from "solady/utils/LibString.sol";
 
 import { LibBattery } from "libraries/LibBattery.sol";
 import { LibPet } from "libraries/LibPet.sol";
+import { LibModifier, ModStatus } from "libraries/LibModifier.sol";
 import { LibOperator } from "libraries/LibOperator.sol";
 import { LibMetadata } from "libraries/LibMetadata.sol";
 
@@ -61,8 +62,27 @@ contract PetMetadataSystem is System {
       entityID,
       LibString.concat(_baseURI, LibString.concat(LibString.toString(packed), ".gif"))
     );
+
+    uint256[] memory permTraits = LibMetadata._packedToArray(packed, _numElements);
+    // TEMP: dynamic trat compnot to be removed
     _DynamicTraitsComponent(getAddressById(components, _DynamicTraitsCompID))
-      .set(entityID, LibMetadata._packedToArray(packed, _numElements));
+      .set(entityID, permTraits);
+    // assigning initial traits. genus is hardcoded
+    string[] memory names = new string[](5);
+    names[0] = "COLOR";
+    names[1] = "BODY";
+    names[2] = "HAND";
+    names[3] = "FACE";
+    names[4] = "BACKGROUND";
+    for (uint256 i; i < permTraits.length; i++) {
+      LibModifier.addToPet(
+        components,
+        world,
+        entityID,
+        names[i], // genus
+        permTraits[i] // index
+      );
+    }
 
     return "";
   }
@@ -121,21 +141,29 @@ contract PetMetadataSystem is System {
     string memory result = "";
 
     // getting values of base traits. values are hardcoded to array position
-    string[] memory names = new string[](6);
+    string[] memory names = new string[](5);
     names[0] = "Color";
     names[1] = "Body";
     names[2] = "Hand";
-    names[3] = "Eyes";
-    names[4] = "Mouth";
-    names[5] = "Background";
+    names[3] = "Face";
+    names[4] = "Background";
     // string[] memory values = LibPetTraits.getNames(
     //   components,
     //   LibPetTraits.getPermArray(components, entityID)
     // );
 
     for (uint256 i; i < names.length; i++) {
+      uint256 curID = LibModifier._getAllX(
+        components,
+        entityID, // petID
+        LibString.toCase(names[i], true), // genus, all caps
+        0, // index, can vary
+        ModStatus.NULL, 
+        "" // mod type, not searching
+      )[0];
+      string memory valName = LibModifier.getName(components, curID);
       string memory entry = string(
-        abi.encodePacked('{"trait_type": "', names[i], '", "value": "', /*values[i],*/ '"},\n')
+        abi.encodePacked('{"trait_type": "', names[i], '", "value": "', valName, '"},\n')
       );
 
       result = string(abi.encodePacked(result, entry));

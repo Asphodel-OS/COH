@@ -222,6 +222,13 @@ library LibPet {
     }
   }
 
+  // get tokenID from entity
+  function entityToIndex(IUintComp components, uint256 entityID) internal view returns (uint256) {
+    return IndexPetComponent(
+      getAddressById(components, IndexPetComponentID)
+    ).getValue(entityID);
+  }
+
   // Get the production of a pet. Return 0 if there are none.
   function getProduction(IUintComp components, uint256 id) internal view returns (uint256 result) {
     uint256[] memory results = LibProduction._getAllX(components, 0, id, "");

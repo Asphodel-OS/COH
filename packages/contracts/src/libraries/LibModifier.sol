@@ -25,7 +25,8 @@ import { Strings } from "utils/Strings.sol";
 enum ModStatus {
   NULL,
   INACTIVE,
-  ACTIVE
+  ACTIVE,
+  BASE
 }
 
 // enum ModType {
@@ -166,7 +167,7 @@ library LibModifier {
     componentIDs[2] = ModifierStatusComponentID;
     componentIDs[3] = NameCompID;
     componentIDs[4] = GenusComponentID;
-    componentIDs[5] = IndexModifierComponentID;
+    componentIDs[5] = IsModifierComponentID;
     componentIDs[6] = PrototypeComponentID;
 
     bytes[] memory values = new bytes[](7);
@@ -175,7 +176,7 @@ library LibModifier {
     values[2] = abi.encode(statusToUint256(ModStatus.NULL));
     values[3] = abi.encode(name);
     values[4] = abi.encode(genus);
-    values[5] = abi.encode(index);
+    values[5] = abi.encode(true);
     values[6] = new bytes(0);
 
     LibModReg.addPrototype(
@@ -211,6 +212,13 @@ library LibModifier {
     uint256 id
   ) internal view returns (uint256) {
     return IndexModifierComponent(getAddressById(components, IndexModifierComponentID)).getValue(id);
+  }
+
+  function getName(
+    IUint256Component components,
+    uint256 id
+  ) internal view returns (string memory) {
+    return NameComponent(getAddressById(components, NameCompID)).getValue(id);
   }
 
   ///////////////

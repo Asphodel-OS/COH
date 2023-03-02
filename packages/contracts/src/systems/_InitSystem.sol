@@ -7,6 +7,7 @@ import { IWorld } from "solecs/interfaces/IWorld.sol";
 import { LibOperator } from "libraries/LibOperator.sol";
 import { LibBattery } from "libraries/LibBattery.sol";
 import { LibInventory } from "libraries/LibInventory.sol";
+import { LibModifier } from "libraries/LibModifier.sol";
 import { Utils } from "utils/Utils.sol";
 
 import { ID as PetSysID } from "systems/ERC721PetSystem.sol";
@@ -21,6 +22,7 @@ contract _InitSystem is System {
     arguments = "";
 
     initFood();
+    initMods();
     
     // for erc721 pet
     LibInventory._set(components, PetSysID, 0);
@@ -36,5 +38,53 @@ contract _InitSystem is System {
     LibBattery.addFoodRegistry(components, world, 100001, 25, "food 1");
     LibBattery.addFoodRegistry(components, world, 100002, 100, "food 2");
     LibBattery.addFoodRegistry(components, world, 100003, 200, "food 3");
+  }
+
+  function initMods() internal {
+    LibModifier.createIndex(
+      components,
+      world,
+      "COLOR",
+      1, // index
+      1, // mod value
+      "ADD",
+      "color1"
+    );
+    LibModifier.createIndex(
+      components,
+      world,
+      "BODY",
+      1, // index
+      1, // mod value
+      "MUL",
+      "body1"
+    );
+    LibModifier.createIndex(
+      components,
+      world,
+      "HAND",
+      1, // index
+      1, // mod value
+      "STORAGE",
+      "hand1"
+    );
+    LibModifier.createIndex(
+      components,
+      world,
+      "FACE",
+      1, // index
+      1, // mod value
+      "UMUL",
+      "face1"
+    );
+    LibModifier.createIndex(
+      components,
+      world,
+      "BACKGROUND",
+      1, // index
+      1, // mod value
+      "UMUL",
+      "background1"
+    );
   }
 }

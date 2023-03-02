@@ -18,6 +18,10 @@ contract ERC721PetTest is SetupTemplate {
     // assertEq(_IdOperatorComponent.getValue(entityID), addressToEntity(operator));
   }
 
+  function entityToAddress(uint256 entityID) internal returns (address) {
+    return address(uint160(entityID));
+  }
+
   function testMint() public {
     _mintPets(1);
 
