@@ -8,14 +8,12 @@ import { LibString } from "solady/utils/LibString.sol";
 
 import { LibBattery } from "libraries/LibBattery.sol";
 import { LibPet } from "libraries/LibPet.sol";
-import { LibPetTraits } from "libraries/LibPetTraits.sol";
 import { LibOperator } from "libraries/LibOperator.sol";
 import { LibMetadata } from "libraries/LibMetadata.sol";
 
 import { ERC721PetSystem, UNREVEALED_URI, ID as PetSystemID } from "systems/ERC721PetSystem.sol";
 
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
-import { PetTraitsPermanentComponent, ID as PetTraitsPermanentCompID } from "components/PetTraitsPermanentComponent.sol";
 import { _DynamicTraitsComponent, ID as _DynamicTraitsCompID } from "components/_DynamicTraitsComponent.sol";
 
 uint256 constant ID = uint256(keccak256("system.ERC721.metadata"));
@@ -65,8 +63,6 @@ contract PetMetadataSystem is System {
     );
     _DynamicTraitsComponent(getAddressById(components, _DynamicTraitsCompID))
       .set(entityID, LibMetadata._packedToArray(packed, _numElements));
-
-    // LibPetTraits.setPermTraits(components, world, entityID, LibMetadata._packedToArray(packed, _numElements));
 
     return "";
   }
@@ -132,14 +128,14 @@ contract PetMetadataSystem is System {
     names[3] = "Eyes";
     names[4] = "Mouth";
     names[5] = "Background";
-    string[] memory values = LibPetTraits.getNames(
-      components,
-      LibPetTraits.getPermArray(components, entityID)
-    );
+    // string[] memory values = LibPetTraits.getNames(
+    //   components,
+    //   LibPetTraits.getPermArray(components, entityID)
+    // );
 
     for (uint256 i; i < names.length; i++) {
       string memory entry = string(
-        abi.encodePacked('{"trait_type": "', names[i], '", "value": "', values[i], '"},\n')
+        abi.encodePacked('{"trait_type": "', names[i], '", "value": "', /*values[i],*/ '"},\n')
       );
 
       result = string(abi.encodePacked(result, entry));

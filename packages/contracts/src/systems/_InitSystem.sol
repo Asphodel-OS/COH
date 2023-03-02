@@ -6,7 +6,6 @@ import { IWorld } from "solecs/interfaces/IWorld.sol";
 
 import { LibOperator } from "libraries/LibOperator.sol";
 import { LibBattery } from "libraries/LibBattery.sol";
-import { LibPetTraits } from "libraries/LibPetTraits.sol";
 import { LibInventory } from "libraries/LibInventory.sol";
 import { Utils } from "utils/Utils.sol";
 
@@ -24,7 +23,6 @@ contract _InitSystem is System {
     initFood();
     
     // for erc721 pet
-    LibPetTraits.placeholderRegistry(components, world);
     LibInventory._set(components, PetSysID, 0);
 
     return "";

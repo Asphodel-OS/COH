@@ -80,8 +80,27 @@
       "inputs": [
         {
           "internalType": "bytes",
-          "name": "",
+          "name": "value",
           "type": "bytes"
+        }
+      ],
+      "name": "getEntitiesWithValue",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "value",
+          "type": "string"
         }
       ],
       "name": "getEntitiesWithValue",
@@ -143,9 +162,9 @@
       "name": "getValue",
       "outputs": [
         {
-          "internalType": "uint256[]",
+          "internalType": "string",
           "name": "",
-          "type": "uint256[]"
+          "type": "string"
         }
       ],
       "stateMutability": "view",
@@ -160,6 +179,30 @@
         }
       ],
       "name": "has",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        }
+      ],
+      "name": "hasValue",
       "outputs": [
         {
           "internalType": "bool",
@@ -200,7 +243,7 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "",
+          "name": "indexer",
           "type": "address"
         }
       ],
@@ -243,9 +286,9 @@
           "type": "uint256"
         },
         {
-          "internalType": "bytes",
+          "internalType": "string",
           "name": "value",
-          "type": "bytes"
+          "type": "string"
         }
       ],
       "name": "set",
@@ -261,9 +304,9 @@
           "type": "uint256"
         },
         {
-          "internalType": "uint256[]",
+          "internalType": "bytes",
           "name": "value",
-          "type": "uint256[]"
+          "type": "bytes"
         }
       ],
       "name": "set",
@@ -334,17 +377,19 @@
     "authorizeWriter(address)": "4fef6a38",
     "getEntities()": "31b933b9",
     "getEntitiesWithValue(bytes)": "b361be46",
+    "getEntitiesWithValue(string)": "f94655da",
     "getRawValue(uint256)": "b8bc073d",
     "getSchema()": "6b122fe0",
     "getValue(uint256)": "0ff4c916",
     "has(uint256)": "cccf7a8e",
+    "hasValue(uint256,string)": "9d72b0e1",
     "id()": "af640d0f",
     "owner()": "8da5cb5b",
     "registerIndexer(address)": "75c0669c",
     "registerWorld(address)": "9d2c76b4",
     "remove(uint256)": "4cc82215",
     "set(uint256,bytes)": "8b282947",
-    "set(uint256,uint256[])": "946aadc6",
+    "set(uint256,string)": "64371977",
     "transferOwnership(address)": "f2fde38b",
     "unauthorizeWriter(address)": "bf4fe57e",
     "world()": "30b67baa",
@@ -436,8 +481,27 @@
           "inputs": [
             {
               "internalType": "bytes",
-              "name": "",
+              "name": "value",
               "type": "bytes"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "getEntitiesWithValue",
+          "outputs": [
+            {
+              "internalType": "uint256[]",
+              "name": "",
+              "type": "uint256[]"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "value",
+              "type": "string"
             }
           ],
           "stateMutability": "view",
@@ -501,9 +565,9 @@
           "name": "getValue",
           "outputs": [
             {
-              "internalType": "uint256[]",
+              "internalType": "string",
               "name": "",
-              "type": "uint256[]"
+              "type": "string"
             }
           ]
         },
@@ -518,6 +582,30 @@
           "stateMutability": "view",
           "type": "function",
           "name": "has",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "hasValue",
           "outputs": [
             {
               "internalType": "bool",
@@ -556,7 +644,7 @@
           "inputs": [
             {
               "internalType": "address",
-              "name": "",
+              "name": "indexer",
               "type": "address"
             }
           ],
@@ -596,9 +684,9 @@
               "type": "uint256"
             },
             {
-              "internalType": "bytes",
+              "internalType": "string",
               "name": "value",
-              "type": "bytes"
+              "type": "string"
             }
           ],
           "stateMutability": "nonpayable",
@@ -613,9 +701,9 @@
               "type": "uint256"
             },
             {
-              "internalType": "uint256[]",
+              "internalType": "bytes",
               "name": "value",
-              "type": "uint256[]"
+              "type": "bytes"
             }
           ],
           "stateMutability": "nonpayable",
@@ -687,6 +775,11 @@
               "writer": "Address to grant write access to."
             }
           },
+          "getEntitiesWithValue(bytes)": {
+            "params": {
+              "value": "Abi-encoded value to get the list of entities with this value for."
+            }
+          },
           "getRawValue(uint256)": {
             "params": {
               "entity": "Entity to get the raw value in this component for."
@@ -700,6 +793,11 @@
           "owner()": {
             "returns": {
               "_0": "conrtact owner"
+            }
+          },
+          "registerIndexer(address)": {
+            "params": {
+              "indexer": "Address of the indexer to notify when a component value is set."
             }
           },
           "registerWorld(address)": {
@@ -738,10 +836,10 @@
             "notice": "Grant write access to the given address. Can only be called by the owner."
           },
           "getEntities()": {
-            "notice": "Not implemented in BareComponent "
+            "notice": "Get a list of all entities that have a value in this component."
           },
           "getEntitiesWithValue(bytes)": {
-            "notice": "Not implemented in BareComponent "
+            "notice": "Get a list of all entities that have the specified value in this component."
           },
           "getRawValue(uint256)": {
             "notice": "Get the raw (abi-encoded) value of the given entity in this component."
@@ -759,7 +857,7 @@
             "notice": "get the ERC173 contract owner"
           },
           "registerIndexer(address)": {
-            "notice": "Not implemented in BareComponent "
+            "notice": "Register a new indexer that gets notified when a component value is set."
           },
           "registerWorld(address)": {
             "notice": "Register this component in the given world."
@@ -813,7 +911,7 @@
         "bytecodeHash": "ipfs"
       },
       "compilationTarget": {
-        "src/components/PetTraitsEquippedComponent.sol": "PetTraitsEquippedComponent"
+        "src/components/GenusComponent.sol": "GenusComponent"
       },
       "libraries": {}
     },
@@ -823,6 +921,14 @@
         "urls": [
           "bzz-raw://890e17cd1f2f2ed87c99ca7b9383f7eabb31570989247a81e268a636b163a89a",
           "dweb:/ipfs/QmXJEKkMBQniSwHvC9aqHjRCaMohwkpPT7ssCtkL31j4FA"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@latticexyz/solecs/src/Component.sol": {
+        "keccak256": "0x40085c2f86bf6be7a756015025477aa46308b1618083ece93ae13093881a6874",
+        "urls": [
+          "bzz-raw://ca8653540b5674e50abfd4b4898009b472fc7fd2fba456146c1a1c44b615d83a",
+          "dweb:/ipfs/QmSqbRng5fHuGUKgkFuNw3BfoefNteYU95sYi4g9QjCCNh"
         ],
         "license": "MIT"
       },
@@ -890,6 +996,22 @@
         ],
         "license": "MIT"
       },
+      "../../node_modules/@latticexyz/solecs/src/interfaces/IEntityContainer.sol": {
+        "keccak256": "0x4506db1dcbdbe68a397107a57bfa3da888a889f14181a90eb728cfecc60700b8",
+        "urls": [
+          "bzz-raw://23f5c02d110f5abf6340a08a2a8b7e0b5668f211fe6baf41213e6c4f69dece10",
+          "dweb:/ipfs/QmYfKeZMeEUNExsxjkCF5nGdw8KRyPe1t5tcGFTEkP7CkV"
+        ],
+        "license": "MIT"
+      },
+      "../../node_modules/@latticexyz/solecs/src/interfaces/IEntityIndexer.sol": {
+        "keccak256": "0xd89023b2a5e9961be3c9d49d9f7f9ac7dcc416e3f43a8758dc058d1db2eea6b5",
+        "urls": [
+          "bzz-raw://3266ea1dd5a7f372f8814db24ac4981730f66fba8e6f90f614246ca5cec529b4",
+          "dweb:/ipfs/QmQ71BtaBsDjfke46dndaTBVhyXAHxs5qs7d9GHJwVXuvw"
+        ],
+        "license": "MIT"
+      },
       "../../node_modules/@latticexyz/solecs/src/interfaces/IOwnableWritable.sol": {
         "keccak256": "0x804db2685d65f5d4029431c47276b6ac43d3c329ea4ce75358928dbd4d11ee77",
         "urls": [
@@ -922,11 +1044,11 @@
         ],
         "license": "MIT"
       },
-      "../../node_modules/@latticexyz/std-contracts/src/components/Uint256ArrayBareComponent.sol": {
-        "keccak256": "0x70f293801b10b20232f5dbbe1589cb7f85e1d80706f91ad66c70b72f154863bd",
+      "../../node_modules/@latticexyz/std-contracts/src/components/StringComponent.sol": {
+        "keccak256": "0xa7e8e699ed4a1bbc3867a3fad20b3ee585049ff4e6160a2e6edfcaf44569dbec",
         "urls": [
-          "bzz-raw://3fbe88e05084899404e75a561929486118bbe917325bed260e19952a067ab68c",
-          "dweb:/ipfs/QmQHCWWq7hjJY3d9MBtJY46U9xgasxVvmWqubXCpU2AxSj"
+          "bzz-raw://502d60861e08e23c765a60fd02959475a028bae788427d99db2d6c5e1e9f67d8",
+          "dweb:/ipfs/QmQrRfvUuSBidhPoAK4QXXxRpLx2FBif9EhHB7TKibjP3i"
         ],
         "license": "MIT"
       },
@@ -1018,16 +1140,16 @@
         ],
         "license": "MIT"
       },
-      "src/components/PetTraitsEquippedComponent.sol": {
-        "keccak256": "0x0387461959d5d6101cf5b7a7fb2f85c4831604e51378db93b539489aefb169af",
+      "src/components/GenusComponent.sol": {
+        "keccak256": "0xc676f06bad72dd0473009cb296ef67d7fdce134a75b27bde874faa2b6701a05b",
         "urls": [
-          "bzz-raw://4d09ee472d556482040ee5fe502dd6ae374eccbd5b74abc76222fbce6760fee5",
-          "dweb:/ipfs/Qmd6MgukphRvsUVfg1HFpFgq6qS9euWVXT6zmzPuw4htjC"
+          "bzz-raw://18169a03fbbed231ab9b207182748c9652b9bc24725ac77f2e27c6726e310dc5",
+          "dweb:/ipfs/QmXG9u8HX7hPKjPN4APB8BmrX9fxW7t5Btw1zEVdFwDKvv"
         ],
         "license": "Unlicense"
       }
     },
     "version": 1
   },
-  "id": 114
+  "id": 81
 }

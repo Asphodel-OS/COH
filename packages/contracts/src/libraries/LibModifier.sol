@@ -7,7 +7,7 @@ import { QueryFragment, QueryType } from "solecs/interfaces/Query.sol";
 import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById } from "solecs/utils.sol";
 
-import { LibRegistry } from "libraries/LibRegistry.sol";
+import { LibModReg } from "libraries/LibModReg.sol";
 import { LibPrototype } from "libraries/LibPrototype.sol";
 
 import { ModifierStatusComponent, ID as ModifierStatusComponentID } from "components/ModifierStatusComponent.sol";
@@ -15,6 +15,7 @@ import { ModifierTypeComponent, ID as ModifierTypeComponentID } from "components
 import { ModifierValueComponent, ID as ModifierValueComponentID } from "components/ModifierValueComponent.sol";
 import { IsModifierComponent, ID as IsModifierComponentID } from "components/IsModifierComponent.sol";
 import { IndexModifierComponent, ID as IndexModifierComponentID } from "components/IndexModifierComponent.sol";
+import { GenusComponent, ID as GenusComponentID } from "components/GenusComponent.sol";
 import { IdPetComponent, ID as IdPetComponentID } from "components/IdPetComponent.sol";
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { ID as PrototypeComponentID } from "components/PrototypeComponent.sol";
@@ -39,25 +40,27 @@ library LibModifier {
   ///////////////
   // PETS
 
-  // sets at active
+  // creates a new entity from registry
+  // does not set as active
   function addToPet(
     IUint256Component components,
     IWorld world,
     uint256 petID,
+    string memory genus,
     uint256 index
   ) internal returns (uint256) {
     uint256 entityID = world.getUniqueEntityId();
 
-    LibRegistry.copyPrototype(components, IndexModifierComponentID, index, entityID);
+    LibModReg.copyPrototype(components, genus, index, entityID);
 
     IdPetComponent(
       getAddressById(components, IdPetComponentID)
     ).set(entityID, petID);
-    writeStatus(components, entityID, ModStatus.ACTIVE);
     
     return entityID;
   }
 
+  // completely deletes the modifier entity
   function remove(
     IUint256Component components,
     uint256 entityID
@@ -67,6 +70,21 @@ library LibModifier {
       getAddressById(components, IdPetComponentID)
     ).remove(entityID);
   }
+
+  // transfers modifier from entities
+  // sets entity as inactive
+  function transfer(
+    IUint256Component components,
+    uint256 entityID,
+    uint256 to 
+  ) internal {
+    IdPetComponent(
+      getAddressById(components, IdPetComponentID)
+    ).set(entityID,  to);
+  }
+
+  //////////////////
+  // TOGGLES
 
   function setActive(
     IUint256Component components, 
@@ -85,10 +103,7 @@ library LibModifier {
   //////////////////
   // CALCULATION
 
-  // calculates hashrate and storage from array
-  // returns (hashrate, array)
-  // ap: this design choice makes it impractical to do regular querying
-  //     better for fe retrieval but need dreaded array operations 
+  // second step for calculation: better to query once and run the new array
   function calArray(
     IUint256Component components,
     uint256 baseValue,
@@ -133,9 +148,11 @@ library LibModifier {
 
   ///////////////
   // REGISTRY
+
   function createIndex(
     IUint256Component components,
     IWorld world,
+    string memory genus,
     uint256 index,
     uint256 modValue,
     string memory modType,
@@ -143,25 +160,27 @@ library LibModifier {
   ) internal returns (uint256) {
     uint256 entityID = world.getUniqueEntityId();
 
-    uint256[] memory componentIDs = new uint256[](6);
+    uint256[] memory componentIDs = new uint256[](7);
     componentIDs[0] = ModifierValueComponentID;
     componentIDs[1] = ModifierTypeComponentID;
     componentIDs[2] = ModifierStatusComponentID;
     componentIDs[3] = NameCompID;
-    componentIDs[4] = IndexModifierComponentID;
-    componentIDs[5] = PrototypeComponentID;
+    componentIDs[4] = GenusComponentID;
+    componentIDs[5] = IndexModifierComponentID;
+    componentIDs[6] = PrototypeComponentID;
 
-    bytes[] memory values = new bytes[](6);
+    bytes[] memory values = new bytes[](7);
     values[0] = abi.encode(modValue);
     values[1] = abi.encode(modType);
     values[2] = abi.encode(statusToUint256(ModStatus.NULL));
     values[3] = abi.encode(name);
-    values[4] = abi.encode(index);
-    values[5] = new bytes(0);
+    values[4] = abi.encode(genus);
+    values[5] = abi.encode(index);
+    values[6] = new bytes(0);
 
-    LibRegistry.addPrototype(
+    LibModReg.addPrototype(
       components,
-      IndexModifierComponentID,
+      genus,
       index,
       entityID,
       componentIDs,
@@ -199,13 +218,15 @@ library LibModifier {
   function _getAllX(
     IUint256Component components,
     uint256 petID,
-    uint256 modIndex,
+    string memory genus,
+    uint256 index,
     ModStatus modStatus,
     string memory modType
   ) internal view returns (uint256[] memory) {
     uint256 numFilters;
     if (petID != 0) numFilters++;
-    if (modIndex != 0) numFilters++;
+    if (!Strings.equal(genus, "")) numFilters++;
+    if (index != 0) numFilters++;
     if (modStatus != ModStatus.NULL) numFilters++;
     if (!Strings.equal(modType, "")) numFilters++;
 
@@ -224,11 +245,18 @@ library LibModifier {
         abi.encode(petID)
       );
     }
-    if (modIndex != 0) {
+    if (!Strings.equal(genus, "")) {
+      fragments[++filterCount] = QueryFragment(
+        QueryType.HasValue,
+        getComponentById(components, GenusComponentID),
+        abi.encode(genus)
+      );
+    }
+    if (index != 0) {
       fragments[++filterCount] = QueryFragment(
         QueryType.HasValue,
         getComponentById(components, IndexModifierComponentID),
-        abi.encode(modIndex)
+        abi.encode(index)
       );
     }
     if (modStatus != ModStatus.NULL) {

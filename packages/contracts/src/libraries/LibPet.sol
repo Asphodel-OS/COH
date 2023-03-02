@@ -18,7 +18,6 @@ import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComp
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { StorageSizeComponent, ID as StorSizeCompID } from "components/StorageSizeComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastCompID } from "components/TimeLastActionComponent.sol";
-import { PetTraitsPermanentComponent, ID as TraitsCompID } from "components/PetTraitsPermanentComponent.sol";
 import { LibModifier } from "libraries/LibModifier.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 

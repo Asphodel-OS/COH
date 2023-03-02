@@ -30,7 +30,7 @@ import type {
 export interface _AddModifierSystemInterface extends utils.Interface {
   functions: {
     "execute(bytes)": FunctionFragment;
-    "executeTyped(uint256,uint256,string,string)": FunctionFragment;
+    "executeTyped(string,uint256,uint256,string,string)": FunctionFragment;
     "owner()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -50,6 +50,7 @@ export interface _AddModifierSystemInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "executeTyped",
     values: [
+      PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -125,6 +126,7 @@ export interface _AddModifierSystem extends BaseContract {
     ): Promise<ContractTransaction>;
 
     executeTyped(
+      genus: PromiseOrValue<string>,
       index: PromiseOrValue<BigNumberish>,
       modValue: PromiseOrValue<BigNumberish>,
       modType: PromiseOrValue<string>,
@@ -146,6 +148,7 @@ export interface _AddModifierSystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   executeTyped(
+    genus: PromiseOrValue<string>,
     index: PromiseOrValue<BigNumberish>,
     modValue: PromiseOrValue<BigNumberish>,
     modType: PromiseOrValue<string>,
@@ -167,6 +170,7 @@ export interface _AddModifierSystem extends BaseContract {
     ): Promise<string>;
 
     executeTyped(
+      genus: PromiseOrValue<string>,
       index: PromiseOrValue<BigNumberish>,
       modValue: PromiseOrValue<BigNumberish>,
       modType: PromiseOrValue<string>,
@@ -200,6 +204,7 @@ export interface _AddModifierSystem extends BaseContract {
     ): Promise<BigNumber>;
 
     executeTyped(
+      genus: PromiseOrValue<string>,
       index: PromiseOrValue<BigNumberish>,
       modValue: PromiseOrValue<BigNumberish>,
       modType: PromiseOrValue<string>,
@@ -222,6 +227,7 @@ export interface _AddModifierSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
+      genus: PromiseOrValue<string>,
       index: PromiseOrValue<BigNumberish>,
       modValue: PromiseOrValue<BigNumberish>,
       modType: PromiseOrValue<string>,

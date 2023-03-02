@@ -8,7 +8,6 @@ import { getAddressById } from "solecs/utils.sol";
 
 import { LibOperator } from "libraries/LibOperator.sol";
 import { LibPet } from "libraries/LibPet.sol";
-import { LibPetTraits } from "libraries/LibPetTraits.sol";
 
 import { BalanceComponent, ID as BalanceCompID } from "components/BalanceComponent.sol";
 
@@ -49,7 +48,7 @@ contract ERC721PetSystem is System, ERC721 {
 
     // TODO: set stats based on the generated traits of the pet.
     uint256 petID = LibPet.create(world, components, to, operatorID, nextMint, UNREVEALED_URI);
-    LibPetTraits.placeholderTraits(components, world, petID);
+
     LibPet.setStats(components, petID);
 
     _mint(to, nextMint); 

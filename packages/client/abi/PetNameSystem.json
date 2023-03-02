@@ -687,6 +687,14 @@
         ],
         "license": "Unlicense"
       },
+      "src/components/GenusComponent.sol": {
+        "keccak256": "0xc676f06bad72dd0473009cb296ef67d7fdce134a75b27bde874faa2b6701a05b",
+        "urls": [
+          "bzz-raw://18169a03fbbed231ab9b207182748c9652b9bc24725ac77f2e27c6726e310dc5",
+          "dweb:/ipfs/QmXG9u8HX7hPKjPN4APB8BmrX9fxW7t5Btw1zEVdFwDKvv"
+        ],
+        "license": "Unlicense"
+      },
       "src/components/IdNodeComponent.sol": {
         "keccak256": "0x762c52e959d4e2c10c29af607dadb3ee93996e203ad421b706dd9853502ef7c3",
         "urls": [
@@ -847,14 +855,6 @@
         ],
         "license": "Unlicense"
       },
-      "src/components/PetTraitsPermanentComponent.sol": {
-        "keccak256": "0xf46cd46dc6cdbe9e7c3da906f0f8b109a040e2f13ce2ae3428c51eb1508fc7d5",
-        "urls": [
-          "bzz-raw://aa93ea7fc4713b6e016ed6fda55def70dfb99886700e631724a6834cb9ad845b",
-          "dweb:/ipfs/QmZFbCHyjNYkwmroPLPad7UmmMj7TmxEBA9nLYsBRbE5CN"
-        ],
-        "license": "Unlicense"
-      },
       "src/components/PrototypeComponent.sol": {
         "keccak256": "0x42c19eb3dc0a02bcd9927353915c90e86e0aabaca483c1877dfda70b3a167944",
         "urls": [
@@ -895,11 +895,19 @@
         ],
         "license": "Unlicense"
       },
-      "src/libraries/LibModifier.sol": {
-        "keccak256": "0x10c168afd63d66aaa97093b05c528222238551f513756253b91bb26ec84b6ef8",
+      "src/libraries/LibModReg.sol": {
+        "keccak256": "0x833b3ef0ddfa64222c0cf0f294c63a74fa1d4c35715eb040d9d3cb92498edc94",
         "urls": [
-          "bzz-raw://2103b94da033cb888bbf7ab7f7cc97bb3728ad540880be6f3dbec8261ecaec8b",
-          "dweb:/ipfs/Qme1Eb7xS7ktD9amXigRTDX5Lkvza53SoDk1NDbYt61zPx"
+          "bzz-raw://42946f134a420a83d6fe58b9a9a1421ca6c977618f3a78e6018a2682668d880f",
+          "dweb:/ipfs/QmZnNDcMHxadgXbkRFvo5jXPzRh5ESEe3Dkf2N1FHSaqPZ"
+        ],
+        "license": "MIT"
+      },
+      "src/libraries/LibModifier.sol": {
+        "keccak256": "0xf87a6d90c25ddc80e073d4c6a4855a7208192bd2f792256bca80703605516ab9",
+        "urls": [
+          "bzz-raw://0d9d303d893236990b8748bece798fcc87e89a01a8e879e5b7d16e6a519bad32",
+          "dweb:/ipfs/QmbC28vD5TMmmELEpknKqfdNDYijZKao1yJjTzDRZE6Kv6"
         ],
         "license": "MIT"
       },
@@ -912,10 +920,10 @@
         "license": "MIT"
       },
       "src/libraries/LibPet.sol": {
-        "keccak256": "0x25d679921237ececf4751d55bf45219af0e1ebd3199e9235b7e88e1b623fb7da",
+        "keccak256": "0xaad9c366c62a1cf9b8e01076268927cb675e79b92a5592218495cf5883e4f1d1",
         "urls": [
-          "bzz-raw://f52f271455ad8733584673df74878210839fd0c5f3b837705692f18575c0e8b9",
-          "dweb:/ipfs/QmXmhZtGPkdSCkKHWXrDAp1WWMW3S6fA9EACU1TiHcwWKS"
+          "bzz-raw://c5b8fdffda6edea80979d263ef88321d079f2e9ede792dc19b143f3b2ca249ab",
+          "dweb:/ipfs/QmT8DXWCnCgPUV1aTcWHA4jNo24zhdLsoY3UYi5QNHwjcP"
         ],
         "license": "MIT"
       },
@@ -932,14 +940,6 @@
         "urls": [
           "bzz-raw://123387914d3984ebca2a6ed0633feb0c4fe517aafa2a29f6ae02cfea617ced28",
           "dweb:/ipfs/QmP3oeaT4UKXSu788XAjwbpnibtrt4BeRm2itHBZafXJEf"
-        ],
-        "license": "MIT"
-      },
-      "src/libraries/LibRegistry.sol": {
-        "keccak256": "0x3fb6bcc805d85800565c42308dc9e2f2334af1d773fb54a1d3a21d07d60aa0f4",
-        "urls": [
-          "bzz-raw://2924615368ba1ba85676db9ddd1c4b040ab0b9d5623b2286c1fae4d1e353e63d",
-          "dweb:/ipfs/QmcqmCcwzXqcAevGTEM54F1kZ44NqpGbAu8sQDWjPCsoPY"
         ],
         "license": "MIT"
       },
@@ -978,5 +978,5 @@
     },
     "version": 1
   },
-  "id": 150
+  "id": 148
 }
