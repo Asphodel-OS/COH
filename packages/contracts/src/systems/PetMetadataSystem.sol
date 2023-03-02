@@ -9,9 +9,10 @@ import { LibString } from "solady/utils/LibString.sol";
 import { LibBattery } from "libraries/LibBattery.sol";
 import { LibPet } from "libraries/LibPet.sol";
 import { LibPetTraits } from "libraries/LibPetTraits.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
 import { LibMetadata } from "libraries/LibMetadata.sol";
 
-import { UNREVEALED_URI, ID as PetSystemID } from "systems/ERC721PetSystem.sol";
+import { ERC721PetSystem, UNREVEALED_URI, ID as PetSystemID } from "systems/ERC721PetSystem.sol";
 
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
 import { PetTraitsPermanentComponent, ID as PetTraitsPermanentCompID } from "components/PetTraitsPermanentComponent.sol";
@@ -37,12 +38,16 @@ contract PetMetadataSystem is System {
     _;
   }
 
-  // sets metadata with a random seed. likely not working because of secondary gas call limits
-  // will be properly split with a commit/reveal scheme 
-  function execute(bytes memory arguments) public onlyPetSystem returns (bytes memory) {
+  // sets metadata with a random seed
+  // second phase of commit/reveal scheme. pet owners call directly
+  function execute(bytes memory arguments) public returns (bytes memory) {
     // reveals individual metadata
     require(_revealed, "collection not yet revealed");
-    uint256 entityID = abi.decode(arguments, (uint256));
+    uint256 tokenID = abi.decode(arguments, (uint256));
+    uint256 entityID = LibPet.indexToID(components, tokenID);
+    
+    uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
+    require(LibPet.getOperator(components, entityID) == operatorID, "Pet: not urs");
 
     MediaURIComponent mediaComp = MediaURIComponent(getAddressById(components, MediaURICompID));
 
@@ -61,13 +66,14 @@ contract PetMetadataSystem is System {
     _DynamicTraitsComponent(getAddressById(components, _DynamicTraitsCompID))
       .set(entityID, LibMetadata._packedToArray(packed, _numElements));
 
-    // LibPetTraits.setPermTraits(components, world, entityID, LibMetadata._packedToArrayScaled(packed, _numElements));
+    // LibPetTraits.setPermTraits(components, world, entityID, LibMetadata._packedToArray(packed, _numElements));
 
     return "";
   }
 
-  function executeTyped(uint256 entityID) public onlyPetSystem returns (bytes memory) {
-    return execute(abi.encode(entityID));
+  // accepts erc721 tokenID as input
+  function executeTyped(uint256 tokenID) public returns (bytes memory) {
+    return execute(abi.encode(tokenID));
   }
 
 

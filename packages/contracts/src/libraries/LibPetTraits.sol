@@ -39,7 +39,8 @@ library LibPetTraits {
 
     uint256[] memory arr = new uint256[](PERM_LENGTH);
     for (uint256 i; i < arr.length; i++) {
-      arr[i] = LibModifier.addToPet(components, world, entityID, registryIDs[i]);
+      // TEMP: broken add to pet
+      // arr[i] = LibModifier.addToPet(components, world, entityID, registryIDs[i]);
     }
 
     PetTraitsPermanentComponent(getAddressById(components, PetTraitsPermanentCompID)).set(

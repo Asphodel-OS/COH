@@ -10,6 +10,12 @@ export function createPlayerAPI(systems: any) {
     return systems["system.ERC721.pet"].mint(address);
   }
 
+  // @dev commit reveal 
+  // @param tokenID   ERC721 petID, not MUD
+  function revealPet(tokenID: BigNumberish) {
+    return systems["system.ERC721.metadata"].executeTyped(tokenID);
+  }
+
   // @dev
   // @param entityID   pet entity
   // @param name       name
@@ -118,7 +124,8 @@ export function createPlayerAPI(systems: any) {
   return {
     ERC721: {
       mint: mintPet,
-      name: namePet
+      reveal: revealPet,
+      name: namePet,
     },
     listing: {
       buy: buyFromListing,
