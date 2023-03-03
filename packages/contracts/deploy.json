@@ -48,8 +48,7 @@
     "StateComponent",
     "StorageSizeComponent",
     "TimeLastActionComponent",
-    "TimeStartComponent",
-    "_DynamicTraitsComponent"
+    "TimeStartComponent"
   ],
   "systems": [
     {

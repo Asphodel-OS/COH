@@ -15,7 +15,6 @@ import { LibMetadata } from "libraries/LibMetadata.sol";
 import { ERC721PetSystem, UNREVEALED_URI, ID as PetSystemID } from "systems/ERC721PetSystem.sol";
 
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
-import { _DynamicTraitsComponent, ID as _DynamicTraitsCompID } from "components/_DynamicTraitsComponent.sol";
 
 import "forge-std/console.sol";
 
@@ -66,9 +65,6 @@ contract PetMetadataSystem is System {
     );
 
     uint256[] memory permTraits = LibMetadata._packedToArray(packed, _numElements);
-    // TEMP: dynamic trat compnot to be removed
-    _DynamicTraitsComponent(getAddressById(components, _DynamicTraitsCompID))
-      .set(entityID, permTraits);
     // assigning initial traits. genus is hardcoded
     string[] memory names = new string[](5);
     names[0] = "BODY";
