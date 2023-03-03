@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { map, merge } from "rxjs";
-import { BigNumber } from "ethers";
-import { EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } from "@latticexyz/recs";
-
-import { registerUIComponent } from "../engine/store";
+import React from 'react';
+import { map, merge } from 'rxjs';
+import {
+  EntityIndex,
+  Has,
+  HasValue,
+  getComponentValue,
+  runQuery,
+} from '@latticexyz/recs';
+import { registerUIComponent } from '../engine/store';
 
 // this one is location-specific (assumes at most 1 node per room)
 export function registerMiningModal() {
   registerUIComponent(
-    "MiningModal",
+    'MiningModal',
 
     // Grid Config
     {
@@ -44,11 +48,16 @@ export function registerMiningModal() {
       } = layers;
 
       // get the production for an operator on a node
-      const getMatchingProductionIndex = (operatorIndex: EntityIndex, nodeIndex: EntityIndex) => {
-        const petIndices = Array.from(runQuery([
-          Has(IsPet),
-          HasValue(OperatorID, { value: world.entities[operatorIndex] }),
-        ]));
+      const getMatchingProductionIndex = (
+        operatorIndex: EntityIndex,
+        nodeIndex: EntityIndex
+      ) => {
+        const petIndices = Array.from(
+          runQuery([
+            Has(IsPet),
+            HasValue(OperatorID, { value: world.entities[operatorIndex] }),
+          ])
+        );
 
         let petID, results;
         for (let i = 0; i < petIndices.length; i++) {
@@ -61,7 +70,7 @@ export function registerMiningModal() {
           if (results.size != 0) return Array.from(results)[0];
         }
         return 0;
-      }
+      };
 
       // gets a Node object from an index
       const getNode = (index: EntityIndex) => {
@@ -70,8 +79,8 @@ export function registerMiningModal() {
           index,
           location: getComponentValue(Location, index)?.value as number,
           name: getComponentValue(Name, index)?.value as string,
-        }
-      }
+        };
+      };
       // gets a Production object from an index
       const getProduction = (index: EntityIndex) => {
         return {
@@ -81,20 +90,30 @@ export function registerMiningModal() {
           nodeID: getComponentValue(NodeID, index)?.value as string,
           state: getComponentValue(State, index)?.value as string,
           timeStart: getComponentValue(StartTime, index)?.value as number,
-        }
-      }
+        };
+      };
 
-      return merge(OperatorID.update$, Location.update$, StartTime.update$, State.update$).pipe(
+      return merge(
+        OperatorID.update$,
+        Location.update$,
+        StartTime.update$,
+        State.update$
+      ).pipe(
         map(() => {
           // get the operator entity of the controlling wallet
-          const operatorIndex = Array.from(runQuery([
-            Has(IsOperator),
-            HasValue(PlayerAddress, { value: network.connectedAddress.get() })
-          ]))[0];
+          const operatorIndex = Array.from(
+            runQuery([
+              Has(IsOperator),
+              HasValue(PlayerAddress, {
+                value: network.connectedAddress.get(),
+              }),
+            ])
+          )[0];
           const operatorID = world.entities[operatorIndex];
 
           // get player location and list of nodes in this room
-          const location = getComponentValue(Location, operatorIndex)?.value as number;
+          const location = getComponentValue(Location, operatorIndex)
+            ?.value as number;
           const nodeResults = runQuery([
             Has(IsNode),
             HasValue(Location, { value: location }),
@@ -105,7 +124,10 @@ export function registerMiningModal() {
             nodeIndex = Array.from(nodeResults)[0];
             node = getNode(nodeIndex);
 
-            const productionIndex = getMatchingProductionIndex(operatorIndex, nodeIndex);
+            const productionIndex = getMatchingProductionIndex(
+              operatorIndex,
+              nodeIndex
+            );
             if (productionIndex != 0) {
               production = getProduction(productionIndex);
             }
@@ -128,11 +150,11 @@ export function registerMiningModal() {
     },
 
     // Render
-    ({ world, actions, api, data }) => {
+    () => {
       // Actions to support on each request:
       // accept trade
       // cancel trade
-      return (<div></div>);
+      return <div></div>;
     }
   );
 }

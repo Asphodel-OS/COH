@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-non-null-assertion, no-empty */
 import React, { useEffect, useState, useCallback } from 'react';
 import { map } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
@@ -113,14 +113,12 @@ const fadeIn = keyframes`
 
 const Input = styled.input`
   width: 100%;
-
   background-color: #ffffff;
   border-style: solid;
   border-width: 2px;
   border-color: black;
   color: black;
   padding: 15px 12px;
-
   text-align: left;
   text-decoration: none;
   display: inline-block;
@@ -149,24 +147,6 @@ const ModalContent = styled.div`
   border-style: solid;
   border-width: 2px;
   border-color: black;
-`;
-
-const Button = styled.button`
-  background-color: #ffffff;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  color: black;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 5px;
-  justify-content: center;
-  font-family: Pixel;
 `;
 
 const Description = styled.p`

@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
 import styled from 'styled-components';
-import './font.css';
+import './styled/font.css';
 import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
 
 export function registerChatButton() {
@@ -69,7 +69,6 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
   font-family: Pixel;
-
   &:active {
     background-color: #c2c2c2;
   }

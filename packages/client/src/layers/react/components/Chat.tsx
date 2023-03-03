@@ -1,24 +1,19 @@
+/* eslint-disable no-empty, @typescript-eslint/no-empty-function, 
+@typescript-eslint/no-non-null-assertion, @typescript-eslint/no-explicit-any,
+@typescript-eslint/no-unused-vars  */
 import React, { useState, useEffect, useCallback } from 'react';
 import { map, merge } from 'rxjs';
-import {
-  EntityIndex,
-  Has,
-  HasValue,
-  getComponentValue,
-  runQuery,
-} from '@latticexyz/recs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
 import styled from 'styled-components';
-import './font.css';
-
+import './styled/font.css';
 import * as mqtt from 'mqtt';
-
-const mqttServerUrl = 'wss://chatserver.asphodel.io:8083/mqtt';
-const mqttTopic = 'kamigotchi';
 
 import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
 import { ModalWrapper } from './styled/AnimModalWrapper';
+
+const mqttServerUrl = 'wss://chatserver.asphodel.io:8083/mqtt';
+const mqttTopic = 'kamigotchi';
 
 export function registerChat() {
   registerUIComponent(
@@ -33,33 +28,24 @@ export function registerChat() {
     (layers) => {
       const {
         network: {
-          world,
-          network,
-          components: { IsOperator, OperatorID, PlayerAddress, Name },
-        },
-        phaser: {
-          game: {
-            scene: {
-              keys: { Main },
-            },
-          },
+          components: { IsOperator },
         },
       } = layers;
 
-      const getName = (index: EntityIndex) => {
-        return getComponentValue(Name, index)?.value as string;
-      };
+      // const getName = (index: EntityIndex) => {
+      //   return getComponentValue(Name, index)?.value as string;
+      // };
 
       return merge(IsOperator.update$).pipe(
         map(() => {
-          const operatorIndex = Array.from(
-            runQuery([
-              Has(IsOperator),
-              HasValue(PlayerAddress, {
-                value: network.connectedAddress.get(),
-              }),
-            ])
-          )[0];
+          // const operatorIndex = Array.from(
+          //   runQuery([
+          //     Has(IsOperator),
+          //     HasValue(PlayerAddress, {
+          //       value: network.connectedAddress.get(),
+          //     }),
+          //   ])
+          // )[0];
           // const chatName = getName(operatorIndex);
           const chatName = 'You'; // operator name interaction bug, but chat working
           return {
@@ -206,7 +192,6 @@ const ChatBox = styled.div`
 
 const ChatInput = styled.input`
   width: 100%;
-
   type: text
   background-color: #ffffff;
   border-style: solid;
@@ -215,7 +200,6 @@ const ChatInput = styled.input`
   color: black;
   padding: 15px 12px;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
-
   text-align: left;
   text-decoration: none;
   display: inline-block;
@@ -237,41 +221,6 @@ const ModalContent = styled.div`
   border-color: black;
 `;
 
-const Button = styled.button`
-  background-color: #ffffff;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  color: black;
-  padding: 15px;
-  display: inline-block;
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-family: Pixel;
-
-  &:active {
-    background-color: #c2c2c2;
-  }
-`;
-
-const Description = styled.p`
-  font-size: 16px;
-  color: #333;
-  text-align: left;
-  padding: 20px;
-  font-family: Pixel;
-`;
-
-const TypeHeading = styled.p`
-  font-size: 20px;
-  color: #333;
-  font-family: Pixel;
-  grid-column: 1;
-  justify-self: left;
-  align-self: middle;
-`;
-
 const TopButton = styled.button`
   background-color: #ffffff;
   border-style: solid;
@@ -289,9 +238,4 @@ const TopButton = styled.button`
     background-color: #c2c2c2;
   }
   justify-self: right;
-`;
-
-const TopGrid = styled.div`
-  display: grid;
-  margin: 2px;
 `;

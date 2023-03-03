@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-explicit-any */
+import React, { useEffect } from 'react';
 import { map, merge } from 'rxjs';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import {
   EntityID,
   EntityIndex,
@@ -9,14 +10,14 @@ import {
   getComponentValue,
   runQuery,
 } from '@latticexyz/recs';
-
 import { registerUIComponent } from '../engine/store';
+import { ModalWrapper } from './styled/AnimModalWrapper';
+import { dataStore } from '../store/createStore';
+
 import pompom from '../../../public/img/pompom.png';
 import gakki from '../../../public/img/gakki.png';
 import ribbon from '../../../public/img/ribbon.png';
 import gum from '../../../public/img/gum.png';
-import { ModalWrapper } from './styled/AnimModalWrapper';
-import { dataStore } from '../store/createStore';
 
 const ItemImages = new Map([
   [1, pompom],
@@ -55,7 +56,6 @@ export function registerMerchantWindow() {
           components: {
             Coin,
             IsListing,
-            IsInventory,
             IsMerchant,
             IsOperator,
             ItemIndex,
@@ -114,7 +114,7 @@ export function registerMerchantWindow() {
           ]);
 
           // if we have a merchant retrieve its listings
-          let listings: any = [];
+          const listings: any = [];
           let merchant, merchantIndex;
           if (merchantResults.size != 0) {
             merchantIndex = Array.from(merchantResults)[0];
@@ -176,21 +176,21 @@ export function registerMerchantWindow() {
       };
 
       // sell to a listing
-      const sell = (listing: any, amt: number) => {
-        const actionID = `Selling ${amt} of ${
-          listing.itemType
-        } at ${Date.now()}` as EntityID; // itemType should be replaced with the item's name
-        actions.add({
-          id: actionID,
-          components: {},
-          // on: data.operator.index, // what's the appropriate value here?
-          requirement: () => true,
-          updates: () => [],
-          execute: async () => {
-            return api.listing.sell(listing.id, amt);
-          },
-        });
-      };
+      // const sell = (listing: any, amt: number) => {
+      //   const actionID = `Selling ${amt} of ${
+      //     listing.itemType
+      //   } at ${Date.now()}` as EntityID; // itemType should be replaced with the item's name
+      //   actions.add({
+      //     id: actionID,
+      //     components: {},
+      //     // on: data.operator.index, // what's the appropriate value here?
+      //     requirement: () => true,
+      //     updates: () => [],
+      //     execute: async () => {
+      //       return api.listing.sell(listing.id, amt);
+      //     },
+      //   });
+      // };
 
       ///////////////////
       // DISPLAY

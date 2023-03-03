@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { map, merge } from 'rxjs';
 import styled from 'styled-components';
@@ -11,27 +13,28 @@ import {
 } from '@latticexyz/recs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
-import './font.css';
+import { ModalWrapper } from './styled/AnimModalWrapper';
+import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
+import './styled/font.css';
+
 import pompom from '../../../public/img/pompom.png';
 import gakki from '../../../public/img/gakki.png';
 import ribbon from '../../../public/img/ribbon.png';
 import gum from '../../../public/img/gum.png';
-import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
-import { ModalWrapper } from './styled/AnimModalWrapper';
 
-const ItemImages = new Map([
-  [1, pompom],
-  [2, gakki],
-  [3, ribbon],
-  [4, gum],
-]);
+// const ItemImages = new Map([
+//   [1, pompom],
+//   [2, gakki],
+//   [3, ribbon],
+//   [4, gum],
+// ]);
 
-const ItemNames = new Map([
-  [1, 'Pompom'],
-  [2, 'Gakki'],
-  [3, 'Ribbon'],
-  [4, 'Gum'],
-]);
+// const ItemNames = new Map([
+//   [1, 'Pompom'],
+//   [2, 'Gakki'],
+//   [3, 'Ribbon'],
+//   [4, 'Gum'],
+// ]);
 
 export function registerPetList() {
   registerUIComponent(
@@ -109,34 +112,33 @@ export function registerPetList() {
             itemIndex: 4,
             image: gum,
             balance: 0,
-          }
+          },
         ];
-      }
-
+      };
 
       // get an Inventory object by index
       // TODO: get name and decription here once we have item registry support
       // NOTE: we need to do something about th FE/SC side overloading the term 'index'
-      const getInventory = (index: EntityIndex) => {
-        const itemIndex = getComponentValue(ItemIndex, index)?.value as number;
-        return {
-          id: world.entities[index],
-          item: {
-            index: itemIndex, // this is the solecs index rather than the cached index
-            // name: getComponentValue(Name, itemIndex)?.value as string,
-            // description: ???, // are we intending to save this onchain or on FE?
-          },
-          balance: getComponentValue(Balance, index)?.value as number,
-        };
-      };
+      // const getInventory = (index: EntityIndex) => {
+      //   const itemIndex = getComponentValue(ItemIndex, index)?.value as number;
+      //   return {
+      //     id: world.entities[index],
+      //     item: {
+      //       index: itemIndex, // this is the solecs index rather than the cached index
+      //       // name: getComponentValue(Name, itemIndex)?.value as string,
+      //       // description: ???, // are we intending to save this onchain or on FE?
+      //     },
+      //     balance: getComponentValue(Balance, index)?.value as number,
+      //   };
+      // };
 
       // this is about to be the jankiest bit inventory retrieval we will see..
-      const getConsumables = (operatorIndex: EntityIndex) => {
-        // pompom
-        // gakki
-        // ribbon
-        // gum
-      };
+      // const getConsumables = (operatorIndex: EntityIndex) => {
+      //   // pompom
+      //   // gakki
+      //   // ribbon
+      //   // gum
+      // };
 
       // gets a Production object from an index
       const getProduction = (index: EntityIndex) => {
@@ -201,27 +203,31 @@ export function registerPetList() {
             ?.value as number;
 
           // get the list of inventory indices for this account
-          const inventoryResults = Array.from(runQuery([
-            Has(IsInventory),
-            HasValue(HolderID, { value: operatorID }),
-          ]));
-          let inventories: any = hardCodeInventory(); // the hardcoded slots we want for consumables
+          const inventoryResults = Array.from(
+            runQuery([
+              Has(IsInventory),
+              HasValue(HolderID, { value: operatorID }),
+            ])
+          );
+          const inventories: any = hardCodeInventory(); // the hardcoded slots we want for consumables
 
           // if we have inventories for the operator, generate a list of inventory objects
           let itemIndex;
           for (let i = 0; i < inventoryResults.length; i++) {
             // match indices to the existing consumables
-            itemIndex = getComponentValue(ItemIndex, inventoryResults[i])?.value as number;
+            itemIndex = getComponentValue(ItemIndex, inventoryResults[i])
+              ?.value as number;
             for (let j = 0; j < inventories.length; j++) {
               if (inventories[j].itemIndex == itemIndex) {
-                let balance = getComponentValue(Balance, inventoryResults[j])?.value as number;
+                const balance = getComponentValue(Balance, inventoryResults[j])
+                  ?.value as number;
                 inventories[j].balance = balance ? balance * 1 : 0;
               }
             }
           }
 
           // get all indices of pets linked to this account and create object array
-          let pets: any = [];
+          const pets: any = [];
           const petResults = Array.from(
             runQuery([Has(IsPet), HasValue(OperatorID, { value: operatorID })])
           );
@@ -231,7 +237,7 @@ export function registerPetList() {
 
           // get the node of the current room for starting productions
           let nodeID;
-          let location = getComponentValue(Location, operatorEntityIndex)
+          const location = getComponentValue(Location, operatorEntityIndex)
             ?.value as number;
           const nodeResults = Array.from(
             runQuery([Has(IsNode), HasValue(Location, { value: location })])
@@ -342,11 +348,11 @@ export function registerPetList() {
 
       // calculate energy (as % of total capacity) based on last charge and time passed since last charge
       const calcEnergy = (kami: any) => {
-        let duration = (lastRefresh / 1000) - kami.lastChargeTime;
-        let newCharge = Math.max(kami.charge - duration / BATTERY_EPOCH, 0);
-        return (100 * newCharge / kami.capacity).toFixed(1);
+        const duration = lastRefresh / 1000 - kami.lastChargeTime;
+        const newCharge = Math.max(kami.charge - duration / BATTERY_EPOCH, 0);
+        return ((100 * newCharge) / kami.capacity).toFixed(1);
         // return Math.round(100 * (1 - newCharge / kami.capacity)); // hunger calculation
-      }
+      };
 
       // calculate the expected output from a pet production based on starttime and
       const calcOutput = (kami: any) => {
@@ -444,8 +450,8 @@ export function registerPetList() {
               {ConsumableCells(data.operator.inventories)}
             </ConsumableGrid>
             {KamiCards(data.pets)}
-          </ModalContent >
-        </ModalWrapper >
+          </ModalContent>
+        </ModalWrapper>
       );
     }
   );
@@ -460,24 +466,6 @@ const ModalContent = styled.div`
   border-style: solid;
   border-width: 2px;
   border-color: black;
-`;
-
-const Button = styled.button`
-  background-color: #ffffff;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  color: black;
-  padding: 5px;
-  display: inline-block;
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-family: Pixel;
-
-  &:active {
-    background - color: #c2c2c2;
-}
 `;
 
 const TopButton = styled.button`
@@ -576,14 +564,6 @@ const TopDescription = styled.p`
   padding: 5px;
 `;
 
-const TypeHeading = styled.p`
-  font-size: 20px;
-  color: #333;
-  text-align: left;
-  padding: 20px;
-  font-family: Pixel;
-`;
-
 const KamiImage = styled.img`
   border-style: solid;
   border-width: 0px 2px 0px 0px;
@@ -619,37 +599,6 @@ const CellBordered = styled.div`
   border-style: solid;
   border-width: 0px 2px 0px 0px;
   border-color: black;
-`;
-
-const CellBorderless = styled.div`
-  border-style: solid;
-  border-width: 0px 2px 0px 0px;
-  border-color: black;
-`;
-
-const CellOne = styled.div`
-  grid-column: 1;
-  border-style: solid;
-  border-width: 0px 2px 0px 0px;
-  border-color: black;
-`;
-
-const CellTwo = styled.div`
-  grid-column: 2;
-  border-style: solid;
-  border-width: 0px 2px 0px 0px;
-  border-color: black;
-`;
-
-const CellThree = styled.div`
-  grid-column: 3;
-  border-style: solid;
-  border-width: 0px 2px 0px 0px;
-  border-color: black;
-`;
-
-const CellFour = styled.div`
-  grid-column: 4;
 `;
 
 const Icon = styled.img`

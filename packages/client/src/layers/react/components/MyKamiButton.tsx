@@ -2,9 +2,9 @@ import React from 'react';
 import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
-import styled from 'styled-components';
-import './font.css';
 import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
+import styled from 'styled-components';
+import './styled/font.css';
 
 export function registerMyKamiButton() {
   registerUIComponent(
@@ -70,7 +70,6 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
   font-family: Pixel;
-
   &:active {
     background-color: #c2c2c2;
   }

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
 import { map, merge } from "rxjs";
-import { BigNumber } from "ethers";
 import { EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery, } from "@latticexyz/recs";
-
 import { registerUIComponent } from "../engine/store";
 
 export function registerRequestQueue() {
@@ -57,7 +56,7 @@ export function registerRequestQueue() {
           const operatorID = world.entities[operatorIndex];
 
           // get all requests based on type
-          let tradeRequests: any = [];
+          const tradeRequests: any = [];
           const tradeResults = Array.from(runQuery([
             Has(IsRequest),
             Has(IsTrade),
@@ -89,7 +88,7 @@ export function registerRequestQueue() {
     },
 
     // Render
-    ({ world, actions, api, data }) => {
+    () => {
       // Actions to support on each request:
       // accept trade
       // cancel trade

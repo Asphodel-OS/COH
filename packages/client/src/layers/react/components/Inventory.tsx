@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { map, merge } from 'rxjs';
 import styled, { keyframes } from 'styled-components';
 import { EntityIndex, Has, HasValue, NotValue, getComponentValue, runQuery } from "@latticexyz/recs";
 import { registerUIComponent } from '../engine/store';
-import './font.css';
-import pompom from '../../../public/img/pompom.png'
-import gakki from '../../../public/img/gakki.png'
-import ribbon from '../../../public/img/ribbon.png'
-import gum from '../../../public/img/gum.png'
+import './styled/font.css';
+// import pompom from '../../../public/img/pompom.png'
+// import gakki from '../../../public/img/gakki.png'
+// import ribbon from '../../../public/img/ribbon.png'
+// import gum from '../../../public/img/gum.png'
 
 export function registerInventory() {
   registerUIComponent(
@@ -72,7 +73,7 @@ export function registerInventory() {
           ]);
 
           // if we have inventories for the operator, generate a list of inventory objects
-          let inventories: any = [];
+          const inventories: any = [];
           let inventory, inventoryIndex;
           if (inventoryResults.size != 0) {
             inventoryIndex = Array.from(inventoryResults)[0];
@@ -97,7 +98,7 @@ export function registerInventory() {
     },
 
     // RENDER
-    ({ world, actions, api, data }) => {
+    () => {
       const hideModal = () => {
         const modalId = window.document.getElementById('inventory_modal');
         if (modalId) modalId.style.display = 'none';
@@ -130,56 +131,6 @@ const fadeIn = keyframes`
   to {
     opacity: 1;
   }
-`;
-
-
-const ConsumableGrid = styled.div`
-  display: grid;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-`;
-
-const CellGrid = styled.div`
-  display: grid;
-  border-style: solid;
-  border-width: 0px;
-  border-color: black;
-`;
-
-
-const CellOne = styled.div`
-  grid-column: 1;
-  border-style: solid;
-  border-width: 0px 2px 0px 0px;
-  border-color: black;
-`;
-
-const CellTwo = styled.div`
-  grid-column: 2;
-  border-style: solid;
-  border-width: 0px 2px 0px 0px;
-  border-color: black;
-`;
-
-const CellThree = styled.div`
-  grid-column: 3;
-  border-style: solid;
-  border-width: 0px 2px 0px 0px;
-  border-color: black;
-`;
-
-const CellFour = styled.div`
-  grid-column: 4;
-`;
-
-const Icon = styled.img`
-  grid-column: 1;
-  height: 40px;
-  padding: 5px;
-  border-style: solid;
-  border-width: 0px 2px 0px 0px;
-  border-color: black;
 `;
 
 const ModalWrapper = styled.div`
@@ -227,12 +178,4 @@ const TypeHeading = styled.p`
   text-align: left;
   padding: 20px;
   font-family: Pixel;
-`;
-
-const ItemNumber = styled.p`
-  font-size: 24px;
-  color: #333;
-  font-family: Pixel;
-  grid-column: 2;
-  padding: 5px
 `;

@@ -2,9 +2,10 @@ import React from 'react';
 import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import styled from 'styled-components';
-import './font.css';
 import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
 import { dataStore } from '../store/createStore';
+import { EntityID } from '@latticexyz/recs/dist/types';
+import './styled/font.css';
 
 export function registerDownButton() {
   registerUIComponent(
@@ -92,7 +93,6 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
   font-family: Pixel;
-
   &:active {
     background-color: #c2c2c2;
   }

@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { map, merge } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import {
-  HasValue,
-  Has,
-  runQuery,
   EntityID,
   EntityIndex,
   getComponentValue,
@@ -58,11 +55,6 @@ export function registerPetMint() {
     ({ layers, nextToken }) => {
       const {
         network: {
-          components: {
-            OwnerID,
-            IsPet,
-            Balance
-          },
           api: { player },
           network: { connectedAddress },
           actions,
@@ -70,7 +62,7 @@ export function registerPetMint() {
         },
       } = layers;
 
-      const { visibleDivs, setVisibleDivs, setSelectedPet, selectedPet } =
+      const { visibleDivs, setVisibleDivs } =
         dataStore();
 
       const mintTx = (address: string) => {

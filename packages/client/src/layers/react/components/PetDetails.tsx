@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { map, merge } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import {
   EntityIndex,
   EntityID,
@@ -12,7 +12,6 @@ import {
   getComponentValue,
 } from '@latticexyz/recs';
 import { dataStore } from '../store/createStore';
-import mintSound from '../../../public/sound/sound_effects/tami_mint_vending_sound.mp3';
 import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
 import { BigNumber, BigNumberish } from 'ethers';
 import { ModalWrapper } from './styled/AnimModalWrapper';
@@ -71,11 +70,9 @@ export function registerPetDetails() {
             MediaURI,
             PetIndex,
             PetTraits,
-            PetEquipped,
             ModifierValue,
             ModifierType,
             Name,
-            State,
             StorageSize,
             _DynamicTraits,
           },
@@ -122,7 +119,7 @@ export function registerPetDetails() {
 
       const getArrayDetails = (comp: any, index: EntityIndex) => {
         const rawArr = getComponentValue(comp, index)?.value as string[];
-        let result: Array<TraitDetails> = [];
+        const result: Array<TraitDetails> = [];
 
         // 'dynamic' metadata to showcase partially implmented dynamic nfts
         const dArr = getComponentValue(_DynamicTraits, index)
@@ -245,7 +242,6 @@ const KamiBox = styled.div`
   padding: 0px 0px;
   border-radius: 5px;
   font-family: Pixel;
-
   display: grid;
   justify-items: center;
   justify-content: center;
@@ -269,7 +265,6 @@ const KamiList = styled.li`
   font-size: 18px;
   font-family: Pixel;
   margin: 0px;
-
   justify-self: start;
 `;
 
@@ -291,41 +286,11 @@ const KamiName = styled.div`
   font-family: Pixel;
 `;
 
-const KamiDetails = styled.div`
-  grid-row: 2 / 5;
-`;
-
 const KamiImage = styled.img`
   height: 90px;
   margin: 0px;
   padding: 0px;
   grid-row: 1 / span 1;
-`;
-
-const Button = styled.button`
-  background-color: #ffffff;
-  border-style: solid;
-  border-width: 2px;
-  border-color: black;
-  color: black;
-  padding: 5px;
-  display: inline-block;
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-family: Pixel;
-
-  &:active {
-    background-color: #c2c2c2;
-  }
-`;
-
-const Description = styled.p`
-  font-size: 22px;
-  color: #333;
-  text-align: center;
-  padding: 20px;
-  font-family: Pixel;
 `;
 
 const TopButton = styled.button`

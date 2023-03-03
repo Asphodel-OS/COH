@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React, { useEffect } from 'react';
 import { of } from 'rxjs';
 import { registerUIComponent } from '../engine/store';
 import { dataStore } from '../store/createStore';
-import styled, { keyframes } from 'styled-components';
-import './font.css';
+import styled from 'styled-components';
 import { ModalWrapper } from './styled/AnimModalWrapper';
+import './styled/font.css';
 
 export function registerObjectModal() {
   registerUIComponent(
