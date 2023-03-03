@@ -71,4 +71,12 @@ contract ERC721PetTest is SetupTemplate {
       _ERC721PetSystem.tokenURI(1)
     );
   }
+
+  function testMetadataFuzz() public {
+    // maybe shouldnt loop..
+    uint256 max = 99;
+    for (uint256 i; i < max; i++) {
+      _mintSinglePet(address(1));
+    }
+  }
 }

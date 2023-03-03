@@ -41,15 +41,7 @@ contract _InitSystem is System {
   }
 
   function initMods() internal {
-    LibModifier.createIndex(
-      components,
-      world,
-      "COLOR",
-      1, // index
-      1, // mod value
-      "ADD",
-      "color1"
-    );
+
     LibModifier.createIndex(
       components,
       world,
@@ -57,17 +49,28 @@ contract _InitSystem is System {
       1, // index
       1, // mod value
       "MUL",
-      "body1"
+      "Butterfly"
     );
     LibModifier.createIndex(
       components,
       world,
-      "HAND",
+      "BODY",
+      2, // index
+      2, // mod value
+      "MUL",
+      "Cube"
+    );
+
+    LibModifier.createIndex(
+      components,
+      world,
+      "COLOR",
       1, // index
       1, // mod value
-      "STORAGE",
-      "hand1"
+      "ADD",
+      "Canto Green"
     );
+
     LibModifier.createIndex(
       components,
       world,
@@ -75,8 +78,37 @@ contract _InitSystem is System {
       1, // index
       1, // mod value
       "UMUL",
-      "face1"
+      "c-c"
     );
+    LibModifier.createIndex(
+      components,
+      world,
+      "FACE",
+      2, // index
+      2, // mod value
+      "UMUL",
+      "uwu"
+    );
+
+    LibModifier.createIndex(
+      components,
+      world,
+      "HAND",
+      1, // index
+      1, // mod value
+      "STORAGE",
+      "Slicers"
+    );
+    LibModifier.createIndex(
+      components,
+      world,
+      "HAND",
+      2, // index
+      2, // mod value
+      "STORAGE",
+      "Paws"
+    );
+
     LibModifier.createIndex(
       components,
       world,

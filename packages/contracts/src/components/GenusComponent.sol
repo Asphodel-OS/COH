@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "std-contracts/components/StringComponent.sol";
 
-uint256 constant ID = uint256(keccak256("component.Genus"));
+uint256 constant ID = uint256(keccak256("component.Index.Genus"));
 
 // assigned Name of an entity
 contract GenusComponent is StringComponent {

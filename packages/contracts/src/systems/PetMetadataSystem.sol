@@ -17,6 +17,8 @@ import { ERC721PetSystem, UNREVEALED_URI, ID as PetSystemID } from "systems/ERC7
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
 import { _DynamicTraitsComponent, ID as _DynamicTraitsCompID } from "components/_DynamicTraitsComponent.sol";
 
+import "forge-std/console.sol";
+
 uint256 constant ID = uint256(keccak256("system.ERC721.metadata"));
 
 contract PetMetadataSystem is System {
@@ -69,12 +71,14 @@ contract PetMetadataSystem is System {
       .set(entityID, permTraits);
     // assigning initial traits. genus is hardcoded
     string[] memory names = new string[](5);
-    names[0] = "COLOR";
-    names[1] = "BODY";
-    names[2] = "HAND";
-    names[3] = "FACE";
+    names[0] = "BODY";
+    names[1] = "COLOR";
+    names[2] = "FACE";
+    names[3] = "HAND";
     names[4] = "BACKGROUND";
     for (uint256 i; i < permTraits.length; i++) {
+      // console.log(names[i]);
+      // console.log(permTraits[i]);
       LibModifier.addToPet(
         components,
         world,
@@ -142,10 +146,10 @@ contract PetMetadataSystem is System {
 
     // getting values of base traits. values are hardcoded to array position
     string[] memory names = new string[](5);
-    names[0] = "Color";
-    names[1] = "Body";
-    names[2] = "Hand";
-    names[3] = "Face";
+    names[0] = "Body";
+    names[1] = "Color";
+    names[2] = "Face";
+    names[3] = "Hand";
     names[4] = "Background";
     // string[] memory values = LibPetTraits.getNames(
     //   components,

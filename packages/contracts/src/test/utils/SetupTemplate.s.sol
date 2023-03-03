@@ -28,11 +28,11 @@ abstract contract SetupTemplate is TestSetupImports {
     // maxElements[2] = 7;
     // maxElements[3] = 8;
     // maxElements[4] = 1;
-    maxElements[0] = 1;
-    maxElements[1] = 1;
-    maxElements[2] = 1;
-    maxElements[3] = 1;
-    maxElements[4] = 1;
+    maxElements[0] = 2;   // BODY
+    maxElements[1] = 1;   // COLOR
+    maxElements[2] = 2;   // FACE
+    maxElements[3] = 2;   // HAND
+    maxElements[4] = 1;   // BACKGROUND
     _PetMetadataSystem._setMaxElements(maxElements);
     vm.stopPrank();
   

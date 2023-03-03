@@ -120,8 +120,8 @@ export function registerPetMint() {
             world.entityToIndex.get(revealActionID) as EntityIndex
           );
 
-          setVisibleDivs({ ...visibleDivs, petMint: !visibleDivs.petMint });
           dataStore.setState({ selectedPet: { description } });
+          setVisibleDivs({ ...visibleDivs, petMint: !visibleDivs.petMint });
           setVisibleDivs({
             ...visibleDivs,
             petDetails: !visibleDivs.petDetails,

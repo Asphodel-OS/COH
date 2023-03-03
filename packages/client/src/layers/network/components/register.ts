@@ -17,6 +17,7 @@ export function createComponents(world: any) {
     IsInventory: defineBoolComponent(world, { id: "IsInventory", metadata: { contractId: "component.Is.Inventory" } }),
     IsListing: defineBoolComponent(world, { id: "IsListing", metadata: { contractId: "component.Is.Listing" } }),
     IsMerchant: defineBoolComponent(world, { id: "IsMerchant", metadata: { contractId: "component.Is.Merchant" } }),
+    IsModifier: defineBoolComponent(world, { id: "IsModifier", metadata: { contractId: "component.Is.Modifier" } }),
     IsNode: defineBoolComponent(world, { id: "IsNode", metadata: { contractId: "component.Is.Node" } }),
     IsOperator: defineBoolComponent(world, { id: "IsOperator", metadata: { contractId: "component.Is.Operator" } }),
     IsPet: defineBoolComponent(world, { id: "IsPet", metadata: { contractId: "component.Is.Pet" } }),
@@ -42,6 +43,7 @@ export function createComponents(world: any) {
     // Indices
     ItemIndex: defineNumberComponent(world, { id: "ItemIndex", metadata: { contractId: "component.Index.Item" } }),
     ModifierIndex: defineNumberComponent(world, { id: "ModifierIndex", metadata: { contractId: "component.Index.Modifier" } }),
+    Genus: defineStringComponent(world, { id: "Genus", metadata: { contractId: "component.Index.Genus" } }),
     PetIndex: defineStringComponent(world, { id: "PetIndex", metadata: { contractId: "component.Index.Pet" } }),
 
     // Values
@@ -65,12 +67,7 @@ export function createComponents(world: any) {
     LastActionTime: defineNumberComponent(world, { id: "LastActionTime", metadata: { contractId: "component.time.LastAction" } }),
     StartTime: defineNumberComponent(world, { id: "StartTime", metadata: { contractId: "component.time.Start" } }),
 
-    // Pet metadata
-    PetTraits: defineStringArrayComponent(world, "PetTraits", "component.PetTraits.Permanent"),
-    PetEquipped: defineStringArrayComponent(world, "PetEquipped", "component.PetTraits.Equipped"),
-    _DynamicTraits: defineStringArrayComponent(world, "_DynamicTraits", "component.PetTraits._Dynamic"),
-
-    // speeecial
+    // speeeecial
     LoadingState: defineLoadingStateComponent(world),
     MediaURI: defineStringComponent(world, { id: "MediaURI", metadata: { contractId: "component.MediaURI" } }),
     Name: defineStringComponent(world, { id: "Name", metadata: { contractId: "component.Name" } }),
