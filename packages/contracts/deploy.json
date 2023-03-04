@@ -8,6 +8,7 @@
     "ChargeComponent",
     "CoinComponent",
     "ExitsComponent",
+    "GenusComponent",
     "IdDelegateeComponent",
     "IdDelegatorComponent",
     "IdHolderComponent",
@@ -41,16 +42,13 @@
     "ModifierTypeComponent",
     "ModifierValueComponent",
     "NameComponent",
-    "PetTraitsEquippedComponent",
-    "PetTraitsPermanentComponent",
     "PriceBuyComponent",
     "PriceSellComponent",
     "PrototypeComponent",
     "StateComponent",
     "StorageSizeComponent",
     "TimeLastActionComponent",
-    "TimeStartComponent",
-    "_DynamicTraitsComponent"
+    "TimeStartComponent"
   ],
   "systems": [
     {
@@ -266,11 +264,11 @@
     "LibNode",
     "LibOperator",
     "LibPet",
-    "LibPetTraits",
     "LibProduction",
     "LibPrototype",
     "LibRegister",
     "LibRegistry",
+    "LibModReg",
     "LibRoom",
     "LibTrade"
   ]

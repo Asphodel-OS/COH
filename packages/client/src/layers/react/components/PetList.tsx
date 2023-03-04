@@ -260,7 +260,7 @@ export function registerPetList() {
     // Render
     ({ actions, api, data }) => {
       const { visibleDivs, setVisibleDivs } = dataStore();
-      console.log(data.pets);
+      // console.log(data.pets);
 
       const [lastRefresh, setLastRefresh] = useState(Date.now());
 

@@ -69,29 +69,11 @@ library LibMetadata {
 
     for (uint256 i; i < numElements; i++) {
       // packed order is reversed
-      result[numElements-1-i] = packed & ((1 << SIZE) - 1);
+      // result[numElements-1-i] = packed & ((1 << SIZE) - 1);
+      result[i] = packed & ((1 << SIZE) - 1);
 
       packed = packed >> SIZE;
     }
-
-    return result;
-  }
-
-  // temp SPECIFICALLY for the +20 index style. background not implemented
-  function _packedToArrayScaled(
-    uint256 packed,
-    uint256 numElements 
-  ) internal pure returns (uint256[] memory) {
-    uint256[] memory result = new uint256[](numElements);
-
-    for (uint256 i; i < numElements; i++) {
-      // packed order is reversed
-      result[numElements-1-i] = (packed & ((1 << SIZE) - 1)) + (10 ** i)*10*2;
-
-      packed = packed >> SIZE;
-    }
-
-    // console.log("scaledArray");
 
     return result;
   }

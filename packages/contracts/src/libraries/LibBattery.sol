@@ -9,7 +9,8 @@ import { LibQuery } from "solecs/LibQuery.sol";
 import { getAddressById, getComponentById, entityToAddress, addressToEntity } from "solecs/utils.sol";
 import { LibString } from "solady/utils/LibString.sol";
 
-import { LibRegistry } from "libraries/LibRegistry.sol";
+// TODO: change ModReg to ItemReg. also implement ItemReg
+import { LibRegistry as LibModReg } from "libraries/LibRegistry.sol";
 
 import { CapacityComponent, ID as CapacityCompID } from "components/CapacityComponent.sol";
 import { ChargeComponent, ID as ChargeCompID } from "components/ChargeComponent.sol";
@@ -88,12 +89,12 @@ library LibBattery {
     BalanceComponent(getAddressById(components, BalanceCompID)).set(entityID, value);
     NameComponent(getAddressById(components, NameCompID)).set(entityID, name);
 
-    LibRegistry.add(components, IndexItemCompID, index, entityID);
+    LibModReg.add(components, IndexItemCompID, index, entityID);
   }
 
   function getFoodValue(IUintComp components, uint256 index) internal view returns (uint256) {
     // no additional check for isFood, but does not affect
-    uint256 entityID = LibRegistry.get(components, IndexItemCompID, index);
+    uint256 entityID = LibModReg.get(components, IndexItemCompID, index);
     return BalanceComponent(getAddressById(components, BalanceCompID)).getValue(entityID);
   }
 

@@ -23,10 +23,11 @@ export function createAdminAPI(systems: any) {
     // init general, mostly temp
     systems["system._Init"].executeTyped();
     systems["system.ERC721.metadata"]._setRevealed("123", "https://kamigotchi.nyc3.cdn.digitaloceanspaces.com/images%2F");
-    systems["system.ERC721.metadata"]._setMaxElements(['9', '1', '7', '8', '1']); 
-
+    // systems["system.ERC721.metadata"]._setMaxElements(['9', '1', '7', '8', '1']); 
+    systems["system.ERC721.metadata"]._setMaxElements(['2', '1', '2', '2', '1']); 
+    // systems["system.ERC721.metadata"]._setMaxElements(['1', '1', '1', '1', '1']); 
+    
     createPlayerAPI(systems).ERC721.mint('0x7681A73aed06bfb648a5818B978fb018019F6900');
-
 
     // TODO: can only set listings after know merchant IDs, how to address this?
   }

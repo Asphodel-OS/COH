@@ -5,7 +5,6 @@ import { _ListingSetSystem } from "./ethers-contracts/_ListingSetSystem";
 import { _MerchantCreateSystem } from "./ethers-contracts/_MerchantCreateSystem";
 import { _NodeCreateSystem } from "./ethers-contracts/_NodeCreateSystem";
 import { _RoomCreateSystem } from "./ethers-contracts/_RoomCreateSystem";
-import { EquipModifierPetSystem } from "./ethers-contracts/EquipModifierPetSystem";
 import { ERC721PetSystem } from "./ethers-contracts/ERC721PetSystem";
 import { ListingBuySystem } from "./ethers-contracts/ListingBuySystem";
 import { ListingSellSystem } from "./ethers-contracts/ListingSellSystem";
@@ -32,7 +31,6 @@ export type SystemTypes = {
   "system._MerchantCreate": _MerchantCreateSystem;
   "system._NodeCreate": _NodeCreateSystem;
   "system._RoomCreate": _RoomCreateSystem;
-  "system.Pet.EquipModifierSystem": EquipModifierPetSystem;
   "system.ERC721.pet": ERC721PetSystem;
   "system.ListingBuy": ListingBuySystem;
   "system.ListingSell": ListingSellSystem;

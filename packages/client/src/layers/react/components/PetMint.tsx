@@ -86,21 +86,42 @@ export function registerPetMint() {
         });
         return actionID;
       };
+      const revealTx = (tokenID: string) => {
+        const actionID = `Revealing Kami` as EntityID;
+        actions.add({
+          id: actionID,
+          components: {},
+          requirement: () => true,
+          updates: () => [],
+          execute: async () => {
+            return player.ERC721.reveal(tokenID);
+          },
+        });
+        return actionID;
+      };
 
       const handleMinting = async () => {
         try {
           const mintFX = new Audio(mintSound);
           mintFX.play();
 
-          const actionID = mintTx(connectedAddress.get()!);
+          const mintActionID = mintTx(connectedAddress.get()!);
           await waitForActionCompletion(
             actions.Action,
-            world.entityToIndex.get(actionID) as EntityIndex
+            world.entityToIndex.get(mintActionID) as EntityIndex
           );
           const description = BigNumber.from(nextToken).add('1').toHexString();
 
-          setVisibleDivs({ ...visibleDivs, petMint: !visibleDivs.petMint });
+          // revealing
+          // might/should not be here, but putting for sake of testing
+          const revealActionID = revealTx(description);
+          await waitForActionCompletion(
+            actions.Action,
+            world.entityToIndex.get(revealActionID) as EntityIndex
+          );
+
           dataStore.setState({ selectedPet: { description } });
+          setVisibleDivs({ ...visibleDivs, petMint: !visibleDivs.petMint });
           setVisibleDivs({
             ...visibleDivs,
             petDetails: !visibleDivs.petDetails,

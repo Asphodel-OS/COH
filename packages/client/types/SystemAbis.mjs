@@ -5,7 +5,6 @@ import _ListingSetSystem from "../abi/_ListingSetSystem.json";
 import _MerchantCreateSystem from "../abi/_MerchantCreateSystem.json";
 import _NodeCreateSystem from "../abi/_NodeCreateSystem.json";
 import _RoomCreateSystem from "../abi/_RoomCreateSystem.json";
-import EquipModifierPetSystem from "../abi/EquipModifierPetSystem.json";
 import ERC721PetSystem from "../abi/ERC721PetSystem.json";
 import ListingBuySystem from "../abi/ListingBuySystem.json";
 import ListingSellSystem from "../abi/ListingSellSystem.json";
@@ -32,7 +31,6 @@ export const SystemAbis = {
   "system._MerchantCreate": _MerchantCreateSystem.abi,
   "system._NodeCreate": _NodeCreateSystem.abi,
   "system._RoomCreate": _RoomCreateSystem.abi,
-  "system.Pet.EquipModifierSystem": EquipModifierPetSystem.abi,
   "system.ERC721.pet": ERC721PetSystem.abi,
   "system.ListingBuy": ListingBuySystem.abi,
   "system.ListingSell": ListingSellSystem.abi,

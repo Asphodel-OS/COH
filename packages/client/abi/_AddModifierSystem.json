@@ -67,6 +67,11 @@
     {
       "inputs": [
         {
+          "internalType": "string",
+          "name": "genus",
+          "type": "string"
+        },
+        {
           "internalType": "uint256",
           "name": "index",
           "type": "uint256"
@@ -127,7 +132,7 @@
   ],
   "methodIdentifiers": {
     "execute(bytes)": "09c5eabe",
-    "executeTyped(uint256,uint256,string,string)": "fc651dd0",
+    "executeTyped(string,uint256,uint256,string,string)": "862351c5",
     "owner()": "8da5cb5b",
     "transferOwnership(address)": "f2fde38b"
   },
@@ -204,6 +209,11 @@
         },
         {
           "inputs": [
+            {
+              "internalType": "string",
+              "name": "genus",
+              "type": "string"
+            },
             {
               "internalType": "uint256",
               "name": "index",
@@ -301,6 +311,7 @@
         ":forge-std/=../../node_modules/forge-std/src/",
         ":libraries/=src/libraries/",
         ":memmove/=../../node_modules/memmove/src/",
+        ":packages/=../../../mud/packages/",
         ":solady/=../../node_modules/solady/src/",
         ":solecs/=../../node_modules/@latticexyz/solecs/src/",
         ":solmate/=../../node_modules/@rari-capital/solmate/src/",
@@ -626,6 +637,14 @@
         ],
         "license": "MIT"
       },
+      "src/components/GenusComponent.sol": {
+        "keccak256": "0x4c92ddd9e136274e7a53323b8c13c4f4d3a44b4ef7a5ea0b31d062731bfd609c",
+        "urls": [
+          "bzz-raw://91b916c93bcf0f97ec91c3c18144e7c1e01d8476a0ce0040121a3137b610f896",
+          "dweb:/ipfs/QmRRbqGFs9snrqHqDLMv2qyQYuVYCiK4VcuxTGwD86jtT7"
+        ],
+        "license": "Unlicense"
+      },
       "src/components/IdPetComponent.sol": {
         "keccak256": "0x494747d8dea26fc4bbab81273ce7ad582fc750109d32eb1cb4d3d4008d7c122e",
         "urls": [
@@ -698,11 +717,19 @@
         ],
         "license": "Unlicense"
       },
-      "src/libraries/LibModifier.sol": {
-        "keccak256": "0x10c168afd63d66aaa97093b05c528222238551f513756253b91bb26ec84b6ef8",
+      "src/libraries/LibModReg.sol": {
+        "keccak256": "0x3e2f6de48a4559da1ff0ae48d1242790328af68b377997bcafdcaa799d4ed22b",
         "urls": [
-          "bzz-raw://2103b94da033cb888bbf7ab7f7cc97bb3728ad540880be6f3dbec8261ecaec8b",
-          "dweb:/ipfs/Qme1Eb7xS7ktD9amXigRTDX5Lkvza53SoDk1NDbYt61zPx"
+          "bzz-raw://1632e85d5fa5398280eab67767ac5c1af84bad77d9c3eb915ca7ac98ab37c4d4",
+          "dweb:/ipfs/QmZoFpyQjLmyGFDHhAt5PsNGtHBLoPBHvgAxFQ9VyFwkKM"
+        ],
+        "license": "MIT"
+      },
+      "src/libraries/LibModifier.sol": {
+        "keccak256": "0x546685e6865bcce405930129b712e17595bb94a0f2a332d3c96b2aed3598ac04",
+        "urls": [
+          "bzz-raw://83005346bfddac9f5d068f9f799e687b1e2a43ba95cd180bdd7b29930e3d08a0",
+          "dweb:/ipfs/QmReRn4pR1BWKp6Q4ZgzeDgkoUkvUdBxkc1obpsYdJWqc2"
         ],
         "license": "MIT"
       },
@@ -714,19 +741,11 @@
         ],
         "license": "MIT"
       },
-      "src/libraries/LibRegistry.sol": {
-        "keccak256": "0x3fb6bcc805d85800565c42308dc9e2f2334af1d773fb54a1d3a21d07d60aa0f4",
-        "urls": [
-          "bzz-raw://2924615368ba1ba85676db9ddd1c4b040ab0b9d5623b2286c1fae4d1e353e63d",
-          "dweb:/ipfs/QmcqmCcwzXqcAevGTEM54F1kZ44NqpGbAu8sQDWjPCsoPY"
-        ],
-        "license": "MIT"
-      },
       "src/systems/_AddModifierSystem.sol": {
-        "keccak256": "0xfc8214668854cb3babc03585dca8aa669a8da6988713c086730ae379e7504568",
+        "keccak256": "0xc314f6cf4708dbf49889fd3581ce1f9549b912110cabef797cfab9635e2e05a1",
         "urls": [
-          "bzz-raw://e2129b0208ab6f8e8d813e71d184111c852628c7f585827b2f2dc2f4a881138c",
-          "dweb:/ipfs/QmTk56yDPc5nLkjcTYCk5QbHdRpJdQR3cMwJD3h3pz4bdh"
+          "bzz-raw://511d12fee3ca146bfde7ffef98d9e303576c62f1ebf35644a51c86ef3b228e61",
+          "dweb:/ipfs/QmcEasoD8jP1pCM2mvKHSaCiMCnxGHeKhASSbMmECZQ82V"
         ],
         "license": "Unlicense"
       },
@@ -741,5 +760,5 @@
     },
     "version": 1
   },
-  "id": 160
+  "id": 157
 }

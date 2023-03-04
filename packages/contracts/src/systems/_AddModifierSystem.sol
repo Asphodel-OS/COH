@@ -13,14 +13,15 @@ contract _AddModifierSystem is System {
   constructor(IWorld _world, address _components) System(_world, _components) {}
 
   function execute(bytes memory arguments) public onlyOwner returns (bytes memory) {
-    (uint256 index, uint256 modValue, string memory modType, string memory name) = abi.decode(
+    (string memory genus, uint256 index, uint256 modValue, string memory modType, string memory name) = abi.decode(
       arguments,
-      (uint256, uint256, string, string)
+      (string, uint256, uint256, string, string)
     );
 
     LibModifier.createIndex(
       components,
       world,
+      genus,
       index,
       modValue,
       modType,
@@ -31,11 +32,12 @@ contract _AddModifierSystem is System {
   }
 
   function executeTyped(
+    string memory genus,
     uint256 index,
     uint256 modValue,
     string memory modType,
     string memory name
   ) public onlyOwner returns (bytes memory) {
-    return execute(abi.encode(index, modValue, modType, name));
+    return execute(abi.encode(genus, index, modValue, modType, name));
   }
 }

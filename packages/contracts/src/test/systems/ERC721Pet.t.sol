@@ -18,6 +18,10 @@ contract ERC721PetTest is SetupTemplate {
     // assertEq(_IdOperatorComponent.getValue(entityID), addressToEntity(operator));
   }
 
+  function entityToAddress(uint256 entityID) internal returns (address) {
+    return address(uint160(entityID));
+  }
+
   function testMint() public {
     _mintPets(1);
 
@@ -66,5 +70,13 @@ contract ERC721PetTest is SetupTemplate {
     console.log(
       _ERC721PetSystem.tokenURI(1)
     );
+  }
+
+  function testMetadataFuzz() public {
+    // maybe shouldnt loop..
+    uint256 max = 99;
+    for (uint256 i; i < max; i++) {
+      _mintSinglePet(address(1));
+    }
   }
 }

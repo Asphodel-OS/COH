@@ -27,22 +27,24 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface PetTraitsPermanentComponentInterface extends utils.Interface {
+export interface GenusComponentInterface extends utils.Interface {
   functions: {
     "authorizeWriter(address)": FunctionFragment;
     "getEntities()": FunctionFragment;
     "getEntitiesWithValue(bytes)": FunctionFragment;
+    "getEntitiesWithValue(string)": FunctionFragment;
     "getRawValue(uint256)": FunctionFragment;
     "getSchema()": FunctionFragment;
     "getValue(uint256)": FunctionFragment;
     "has(uint256)": FunctionFragment;
+    "hasValue(uint256,string)": FunctionFragment;
     "id()": FunctionFragment;
     "owner()": FunctionFragment;
     "registerIndexer(address)": FunctionFragment;
     "registerWorld(address)": FunctionFragment;
     "remove(uint256)": FunctionFragment;
+    "set(uint256,string)": FunctionFragment;
     "set(uint256,bytes)": FunctionFragment;
-    "set(uint256,uint256[])": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unauthorizeWriter(address)": FunctionFragment;
     "world()": FunctionFragment;
@@ -53,18 +55,20 @@ export interface PetTraitsPermanentComponentInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "authorizeWriter"
       | "getEntities"
-      | "getEntitiesWithValue"
+      | "getEntitiesWithValue(bytes)"
+      | "getEntitiesWithValue(string)"
       | "getRawValue"
       | "getSchema"
       | "getValue"
       | "has"
+      | "hasValue"
       | "id"
       | "owner"
       | "registerIndexer"
       | "registerWorld"
       | "remove"
+      | "set(uint256,string)"
       | "set(uint256,bytes)"
-      | "set(uint256,uint256[])"
       | "transferOwnership"
       | "unauthorizeWriter"
       | "world"
@@ -80,8 +84,12 @@ export interface PetTraitsPermanentComponentInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getEntitiesWithValue",
+    functionFragment: "getEntitiesWithValue(bytes)",
     values: [PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getEntitiesWithValue(string)",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "getRawValue",
@@ -95,6 +103,10 @@ export interface PetTraitsPermanentComponentInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "has",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "hasValue",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "id", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -111,12 +123,12 @@ export interface PetTraitsPermanentComponentInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "set(uint256,bytes)",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
+    functionFragment: "set(uint256,string)",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "set(uint256,uint256[])",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>[]]
+    functionFragment: "set(uint256,bytes)",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
@@ -141,7 +153,11 @@ export interface PetTraitsPermanentComponentInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getEntitiesWithValue",
+    functionFragment: "getEntitiesWithValue(bytes)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getEntitiesWithValue(string)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -151,6 +167,7 @@ export interface PetTraitsPermanentComponentInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "getSchema", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getValue", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "has", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "hasValue", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "id", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
@@ -163,11 +180,11 @@ export interface PetTraitsPermanentComponentInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "remove", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "set(uint256,bytes)",
+    functionFragment: "set(uint256,string)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "set(uint256,uint256[])",
+    functionFragment: "set(uint256,bytes)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -203,12 +220,12 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface PetTraitsPermanentComponent extends BaseContract {
+export interface GenusComponent extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PetTraitsPermanentComponentInterface;
+  interface: GenusComponentInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -237,8 +254,13 @@ export interface PetTraitsPermanentComponent extends BaseContract {
 
     getEntities(overrides?: CallOverrides): Promise<[BigNumber[]]>;
 
-    getEntitiesWithValue(
-      arg0: PromiseOrValue<BytesLike>,
+    "getEntitiesWithValue(bytes)"(
+      value: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
+
+    "getEntitiesWithValue(string)"(
+      value: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
@@ -254,10 +276,16 @@ export interface PetTraitsPermanentComponent extends BaseContract {
     getValue(
       entity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber[]]>;
+    ): Promise<[string]>;
 
     has(
       entity: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    hasValue(
+      id: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -266,7 +294,7 @@ export interface PetTraitsPermanentComponent extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     registerIndexer(
-      arg0: PromiseOrValue<string>,
+      indexer: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -280,15 +308,15 @@ export interface PetTraitsPermanentComponent extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "set(uint256,bytes)"(
+    "set(uint256,string)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BytesLike>,
+      value: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "set(uint256,uint256[])"(
+    "set(uint256,bytes)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BigNumberish>[],
+      value: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -317,8 +345,13 @@ export interface PetTraitsPermanentComponent extends BaseContract {
 
   getEntities(overrides?: CallOverrides): Promise<BigNumber[]>;
 
-  getEntitiesWithValue(
-    arg0: PromiseOrValue<BytesLike>,
+  "getEntitiesWithValue(bytes)"(
+    value: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
+
+  "getEntitiesWithValue(string)"(
+    value: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
@@ -334,10 +367,16 @@ export interface PetTraitsPermanentComponent extends BaseContract {
   getValue(
     entity: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<BigNumber[]>;
+  ): Promise<string>;
 
   has(
     entity: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  hasValue(
+    id: PromiseOrValue<BigNumberish>,
+    name: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -346,7 +385,7 @@ export interface PetTraitsPermanentComponent extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   registerIndexer(
-    arg0: PromiseOrValue<string>,
+    indexer: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -360,15 +399,15 @@ export interface PetTraitsPermanentComponent extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "set(uint256,bytes)"(
+  "set(uint256,string)"(
     entity: PromiseOrValue<BigNumberish>,
-    value: PromiseOrValue<BytesLike>,
+    value: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "set(uint256,uint256[])"(
+  "set(uint256,bytes)"(
     entity: PromiseOrValue<BigNumberish>,
-    value: PromiseOrValue<BigNumberish>[],
+    value: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -397,8 +436,13 @@ export interface PetTraitsPermanentComponent extends BaseContract {
 
     getEntities(overrides?: CallOverrides): Promise<BigNumber[]>;
 
-    getEntitiesWithValue(
-      arg0: PromiseOrValue<BytesLike>,
+    "getEntitiesWithValue(bytes)"(
+      value: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
+
+    "getEntitiesWithValue(string)"(
+      value: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
@@ -414,10 +458,16 @@ export interface PetTraitsPermanentComponent extends BaseContract {
     getValue(
       entity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber[]>;
+    ): Promise<string>;
 
     has(
       entity: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    hasValue(
+      id: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -426,7 +476,7 @@ export interface PetTraitsPermanentComponent extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     registerIndexer(
-      arg0: PromiseOrValue<string>,
+      indexer: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -440,15 +490,15 @@ export interface PetTraitsPermanentComponent extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "set(uint256,bytes)"(
+    "set(uint256,string)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BytesLike>,
+      value: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "set(uint256,uint256[])"(
+    "set(uint256,bytes)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BigNumberish>[],
+      value: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -489,8 +539,13 @@ export interface PetTraitsPermanentComponent extends BaseContract {
 
     getEntities(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getEntitiesWithValue(
-      arg0: PromiseOrValue<BytesLike>,
+    "getEntitiesWithValue(bytes)"(
+      value: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getEntitiesWithValue(string)"(
+      value: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -511,12 +566,18 @@ export interface PetTraitsPermanentComponent extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    hasValue(
+      id: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     id(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     registerIndexer(
-      arg0: PromiseOrValue<string>,
+      indexer: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -530,15 +591,15 @@ export interface PetTraitsPermanentComponent extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "set(uint256,bytes)"(
+    "set(uint256,string)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BytesLike>,
+      value: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "set(uint256,uint256[])"(
+    "set(uint256,bytes)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BigNumberish>[],
+      value: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -568,8 +629,13 @@ export interface PetTraitsPermanentComponent extends BaseContract {
 
     getEntities(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getEntitiesWithValue(
-      arg0: PromiseOrValue<BytesLike>,
+    "getEntitiesWithValue(bytes)"(
+      value: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "getEntitiesWithValue(string)"(
+      value: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -590,12 +656,18 @@ export interface PetTraitsPermanentComponent extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    hasValue(
+      id: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     id(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     registerIndexer(
-      arg0: PromiseOrValue<string>,
+      indexer: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -609,15 +681,15 @@ export interface PetTraitsPermanentComponent extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "set(uint256,bytes)"(
+    "set(uint256,string)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BytesLike>,
+      value: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "set(uint256,uint256[])"(
+    "set(uint256,bytes)"(
       entity: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BigNumberish>[],
+      value: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

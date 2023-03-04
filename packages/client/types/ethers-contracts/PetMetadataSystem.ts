@@ -188,7 +188,7 @@ export interface PetMetadataSystem extends BaseContract {
     ): Promise<ContractTransaction>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
+      tokenID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -232,7 +232,7 @@ export interface PetMetadataSystem extends BaseContract {
   ): Promise<ContractTransaction>;
 
   executeTyped(
-    entityID: PromiseOrValue<BigNumberish>,
+    tokenID: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -276,7 +276,7 @@ export interface PetMetadataSystem extends BaseContract {
     ): Promise<string>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
+      tokenID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
@@ -332,7 +332,7 @@ export interface PetMetadataSystem extends BaseContract {
     ): Promise<BigNumber>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
+      tokenID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -377,7 +377,7 @@ export interface PetMetadataSystem extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     executeTyped(
-      entityID: PromiseOrValue<BigNumberish>,
+      tokenID: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

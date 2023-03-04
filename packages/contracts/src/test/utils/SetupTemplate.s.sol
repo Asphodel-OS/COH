@@ -23,11 +23,16 @@ abstract contract SetupTemplate is TestSetupImports {
     __InitSystem.executeTyped();
     _PetMetadataSystem._setRevealed(123, "https://kamigotchi.nyc3.cdn.digitaloceanspaces.com/images%2F");
     uint256[] memory maxElements = new uint256[](5);
-    maxElements[0] = 9;
-    maxElements[1] = 1;
-    maxElements[2] = 7;
-    maxElements[3] = 8;
-    maxElements[4] = 1;
+    // maxElements[0] = 9;
+    // maxElements[1] = 1;
+    // maxElements[2] = 7;
+    // maxElements[3] = 8;
+    // maxElements[4] = 1;
+    maxElements[0] = 2;   // BODY
+    maxElements[1] = 1;   // COLOR
+    maxElements[2] = 2;   // FACE
+    maxElements[3] = 2;   // HAND
+    maxElements[4] = 1;   // BACKGROUND
     _PetMetadataSystem._setMaxElements(maxElements);
     vm.stopPrank();
   
@@ -44,9 +49,11 @@ abstract contract SetupTemplate is TestSetupImports {
     if (n > 2) petThreeEntityID = _mintSinglePet(eve);
   }
 
-  function _mintSinglePet(address addy) internal virtual returns (uint256) {
-    vm.prank(addy, addy);
-    return _ERC721PetSystem.mint(addy);
+  function _mintSinglePet(address addy) internal virtual returns (uint256 entityID) {
+    vm.startPrank(addy, addy);
+    entityID = _ERC721PetSystem.mint(addy);
+    _PetMetadataSystem.executeTyped(LibPet.entityToIndex(components, entityID));
+    vm.stopPrank();
   }
 
   function _transferPetNFT(

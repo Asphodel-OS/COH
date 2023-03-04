@@ -12,18 +12,15 @@ import {
   getComponentValue,
 } from '@latticexyz/recs';
 import { dataStore } from '../store/createStore';
-import mintSound from '../../../public/sound/sound_effects/tami_mint_vending_sound.mp3';
 import clickSound from '../../../public/sound/sound_effects/mouseclick.wav';
 import { BigNumber, BigNumberish } from 'ethers';
 import { ModalWrapper } from './styled/AnimModalWrapper';
 import { hexToDecimal } from '../../phaser/utils';
-import { describeCharacther } from '../../../constants';
 
 type TraitDetails = {
   Name: string;
   Type: string;
   Value: string;
-  D: string;
 };
 
 type Details = {
@@ -48,11 +45,34 @@ export function registerPetDetails() {
     (layers) => {
       const {
         network: {
-          components: { IsPet, PetTraits, Balance },
+          components: { 
+            Balance,
+            IsPet,
+            IsModifier,
+            Genus, 
+            PetID,
+            PetIndex,
+            Name,
+            MediaURI,
+            Bandwidth,
+            Capacity,
+            StorageSize,
+            ModifierType,
+            ModifierValue
+           },
+           world,
         },
       } = layers;
 
-      return merge(IsPet.update$, PetTraits.update$, Balance.update$).pipe(
+
+      return merge(
+        IsPet.update$,
+        IsModifier.update$, 
+        Balance.update$,
+        PetID.update$,
+        Genus.update$,
+        MediaURI.update$
+      ).pipe(
         map(() => {
           return {
             layers,
@@ -67,17 +87,17 @@ export function registerPetDetails() {
           components: {
             Bandwidth,
             Capacity,
+            Genus,
             IsPet,
+            IsModifier,
             MediaURI,
             PetIndex,
-            PetTraits,
-            PetEquipped,
+            PetID,
             ModifierValue,
             ModifierType,
             Name,
             State,
             StorageSize,
-            _DynamicTraits,
           },
           world,
         },
@@ -116,30 +136,22 @@ export function registerPetDetails() {
           storage: hexToString(
             getComponentValue(StorageSize, index)?.value as number
           ),
-          traits: getArrayDetails(PetTraits, index)?.value as TraitDetails[],
+          traits: getBaseTraits(index)?.value as TraitDetails[],
         };
       };
 
-      const getArrayDetails = (comp: any, index: EntityIndex) => {
-        const rawArr = getComponentValue(comp, index)?.value as string[];
+      const getBaseTraits = (petIndex: EntityIndex) => {
+        const genusArr = [
+          "COLOR",
+          'BODY',
+          'HAND',
+          'FACE',
+          'BACKGROUND',
+        ];
         let result: Array<TraitDetails> = [];
 
-        // 'dynamic' metadata to showcase partially implmented dynamic nfts
-        const dArr = getComponentValue(_DynamicTraits, index)
-          ?.value as string[];
-
-        for (let i = 0; i < rawArr.length; i++) {
-          const ind = world.entityToIndex.get(
-            rawArr[i] as EntityID
-          ) as EntityIndex;
-          const n = getComponentValue(Name, ind)?.value as string;
-          const t = getComponentValue(ModifierType, ind)?.value as string;
-          const v = hexToString(
-            getComponentValue(ModifierValue, ind)?.value as string
-          );
-          const d = dArr[i];
-
-          result.push({ Name: n, Type: t, Value: v, D: d });
+        for (let i = 0; i < genusArr.length; i++) {
+          result.push(getTrait(petIndex, genusArr[i]));
         }
 
         return {
@@ -147,10 +159,31 @@ export function registerPetDetails() {
         };
       };
 
+      const getTrait = (petIndex: EntityIndex, genus: string) => {
+        const entity = Array.from(
+          runQuery([
+            Has(IsModifier),
+            HasValue(Genus, {
+              value: genus
+            }),
+            HasValue(PetID, {
+              value: world.entities[petIndex]
+            })
+          ])
+        )[0]; 
+
+        console.log(entity);
+
+        return {
+          Name: getComponentValue(Name, entity)?.value as string,
+          Type: getComponentValue(ModifierType, entity)?.value as string,
+          Value: getComponentValue(ModifierValue, entity)?.value as string,
+        };
+      };
+
       const hexToString = (num: BigNumberish) => {
         return BigNumber.from(num).toString();
       };
-
       /////////////////
       // Display values
 
@@ -162,24 +195,11 @@ export function registerPetDetails() {
         }
       }, [description]);
 
-      function findBodyPartByIndex(name: string, index: number) {
-        if (name == 'Color') return describeCharacther.colors[index - 1];
-        else if (name == 'Body') return describeCharacther.bodyType[index - 1];
-        else if (name == 'Hand') return describeCharacther.handType[index - 1];
-        else if (name == 'Eyes') return describeCharacther.face[index - 1];
-        else return;
-      }
-
       const traitLines = dets?.traits.map((trait) => {
-        const traitNumber = hexToDecimal(trait.D);
-        const bodyPart = findBodyPartByIndex(trait.Name, traitNumber);
-
-        if (trait.Name == 'Mouth') return;
-        if (trait.Name == 'Eyes') trait.Name = 'Face';
         return (
           <KamiList key={trait.Name}>
-            {`${trait.Name} [${bodyPart}]`}
-            <KamiText style={{paddingTop: '20px'}}>{`${trait.Type} | {${traitNumber}}`}</KamiText>
+            {`${trait.Name}`}
+            <KamiText style={{paddingTop: '20px'}}>{`${trait.Type} | {${trait.Value}}`}</KamiText>
           </KamiList>
         );
       });

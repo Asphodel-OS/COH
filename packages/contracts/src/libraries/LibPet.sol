@@ -18,7 +18,6 @@ import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComp
 import { NameComponent, ID as NameCompID } from "components/NameComponent.sol";
 import { StorageSizeComponent, ID as StorSizeCompID } from "components/StorageSizeComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastCompID } from "components/TimeLastActionComponent.sol";
-import { PetTraitsPermanentComponent, ID as TraitsCompID } from "components/PetTraitsPermanentComponent.sol";
 import { LibModifier } from "libraries/LibModifier.sol";
 import { LibProduction } from "libraries/LibProduction.sol";
 
@@ -221,6 +220,13 @@ library LibPet {
     if (results.length > 0) {
       result = results[0];
     }
+  }
+
+  // get tokenID from entity
+  function entityToIndex(IUintComp components, uint256 entityID) internal view returns (uint256) {
+    return IndexPetComponent(
+      getAddressById(components, IndexPetComponentID)
+    ).getValue(entityID);
   }
 
   // Get the production of a pet. Return 0 if there are none.

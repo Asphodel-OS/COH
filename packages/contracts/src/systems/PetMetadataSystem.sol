@@ -8,14 +8,15 @@ import { LibString } from "solady/utils/LibString.sol";
 
 import { LibBattery } from "libraries/LibBattery.sol";
 import { LibPet } from "libraries/LibPet.sol";
-import { LibPetTraits } from "libraries/LibPetTraits.sol";
+import { LibModifier, ModStatus } from "libraries/LibModifier.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
 import { LibMetadata } from "libraries/LibMetadata.sol";
 
-import { UNREVEALED_URI, ID as PetSystemID } from "systems/ERC721PetSystem.sol";
+import { ERC721PetSystem, UNREVEALED_URI, ID as PetSystemID } from "systems/ERC721PetSystem.sol";
 
 import { MediaURIComponent, ID as MediaURICompID } from "components/MediaURIComponent.sol";
-import { PetTraitsPermanentComponent, ID as PetTraitsPermanentCompID } from "components/PetTraitsPermanentComponent.sol";
-import { _DynamicTraitsComponent, ID as _DynamicTraitsCompID } from "components/_DynamicTraitsComponent.sol";
+
+import "forge-std/console.sol";
 
 uint256 constant ID = uint256(keccak256("system.ERC721.metadata"));
 
@@ -37,12 +38,16 @@ contract PetMetadataSystem is System {
     _;
   }
 
-  // sets metadata with a random seed. likely not working because of secondary gas call limits
-  // will be properly split with a commit/reveal scheme 
-  function execute(bytes memory arguments) public onlyPetSystem returns (bytes memory) {
+  // sets metadata with a random seed
+  // second phase of commit/reveal scheme. pet owners call directly
+  function execute(bytes memory arguments) public returns (bytes memory) {
     // reveals individual metadata
     require(_revealed, "collection not yet revealed");
-    uint256 entityID = abi.decode(arguments, (uint256));
+    uint256 tokenID = abi.decode(arguments, (uint256));
+    uint256 entityID = LibPet.indexToID(components, tokenID);
+    
+    uint256 operatorID = LibOperator.getByAddress(components, msg.sender);
+    require(LibPet.getOperator(components, entityID) == operatorID, "Pet: not urs");
 
     MediaURIComponent mediaComp = MediaURIComponent(getAddressById(components, MediaURICompID));
 
@@ -58,16 +63,33 @@ contract PetMetadataSystem is System {
       entityID,
       LibString.concat(_baseURI, LibString.concat(LibString.toString(packed), ".gif"))
     );
-    _DynamicTraitsComponent(getAddressById(components, _DynamicTraitsCompID))
-      .set(entityID, LibMetadata._packedToArray(packed, _numElements));
 
-    // LibPetTraits.setPermTraits(components, world, entityID, LibMetadata._packedToArrayScaled(packed, _numElements));
+    uint256[] memory permTraits = LibMetadata._packedToArray(packed, _numElements);
+    // assigning initial traits. genus is hardcoded
+    string[] memory names = new string[](5);
+    names[0] = "BODY";
+    names[1] = "COLOR";
+    names[2] = "FACE";
+    names[3] = "HAND";
+    names[4] = "BACKGROUND";
+    for (uint256 i; i < permTraits.length; i++) {
+      // console.log(names[i]);
+      // console.log(permTraits[i]);
+      LibModifier.addToPet(
+        components,
+        world,
+        entityID,
+        names[i], // genus
+        permTraits[i] // index
+      );
+    }
 
     return "";
   }
 
-  function executeTyped(uint256 entityID) public onlyPetSystem returns (bytes memory) {
-    return execute(abi.encode(entityID));
+  // accepts erc721 tokenID as input
+  function executeTyped(uint256 tokenID) public returns (bytes memory) {
+    return execute(abi.encode(tokenID));
   }
 
 
@@ -119,21 +141,29 @@ contract PetMetadataSystem is System {
     string memory result = "";
 
     // getting values of base traits. values are hardcoded to array position
-    string[] memory names = new string[](6);
-    names[0] = "Color";
-    names[1] = "Body";
-    names[2] = "Hand";
-    names[3] = "Eyes";
-    names[4] = "Mouth";
-    names[5] = "Background";
-    string[] memory values = LibPetTraits.getNames(
-      components,
-      LibPetTraits.getPermArray(components, entityID)
-    );
+    string[] memory names = new string[](5);
+    names[0] = "Body";
+    names[1] = "Color";
+    names[2] = "Face";
+    names[3] = "Hand";
+    names[4] = "Background";
+    // string[] memory values = LibPetTraits.getNames(
+    //   components,
+    //   LibPetTraits.getPermArray(components, entityID)
+    // );
 
     for (uint256 i; i < names.length; i++) {
+      uint256 curID = LibModifier._getAllX(
+        components,
+        entityID, // petID
+        LibString.toCase(names[i], true), // genus, all caps
+        0, // index, can vary
+        ModStatus.NULL, 
+        "" // mod type, not searching
+      )[0];
+      string memory valName = LibModifier.getName(components, curID);
       string memory entry = string(
-        abi.encodePacked('{"trait_type": "', names[i], '", "value": "', values[i], '"},\n')
+        abi.encodePacked('{"trait_type": "', names[i], '", "value": "', valName, '"},\n')
       );
 
       result = string(abi.encodePacked(result, entry));

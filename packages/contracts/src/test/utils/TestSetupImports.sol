@@ -4,22 +4,22 @@ pragma solidity ^0.8.0;
 import "std-contracts/test/MudTest.t.sol";
 
 // Libraries
-import "libraries/LibBattery.sol";
-import "libraries/LibCoin.sol";
-import "libraries/LibInventory.sol";
-import "libraries/LibListing.sol";
-import "libraries/LibMerchant.sol";
-import "libraries/LibModifier.sol";
-import "libraries/LibNode.sol";
-import "libraries/LibOperator.sol";
-import "libraries/LibPet.sol";
-import "libraries/LibPetTraits.sol";
-import "libraries/LibProduction.sol";
-import "libraries/LibPrototype.sol";
-import "libraries/LibRegister.sol";
-import "libraries/LibRegistry.sol";
-import "libraries/LibRoom.sol";
-import "libraries/LibTrade.sol";
+import { LibBattery } from "libraries/LibBattery.sol";
+import { LibCoin } from "libraries/LibCoin.sol";
+import { LibInventory } from "libraries/LibInventory.sol";
+import { LibListing } from "libraries/LibListing.sol";
+import { LibMerchant } from "libraries/LibMerchant.sol";
+import { LibModifier } from "libraries/LibModifier.sol";
+import { LibNode } from "libraries/LibNode.sol";
+import { LibOperator } from "libraries/LibOperator.sol";
+import { LibPet } from "libraries/LibPet.sol";
+import { LibProduction } from "libraries/LibProduction.sol";
+import { LibPrototype } from "libraries/LibPrototype.sol";
+import { LibRegister } from "libraries/LibRegister.sol";
+import { LibRegistry } from "libraries/LibRegistry.sol";
+import { LibModReg } from "libraries/LibModReg.sol";
+import { LibRoom } from "libraries/LibRoom.sol";
+import { LibTrade } from "libraries/LibTrade.sol";
 
 // Components
 import { AddressPlayerComponent, ID as AddressPlayerComponentID } from "components/AddressPlayerComponent.sol";
@@ -30,6 +30,7 @@ import { CapacityComponent, ID as CapacityComponentID } from "components/Capacit
 import { ChargeComponent, ID as ChargeComponentID } from "components/ChargeComponent.sol";
 import { CoinComponent, ID as CoinComponentID } from "components/CoinComponent.sol";
 import { ExitsComponent, ID as ExitsComponentID } from "components/ExitsComponent.sol";
+import { GenusComponent, ID as GenusComponentID } from "components/GenusComponent.sol";
 import { IdDelegateeComponent, ID as IdDelegateeComponentID } from "components/IdDelegateeComponent.sol";
 import { IdDelegatorComponent, ID as IdDelegatorComponentID } from "components/IdDelegatorComponent.sol";
 import { IdHolderComponent, ID as IdHolderComponentID } from "components/IdHolderComponent.sol";
@@ -63,8 +64,6 @@ import { ModifierStatusComponent, ID as ModifierStatusComponentID } from "compon
 import { ModifierTypeComponent, ID as ModifierTypeComponentID } from "components/ModifierTypeComponent.sol";
 import { ModifierValueComponent, ID as ModifierValueComponentID } from "components/ModifierValueComponent.sol";
 import { NameComponent, ID as NameComponentID } from "components/NameComponent.sol";
-import { PetTraitsEquippedComponent, ID as PetTraitsEquippedComponentID } from "components/PetTraitsEquippedComponent.sol";
-import { PetTraitsPermanentComponent, ID as PetTraitsPermanentComponentID } from "components/PetTraitsPermanentComponent.sol";
 import { PriceBuyComponent, ID as PriceBuyComponentID } from "components/PriceBuyComponent.sol";
 import { PriceSellComponent, ID as PriceSellComponentID } from "components/PriceSellComponent.sol";
 import { PrototypeComponent, ID as PrototypeComponentID } from "components/PrototypeComponent.sol";
@@ -72,7 +71,6 @@ import { StateComponent, ID as StateComponentID } from "components/StateComponen
 import { StorageSizeComponent, ID as StorageSizeComponentID } from "components/StorageSizeComponent.sol";
 import { TimeLastActionComponent, ID as TimeLastActionComponentID } from "components/TimeLastActionComponent.sol";
 import { TimeStartComponent, ID as TimeStartComponentID } from "components/TimeStartComponent.sol";
-import { _DynamicTraitsComponent, ID as _DynamicTraitsComponentID } from "components/_DynamicTraitsComponent.sol";
 
 // Systems
 import { _InitSystem, ID as _InitSystemID } from "systems/_InitSystem.sol";
@@ -110,6 +108,7 @@ CapacityComponent _CapacityComponent;
 ChargeComponent _ChargeComponent;
 CoinComponent _CoinComponent;
 ExitsComponent _ExitsComponent;
+GenusComponent _GenusComponent;
 IdDelegateeComponent _IdDelegateeComponent;
 IdDelegatorComponent _IdDelegatorComponent;
 IdHolderComponent _IdHolderComponent;
@@ -143,8 +142,6 @@ ModifierStatusComponent _ModifierStatusComponent;
 ModifierTypeComponent _ModifierTypeComponent;
 ModifierValueComponent _ModifierValueComponent;
 NameComponent _NameComponent;
-PetTraitsEquippedComponent _PetTraitsEquippedComponent;
-PetTraitsPermanentComponent _PetTraitsPermanentComponent;
 PriceBuyComponent _PriceBuyComponent;
 PriceSellComponent _PriceSellComponent;
 PrototypeComponent _PrototypeComponent;
@@ -152,7 +149,6 @@ StateComponent _StateComponent;
 StorageSizeComponent _StorageSizeComponent;
 TimeLastActionComponent _TimeLastActionComponent;
 TimeStartComponent _TimeStartComponent;
-_DynamicTraitsComponent __DynamicTraitsComponent;
 
 // System vars
 _InitSystem __InitSystem;
@@ -191,6 +187,7 @@ _CapacityComponent = CapacityComponent(component(CapacityComponentID));
 _ChargeComponent = ChargeComponent(component(ChargeComponentID));
 _CoinComponent = CoinComponent(component(CoinComponentID));
 _ExitsComponent = ExitsComponent(component(ExitsComponentID));
+_GenusComponent = GenusComponent(component(GenusComponentID));
 _IdDelegateeComponent = IdDelegateeComponent(component(IdDelegateeComponentID));
 _IdDelegatorComponent = IdDelegatorComponent(component(IdDelegatorComponentID));
 _IdHolderComponent = IdHolderComponent(component(IdHolderComponentID));
@@ -224,8 +221,6 @@ _ModifierStatusComponent = ModifierStatusComponent(component(ModifierStatusCompo
 _ModifierTypeComponent = ModifierTypeComponent(component(ModifierTypeComponentID));
 _ModifierValueComponent = ModifierValueComponent(component(ModifierValueComponentID));
 _NameComponent = NameComponent(component(NameComponentID));
-_PetTraitsEquippedComponent = PetTraitsEquippedComponent(component(PetTraitsEquippedComponentID));
-_PetTraitsPermanentComponent = PetTraitsPermanentComponent(component(PetTraitsPermanentComponentID));
 _PriceBuyComponent = PriceBuyComponent(component(PriceBuyComponentID));
 _PriceSellComponent = PriceSellComponent(component(PriceSellComponentID));
 _PrototypeComponent = PrototypeComponent(component(PrototypeComponentID));
@@ -233,7 +228,6 @@ _StateComponent = StateComponent(component(StateComponentID));
 _StorageSizeComponent = StorageSizeComponent(component(StorageSizeComponentID));
 _TimeLastActionComponent = TimeLastActionComponent(component(TimeLastActionComponentID));
 _TimeStartComponent = TimeStartComponent(component(TimeStartComponentID));
-__DynamicTraitsComponent = _DynamicTraitsComponent(component(_DynamicTraitsComponentID));
 
 __InitSystem = _InitSystem(system(_InitSystemID));
 __AddModifierSystem = _AddModifierSystem(system(_AddModifierSystemID));
