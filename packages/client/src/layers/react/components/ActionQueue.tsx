@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   getComponentEntities,
   getComponentValueStrict,
@@ -35,12 +35,13 @@ export function registerActionQueue() {
         <ModalWrapper>
           <ModalContent style={{ pointerEvents: 'auto'}}>
           <Description>TX Queue:</Description>
-          {[...getComponentEntities(Action)].map((e) => {
+          {[...getComponentEntities(Action)].reverse().map((e) => {
             const actionData = getComponentValueStrict(Action, e);
-            const state = ActionStateString[actionData.state as ActionState];
+            let state = ActionStateString[actionData.state as ActionState];
+            if (state == "WaitingForTxEvents") state = "Pending";
             return (
               <Description key={`action${e}`}>
-                {Action.world.entities[e]}: {state}
+                {Action.world.entities[e]}: [{state}]
               </Description>
             );
           })}
