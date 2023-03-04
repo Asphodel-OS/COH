@@ -50,7 +50,7 @@ export function registerChat() {
         return getComponentValue(Name, index)?.value as string;
       };
 
-      return merge(IsOperator.update$).pipe(
+      return merge(IsOperator.update$, Name.update$).pipe(
         map(() => {
           const operatorIndex = Array.from(
             runQuery([
@@ -60,8 +60,7 @@ export function registerChat() {
               }),
             ])
           )[0];
-          // const chatName = getName(operatorIndex);
-          const chatName = 'You'; // operator name interaction bug, but chat working
+          const chatName = getName(operatorIndex);
           return {
             chatName: chatName,
           };
